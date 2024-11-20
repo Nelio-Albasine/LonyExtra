@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LONY EXTRA</title>
+    <link rel="stylesheet" href="../CSS/Home/styles.css">
+    <link rel="stylesheet" href="../CSS/Home/header.css">
+    <link rel="stylesheet" href="../CSS/Home/ui_settings.css">
+    <link rel="stylesheet" href="../CSS/Home/pc.css">
+    <link rel="stylesheet" href="../CSS/Home/drawer.css">
+    <link rel="stylesheet" href="../CSS/Home/mobile.css">
+    <link rel="stylesheet" href="../CSS/Home/dialog_choose_tasks.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+
+</head>
+
+<body>
+    <header class="header">
+        <!-- Conteúdo do cabeçalho -->
+        <ul class="header_ul">
+            <li>
+                <img class="drawer_icon" id="drawer_icon" src="../SRC/IMGs/menu.png" alt="drawer icon">
+            </li>
+
+            <li>
+                <div id="container_stars">
+                    <img src="../SRC/IMGs/star.png" alt="star">
+                    <p id="userStars">0</p>
+                </div>
+
+                <p id="userRevenue">R$ 0.00 </p>
+            </li>
+
+            <li>
+                <img id="notification_icon" src="../SRC/IMGs/bell.png" alt="star">
+            </li>
+
+            <li>
+                <div id="container_name_and_email">
+                    <p id="userName">Nome do Usuário</p>
+                    <p id="userEmail">emaildousuario@gmail.com</p>
+                </div>
+                <img id="profile_icon" src="../SRC/IMGs/profile.png" alt="">
+            </li>
+        </ul>
+    </header>
+
+
+    <div class="drawer" id="drawer">
+        <div id="drawer-close">
+            <img class="drawer_icon" src="../SRC/IMGs/close_menu.png" alt="Fechar Menu">
+        </div>
+
+        <div class="drawer-content">
+            <!-- Seção de Perfil e Configurações -->
+            <div class="drawer-section">
+                <span class="section-title">Perfil</span>
+                <div class="drawer-grid">
+                    <div class="drawer-card">
+                        <img src="../SRC/IMGs/icon.png" alt="Perfil">
+                        <span>Editar Perfil</span>
+                    </div>
+                    <div class="drawer-card">
+                        <img src="../SRC/IMGs/icon.png" alt="Sair">
+                        <span>Sign Out</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Seção de Ações Principais -->
+            <div class="drawer-section">
+                <span class="section-title">Saque</span>
+                <div class="drawer-grid">
+                    <div class="drawer-card">
+                        <img src="../SRC/IMGs/atm_cashout.png" alt="Efetuar Saque">
+                        <span>Saque</span>
+                    </div>
+                    <div class="drawer-card">
+                        <img src="../SRC/IMGs/history.png" alt="Histórico de Saque">
+                        <span>Histórico</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Seção de Políticas -->
+            <div class="drawer-section">
+                <span class="section-title">Políticas</span>
+                <div class="drawer-grid">
+                    <div class="drawer-card">
+                        <img src="../SRC/IMGs/icon.png" alt="Uso">
+                        <span>Uso</span>
+                    </div>
+                    <div class="drawer-card">
+                        <img src="../SRC/IMGs/icon.png" alt="Privacidade">
+                        <span>Privacidade</span>
+                    </div>
+                    <div class="drawer-card">
+                        <img src="../SRC/IMGs/icon.png" alt="Pesquisa">
+                        <span>Pesquisa</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Seção de Redes Sociais -->
+            <div class="drawer-section">
+                <span class="section-title">Contato</span>
+                <div class="drawer-grid">
+                    <div class="drawer-card">
+                        <img src="../SRC/IMGs/icon.png" alt="Instagram">
+                        <span>Instagram</span>
+                    </div>
+                    <div class="drawer-card">
+                        <img src="../SRC/IMGs/icon.png" alt="Telegram">
+                        <span>Telegram</span>
+                    </div>
+                    <div class="drawer-card">
+                        <img src="../SRC/IMGs/icon.png" alt="Email">
+                        <span>Email</span>
+                    </div>
+                    <div class="drawer-card">
+                        <img src="../SRC/IMGs/icon.png" alt="WhatsApp">
+                        <span>WhatsApp</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <main class="main-content">
+        <!-- Conteúdo principal -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <p class="stat-label">Estrelas já acumuladas</p>
+                <div class="stat-value"> <strong id="userLTStars">0</strong></div>
+            </div>
+            <div class="stat-card">
+                <p class="stat-label">Receita Correspondente</p>
+                <div class="stat-value"><strong id="userLTRevenue">R$ 0.00</strong></div>
+            </div>
+            <div class="stat-card">
+                <p class="stat-label p_label_invitation">Amigos Convidados</p>
+                <div class="stat-value"><strong id="textTotalInvitedFriends">0</strong></div>
+            </div>
+            <div class="stat-card">
+                <p class="stat-label p_label_invitation">Total ganho pelos convintes</p>
+                <div class="stat-value"><strong id="textTotalEarnedByReferrals">R$ 0.00</strong></div>
+            </div>
+        </div>
+
+        <div class="ads_banner">
+            <p>Anúncio</p>
+            <div id="the_banner_ad"></div>
+        </div>
+
+        <div class="banner">
+            <img src="../SRC/IMGs/convinte.png">
+            <div class="banner-texto">
+                <p>Multiplique seus ganhos ao indicar amigos! Ganhe 5% de tudo o que seus amigos acumularem, de forma
+                    simples e contínua. Cada vez que eles aumentarem seus rendimentos, você também ganha sem esforço.
+                </p>
+                <p class="convite">Partilhar Convite</p>
+            </div>
+        </div>
+
+        <div>
+            <h2 class="section-title">Pesquisas</h2>
+            <div class="level-list">
+                <div class="level-card">
+                    <div class="level-badge">
+                        <p class="p_option_leven_name">Nivel Bronze</p>
+                        <div class="level-desc">15 segundos de leitura a cada etapa e devera passar 1 etapa.</div>
+                    </div>
+                    <div class="points">
+                        <img src="../SRC/IMGs/star.png">10 <span class="span_stars">Stars</span>
+                    </div>
+                    <div class="info"><img src="../SRC/IMGs/info.png"></div>
+
+                    <div id="containerBronzeChecker" class="timer">
+                        <img src="../SRC/IMGs/task.png">
+                        <p id="tasksBronzeRemaining" class="timeOrtaskRemaining">Realizar tarefa (2/10) </p>
+                    </div>
+
+                </div>
+
+                <div class="level-card">
+                    <div class="level-badge">
+                        <p class="p_option_leven_name">Nivel Prata</p>
+                        <div class="level-desc">15 segundos de leitura a cada etapa e devera passar 2 etapa.</div>
+                    </div>
+                    <div class="points">
+                        <img src="../SRC/IMGs/star.png">20 <span class="span_stars">Stars</span>
+                    </div>
+                    <div class="info"><img src="../SRC/IMGs/info.png"></div>
+                    <div id="containerPrataChecker" class="timer">
+                        <img src="../SRC/IMGs/task.png">
+                        <p id="tasksPrataRemaining" class="timeOrtaskRemaining">Disponível em <strong>00:00</strong></p>
+                    </div>
+                </div>
+
+                <div class="level-card">
+                    <div class="level-badge">
+                        <p class="p_option_leven_name">Nivel Ouro</p>
+                        <div class="level-desc">15 segundos de leitura a cada etapa e devera passar 3 etapa.</div>
+                    </div>
+                    <div class="points"><img src="../SRC/IMGs/star.png">30 <span class="span_stars">Stars</span></div>
+                    <div class="info"><img src="../SRC/IMGs/info.png"></div>
+                    <div id="containerOuroChecker" class="timer">
+                        <img src="../SRC/IMGs/task.png">
+                        <p id="tasksOuroRemaining" class="timeOrtaskRemaining">Disponível em <strong>00:00</strong></p>
+                    </div>
+
+                </div>
+
+                <div class="level-card">
+                    <div class="level-badge">
+                        <p class="p_option_leven_name"> Nivel <span class="span_diamante">Diamante</span></p>
+                        <div class="level-desc">15 segundos de leitura a cada etapa e devera passar 4 etapa.</div>
+                    </div>
+                    <div class="points">
+                        <img src="../SRC/IMGs/star.png">50 <span class="span_stars">Stars</span>
+                    </div>
+                    <div class="info"><img src="../SRC/IMGs/info.png"></div>
+                    <div id="containerDiamanteChecker" class="timer">
+                        <img src="../SRC/IMGs/task.png">
+                        <p id="tasksDiamanteRemaining" class="timeOrtaskRemaining">Disponível em <strong>00:00</strong>
+                        </p>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="other_earning_ways">
+            <h2 class="section-title">Outras Formas de Ganhos</h2>
+
+            <ul class="other_earning_ways_ul">
+                <li>
+                    <p>01</p>
+                </li>
+
+                <li>
+                    <p>02</p>
+                </li>
+
+                <li>
+                    <p>03</p>
+                </li>
+
+                <li>
+                    <p>04</p>
+                </li>
+
+            </ul>
+        </div>
+    </main>
+
+    <div class="ads_banner">
+        <p>Anúncio</p>
+        <div id="the_banner_ad"></div>
+    </div>
+
+    <div id="fab_invite_friends">
+        <img src="../SRC/IMGs/invitation_card.png" />
+    </div>
+
+
+    <div id="overlay">
+        <div id="container_dialog_choose_links">
+            <div class="dialog_title">
+                <p>Escolha uma opção para prosseguir</p>
+                <img class="close_dialog_choose_links" id="close_dialog_choose_links" src="../SRC/IMGs/close.png"
+                    alt="close dialog">
+            </div>
+            <p id="p_link_descri">Você tem <strong id="dialog_title_tasks_remaining">x</strong> pesquisas no nível <strong id="dialog_title_level_name">y</strong> para realizar por
+                dia. Após a conclusão
+                de cada opção, <strong>ela levará 24 horas para reiniciar</strong> (contando a partir do momento em que você concluiu a
+                respectiva tarefa).</p>
+
+            <div class="container_the_links_table">
+                <table id="table_links">
+                    <thead id="thead_links">
+                        <tr>
+                            <th>Tarefa</th>
+                            <th>Pontuação</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="tbody_links">
+                        <!--
+                          <tr class="tbody_tr_links">
+                            <td>Tarefa <strong>1</strong></td>
+                            <td>+10 <img src="../SRC/IMGs/star.png" class="task_star" alt="Estrela"></td>
+                            <td class="task_td">
+                                <div class="status disponivel">
+                                    <span>Disponível</span>
+                                    <span class="arrow">➔</span>
+                                </div>
+                            </td>
+                        </tr> 
+                        <tr class="tbody_tr_links">
+                            <td><div class="div_task_name_shimmer"></div></td>
+                            <td><div class="div_pontuation_shimmer"></div></td>
+                            <td class="task_td">
+                                <div class="div_status_shimmer">
+                                </div>
+                            </td>
+                        </tr> 
+                        -->
+                    </tbody>
+
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="../Js/drawer_toggle.js"></script>
+    <script src="../Js/GetDashboardInfo.js"></script>
+    <script src="../Js/table_choose_links.js"></script>
+</body>
+
+</html>

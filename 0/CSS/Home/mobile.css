@@ -1,0 +1,122 @@
+#fab_invite_friends {
+    display: none;
+}
+
+@media screen and (max-width: 769px) {
+    main {
+        margin-top: 80px;
+    }
+
+    #notification_icon {
+        margin: 0 10px;
+    }
+
+    .main-content {
+        padding: 6px 6px 0 6px !important;
+    }
+
+    .stat-value {
+        margin-top: 4px;
+    }
+
+    .banner {
+        display: none;
+    }
+
+    .section-title {
+        font-size: 14px !important;
+        color: #2e2e2e !important;
+    }
+
+    .section-title:nth-child(1) {
+        margin-top: 20px;
+    }
+
+
+    .p_option_leven_name {
+        font-size: 14px !important;
+        width: 100px;
+    }
+
+    .level-desc {
+        display: none;
+    }
+
+    .level-card {
+        background-color: white;
+        padding: 0 !important;
+        height: 60px;
+    }
+
+    .level-badge {
+        height: 100%;
+        width: 105px !important;
+        white-space: nowrap;
+        padding: 6px 15px;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+    }
+
+
+    #fab_invite_friends {
+        width: 60px;
+        height: 60px;
+        padding: 8px;
+        background-color: #064d10;
+        position: fixed;
+        bottom: 16px;
+        right: 16px;
+        border-radius: 50px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    #fab_invite_friends img {
+        width: 40px;
+        height: 40px;
+    }
+
+    .info {
+        display: none;
+    }
+
+    .span_stars {
+        display: none;
+    }
+
+
+    .points {
+        width: 100px !important;
+    }
+
+    .timer p {
+        white-space: nowrap;
+    }
+
+    .timeOrtaskRemaining {
+        margin-left: 3px;
+    }
+
+    .ads_banner {
+        width: 100%;
+        height: 60px;
+        display: flex;
+        flex-direction: column;
+    }
+
+    #the_banner_ad {
+        width: 100%;
+        background-color: #2e2e2e;
+        padding: 28px;
+    }
+
+
+
+    .stats-grid {
+        margin-bottom: 10px;
+    }
+}

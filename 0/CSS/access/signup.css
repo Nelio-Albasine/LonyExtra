@@ -1,0 +1,56 @@
+.li_gender_and_age {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    height: fit-content;
+}
+
+.div_container_gender {
+    flex: 1;
+    margin-top: 4px;
+    background-color: none;
+}
+
+.div_container_age {
+    margin-left: 0px;
+}
+
+.div_container_gender p {
+    text-align: left;
+    padding: 5px;
+    color: black;
+    font-size: 13px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+.base_gender_or_age {
+    justify-content: start;
+}
+
+
+@media (min-width: 769px) {
+    header {
+        display: none;
+    }
+
+    main {
+        margin-top: 8px;
+    }
+
+    .li_gender_and_age {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: fit-content;
+    }
+
+    .div_container_age {
+        margin-left: 25px;
+    }
+}

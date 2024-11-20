@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirme seu e-mail</title>
+    <link rel="stylesheet" href="../CSS/access/otp_layout.css">
+    <link rel="stylesheet" href="../CSS/access/access_pc.css">
+    <link rel="stylesheet" href="../CSS/access/general_styles.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+    <div class="alert_as_error" id="div_alert_message">
+        <p id="textAlert">alert message</p>
+    </div>
+
+    <div id="div_container_otp_verification">
+
+        <img id="otp_big_logo" src="../SRC/IMGs/enter_otp_img.svg" alt="img verify your email">
+
+        <h1 id="otp_title">Confirme seu e-mail</h1>
+
+        <p id="otp_description">Enviamos um código de verificação de <br>6 dígitos para <span
+                id="userEmailToVerify">usuário@dicas.com</span>
+        </p>
+
+        <li id="li_otp">
+            <p>Insira o código de verificação</p>
+
+            <div id="div_container_input_otp">
+                <img src="../SRC/IMGs/email_verify.svg" alt="info_icon">
+
+                <input required type="number" name="OTP" placeholder="_   _   _   _   _   _" id="inputOTP">
+              
+                <p>Reenviar em <span id="textCountDownToResendOTP">3:03</span></p>
+            </div>
+
+        </li>
+
+
+        <button id="btnVerifyOTP">Verificar</button>
+
+
+    </div>
+
+    <script src="../Js/verifyEmailToSignUp.js"></script>
+</body>
+
+</html>

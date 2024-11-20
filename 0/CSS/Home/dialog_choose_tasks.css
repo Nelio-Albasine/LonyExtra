@@ -1,0 +1,208 @@
+.status {
+    width: 70%;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.status .arrow,
+.status .timer {
+    font-size: 1.2em;
+}
+
+#container_dialog_choose_links {
+    max-width: 700px;
+}
+
+
+#overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    background-color: rgba(0, 0, 0, 0.61);
+    width: 100%;
+    height: 100%;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+}
+
+#container_dialog_choose_links {
+    width: 100%;
+    height: fit-content;
+    padding: 12px 10px 10px 10px;
+    background-color: white;
+    border-radius: 10px;
+}
+
+.dialog_title {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.close_dialog_choose_links {
+    width: 30px;
+    height: 30px;
+    background-color: rgb(189, 189, 189);
+    padding: 7px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+#p_link_descri {
+    font-size: 14px;
+    color: #292929;
+    margin-top: 12px;
+}
+
+.container_the_links_table {
+    height: 430px;
+    overflow-y: auto;
+    margin-top: 15px;
+    border-radius: 8px;
+}
+
+
+#thead_links th {
+    background-color: #3c3c3c;
+    color: white;
+    padding: 15px;
+    font-weight: bold;
+    text-transform: uppercase;
+    text-align: center;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    font-size: 12px;
+}
+
+
+/*Tabela Links*/
+#table_links {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    white-space: nowrap;
+}
+
+
+.tbody_tr_links td {
+    padding: 10px;
+}
+
+
+
+/* Estilo para a célula de carregamento */
+.loading_cell {
+    text-align: center;
+    padding: 20px;
+}
+
+/* Estilo para o contêiner de carregamento */
+.loading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    font-family: Arial, sans-serif;
+    color: #555;
+    font-size: 16px;
+}
+
+/* Spinner */
+.spinner {
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #3498db;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.hidden {
+    display: none;
+}
+
+
+
+.status {
+    display: inline-flex;
+    align-items: center;
+    padding: 5px 10px;
+    border-radius: 8px;
+    color: white;
+    font-size: 12px;
+    height: 35px;
+    justify-content: center;
+    width: 100%;
+}
+
+.status.disponivel {
+    background-color: #2d8b30;
+}
+
+.status.indisponivel {
+    background-color: #5c5c5c;
+    color: #f3f3f3;
+}
+
+.status .arrow,
+.status .timer {
+    margin-left: 8px;
+    font-size: 1.1em;
+}
+
+.task_star {
+    width: 18px;
+    height: 18px;
+    margin-left: 4px;
+}
+
+
+.tbody_tr_links:nth-child(even) {
+    background-color: #f3f3f3;
+}
+
+
+.div_task_name_shimmer,
+.div_pontuation_shimmer,
+.div_status_shimmer {
+    background-color: rgb(209, 209, 209);
+    border-radius: 8px;
+    width: 100%;
+    height: 35px;
+    animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+    0% {
+        background-position: -150px 0;
+    }
+    100% {
+        background-position: 150px 0;
+    }
+}
+
+.tbody_tr_links.shimmer td div {
+    background: linear-gradient(90deg, #e0e0e0 25%, #f0f0f0 50%, #e0e0e0 75%);
+    background-size: 400% 100%;
+}

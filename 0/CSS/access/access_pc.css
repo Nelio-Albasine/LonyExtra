@@ -1,0 +1,9 @@
+@media (min-width: 769px) {
+    main {
+      margin-top: 10px;
+    }
+
+    #div_container_otp_verification{
+      padding: 30px 90px;
+    }
+}

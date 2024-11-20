@@ -1,0 +1,706 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background-color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.span_stars {
+    margin-left: 8px;
+}
+
+.section-title {
+    color: black !important;
+    font-size: 17px !important;
+}
+
+.main-content {
+    flex-grow: 1;
+    padding: 16px;
+    overflow-y: auto;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.menu-line {
+    width: 24px;
+    height: 2px;
+    background-color: #000;
+    margin-bottom: 4px;
+}
+
+.menu-button {
+    width: 50px;
+    height: 50px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+
+}
+
+.menu-button img {
+    width: 100%;
+    /* Ajusta a largura da imagem para preencher a div */
+    height: 100%;
+    /* Ajusta a altura da imagem para preencher a div */
+    object-fit: cover;
+    /* Garante que a imagem cubra completamente a div sem distorcer */
+}
+
+
+.avatar {
+    margin-left: 190px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+
+}
+
+.avatar img {
+    width: 100%;
+    /* Ajusta a largura da imagem para preencher a div */
+    height: 100%;
+    /* Ajusta a altura da imagem para preencher a div */
+    object-fit: cover;
+    /* Garante que a imagem cubra completamente a div sem distorcer */
+}
+
+.not {
+    margin-left: 190px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.not img {
+    width: 100%;
+    /* Ajusta a largura da imagem para preencher a div */
+    height: 100%;
+    /* Ajusta a altura da imagem para preencher a div */
+    object-fit: cover;
+    /* Garante que a imagem cubra completamente a div sem distorcer */
+}
+
+
+.points-badge {
+    background-color: #dc2626;
+    color: white;
+    padding: 6px 14px;
+    border-radius: 999px;
+    font-size: 14px;
+    text-align: center;
+}
+
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    margin-bottom: 24px;
+}
+
+.stat-card {
+    background-color: #222160;
+    color: white;
+    padding: 16px;
+    border-radius: 20px;
+}
+
+.banner {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    /* Espaço entre a imagem e o texto */
+    background-color: #222160;
+    color: white;
+    padding: 40px;
+    border-radius: 8px;
+    text-align: center;
+    margin-bottom: 24px;
+}
+
+.banner img {
+    width: 100px;
+    /* Ajuste o tamanho conforme necessário */
+    height: auto;
+}
+
+.banner-texto {
+    display: flex;
+    flex-direction: column;
+}
+
+.ways-title {
+
+    margin-bottom: 10px;
+}
+
+.section-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 16px;
+}
+
+.level-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 24px;
+}
+
+.level-card {
+    background-color: #d7e0f6;
+    padding: 12px;
+    border-radius: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.level-badge {
+    background-color: #dc2626;
+    padding: 12px;
+    border-radius: 8px;
+    color: #ffffff;
+    width: 100%;
+    height: fit-content;
+    margin: 10px;
+}
+
+.timer {
+    padding: 12px;
+    border-radius: 8px;
+    width: 350px;
+    text-align: center;
+    color: #ffffff;
+    height: 100% !important;
+    margin: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.timer img {
+    width: 35px;
+    /* Ajusta a largura da imagem para preencher a div */
+    height: 35px;
+    /* Ajusta a altura da imagem para preencher a div */
+    margin-right: 25px;
+    object-fit: cover;
+    /* Garante que a imagem cubra completamente a div sem distorcer */
+}
+
+.points {
+    background-color: #20286c;
+    padding: 12px;
+    border-radius: 8px;
+    width: 60%;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+    height: 65px;
+    margin: 10px;
+}
+
+.points img {
+    width: 35px;
+    /* Ajusta a largura da imagem para preencher a div */
+    height: 35px;
+    /* Ajusta a altura da imagem para preencher a div */
+    margin-right: 25px;
+    object-fit: cover;
+    /* Garante que a imagem cubra completamente a div sem distorcer */
+}
+
+.info {
+    background-color: none;
+    padding: 12px;
+    border-radius: 8px;
+    width: 20px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin: 10px;
+}
+
+.info img {
+    width: 35px;
+    /* Ajusta a largura da imagem para preencher a div */
+    height: 35px;
+    /* Ajusta a altura da imagem para preencher a div */
+    object-fit: cover;
+    /* Garante que a imagem cubra completamente a div sem distorcer */
+}
+
+.level-desc {
+    color: #ffffff;
+    font-size: 14px;
+    margin-top: 2px;
+}
+
+.points-badge_cell {
+    display: none;
+}
+
+.convite {
+    background-color: #dc2626;
+    color: #ffffff;
+    border-radius: 20px;
+    width: 200px;
+    padding: 10px;
+    margin-left: auto;
+    /* empurra o elemento para a esquerda */
+}
+
+
+.ways-card {
+    background-color: #312e81;
+    color: white;
+    padding: 16px;
+    border-radius: 8px;
+}
+
+.nav-bar {
+    display: flex;
+    justify-content: space-between;
+    padding: 5px;
+    background-color: #d7e0f6;
+}
+
+.nav-button {
+    background: #ffffff;
+    border-radius: 30px;
+    margin: 5px;
+    width: 150px;
+    cursor: pointer;
+
+    padding: 10px;
+    border: 2px solid #62618B;
+    /* Adiciona a borda amarela */
+}
+
+.div-pts {
+    align-items: center;
+    margin-right: 300px;
+    margin-left: 50px;
+}
+
+.drawer {
+    position: fixed;
+    top: 0;
+    left: -300px;
+    /* Inicialmente fora da tela */
+    width: 300px;
+    height: 100%;
+    background-color: #ffffff;
+    color: black;
+    transition: left 0.3s ease;
+    padding: 20px;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
+    z-index: 100;
+}
+
+.drawer ul {
+    list-style: none;
+}
+
+.drawer li {
+    padding: 15px 0;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.drawer li:hover {
+    background-color: #fff;
+}
+
+
+#drawer-close {
+    width: 50px;
+    height: 50px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+
+}
+
+
+#drawer-close img {
+    width: 100%;
+    /* Ajusta a largura da imagem para preencher a div */
+    height: 100%;
+    /* Ajusta a altura da imagem para preencher a div */
+    object-fit: cover;
+    /* Garante que a imagem cubra completamente a div sem distorcer */
+}
+
+
+
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+li {
+    margin-bottom: 10px;
+}
+
+.icon-text {
+    display: flex;
+    align-items: center;
+}
+
+.icon-text img {
+    margin-right: 8px;
+    /* Espaçamento entre a imagem e o texto */
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Responsividade para celulares (largura máxima de 580px) */
+@media (max-width: 769px) {
+    .main-content {
+        flex-grow: 1;
+        overflow-y: auto;
+    }
+
+    .user-info {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .menu-line {
+        width: 24px;
+        height: 2px;
+        background-color: #000;
+        margin-bottom: 4px;
+    }
+
+    .div-pts {
+        display: none;
+    }
+
+    .ola {
+        color: #000;
+        font-size: 13px;
+
+    }
+
+    .name {
+        color: #000;
+        font-size: 13px;
+        width: 80px;
+    }
+
+    .menu-button {
+        width: 45px;
+        height: 45px;
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 8px;
+
+    }
+
+    .menu-button img {
+        width: 100%;
+        /* Ajusta a largura da imagem para preencher a div */
+        height: 100%;
+    }
+
+    .stat-card {
+        background-color: #222160;
+        color: white;
+        padding: 10px;
+        border-radius: 8px;
+    }
+
+    .stat-label {
+        font-size: 13px;
+        padding: 2px;
+    }
+
+    .stat-value {
+        font-size: 15px;
+        padding: 2px;
+    }
+
+    .avatar {
+        margin-left: 5px;
+
+    }
+
+    .not img {
+        width: 35px;
+        height: 35px;
+    }
+
+    .not {
+        margin-left: 25px;
+
+    }
+
+    .avatar img {
+        width: 40px;
+        height: 40px;
+        /* Ajusta a altura da imagem para preencher a div */
+
+    }
+
+
+    .points-badge {
+        background-color: #dc2626;
+        color: white;
+        padding: 6px 14px;
+        border-radius: 90px;
+        font-size: 14px;
+        text-align: center;
+    }
+
+    .points-badge_cell {
+        display: block;
+        /* Visível em telas de 600px ou menos */
+        background-color: #dc2626;
+        color: white;
+        padding: 5px;
+        border-radius: 50px;
+        font-size: 12px;
+        text-align: center;
+        width: 80px;
+        margin-top: 6px;
+    }
+
+
+    .section-title {
+        font-size: 16px;
+        font-weight: bold;
+        margin-bottom: 16px;
+    }
+
+    .level-list {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        margin-bottom: 0;
+    }
+
+    .level-card {
+        background-color: #d7e0f6;
+        padding: 12px;
+        height: 70px;
+        border-radius: 8px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .level-badge {
+        background-color: #dc2626;
+        padding: 8px;
+        border-radius: 8px;
+        color: #ffffff;
+        width: 100%;
+        height: fit-content;
+        margin: 5px;
+        font-size: 14px;
+        padding-bottom: 8px;
+    }
+
+    .timer {
+        padding: 8px;
+        border-radius: 8px;
+        width: 300px;
+        text-align: center;
+        color: #ffffff;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 14px;
+    }
+
+    .timer img {
+        width: 20px;
+        /* Ajusta a largura da imagem para preencher a div */
+        height: 20px;
+        /* Ajusta a altura da imagem para preencher a div */
+        margin-right: 5px;
+        object-fit: cover;
+        /* Garante que a imagem cubra completamente a div sem distorcer */
+    }
+
+    .points {
+        background-color: #20286c;
+        padding: 12px;
+        border-radius: 8px;
+        width: 60%;
+        text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #ffffff;
+        height: 56px;
+        margin: 5px;
+        font-size: 14px;
+    }
+
+    .points img {
+        width: 20px;
+        /* Ajusta a largura da imagem para preencher a div */
+        height: 20px;
+        /* Ajusta a altura da imagem para preencher a div */
+        margin-right: 5px;
+        object-fit: cover;
+        /* Garante que a imagem cubra completamente a div sem distorcer */
+    }
+
+    .info {
+        background-color: none;
+        padding: 10px;
+        border-radius: 8px;
+        text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 5px;
+    }
+
+    .info img {
+        width: 25px;
+        /* Ajusta a largura da imagem para preencher a div */
+        height: 25px;
+        /* Ajusta a altura da imagem para preencher a div */
+        object-fit: cover;
+        /* Garante que a imagem cubra completamente a div sem distorcer */
+    }
+
+    .level-desc {
+        color: #ffffff;
+        font-size: 9.5px;
+        margin-top: 2px;
+    }
+
+    .ways-card {
+        background-color: #312e81;
+        color: white;
+        padding: 8px;
+        font-size: 12px;
+        border-radius: 12px;
+    }
+
+    .ways-title {
+        font-size: 16px;
+        margin-bottom: 8px;
+        padding: 3px;
+    }
+
+    .ways-desc {
+        font-size: 14px;
+        padding: 3px;
+    }
+
+    .banner {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        /* Espaço entre a imagem e o texto */
+        background-color: #222160;
+        color: white;
+        padding: 12px;
+        border-radius: 8px;
+        text-align: justify;
+        /* Alinhamento justificado do texto */
+        margin-bottom: 20px;
+        font-size: 12px;
+    }
+
+
+    .banner img {
+        width: 100px;
+        /* Ajuste o tamanho conforme necessário */
+        height: auto;
+    }
+
+    .banner-texto {
+        display: flex;
+        flex-direction: column;
+    }
+
+
+    .convite {
+        background-color: #dc2626;
+        color: #ffffff;
+        border-radius: 20px;
+        width: 150px;
+        padding: 8px;
+        font-size: 12px;
+        margin-left: auto;
+        text-align: center;
+        display: flex;
+        margin-top: 10px;
+        justify-content: center;
+        align-items: center;
+    }
+
+
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+li {
+    margin-bottom: 10px;
+}
+
+.icon-text {
+    display: flex;
+    align-items: center;
+}
+
+.icon-text img {
+    margin-right: 8px;
+    /* Espaçamento entre a imagem e o texto */
+}
