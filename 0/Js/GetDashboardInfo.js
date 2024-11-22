@@ -1,10 +1,10 @@
-let countdownIntervals = {};
+let countdownIntervals = [];
 let isOverlayVisible = false
 let previusLinksFetched = null;
 let allLinks = null;
 let pointsToEarnByLevel = 10
 let currentURL_hash;
-
+let currentServerDate;
 
 document.addEventListener("DOMContentLoaded", async function () {
     const userName = document.getElementById("userName");
@@ -75,7 +75,8 @@ async function FetchAllLinks(userId, batch = null) {
         }
 
         const dashInfoResponse = await response.json();
-        return dashInfoResponse;
+        currentServerDate = dashInfoResponse.currentDate
+        return dashInfoResponse.links;
     } catch (error) {
         console.error("Erro ao buscar links:", error);
         return null;
@@ -115,7 +116,7 @@ async function loadLinksIntoTable(levelIndex) {
 
 
     const tarefas = Object.entries(previusLinksFetched).map(([key, value], index) => {
-        const timeLeft = value.isAvailable ? "Disponível" : new Date(value.timeStored).toLocaleString();
+        const timeLeft = value.isAvailable ? "Disponível" : calculateRemainingTime(value.timeStored, currentServerDate);
         return {
             nome: `Tarefa`,
             pontos: pointsToEarnByLevel,
@@ -160,44 +161,56 @@ async function loadLinksIntoTable(levelIndex) {
         shimmerRows.forEach((row) => row.remove());
     }
 
-    async function getToken() {
+    async function encrypteData(data) {
         try {
-            const response = await fetch('http://localhost/LonyExtra/0/Api/Config/GetJWTtokens.php', {
-                method: 'GET',
+            const response = await fetch('http://localhost/LonyExtra/0/Api/Tasks/EncryptTaskData.php', {
+                method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json',
-                }
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ data })
             });
 
             if (!response.ok) {
-                throw new Error(`Erro na requisição: ${response.status}`);
+                console.error("Erro ao encriptar os dados:", response.statusText);
+                return null;
             }
 
             const result = await response.json();
-            return result.token;
+
+            if (result.success) {
+                localStorage.setItem("iv", result.data.iv)
+                return result.data.encryptedData;
+            } else {
+                return null;
+            }
+
         } catch (error) {
-            console.error("Erro ao obter o token do servidor:", error);
+            console.error("Erro ao conectar ao servidor:", error);
             return null;
         }
     }
 
-
     async function saveToCookies(data) {
-        const jsonData = JSON.stringify(data);
+        try {
+            const jsonData = JSON.stringify(data);
 
-        const token = await getToken();
+            const encryptedData = await encrypteData(jsonData);
 
-        if (!token) {
-            alert("Erro 19");
-            return;
+            if (!encryptedData) {
+                alert("Erro ao encriptar os dados");
+                return;
+            }
+
+            document.cookie = "taskData=" + encodeURIComponent(encryptedData) + "; path=/; SameSite=Strict";
+
+            console.log("Dados criptografados do servidor sao:", encryptedData);
+            return true;
+        } catch (error) {
+            console.error("Erro ao salvar os dados:", error);
+            return false;
         }
-
-        const encryptedData = CryptoJS.AES.encrypt(jsonData, token).toString();
-
-        document.cookie = "userData=" + encodeURIComponent(encryptedData) + "; path=/; Secure; SameSite=Strict";
-        console.log("Dados encriptados e  resultou em: ", encryptedData);
     }
-
 
     function popularTabela(tarefas) {
         tarefas.forEach((tarefa, index) => {
@@ -220,22 +233,25 @@ async function loadLinksIntoTable(levelIndex) {
                 : `<span>${tarefa.status}</span>`;
 
             if (tarefa.disponivel && tarefa.url) {
-                statusDiv.addEventListener("click", () => {
+                statusDiv.addEventListener("click", (event) => {
+                    event.preventDefault();
                     statusDiv.innerText = "Carregando...";
-                    setTimeout(() => {
-                        let toCookies = {
-                            userId: userId,
-                            index: levelIndex,
-                            taskId: tarefa.key,
-                        }
 
-                        console.log("data to save in cookies: ", toCookies)
-                        localStorage.setItem("taskIndex", levelIndex);
+                    let data = {
+                        userId: userId,
+                        index: levelIndex,
+                        taskId: tarefa.key,
+                    }
 
-                        saveToCookies(toCookies);
+                    localStorage.setItem("taskIndex", levelIndex);
 
-                        window.open(tarefa.url, "_blank");
-                    }, 500);
+                    if (saveToCookies(data)) {
+                        setTimeout(() => {
+                            window.location.href = tarefa.url
+                        }, 500);
+                    } else {
+                        console.error("Ocorreu um erro ao salvar para os cookies: ")
+                    }
                 });
             }
 
@@ -245,7 +261,6 @@ async function loadLinksIntoTable(levelIndex) {
             tbody.appendChild(tr);
         });
     }
-
 
     limparTabela();
 
@@ -337,19 +352,44 @@ function handleLinkAvailabilityChecker(data) {
     ];
 
     checkers.forEach(({ container, textTask, availability }) => {
-        updateTaskAvailability(container, textTask, availability);
+        updateHomeTaskAvailability(container, textTask, availability);
     });
 }
 
-function calculateRemainingTime(oldestTimeStored, currentServerDate) {
-    const storedTime = new Date(oldestTimeStored); // A data armazenada que foi passada
+function calculateRemainingTime(timeStored) {
+    console.log(`Time stored: ${timeStored}`);
 
-    console.log(`Oldesttime: ${oldestTimeStored} || current time from the server: ${currentServerDate}`);
-    // Se a diferença é maior que zero, retorna o tempo restante
-    return {};
+    // Converte a string de data armazenada em um objeto Date
+    const updatedAt = new Date(timeStored.replace(" ", "T")); // Formata como ISO
+
+    // Obtém a data e hora local do cliente
+    const localNow = new Date();
+
+    // Calcula o horário de expiração (24 horas após a tarefa)
+    const expirationTime = new Date(updatedAt.getTime() + 24 * 60 * 60 * 1000);
+
+    // Calcula o tempo restante
+    const remainingTime = expirationTime - localNow;
+
+    if (remainingTime <= 0) {
+        return "O tempo já expirou!";
+    }
+
+    // Converte o tempo restante em horas, minutos e segundos
+    const hours = Math.floor(remainingTime / (1000 * 60 * 60));
+    const minutes = Math.floor((remainingTime % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((remainingTime % (1000 * 60)) / 1000);
+
+    // Formata a resposta
+    const response = `Disponível em: <strong>${hours}h : ${minutes}min</strong>`;
+    console.log(`Disponível em: ${hours} horas, ${minutes} minutos, ${seconds} segundos`);
+
+    return response;
 }
 
-function updateTaskAvailability(container, textTask, availability) {
+
+function updateHomeTaskAvailability(container, textTask, availability) {
+    
     const intervalKey = container.id;
 
     if (countdownIntervals[intervalKey]) {
@@ -375,7 +415,7 @@ function updateTaskAvailability(container, textTask, availability) {
                 textTask.innerHTML = `Tempo <strong>Expirado</strong>`;
                 clearInterval(countdownIntervals[intervalKey]);
             } else {
-                //textTask.innerHTML = `Disponível em <strong>${remainingTime.hours}h ${remainingTime.minutes}m ${remainingTime.seconds}s</strong>`;
+                textTask.innerHTML = `Disponível em <strong>${remainingTime.hours}h ${remainingTime.minutes}m ${remainingTime.seconds}s</strong>`;
             }
         }, 1000);
 
@@ -400,16 +440,11 @@ function handleURLHashs() {
         case "tarefas_diamante":
             index = 3;
             break;
-        default:
-            console.warn("Página não encontrada ou hash inválido.");
-            break;
     }
 
     if (index !== null) {
         loadLinksIntoTable(index);
         handleDialogChooseTask(index);
-    } else {
-        console.warn("Nenhuma tarefa será carregada porque o hash é inválido ou está vazio.");
     }
 }
 
@@ -418,8 +453,6 @@ function updateHashSilently(hashValue) {
     if (hashValue) {
         const newURL = `${window.location.origin}${window.location.pathname}#${hashValue}`;
         history.replaceState(null, "", newURL);
-    } else {
-        console.warn("O valor do hash está vazio.");
     }
 }
 

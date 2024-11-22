@@ -1,210 +1,210 @@
 {
-  "ouroAvailability": {
-      "Ouro_1": {
-          "url": "http://127.0.0.1:5500/Congratulations/index.html",
-          "timeStored": null,
-          "isAvailable": true
-      },
-      "Ouro_2": {
-          "url": "https://alpharede.com/ouro_tarefa_2",
-          "timeStored": null,
-          "isAvailable": true
-      },
-      "Ouro_3": {
-          "url": "https://alpharede.com/ouro_tarefa_3",
-          "timeStored": null,
-          "isAvailable": true
-      },
-      "Ouro_4": {
-          "url": "https://alpharede.com/ouro_tarefa_4",
-          "timeStored": null,
-          "isAvailable": true
-      },
-      "Ouro_5": {
-          "url": "https://alpharede.com/ouro_tarefa_5",
-          "timeStored": null,
-          "isAvailable": true
-      },
-      "Ouro_6": {
-          "url": "https://alpharede.com/ouro_tarefa_6",
-          "timeStored": null,
-          "isAvailable": true
-      },
-      "Ouro_7": {
-          "url": "https://alpharede.com/ouro_tarefa_7",
-          "timeStored": null,
-          "isAvailable": true
-      },
-      "Ouro_8": {
-          "url": "https://alpharede.com/ouro_tarefa_8",
-          "timeStored": null,
-          "isAvailable": true
-      },
-      "Ouro_9": {
-          "url": "https://alpharede.com/ouro_tarefa_9",
-          "timeStored": null,
-          "isAvailable": true
-      },
-      "Ouro_10": {
-          "url": "https://alpharede.com/ouro_tarefa_10",
-          "timeStored": null,
-          "isAvailable": true
-      }
-  },
-  "prataAvailability": {
-      "Prata_1": {
-          "url": "http://127.0.0.1:5500/Congratulations/index.html",
-          "timeStored": null,
-          "isAvailable": true
-      },
-      "Prata_2": {
-          "url": "https://alpharede.com/prata_tarefa_2",
-          "timeStored": null,
-          "isAvailable": true
-      },
-      "Prata_3": {
-          "url": "https://alpharede.com/prata_tarefa_3",
-          "timeStored": null,
-          "isAvailable": true
-      },
-      "Prata_4": {
-          "url": "https://alpharede.com/prata_tarefa_4",
-          "timeStored": null,
-          "isAvailable": true
-      },
-      "Prata_5": {
-          "url": "https://alpharede.com/prata_tarefa_5",
-          "timeStored": null,
-          "isAvailable": true
-      },
-      "Prata_6": {
-          "url": "https://alpharede.com/prata_tarefa_6",
-          "timeStored": null,
-          "isAvailable": true
-      },
-      "Prata_7": {
-          "url": "https://alpharede.com/prata_tarefa_7",
-          "timeStored": null,
-          "isAvailable": true
-      },
-      "Prata_8": {
-          "url": "https://alpharede.com/prata_tarefa_8",
-          "timeStored": null,
-          "isAvailable": true
-      },
-      "Prata_9": {
-          "url": "https://alpharede.com/prata_tarefa_9",
-          "timeStored": null,
-          "isAvailable": true
-      },
-      "Prata_10": {
-          "url": "https://alpharede.com/prata_tarefa_10",
-          "timeStored": null,
-          "isAvailable": true
-      }
-  },
-  "bronzeAvailability": {
-      "Bronze_1": {
-          "url": "http://127.0.0.1:5500/Congratulations/index.html",
-          "timeStored": null,
-          "isAvailable": true
-      },
-      "Bronze_2": {
-          "url": "https://alpharede.com/bronze_tarefa_2",
-          "timeStored": null,
-          "isAvailable": true
-      },
-      "Bronze_3": {
-          "url": "https://alpharede.com/bronze_tarefa_3",
-          "timeStored": null,
-          "isAvailable": true
-      },
-      "Bronze_4": {
-          "url": "https://alpharede.com/bronze_tarefa_4",
-          "timeStored": null,
-          "isAvailable": true
-      },
-      "Bronze_5": {
-          "url": "https://alpharede.com/bronze_tarefa_5",
-          "timeStored": null,
-          "isAvailable": true
-      },
-      "Bronze_6": {
-          "url": "https://alpharede.com/bronze_tarefa_6",
-          "timeStored": null,
-          "isAvailable": true
-      },
-      "Bronze_7": {
-          "url": "https://alpharede.com/bronze_tarefa_7",
-          "timeStored": null,
-          "isAvailable": true
-      },
-      "Bronze_8": {
-          "url": "https://alpharede.com/bronze_tarefa_8",
-          "timeStored": null,
-          "isAvailable": true
-      },
-      "Bronze_9": {
-          "url": "https://alpharede.com/bronze_tarefa_9",
-          "timeStored": null,
-          "isAvailable": true
-      },
-      "Bronze_10": {
-          "url": "https://alpharede.com/bronze_tarefa_10",
-          "timeStored": null,
-          "isAvailable": true
-      }
-  },
-  "diamanteAvailability": {
-      "Diamante_1": {
-          "url": "https://alpharede.com/diamante_tarefa_1",
-          "timeStored": null,
-          "isAvailable": true
-      },
-      "Diamante_2": {
-          "url": "https://alpharede.com/diamante_tarefa_2",
-          "timeStored": null,
-          "isAvailable": true
-      },
-      "Diamante_3": {
-          "url": "https://alpharede.com/diamante_tarefa_3",
-          "timeStored": null,
-          "isAvailable": true
-      },
-      "Diamante_4": {
-          "url": "https://alpharede.com/diamante_tarefa_4",
-          "timeStored": null,
-          "isAvailable": true
-      },
-      "Diamante_5": {
-          "url": "https://alpharede.com/diamante_tarefa_5",
-          "timeStored": null,
-          "isAvailable": true
-      },
-      "Diamante_6": {
-          "url": "https://alpharede.com/diamante_tarefa_6",
-          "timeStored": null,
-          "isAvailable": true
-      },
-      "Diamante_7": {
-          "url": "https://alpharede.com/diamante_tarefa_7",
-          "timeStored": null,
-          "isAvailable": true
-      },
-      "Diamante_8": {
-          "url": "https://alpharede.com/diamante_tarefa_8",
-          "timeStored": null,
-          "isAvailable": true
-      },
-      "Diamante_9": {
-          "url": "https://alpharede.com/diamante_tarefa_9",
-          "timeStored": null,
-          "isAvailable": true
-      },
-      "Diamante_10": {
-          "url": "https://alpharede.com/diamante_tarefa_10",
-          "timeStored": null,
-          "isAvailable": true
-      }
-  }
+    "ouroAvailability": {
+        "Ouro_1": {
+            "url": "http://127.0.0.1:5500/Congratulations/index.html",
+            "timeStored": null,
+            "isAvailable": true
+        },
+        "Ouro_2": {
+            "url": "https://alpharede.com/ouro_tarefa_2",
+            "timeStored": null,
+            "isAvailable": true
+        },
+        "Ouro_3": {
+            "url": "https://alpharede.com/ouro_tarefa_3",
+            "timeStored": null,
+            "isAvailable": true
+        },
+        "Ouro_4": {
+            "url": "https://alpharede.com/ouro_tarefa_4",
+            "timeStored": null,
+            "isAvailable": true
+        },
+        "Ouro_5": {
+            "url": "https://alpharede.com/ouro_tarefa_5",
+            "timeStored": null,
+            "isAvailable": true
+        },
+        "Ouro_6": {
+            "url": "https://alpharede.com/ouro_tarefa_6",
+            "timeStored": null,
+            "isAvailable": true
+        },
+        "Ouro_7": {
+            "url": "https://alpharede.com/ouro_tarefa_7",
+            "timeStored": null,
+            "isAvailable": true
+        },
+        "Ouro_8": {
+            "url": "https://alpharede.com/ouro_tarefa_8",
+            "timeStored": null,
+            "isAvailable": true
+        },
+        "Ouro_9": {
+            "url": "https://alpharede.com/ouro_tarefa_9",
+            "timeStored": null,
+            "isAvailable": true
+        },
+        "Ouro_10": {
+            "url": "https://alpharede.com/ouro_tarefa_10",
+            "timeStored": null,
+            "isAvailable": true
+        }
+    },
+    "prataAvailability": {
+        "Prata_1": {
+            "url": "http://127.0.0.1:5500/Congratulations/index.html",
+            "timeStored": null,
+            "isAvailable": true
+        },
+        "Prata_2": {
+            "url": "https://alpharede.com/prata_tarefa_2",
+            "timeStored": null,
+            "isAvailable": true
+        },
+        "Prata_3": {
+            "url": "https://alpharede.com/prata_tarefa_3",
+            "timeStored": null,
+            "isAvailable": true
+        },
+        "Prata_4": {
+            "url": "https://alpharede.com/prata_tarefa_4",
+            "timeStored": null,
+            "isAvailable": true
+        },
+        "Prata_5": {
+            "url": "https://alpharede.com/prata_tarefa_5",
+            "timeStored": null,
+            "isAvailable": true
+        },
+        "Prata_6": {
+            "url": "https://alpharede.com/prata_tarefa_6",
+            "timeStored": null,
+            "isAvailable": true
+        },
+        "Prata_7": {
+            "url": "https://alpharede.com/prata_tarefa_7",
+            "timeStored": null,
+            "isAvailable": true
+        },
+        "Prata_8": {
+            "url": "https://alpharede.com/prata_tarefa_8",
+            "timeStored": null,
+            "isAvailable": true
+        },
+        "Prata_9": {
+            "url": "https://alpharede.com/prata_tarefa_9",
+            "timeStored": null,
+            "isAvailable": true
+        },
+        "Prata_10": {
+            "url": "https://alpharede.com/prata_tarefa_10",
+            "timeStored": null,
+            "isAvailable": true
+        }
+    },
+    "bronzeAvailability": {
+        "Bronze_1": {
+            "url": "http://127.0.0.1:5500/Congratulations/index.html",
+            "timeStored": "2024-11-22 09:49:31",
+            "isAvailable": false
+        },
+        "Bronze_2": {
+            "url": "https://alpharede.com/bronze_tarefa_2",
+            "timeStored": null,
+            "isAvailable": true
+        },
+        "Bronze_3": {
+            "url": "https://alpharede.com/bronze_tarefa_3",
+            "timeStored": null,
+            "isAvailable": true
+        },
+        "Bronze_4": {
+            "url": "https://alpharede.com/bronze_tarefa_4",
+            "timeStored": null,
+            "isAvailable": true
+        },
+        "Bronze_5": {
+            "url": "https://alpharede.com/bronze_tarefa_5",
+            "timeStored": null,
+            "isAvailable": true
+        },
+        "Bronze_6": {
+            "url": "https://alpharede.com/bronze_tarefa_6",
+            "timeStored": null,
+            "isAvailable": true
+        },
+        "Bronze_7": {
+            "url": "https://alpharede.com/bronze_tarefa_7",
+            "timeStored": null,
+            "isAvailable": true
+        },
+        "Bronze_8": {
+            "url": "https://alpharede.com/bronze_tarefa_8",
+            "timeStored": null,
+            "isAvailable": true
+        },
+        "Bronze_9": {
+            "url": "https://alpharede.com/bronze_tarefa_9",
+            "timeStored": null,
+            "isAvailable": true
+        },
+        "Bronze_10": {
+            "url": "https://alpharede.com/bronze_tarefa_10",
+            "timeStored": null,
+            "isAvailable": true
+        }
+    },
+    "diamanteAvailability": {
+        "Diamante_1": {
+            "url": "https://alpharede.com/diamante_tarefa_1",
+            "timeStored": null,
+            "isAvailable": true
+        },
+        "Diamante_2": {
+            "url": "https://alpharede.com/diamante_tarefa_2",
+            "timeStored": null,
+            "isAvailable": true
+        },
+        "Diamante_3": {
+            "url": "https://alpharede.com/diamante_tarefa_3",
+            "timeStored": null,
+            "isAvailable": true
+        },
+        "Diamante_4": {
+            "url": "https://alpharede.com/diamante_tarefa_4",
+            "timeStored": null,
+            "isAvailable": true
+        },
+        "Diamante_5": {
+            "url": "https://alpharede.com/diamante_tarefa_5",
+            "timeStored": null,
+            "isAvailable": true
+        },
+        "Diamante_6": {
+            "url": "https://alpharede.com/diamante_tarefa_6",
+            "timeStored": null,
+            "isAvailable": true
+        },
+        "Diamante_7": {
+            "url": "https://alpharede.com/diamante_tarefa_7",
+            "timeStored": null,
+            "isAvailable": true
+        },
+        "Diamante_8": {
+            "url": "https://alpharede.com/diamante_tarefa_8",
+            "timeStored": null,
+            "isAvailable": true
+        },
+        "Diamante_9": {
+            "url": "https://alpharede.com/diamante_tarefa_9",
+            "timeStored": null,
+            "isAvailable": true
+        },
+        "Diamante_10": {
+            "url": "https://alpharede.com/diamante_tarefa_10",
+            "timeStored": null,
+            "isAvailable": true
+        }
+    }
 }
