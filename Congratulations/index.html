@@ -11,6 +11,11 @@
 </head>
 
 <body>
+    <div id="alert" class="alert hidden">
+        <span class="icon"></span>
+        <span class="message"></span>
+    </div>
+
     <div class="container">
         <div class="card">
             <div class="container_available_revenue">
@@ -22,7 +27,7 @@
 
             <div class="container_available_points">
                 <div id="container_available_points">
-                    <p id="the_available_pints">0</p>
+                    <p id="the_available_points">0</p>
                     <img src="../0/SRC/IMGs/star.png" class="task_star" alt="Estrela">
                 </div>
             </div>
@@ -38,10 +43,48 @@
                 <p id="pointsToEarn">+...</p>
                 <img src="../0/SRC/IMGs/star.png" class="task_star" alt="Estrela">
             </div>
-            <button class="btn-premio" onclick="receberPremio()">Receber Meu Prêmio</button>
+            <button id="btnGetReward" class="btn-premio">Receber Meu Prêmio</button>
+
+            <a id="backLink" href="#">← Voltar</a>
+
             <p class="hint">Continue conquistando seus objetivos diariamente!</p>
         </div>
     </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const taskBatch = getTaskBatch();
+            const backLink = document.getElementById("backLink");
+            if (taskBatch) {
+                backLink.href = `http://127.0.0.1:5500/0/Dashboard/index.html#${taskBatch}`;
+            } else {
+                console.error("Task batch inválido, o link não foi atualizado.");
+            }
+        });
+
+        function getTaskBatch() {
+            const taskIndex = parseInt(localStorage.getItem("taskIndex"));
+            let taskBatch = null;
+            switch (taskIndex) {
+                case 0:
+                    taskBatch = "tarefas_bronze";
+                    break;
+                case 1:
+                    taskBatch = "tarefas_prata";
+                    break;
+                case 2:
+                    taskBatch = "tarefas_ouro";
+                    break;
+                case 3:
+                    taskBatch = "tarefas_diamante";
+                    break;
+                default:
+                    console.error("Índice de tarefa inválido:", taskIndex);
+            }
+            return taskBatch;
+        }
+    </script>
+
     <script src="../0/Js/GetRewardFromCongratulations.js"></script>
 </body>
 

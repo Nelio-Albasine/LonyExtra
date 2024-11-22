@@ -1,8 +1,13 @@
 <?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+ini_set('error_log', __DIR__ . '/../Logs/GetAllLinksToTable.log');
+
 require_once "../Wamp64Connection.php";
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: GET, OPTIONS');
 header('Access-Control-Allow-Headers: Content-Type');
+
 
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     http_response_code(200);
@@ -35,7 +40,14 @@ function main()
                 $result = insertLinksAvailability($userId, $conn);
             }
 
-            echo json_encode($result, JSON_PRETTY_PRINT);
+            $currentDate = gmdate("Y-m-d H:i:s");
+
+            $response = [
+                "links" => $result,
+                "currentDate" => $currentDate
+            ];
+
+            echo json_encode($response, JSON_PRETTY_PRINT);
         } catch (Exception $e) {
             $response['message'] = "Erro: " . $e->getMessage();
             echo json_encode($response);
@@ -99,23 +111,39 @@ function getLinksAvailability($userId, $conn, $batch = null)
         $isUpdated = false;
 
         if ($batch) {
+            //para retornar um lote especifico (porem, atualmente to usando a logica que recupera todos lotes
+            //entao esse codigo aqui é desnecessario)
+            //#### Entao no escopo atual do projeto, nunca entrarei nessa condicao
+            error_log("batch true: ");
+
             if (isset($linksMap[$batch])) {
                 $links = &$linksMap[$batch];
-                updateLinks($links, $isUpdated);
+                updateLinksIfExpired($links, $isUpdated);
                 if ($isUpdated) {
-                    saveUpdatedLinks($conn, $userId, $linksMap);
+                    saveExpiredLinksUpdate($conn, $userId, $linksMap);
                 }
-                return [$batch => $links];
+
+                $response = [$batch => $links];
+
+                error_log("batch true return: " . print_r($response, true));
+
+                return $response;
             } else {
                 return ["status" => "error", "message" => "Lote não encontrado."];
             }
         } else {
+            error_log("batch false: ");
+
             foreach ($linksMap as $key => &$links) {
-                updateLinks($links, $isUpdated);
+                //atualizar links expirados
+                updateLinksIfExpired($links, $isUpdated);
             }
+
             if ($isUpdated) {
-                saveUpdatedLinks($conn, $userId, $linksMap);
+                //Salvar esses links atualizados no DB
+                saveExpiredLinksUpdate($conn, $userId, $linksMap);
             }
+
             return $linksMap;
         }
     }
@@ -178,22 +206,36 @@ function createLinkGroup($batch, $conn)
     return $group;
 }
 
-function updateLinks(&$links, &$isUpdated)
+function updateLinksIfExpired(&$links, &$isUpdated)
 {
+    /**
+     * Essas duas variáveis passadas na função:
+     * 
+     * - &$links: A variável $links é passada por referência, permitindo que 
+     *   qualquer modificação feita dentro da função updateLinksIfExpired() 
+     *   altere diretamente os dados do array original $linksMap.
+     * 
+     * - $isUpdated: Essa variável é passada por valor, portanto, qualquer 
+     *   alteração nela dentro da função não afetará seu valor fora do escopo da função.
+     */
+
     foreach ($links as &$linkData) {
         if (!$linkData["isAvailable"]) {
             $timeStored = new DateTime($linkData["timeStored"]);
             $now = new DateTime();
             $interval = $now->diff($timeStored);
             if ($interval->h >= 24) {
+                error_log("O link estava expirdo, atualizando:: " . $linkData);
+
                 $linkData["isAvailable"] = true;
+                $linkData["timeStored"] = null;
                 $isUpdated = true;
             }
         }
     }
 }
 
-function saveUpdatedLinks($conn, $userId, $linksMap)
+function saveExpiredLinksUpdate($conn, $userId, $linksMap)
 {
     $updatedJson = json_encode($linksMap, JSON_PRETTY_PRINT);
     $updateQuery = "UPDATE Links_Availability SET availabilityJson = ? WHERE userId = ?";
@@ -202,4 +244,8 @@ function saveUpdatedLinks($conn, $userId, $linksMap)
     $updateStmt->execute();
 }
 
-main();
+try {
+    main();
+} catch (\Throwable $th) {
+    error_log("Ocorreu um erro ao obter os links: \n" . $th->getMessage());
+}

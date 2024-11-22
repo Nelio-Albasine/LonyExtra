@@ -33,6 +33,9 @@ body {
     padding: 30px;
     text-align: center;
     position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     animation: slideIn 0.6s ease-out;
 }
 
@@ -80,7 +83,7 @@ body {
 }
 
 .btn-premio {
-    background-color: green;
+    background-color: blue;
     color: #fff;
     font-size: 15px;
     padding: 12px 20px;
@@ -139,12 +142,12 @@ body {
     padding: 0;
 }
 
-.container_available_revenue{
+.container_available_revenue {
     left: 10px;
     right: inherit;
 }
 
-#the_available_revenue{
+#the_available_revenue {
     margin: 2.5px;
 }
 
@@ -174,4 +177,98 @@ body {
     font-size: 11px;
     color: #777;
     margin-top: 4px;
+}
+
+
+
+.alert {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    z-index: 10;
+    height: 40px;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    background-color: #296d2b;
+    color: white;
+    padding: 4px 20px;
+    border-radius: 5px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.alert.hidden {
+    transform: translateX(-50%) translateY(-20px);
+    opacity: 0;
+}
+
+.alert.show {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateX(-50%) translateY(0);
+}
+
+.alert.success {
+    background-color: #319234;
+}
+
+.alert.error {
+    background-color: #c72c1b;
+}
+
+.alert.warning {
+    background-color: #c7ba05;
+}
+
+.alert .icon {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.alert .message {
+    flex: 1;
+    color: white;
+    font-size: 14px;
+
+}
+
+
+
+
+#backLink {
+    font-size: 12px;
+    font-weight: 500;
+    text-decoration: none;
+    color: #fff;
+    background-color: #4CAF50;
+    padding: 2px 20px;
+    border-radius: 8px; 
+    display: inline-flex;
+    align-items: center;
+    height: 20px;
+    margin-top: 10px;
+    transition: all 0.3s ease-in-out;   
+}
+
+#backLink:hover {
+    background-color: #45a049; /* Cor um pouco mais escura no hover */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Sombra mais intensa no hover */
+    transform: translateY(-2px); /* Levanta um pouco no hover */
+}
+
+#backLink:active {
+    transform: translateY(2px); 
+}
+
+#backLink i {
+    margin-right: 8px; 
+    font-size: 20px; 
+}
+
+#backLink span {
+    font-size: 18px; 
 }
