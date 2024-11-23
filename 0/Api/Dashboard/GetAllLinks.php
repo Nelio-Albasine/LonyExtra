@@ -39,8 +39,8 @@ function main()
             if (empty($result)) {
                 $result = insertLinksAvailability($userId, $conn);
             }
-
-            $currentDate = gmdate("Y-m-d H:i:s");
+         
+            $currentDate = $currentDate = getUserLocalTime(getUserTimeZone($conn, $userId));
 
             $response = [
                 "links" => $result,
@@ -59,6 +59,17 @@ function main()
         echo json_encode($response);
     }
 }
+
+function getUserLocalTime($userTimeZone) {
+    $currentUtcTime = new DateTime("now", new DateTimeZone("UTC"));
+
+    $userTimeZoneObj = new DateTimeZone($userTimeZone);
+
+    $currentUtcTime->setTimezone($userTimeZoneObj);
+
+    return $currentUtcTime->format("Y-m-d H:i:s");
+}
+
 
 function createTableLinksIfNotExists($conn)
 {
@@ -114,29 +125,23 @@ function getLinksAvailability($userId, $conn, $batch = null)
             //para retornar um lote especifico (porem, atualmente to usando a logica que recupera todos lotes
             //entao esse codigo aqui é desnecessario)
             //#### Entao no escopo atual do projeto, nunca entrarei nessa condicao
-            error_log("batch true: ");
-
             if (isset($linksMap[$batch])) {
                 $links = &$linksMap[$batch];
-                updateLinksIfExpired($links, $isUpdated);
+                updateLinksIfExpired($conn, $userId, $links, $isUpdated);
                 if ($isUpdated) {
                     saveExpiredLinksUpdate($conn, $userId, $linksMap);
                 }
 
                 $response = [$batch => $links];
-
-                error_log("batch true return: " . print_r($response, true));
-
                 return $response;
             } else {
                 return ["status" => "error", "message" => "Lote não encontrado."];
             }
         } else {
-            error_log("batch false: ");
 
             foreach ($linksMap as $key => &$links) {
                 //atualizar links expirados
-                updateLinksIfExpired($links, $isUpdated);
+                updateLinksIfExpired($conn, $userId,$links, $isUpdated);
             }
 
             if ($isUpdated) {
@@ -206,34 +211,30 @@ function createLinkGroup($batch, $conn)
     return $group;
 }
 
-function updateLinksIfExpired(&$links, &$isUpdated)
+function updateLinksIfExpired($conn, $userId, &$links, &$isUpdated)
 {
-    /**
-     * Essas duas variáveis passadas na função:
-     * 
-     * - &$links: A variável $links é passada por referência, permitindo que 
-     *   qualquer modificação feita dentro da função updateLinksIfExpired() 
-     *   altere diretamente os dados do array original $linksMap.
-     * 
-     * - $isUpdated: Essa variável é passada por valor, portanto, qualquer 
-     *   alteração nela dentro da função não afetará seu valor fora do escopo da função.
-     */
+    $userTimeZone = getUserTimeZone($conn, $userId);
+    $userTimeZone = new DateTimeZone($userTimeZone);
 
     foreach ($links as &$linkData) {
         if (!$linkData["isAvailable"]) {
-            $timeStored = new DateTime($linkData["timeStored"]);
-            $now = new DateTime();
-            $interval = $now->diff($timeStored);
-            if ($interval->h >= 24) {
-                error_log("O link estava expirdo, atualizando:: " . $linkData);
+            $timeStored = new DateTime($linkData["timeStored"], $userTimeZone);
 
+            $now = new DateTime("now", $userTimeZone);
+
+            $interval = $now->diff($timeStored);
+
+            if ($interval->d >= 1 || $interval->h >= 24 || $interval->days >= 1) {
                 $linkData["isAvailable"] = true;
                 $linkData["timeStored"] = null;
                 $isUpdated = true;
+            } else {
+                error_log("Horário atual: " . $now->format('Y-m-d H:i:s') . " no fuso horário do usuário: " . $userTimeZone->getName());
             }
         }
     }
 }
+
 
 function saveExpiredLinksUpdate($conn, $userId, $linksMap)
 {
@@ -243,6 +244,41 @@ function saveExpiredLinksUpdate($conn, $userId, $linksMap)
     $updateStmt->bind_param("ss", $updatedJson, $userId);
     $updateStmt->execute();
 }
+
+
+function getUserTimeZone($conn, $userId) {
+    $query = "SELECT userTimeZone FROM usuarios WHERE userId = ?";
+    $stmt = $conn->prepare($query);
+
+    if ($stmt) {
+        $stmt->bind_param("s", $userId);
+
+        if ($stmt->execute()) {
+            $result = $stmt->get_result();
+
+            if ($result) {
+                if ($result->num_rows > 0) {
+                    $row = $result->fetch_assoc();
+                    $userTimeZone = $row["userTimeZone"];
+                    return $userTimeZone;
+                } else {
+                    return "America/Sao_Paulo";
+                }
+            } else {
+                error_log("Erro ao obter o resultado da consulta para userId $userId: " . $stmt->error);
+            }
+        } else {
+            error_log("Falha ao executar a query para userId $userId: " . $stmt->error);
+        }
+    } else {
+        error_log("Erro ao preparar a query: " . $conn->error);
+    }
+
+    return "America/Sao_Paulo";
+}
+
+
+
 
 try {
     main();

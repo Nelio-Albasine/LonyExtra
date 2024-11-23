@@ -106,8 +106,8 @@
     "bronzeAvailability": {
         "Bronze_1": {
             "url": "http://127.0.0.1:5500/Congratulations/index.html",
-            "timeStored": "2024-11-22 09:49:31",
-            "isAvailable": false
+            "timeStored": null,
+            "isAvailable": true
         },
         "Bronze_2": {
             "url": "https://alpharede.com/bronze_tarefa_2",

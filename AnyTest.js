@@ -1,7 +1,15 @@
-const secretKey = process.env.LONY_EXTRA_POINTS_SECRET_KEY;
-
-if (secretKey) {
-    console.log(`A chave secreta é: ${secretKey}`);
-} else {
-    console.error('A variável de ambiente LONY_EXTRA_POINTS_SECRET_KEY não está definida.');
+async function currentuserTime() {
+    try {
+        const response = await fetch("http://worldtimeapi.org/api/ip");
+        if (!response.ok) {
+            throw new Error("Erro ao obter dados da API.");
+        }
+        const data = await response.json();
+        console.log("Fuso horário detectado pela API:", data.timezone);
+        console.log("Data e hora atual:", data.datetime);
+    } catch (error) {
+        console.error("Erro ao obter fuso horário da API:", error);
+    }
 }
+
+currentuserTime();

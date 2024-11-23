@@ -31,6 +31,20 @@ function verifyPassword() {
     return inputPassword.value === inputPasswordConfirm.value
 }
 
+async function getTimeZoneFromAPI() {
+    try {
+        const response = await fetch("http://worldtimeapi.org/api/ip");
+        if (!response.ok) {
+            throw new Error("Erro ao obter dados da API.");
+        }
+        const data = await response.json();
+        return data.timezone;
+    } catch (error) {
+        console.error("Erro ao obter fuso horário da API:", error);
+        return null; // Retorna null em caso de erro
+    }
+}
+
 document.addEventListener("DOMContentLoaded", function () {
 
     textStartSession.addEventListener("click", () => {
@@ -53,6 +67,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
         let userId = await emailToUniqueHash(inputEmail.value);
 
+        const userTimeZone = await getTimeZoneFromAPI();
+
         const allFields = new Map([
             ["userId", userId],
             ["name", inputName.value],
@@ -61,6 +77,7 @@ document.addEventListener("DOMContentLoaded", function () {
             ["password", inputPassword.value],
             ["gender", selectGender.value],
             ["age", inputAge.value],
+            ["userTimeZone", inputAge.userTimeZone],
             ["inviterCode", inviterCode]
         ]);
 
@@ -119,7 +136,7 @@ limitateInputsMaxChars();
 
 
 async function sendOTPtoVerifyEmail(data) {
-    const url = 'http://localhost/LonyExtra/0/Api/Access/OTP/SendOTP.php';
+    const url = 'http://localhost/LonyExtra/0/Api/Access/OTP/VerifyOTP_and_CreateUser.php';
 
     try {
         const response = await fetch(url, {

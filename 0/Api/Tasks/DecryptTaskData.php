@@ -57,7 +57,7 @@ function main()
 try {
     main();
 } catch (\Throwable $th) {
-    error_log("Ocorreum um erro generuco no DecrypeTaskData.php");
+    error_log("Ocorreum um erro generico no DecrypeTaskData.php: ". $th->getMessage());
 }
 exit;
 
@@ -182,36 +182,46 @@ function updateUserPoints($conn, $decryptedData, $userId, $taskId)
 /**
  * Função para atualizar o status e a data do link
  */
-function updatelinkStatus($conn, $decryptedData, $userId, $taskId, $jsonBatchName)
+function updatelinkStatus($conn, $userId, $taskId, $jsonBatchName)
 {
-    $timeStored = gmdate("Y-m-d H:i:s");
+    $userTimeZone = getUserTimeZone($conn, $userId); 
 
-    // Define o valor booleano diretamente na consulta
+    $userDateTime = new DateTime("now", new DateTimeZone($userTimeZone));
+    $timeToStored = $userDateTime->format("Y-m-d H:i:s");
+
+    $isAvailable = false; 
+
     $updateQuery = "
         UPDATE links_availability
         SET availabilityJson = JSON_SET(
             availabilityJson,
             '$.$jsonBatchName.$taskId.timeStored', ?,
-            '$.$jsonBatchName.$taskId.isAvailable', JSON_FALSE()
+            '$.$jsonBatchName.$taskId.isAvailable', ?
         )
         WHERE userId = ?
     ";
 
     $stmt = $conn->prepare($updateQuery);
     if ($stmt === false) {
+        error_log("Erro ao preparar a query: " . $conn->error);
         return false;
     }
 
-    $stmt->bind_param("si", $timeStored, $userId);
+    // Bind dos parâmetros (string para timeStored, boolean para isAvailable, e int para userId)
+    $stmt->bind_param("sii", $timeToStored, $isAvailable, $userId);
 
+    // Executa a query e verifica o resultado
     if ($stmt->execute()) {
         $stmt->close();
         return true;
     } else {
+        error_log("Erro ao executar a query: " . $stmt->error);
         $stmt->close();
         return false;
     }
 }
+
+
 
 function processUserPointsAndLinkStatus($conn, array $decryptedData): bool
 {
@@ -254,7 +264,6 @@ function processUserPointsAndLinkStatus($conn, array $decryptedData): bool
 
         if (!updateLinkStatus(
             $conn,
-            $decryptedData,
             $userId,
             $taskId,
             $jsonBatchName
@@ -299,6 +308,37 @@ function checkIfTaskIdIsAvailable($conn, $userId, $taskId, $jsonBatchName): bool
     error_log("Essa tarefa: $taskId do lote: $jsonBatchName tem o isAvailable como: " . ($isAvailable ? 'true' : 'false'));
 
     return $isAvailable === true;
+}
+
+function getUserTimeZone($conn, $userId) {
+    $query = "SELECT userTimeZone FROM usuarios WHERE userId = ?";
+    $stmt = $conn->prepare($query);
+
+    if ($stmt) {
+        $stmt->bind_param("s", $userId);
+
+        if ($stmt->execute()) {
+            $result = $stmt->get_result();
+
+            if ($result) {
+                if ($result->num_rows > 0) {
+                    $row = $result->fetch_assoc();
+                    $userTimeZone = $row["userTimeZone"];
+                    return $userTimeZone;
+                } else {
+                    return "America/Sao_Paulo";
+                }
+            } else {
+                error_log("Erro ao obter o resultado da consulta para userId $userId: " . $stmt->error);
+            }
+        } else {
+            error_log("Falha ao executar a query para userId $userId: " . $stmt->error);
+        }
+    } else {
+        error_log("Erro ao preparar a query: " . $conn->error);
+    }
+
+    return "America/Sao_Paulo";
 }
 
 
