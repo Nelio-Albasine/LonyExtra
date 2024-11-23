@@ -5,6 +5,7 @@ function createNewUser($conn, $data): bool
     $userName = $data['name'];
     $userSurName = $data['surname'];
     $userEmail = $data['email'];
+    $userTimeZone = $data['userTimeZone'];
     $userPassword = password_hash($data['password'], PASSWORD_BCRYPT);  // Senha criptografada
     $userGender = $data['gender'];
     $userAge = $data['age'];
@@ -26,11 +27,11 @@ function createNewUser($conn, $data): bool
     ], JSON_FORCE_OBJECT);
 
     $queryToInsert = "INSERT INTO Usuarios 
-        (userId, userName, userSurname, userEmail, userPassword, myReferralCode, userGender, userAge, userPointsJSON, userInvitationJSON)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        (userId, userName, userSurname, userEmail, userTimeZone, userPassword, myReferralCode, userGender, userAge, userPointsJSON, userInvitationJSON)
+        VALUES (?, ?, ?,?, ?, ?, ?, ?, ?, ?, ?)";
 
     $stmtInsertUser = $conn->prepare($queryToInsert);
-    $stmtInsertUser->bind_param("sssssssiss", $userId, $userName, $userSurName, $userEmail, $userPassword, $myReferralCode, $userGender, $userAge, $userPointsJSON, $userInvitationJSON);
+    $stmtInsertUser->bind_param("ssssssssiss", $userId, $userName, $userSurName, $userEmail, $userTimeZone, $userPassword, $myReferralCode, $userGender, $userAge, $userPointsJSON, $userInvitationJSON);
 
     if ($stmtInsertUser->execute()) {
         return true;

@@ -2,6 +2,7 @@ let alertMessage = null;
 let currentStars = 0;
 let pointsToEarn = null;
 let textUserPoints;
+let taskBatch;
 
 document.addEventListener("DOMContentLoaded", async function () {
     const textUserRevenue = document.getElementById("the_available_revenue");
@@ -16,6 +17,14 @@ document.addEventListener("DOMContentLoaded", async function () {
     const userPointsJson = loadUserPointsFromLocal();
 
     handlePointsToEarnText(taskIndex, pointsToEarn);
+
+    taskBatch = getTaskBatch();
+    const backLink = document.getElementById("backLink");
+    if (taskBatch) {
+        backLink.href = `http://127.0.0.1:5500/0/Dashboard/index.html#${taskBatch}`;
+    } else {
+        console.error("Task batch inválido, o link não foi atualizado.");
+    }
 
     textUserRevenue.textContent = userPointsJson.userRevenue.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
     currentStars = userPointsJson.userStars
@@ -47,7 +56,12 @@ function showAlert(message, type) {
 
     setTimeout(() => {
         alertBox.className = 'alert hidden';
-    }, 5000);
+        if (type === 'success') {
+            let url = `http://127.0.0.1:5500/0/Dashboard/index.html#${taskBatch}`;
+            window.open(url , "_self")
+        }
+    }, 1500);
+    
 }
 
 function handlePointsToEarnText(index, text) {
@@ -135,6 +149,29 @@ async function sendEncryptedDataToServer(encryptedData, iv, btnGetReward, taskIn
     } catch (error) {
         console.error('Erro ao enviar os dados:', error);
     }
+}
+
+
+function getTaskBatch() {
+    const taskIndex = parseInt(localStorage.getItem("taskIndex"));
+    let taskBatch = null;
+    switch (taskIndex) {
+        case 0:
+            taskBatch = "tarefas_bronze";
+            break;
+        case 1:
+            taskBatch = "tarefas_prata";
+            break;
+        case 2:
+            taskBatch = "tarefas_ouro";
+            break;
+        case 3:
+            taskBatch = "tarefas_diamante";
+            break;
+        default:
+            console.error("Índice de tarefa inválido:", taskIndex);
+    }
+    return taskBatch;
 }
 
 

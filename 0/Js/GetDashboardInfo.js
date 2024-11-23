@@ -6,6 +6,7 @@ let pointsToEarnByLevel = 10
 let currentURL_hash;
 let currentServerDate;
 
+
 document.addEventListener("DOMContentLoaded", async function () {
     const userName = document.getElementById("userName");
     const userRevenue = document.getElementById("userRevenue");
@@ -19,6 +20,9 @@ document.addEventListener("DOMContentLoaded", async function () {
 
     const userId = "391f58325968d93b6778b9722f953bb063b44254d8e04109955c52b928ac9782";
     const dashInfo = await GetDashboardInfo(userId);
+
+    console.log("User dash info: ", dashInfo);
+
     const userInfo = dashInfo.userInfo;
     const userPoints = JSON.parse(userInfo.userPointsJSON);
     const userInvitationInfo = JSON.parse(userInfo.userInvitationJSON);
@@ -59,7 +63,6 @@ function handleStartTasksClicks() {
 
 }
 
-
 async function FetchAllLinks(userId, batch = null) {
     try {
         const batchParam = batch ? `&batch=${batch}` : '';
@@ -83,7 +86,6 @@ async function FetchAllLinks(userId, batch = null) {
     }
 
 }
-
 
 async function loadLinksIntoTable(levelIndex) {
     const dialog_title_tasks_remaining = document.getElementById("dialog_title_tasks_remaining");
@@ -356,31 +358,25 @@ function handleLinkAvailabilityChecker(data) {
     });
 }
 
-function calculateRemainingTime(timeStored) {
+function calculateRemainingTime(timeStored, currentServerDate) {
     console.log(`Time stored: ${timeStored}`);
+    console.log(`Current server date: ${currentServerDate}`);
 
-    // Converte a string de data armazenada em um objeto Date
-    const updatedAt = new Date(timeStored.replace(" ", "T")); // Formata como ISO
+    const updatedAt = new Date(timeStored.replace(" ", "T"));
+    const serverDate = new Date(currentServerDate.replace(" ", "T"));
 
-    // Obtém a data e hora local do cliente
-    const localNow = new Date();
-
-    // Calcula o horário de expiração (24 horas após a tarefa)
     const expirationTime = new Date(updatedAt.getTime() + 24 * 60 * 60 * 1000);
 
-    // Calcula o tempo restante
-    const remainingTime = expirationTime - localNow;
+    const remainingTime = expirationTime - serverDate;
 
     if (remainingTime <= 0) {
         return "O tempo já expirou!";
     }
 
-    // Converte o tempo restante em horas, minutos e segundos
     const hours = Math.floor(remainingTime / (1000 * 60 * 60));
     const minutes = Math.floor((remainingTime % (1000 * 60 * 60)) / (1000 * 60));
     const seconds = Math.floor((remainingTime % (1000 * 60)) / 1000);
 
-    // Formata a resposta
     const response = `Disponível em: <strong>${hours}h : ${minutes}min</strong>`;
     console.log(`Disponível em: ${hours} horas, ${minutes} minutos, ${seconds} segundos`);
 

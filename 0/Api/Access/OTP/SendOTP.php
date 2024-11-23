@@ -80,6 +80,7 @@ function createTableUserIfNotExists($conn)
         userSurname VARCHAR(20) NOT NULL,
         userEmail VARCHAR(100) NOT NULL UNIQUE,
         userPassword VARCHAR(255),
+        userTimeZone VARCHAR(50),
         myReferralCode VARCHAR(6),
         userGender VARCHAR(10) NOT NULL,
         userAge INT,
