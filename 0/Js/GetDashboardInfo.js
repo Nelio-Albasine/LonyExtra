@@ -16,16 +16,16 @@ document.addEventListener("DOMContentLoaded", async function () {
     const userEmail = document.getElementById("userEmail");
 
     const textTotalInvitedFriends = document.getElementById("textTotalInvitedFriends");
-    const textTotalEarnedByReferrals = document.getElementById("textTotalEarnedByReferrals");
+    const textTotalStarsEarnedByReferrals = document.getElementById("textTotalStarsEarnedByReferrals");
 
     const userId = "391f58325968d93b6778b9722f953bb063b44254d8e04109955c52b928ac9782";
     const dashInfo = await GetDashboardInfo(userId);
 
-    console.log("User dash info: ", dashInfo);
-
     const userInfo = dashInfo.userInfo;
     const userPoints = JSON.parse(userInfo.userPointsJSON);
     const userInvitationInfo = JSON.parse(userInfo.userInvitationJSON);
+    console.log("user Invite Info : ", userInvitationInfo);
+
 
     saveUserPointsToLocalStorage(userPoints);
     handleLinkAvailabilityChecker(dashInfo.hasValidLinksPerBatch);
@@ -43,7 +43,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     userLTStars.textContent = userPoints.userLTStars.toLocaleString("pt-PT");
 
     textTotalInvitedFriends.textContent = userInvitationInfo.myTotalReferredFriends.toLocaleString("pt-PT");
-    textTotalEarnedByReferrals.textContent = userInvitationInfo.totalEarnedByReferral.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
+    textTotalStarsEarnedByReferrals.textContent = userInvitationInfo.totalStarsEarnedByReferral.toLocaleString("pt-PT");
 });
 
 function handleStartTasksClicks() {

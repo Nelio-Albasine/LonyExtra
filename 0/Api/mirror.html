@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drawer with Submenus</title>
+
+    <link rel="stylesheet" href="../CSS/Home/drawer_v2.css">
+
+</head>
+
+<body>
+    <!-- Drawer -->
+    <div class="drawer">
+        <div class="drawer-header">
+            <button class="toggle-drawer" onclick="toggleDrawer()">☰</button>
+            <h2>Menu</h2>
+        </div>
+        <ul class="drawer-menu">
+            <li class="has-submenu">
+                <a href="#dashboard" onclick="toggleSubmenu(event)">
+                    📊 Dashboard
+                    <span class="arrow">▼</span>
+                </a>
+                <ul class="submenu">
+                    <li><a href="#home">🏠 Home</a></li>
+                </ul>
+            </li>
+            <li class="has-submenu">
+                <a href="#convides" onclick="toggleSubmenu(event)">
+                    🤝 Convites
+                    <span class="arrow">▼</span>
+                </a>
+                <ul class="submenu">
+                    <li><a href="#amigos-convidados">👥 Amigos Convidados</a></li>
+                </ul>
+            </li>
+            <li class="has-submenu">
+                <a href="#saques" onclick="toggleSubmenu(event)">
+                    💰 Saques
+                    <span class="arrow">▼</span>
+                </a>
+                <ul class="submenu">
+                    <li><a href="#sacar">💵 Sacar</a></li>
+                    <li><a href="#historico">🔍 Histórico</a></li>
+                </ul>
+            </li>
+            <li class="has-submenu">
+                <a href="#saques" onclick="toggleSubmenu(event)">
+                    🔔 Notificações
+                    <span class="arrow">▼</span>
+                </a>
+                <ul class="submenu">
+                    <li><a href="#historico">🛎️ Minhas Notificações</a></li>
+                </ul>
+            </li>
+            <li class="has-submenu">
+                <a href="#redes-sociais" onclick="toggleSubmenu(event)">
+                    🌐 Redes Sociais
+                    <span class="arrow">▼</span>
+                </a>
+                <ul class="submenu">
+                    <li><a href="#instagram">📸 Instagram</a></li>
+                    <li><a href="#telegram">💬 Telegram</a></li>
+                </ul>
+            </li>
+            <li class="has-submenu">
+                <a href="#suporte" onclick="toggleSubmenu(event)">
+                    📞 Suporte
+                    <span class="arrow">▼</span>
+                </a>
+                <ul class="submenu">
+                    <li><a href="#gmail">📧 Gmail</a></li>
+                    <li><a href="#youtube">🎥 YouTube</a></li>
+                </ul>
+            </li>
+            <li class="has-submenu">
+                <a href="#configuracoes" onclick="toggleSubmenu(event)">
+                    ⚙️ Configurações
+                    <span class="arrow">▼</span>
+                </a>
+                <ul class="submenu">
+                    <li><a href="#perfil">👤 Perfil</a></li>
+                    <li><a href="#logout">🚪 Logout</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <h1>Bem-vindo!</h1>
+        <p>Aqui está o conteúdo principal da sua página...</p>
+    </div>
+
+    <script>
+        function toggleDrawer() {
+            document.querySelector('.drawer').classList.toggle('open');
+            document.querySelector('.main-content').classList.toggle('drawer-open');
+        }
+
+        function toggleSubmenu(event) {
+            event.preventDefault();
+            const parent = event.target.closest('.has-submenu');
+            const arrow = parent.querySelector('.arrow');
+
+            parent.classList.toggle('open');
+
+            // Mostra/esconde o submenu
+            const submenu = parent.querySelector('.submenu');
+            submenu.style.display = submenu.style.display === 'block' ? 'none' : 'block';
+
+            // Atualiza o texto da seta
+            if (submenu.style.display === 'block') {
+                arrow.textContent = '▲'; // Submenu aberto
+            } else {
+                arrow.textContent = '▼'; // Submenu fechado
+            }
+        }
+    </script>
+</body>
+
+</html>
