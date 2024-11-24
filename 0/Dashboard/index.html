@@ -9,9 +9,14 @@
     <link rel="stylesheet" href="../CSS/Home/header.css">
     <link rel="stylesheet" href="../CSS/Home/ui_settings.css">
     <link rel="stylesheet" href="../CSS/Home/pc.css">
-    <link rel="stylesheet" href="../CSS/Home/drawer.css">
     <link rel="stylesheet" href="../CSS/Home/mobile.css">
     <link rel="stylesheet" href="../CSS/Home/dialog_choose_tasks.css">
+    <link rel="stylesheet" href="../CSS/Home/ganhos_turbo_boxes.css">
+    <link rel="stylesheet" href="../CSS/Home/invitation.css">
+
+    <link rel="stylesheet" href="../CSS/Home/generic.css">
+    <link rel="stylesheet" href="../CSS/Home/drawer_v2.css">
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
 
 </head>
@@ -25,7 +30,7 @@
             </li>
 
             <li>
-                <div id="container_stars">
+                <div class="container_stars">
                     <img src="../SRC/IMGs/star.png" alt="star">
                     <p id="userStars">0</p>
                 </div>
@@ -48,84 +53,82 @@
     </header>
 
 
-    <div class="drawer" id="drawer">
-        <div id="drawer-close">
-            <img class="drawer_icon" src="../SRC/IMGs/close_menu.png" alt="Fechar Menu">
+    <div class="drawer">
+        <div class="drawer-header">
+            <h2>Menu</h2>
         </div>
-
-        <div class="drawer-content">
-            <!-- Seção de Perfil e Configurações -->
-            <div class="drawer-section">
-                <span class="section-title">Perfil</span>
-                <div class="drawer-grid">
-                    <div class="drawer-card">
-                        <img src="../SRC/IMGs/icon.png" alt="Perfil">
-                        <span>Editar Perfil</span>
-                    </div>
-                    <div class="drawer-card">
-                        <img src="../SRC/IMGs/icon.png" alt="Sair">
-                        <span>Sign Out</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Seção de Ações Principais -->
-            <div class="drawer-section">
-                <span class="section-title">Saque</span>
-                <div class="drawer-grid">
-                    <div class="drawer-card">
-                        <img src="../SRC/IMGs/atm_cashout.png" alt="Efetuar Saque">
-                        <span>Saque</span>
-                    </div>
-                    <div class="drawer-card">
-                        <img src="../SRC/IMGs/history.png" alt="Histórico de Saque">
-                        <span>Histórico</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Seção de Políticas -->
-            <div class="drawer-section">
-                <span class="section-title">Políticas</span>
-                <div class="drawer-grid">
-                    <div class="drawer-card">
-                        <img src="../SRC/IMGs/icon.png" alt="Uso">
-                        <span>Uso</span>
-                    </div>
-                    <div class="drawer-card">
-                        <img src="../SRC/IMGs/icon.png" alt="Privacidade">
-                        <span>Privacidade</span>
-                    </div>
-                    <div class="drawer-card">
-                        <img src="../SRC/IMGs/icon.png" alt="Pesquisa">
-                        <span>Pesquisa</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Seção de Redes Sociais -->
-            <div class="drawer-section">
-                <span class="section-title">Contato</span>
-                <div class="drawer-grid">
-                    <div class="drawer-card">
-                        <img src="../SRC/IMGs/icon.png" alt="Instagram">
-                        <span>Instagram</span>
-                    </div>
-                    <div class="drawer-card">
-                        <img src="../SRC/IMGs/icon.png" alt="Telegram">
-                        <span>Telegram</span>
-                    </div>
-                    <div class="drawer-card">
-                        <img src="../SRC/IMGs/icon.png" alt="Email">
-                        <span>Email</span>
-                    </div>
-                    <div class="drawer-card">
-                        <img src="../SRC/IMGs/icon.png" alt="WhatsApp">
-                        <span>WhatsApp</span>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <ul class="drawer-menu">
+            <li class="has-submenu">
+                <a href="#dashboard" onclick="toggleSubmenu(event)">
+                    📊 Dashboard
+                    <span class="arrow">▼</span>
+                </a>
+                <ul class="submenu">
+                    <li><a href="#home">🏠 Home</a></li>
+                </ul>
+                <ul class="submenu">
+                    <li><a href="#home">⭐ Converter estrelas</a></li>
+                </ul>
+            </li>
+            <li class="has-submenu">
+                <a href="#convides" onclick="toggleSubmenu(event)">
+                    🤝 Convites
+                    <span class="arrow">▼</span>
+                </a>
+                <ul class="submenu">
+                    <li><a href="#amigos-convidados">👥 Amigos Convidados</a></li>
+                </ul>
+            </li>
+            <li class="has-submenu">
+                <a href="#saques" onclick="toggleSubmenu(event)">
+                    💰 Saques
+                    <span class="arrow">▼</span>
+                </a>
+                <ul class="submenu">
+                    <li><a href="#sacar">💵 Sacar</a></li>
+                    <li><a href="#historico">🔍 Histórico</a></li>
+                </ul>
+            </li>
+            <li class="has-submenu">
+                <a href="#saques" onclick="toggleSubmenu(event)">
+                    🔔 Notificações
+                    <span class="arrow">▼</span>
+                </a>
+                <ul class="submenu">
+                    <li><a href="#historico">🛎️ Minhas Notificações</a></li>
+                </ul>
+            </li>
+            <li class="has-submenu">
+                <a href="#redes-sociais" onclick="toggleSubmenu(event)">
+                    🌐 Redes Sociais
+                    <span class="arrow">▼</span>
+                </a>
+                <ul class="submenu">
+                    <li><a href="#instagram">📸 Instagram</a></li>
+                    <li><a href="#telegram">💬 Telegram</a></li>
+                </ul>
+            </li>
+            <li class="has-submenu">
+                <a href="#suporte" onclick="toggleSubmenu(event)">
+                    📞 Suporte
+                    <span class="arrow">▼</span>
+                </a>
+                <ul class="submenu">
+                    <li><a href="#gmail">📧 Gmail</a></li>
+                    <li><a href="#youtube">🎥 YouTube</a></li>
+                </ul>
+            </li>
+            <li class="has-submenu">
+                <a href="#configuracoes" onclick="toggleSubmenu(event)">
+                    ⚙️ Configurações
+                    <span class="arrow">▼</span>
+                </a>
+                <ul class="submenu">
+                    <li><a href="#perfil">👤 Perfil</a></li>
+                    <li><a href="#logout">🚪 Logout</a></li>
+                </ul>
+            </li>
+        </ul>
     </div>
 
 
@@ -137,36 +140,79 @@
                 <div class="stat-value"> <strong id="userLTStars">0</strong></div>
             </div>
             <div class="stat-card">
-                <p class="stat-label">Receita Correspondente</p>
+                <p class="stat-label">Total já acumulado</p>
                 <div class="stat-value"><strong id="userLTRevenue">R$ 0.00</strong></div>
             </div>
             <div class="stat-card">
                 <p class="stat-label p_label_invitation">Amigos Convidados</p>
-                <div class="stat-value"><strong id="textTotalInvitedFriends">0</strong></div>
+                <div id="div_container_ttl_invite" class="div_container_invtation">
+                    <div class="container_stars container_stars_from_invite">
+                        <img style="transform: rotate(0deg);" src="../SRC/IMGs/friends.png" alt="friends">
+                        <p><strong id="textTotalInvitedFriends">0</strong></p>
+                    </div>
+                </div>
             </div>
             <div class="stat-card">
-                <p class="stat-label p_label_invitation">Total ganho pelos convintes</p>
-                <div class="stat-value"><strong id="textTotalEarnedByReferrals">R$ 0.00</strong></div>
+                <p class="stat-label p_label_invitation">Estrelas dos Convintes</p>
+                <div class="stat-value div_container_invtation">
+                    <div class="container_stars container_stars_from_invite">
+                        <img src="../SRC/IMGs/star.png" alt="star">
+                        <p><strong id="textTotalStarsEarnedByReferrals">0</strong></p>
+                    </div>
+                    <img class="seeInvitattionDetails" src="../SRC/IMGs/dropdown_icon.png" alt="dropdown_icon">
+                </div>
             </div>
         </div>
 
-        <div class="ads_banner">
-            <p>Anúncio</p>
-            <div id="the_banner_ad"></div>
-        </div>
+        <div class="other_earning_ways">
+            <h2 class="h2_outras_formas_de_ganhos">Ganhos Turbo</h2>
 
-        <div class="banner">
-            <img src="../SRC/IMGs/convinte.png">
-            <div class="banner-texto">
-                <p>Multiplique seus ganhos ao indicar amigos! Ganhe 5% de tudo o que seus amigos acumularem, de forma
-                    simples e contínua. Cada vez que eles aumentarem seus rendimentos, você também ganha sem esforço.
-                </p>
-                <p class="convite">Partilhar Convite</p>
-            </div>
+            <ul class="other_earning_ways_ul">
+
+                <li class="li_as_banner_turbo_earnings">
+                    <div class="img_wrapper">
+                        <img class="img_como_fundo" src="../SRC/IMGs/banner_duelo.webp" alt="banner duelo">
+                        <div id="base_duelo" class="div_como_overlay_para_o_fundo ">
+                            <img class="img_turbo_card_icon" id="sword_icon" src="../SRC/IMGs/swords.png"
+                                alt="Sword icon">
+                            <button class="card_option_name">Duelar →</button>
+                            <p class="p_know_more">❓</p>
+                        </div>
+                    </div>
+
+                </li>
+
+                <li class="li_as_banner_turbo_earnings">
+                    <div class="img_wrapper">
+                        <img class="img_como_fundo" src="../SRC/IMGs/banner_bank.webp" alt="banner bank">
+                        <div id="base_duelo" class="div_como_overlay_para_o_fundo ">
+                            <img class="img_turbo_card_icon" id="pig_icon" src="../SRC/IMGs/bank_pig.png"
+                                alt="Sword icon">
+                            <button class="card_option_name">poupar →</button>
+                            <p class="p_know_more">❓</p>
+                        </div>
+                    </div>
+                </li>
+
+                <li class="li_as_banner_turbo_earnings">
+                    <div class="img_wrapper">
+                        <img class="img_como_fundo" src="../SRC/IMGs/banner_turbo.webp" alt="banner turbo">
+                        <div class="div_como_overlay_para_o_fundo">
+                            <div class="div_container_coming_soon">
+                                <p>Brevemente...</p>
+                            </div>
+                            <img src="../SRC/IMGs/cadeado_white.png" alt="Lock white" class="cadeado_icon">
+                            <button class="card_option_name unavailable">Turbinar</button>
+                            <p class="p_know_more unavailable">❓</p>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+
         </div>
 
         <div>
-            <h2 class="section-title">Pesquisas</h2>
+            <h2 class="h2_outras_formas_de_ganhos">Pesquisas diárias</h2>
             <div class="level-list">
                 <div class="level-card">
                     <div class="level-badge">
@@ -228,32 +274,9 @@
                         <p id="tasksDiamanteRemaining" class="timeOrtaskRemaining">Disponível em <strong>00:00</strong>
                         </p>
                     </div>
-
                 </div>
+
             </div>
-        </div>
-
-        <div class="other_earning_ways">
-            <h2 class="section-title">Outras Formas de Ganhos</h2>
-
-            <ul class="other_earning_ways_ul">
-                <li>
-                    <p>01</p>
-                </li>
-
-                <li>
-                    <p>02</p>
-                </li>
-
-                <li>
-                    <p>03</p>
-                </li>
-
-                <li>
-                    <p>04</p>
-                </li>
-
-            </ul>
         </div>
     </main>
 
@@ -274,10 +297,13 @@
                 <img class="close_dialog_choose_links" id="close_dialog_choose_links" src="../SRC/IMGs/close.png"
                     alt="close dialog">
             </div>
-            <p id="p_link_descri">Você tem <strong id="dialog_title_tasks_remaining">x</strong> pesquisas no nível <strong id="dialog_title_level_name">y</strong> para realizar por
+            <p id="p_link_descri">Você tem <strong id="dialog_title_tasks_remaining">x</strong> pesquisas no nível
+                <strong id="dialog_title_level_name">y</strong> para realizar por
                 dia. Após a conclusão
-                de cada opção, <strong>ela levará 24 horas para reiniciar</strong> (contando a partir do momento em que você concluiu a
-                respectiva tarefa).</p>
+                de cada opção, <strong>ela levará 24 horas para reiniciar</strong> (contando a partir do momento em que
+                você concluiu a
+                respectiva tarefa).
+            </p>
 
             <div class="container_the_links_table">
                 <table id="table_links">
@@ -318,7 +344,7 @@
     </div>
 
 
-    <script src="../Js/drawer_toggle.js"></script>
+    <script src="../Js/drawer.js"></script>
     <script src="../Js/GetDashboardInfo.js"></script>
     <script src="../Js/table_choose_links.js"></script>
 </body>

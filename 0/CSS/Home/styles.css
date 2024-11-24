@@ -112,7 +112,7 @@ body {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 15px;
-    margin-bottom: 24px;
+    margin-bottom: 8px;
 }
 
 .stat-card {
@@ -304,96 +304,6 @@ body {
     margin-right: 300px;
     margin-left: 50px;
 }
-
-.drawer {
-    position: fixed;
-    top: 0;
-    left: -300px;
-    /* Inicialmente fora da tela */
-    width: 300px;
-    height: 100%;
-    background-color: #ffffff;
-    color: black;
-    transition: left 0.3s ease;
-    padding: 20px;
-    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
-    z-index: 100;
-}
-
-.drawer ul {
-    list-style: none;
-}
-
-.drawer li {
-    padding: 15px 0;
-    cursor: pointer;
-    font-weight: bold;
-}
-
-.drawer li:hover {
-    background-color: #fff;
-}
-
-
-#drawer-close {
-    width: 50px;
-    height: 50px;
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 8px;
-
-}
-
-
-#drawer-close img {
-    width: 100%;
-    /* Ajusta a largura da imagem para preencher a div */
-    height: 100%;
-    /* Ajusta a altura da imagem para preencher a div */
-    object-fit: cover;
-    /* Garante que a imagem cubra completamente a div sem distorcer */
-}
-
-
-
-ul {
-    list-style: none;
-    padding: 0;
-}
-
-li {
-    margin-bottom: 10px;
-}
-
-.icon-text {
-    display: flex;
-    align-items: center;
-}
-
-.icon-text img {
-    margin-right: 8px;
-    /* Espaçamento entre a imagem e o texto */
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

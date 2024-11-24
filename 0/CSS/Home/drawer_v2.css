@@ -1,0 +1,160 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f5f5f5;
+    color: #333;
+}
+
+
+.drawer {
+    position: fixed;
+    top: 0;
+    left: -300px;
+    width: 300px;
+    height: 100%;
+    background: #fff;
+    box-shadow: 4px 0 10px rgba(0, 0, 0, 0.1);
+    border-right: 1px solid #ddd;
+    transition: all 0.3s ease;
+    z-index: 20;
+}
+
+.drawer.open {
+    left: 0;
+}
+
+.drawer-header {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    padding: 20px;
+    text-align: center;
+    background: white;
+    color: white;
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+.drawer-menu {
+    list-style: none;
+    overflow-y: auto;
+    max-height: calc(100vh - 70px);
+    padding: 15px;
+}
+
+
+.drawer-menu li {
+    position: relative;
+    margin-bottom: 10px;
+}
+
+.drawer-menu a {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 20px;
+    text-decoration: none;
+    color: #333;
+    background: #f9f9f9;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    font-size: 1em;
+    font-weight: 500;
+}
+
+.drawer-menu a:hover {
+    background: #007bff;
+    color: white;
+}
+
+
+.arrow {
+    font-size: 0.9em;
+    margin-left: auto;
+    transition: transform 0.3s ease;
+}
+
+.has-submenu>a::after {
+    content: "";
+}
+
+.submenu {
+    list-style: none;
+    margin-top: 5px;
+    padding-left: 20px;
+    display: none;
+}
+
+.has-submenu.open .submenu {
+    display: block;
+}
+
+.submenu a {
+    font-size: 0.9em;
+    color: #555;
+    background: #e9ecef;
+    margin-bottom: 5px;
+}
+
+.submenu a:hover {
+    background: #007bff;
+    color: white;
+}
+
+
+.drawer_icon {
+    position: fixed;
+    left: 10px;
+    z-index: 9999;
+    border: none;
+    width: 35px;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.notification {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    background: #ff3b3b;
+    color: white;
+    font-size: 0.8em;
+    font-weight: bold;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+}
+
+
+.drawer-menu li {
+    position: relative;
+}
+
+.drawer-menu::-webkit-scrollbar {
+    width: 4px;
+}
+
+.drawer-menu::-webkit-scrollbar-thumb {
+    background-color: #cccccc;
+    border-radius: 8px;
+}
+
+.drawer-menu::-webkit-scrollbar-track {
+    background-color: #f1f1f1;
+}
+
+
+@media screen and (max-width: 769px) {
+    .drawer_icon {
+        left: 8px;
+        width: 28px;
+        height: 28px;
+    }
+}
