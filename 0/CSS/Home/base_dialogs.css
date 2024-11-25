@@ -1,0 +1,138 @@
+#base_dialog {
+    width: 90%;
+    max-width: 700px;
+    height: fit-content;
+    max-height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: white;
+    border-radius: 10px;
+    z-index: 10;
+    padding: 8px 12px;
+}
+
+.dialog_title {
+    width: 100%;
+    height: fit-content;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #2c3e50;
+    margin-bottom: 10px;
+}
+
+
+.main_container_all_dialogs {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    overflow: auto;
+}
+
+.the_dialog_container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+.the_dialog_container.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.dialog_content {
+    border-radius: 16px;
+    width: 100%;
+    padding: 10px 15px;
+    text-align: center;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease-in-out;
+}
+
+.the_dialog_container.active .dialog_content {
+    transform: scale(1);
+}
+
+.dialog_subtitle {
+    text-align: center;
+    font-size: 1rem;
+    color: #7f8c8d;
+    margin-bottom: 20px;
+}
+
+.conversion_options {
+    display: grid;
+    gap: 15px;
+}
+
+.conversion_option {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    background: #f8f9fa;
+    border: 2px solid #e7e7e7;
+    border-radius: 12px;
+    transition: all 0.3s ease-in-out;
+    cursor: pointer;
+}
+
+.conversion_option:hover {
+    background: #ecf0f1;
+    border-color: #3498db;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(52, 152, 219, 0.2);
+}
+
+.conversion_option .stars {
+    font-weight: 600;
+    font-size: 1rem;
+    color: #2c3e50;
+}
+
+.conversion_option .amount {
+    font-weight: 700;
+    font-size: 1rem;
+    color: #16a085;
+}
+
+
+.close_button {
+    width: 100%;
+    margin-top: 20px;
+    padding: 15px 24px;
+    background: #e74c3c;
+    color: #fff;
+    font-size: 1rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.close_button:hover {
+    background: #c0392b;
+}
+
+
+.conversion_option.selected {
+    background: #0d639c;
+    color: #ffffff;
+    border-color: #2980b9;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(52, 152, 219, 0.4);
+}
+
+.conversion_option.selected .stars,
+.conversion_option.selected .amount {
+    color: #ffffff;
+}

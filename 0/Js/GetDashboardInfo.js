@@ -288,19 +288,35 @@ function handleDialogChooseTask(levelIndex) {
         overlay.style.display = "none";
         isOverlayVisible = !isOverlayVisible
     } else {
+        const hashToDialogData = {
+            "#TodosLinks": { id: "dialog_all_links", title: "Todos os Links" },
+            "#ConverterEstrelas": { id: "dialog_convert_stars", title: "Converter Estrelas" },
+            "#ConvidarAmigos": { id: "dialog_convidar_amigos", title: "Convidar Amigos" },
+            "#Sacar": { id: "dialog_sacar", title: "Sacar Saldo" },
+            "#HistoricoSaques": { id: "dialog_historio_de_saques", title: "Histórico de Saques" },
+            "#MinhasNotificacoes": { id: "dialog_minhas_notificacoes", title: "Minhas Notificações" },
+            "#Instagram": { id: "dialog_instagram", title: "Instagram" },
+            "#Telegram": { id: "dialog_telegram", title: "Telegram" },
+            "#Gmail": { id: "dialog_gmail", title: "Gmail" },
+            "#YouTube": { id: "dialog_youtube", title: "YouTube" },
+            "#Perfil": { id: "dialog_perfil", title: "Perfil" },
+            "#Logout": { id: "dialog_logout", title: "Logout" },
+        };
+
         overlay.style.display = "flex";
         isOverlayVisible = !isOverlayVisible
 
-        const closeDialog = document.getElementById("close_dialog_choose_links");
+        const dialog_title = document.getElementById("dialog_title");
         const dialog_title_level_name = document.getElementById("dialog_title_level_name");
 
         const levelsNames = ["Bronze", "Prata", "Ouro", "Diamante"];
         dialog_title_level_name.textContent = levelsNames[levelIndex]
+        dialog_title.textContent = "Escolha uma tarefa para prosseguir!";
 
-        closeDialog.addEventListener("click", () => {
-            overlay.style.display = "none";
-            isOverlayVisible = !isOverlayVisible
-            history.replaceState(null, "", window.location.pathname + window.location.search);
+        const dialogs = document.querySelectorAll(".main_container_all_dialogs .the_dialog_container");
+
+        dialogs.forEach(dialog => {
+            dialog.style.display = dialog.id === "dialog_all_links" ? "block" : "none";
         });
 
         loadLinksIntoTable(levelIndex);
@@ -383,9 +399,8 @@ function calculateRemainingTime(timeStored, currentServerDate) {
     return response;
 }
 
-
 function updateHomeTaskAvailability(container, textTask, availability) {
-    
+
     const intervalKey = container.id;
 
     if (countdownIntervals[intervalKey]) {
@@ -444,14 +459,12 @@ function handleURLHashs() {
     }
 }
 
-
 function updateHashSilently(hashValue) {
     if (hashValue) {
         const newURL = `${window.location.origin}${window.location.pathname}#${hashValue}`;
         history.replaceState(null, "", newURL);
     }
 }
-
 
 function saveUserPointsToLocalStorage(jsonPoints) {
     const userPoints = JSON.stringify(jsonPoints);

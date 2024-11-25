@@ -17,6 +17,8 @@
     <link rel="stylesheet" href="../CSS/Home/generic.css">
     <link rel="stylesheet" href="../CSS/Home/drawer_v2.css">
 
+    <link rel="stylesheet" href="../CSS/Home/base_dialogs.css">
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
 
 </head>
@@ -57,6 +59,7 @@
         <div class="drawer-header">
             <h2>Menu</h2>
         </div>
+
         <ul class="drawer-menu">
             <li class="has-submenu">
                 <a href="#dashboard" onclick="toggleSubmenu(event)">
@@ -64,19 +67,19 @@
                     <span class="arrow">▼</span>
                 </a>
                 <ul class="submenu">
-                    <li><a href="#home">🏠 Home</a></li>
-                </ul>
-                <ul class="submenu">
-                    <li><a href="#home">⭐ Converter estrelas</a></li>
+                    <li onclick="openEspecificDialog('#Home')"><a href="#home">🏠 Home</a></li>
+                    <li onclick="openEspecificDialog('#ConverterEstrelas')"><a href="#ConverterEstrelas">⭐ Converter
+                            Estrelas</a></li>
                 </ul>
             </li>
             <li class="has-submenu">
-                <a href="#convides" onclick="toggleSubmenu(event)">
+                <a href="#convites" onclick="toggleSubmenu(event)">
                     🤝 Convites
                     <span class="arrow">▼</span>
                 </a>
                 <ul class="submenu">
-                    <li><a href="#amigos-convidados">👥 Amigos Convidados</a></li>
+                    <li onclick="openEspecificDialog('#ConvidarAmigos')"><a href="#ConvidarAmigos">👥 Convidar
+                            Amigos</a></li>
                 </ul>
             </li>
             <li class="has-submenu">
@@ -85,17 +88,19 @@
                     <span class="arrow">▼</span>
                 </a>
                 <ul class="submenu">
-                    <li><a href="#sacar">💵 Sacar</a></li>
-                    <li><a href="#historico">🔍 Histórico</a></li>
+                    <li onclick="openEspecificDialog('#Sacar')"><a href="#Sacar">💵 Sacar</a></li>
+                    <li onclick="openEspecificDialog('#HistoricoSaques')"><a href="#HistoricoSaques">🔍
+                            Histórico de Saques</a></li>
                 </ul>
             </li>
             <li class="has-submenu">
-                <a href="#saques" onclick="toggleSubmenu(event)">
+                <a href="#notificacoes" onclick="toggleSubmenu(event)">
                     🔔 Notificações
                     <span class="arrow">▼</span>
                 </a>
                 <ul class="submenu">
-                    <li><a href="#historico">🛎️ Minhas Notificações</a></li>
+                    <li onclick="openEspecificDialog('#MinhasNotificacoes')"><a href="#MinhasNotificacoes">🛎️
+                            Minhas Notificações</a></li>
                 </ul>
             </li>
             <li class="has-submenu">
@@ -104,8 +109,8 @@
                     <span class="arrow">▼</span>
                 </a>
                 <ul class="submenu">
-                    <li><a href="#instagram">📸 Instagram</a></li>
-                    <li><a href="#telegram">💬 Telegram</a></li>
+                    <li onclick="openEspecificDialog('#Instagram')"><a href="#Instagram">📸 Instagram</a></li>
+                    <li onclick="openEspecificDialog('#Telegram')"><a href="#Telegram">💬 Telegram</a></li>
                 </ul>
             </li>
             <li class="has-submenu">
@@ -114,8 +119,8 @@
                     <span class="arrow">▼</span>
                 </a>
                 <ul class="submenu">
-                    <li><a href="#gmail">📧 Gmail</a></li>
-                    <li><a href="#youtube">🎥 YouTube</a></li>
+                    <li onclick="openEspecificDialog('#Gmail')"><a href="#Gmail">📧 Gmail</a></li>
+                    <li onclick="openEspecificDialog('#YouTube')"><a href="#YouTube">🎥 YouTube</a></li>
                 </ul>
             </li>
             <li class="has-submenu">
@@ -124,11 +129,12 @@
                     <span class="arrow">▼</span>
                 </a>
                 <ul class="submenu">
-                    <li><a href="#perfil">👤 Perfil</a></li>
-                    <li><a href="#logout">🚪 Logout</a></li>
+                    <li onclick="openEspecificDialog('#Perfil')"><a href="#Perfil">👤 Perfil</a></li>
+                    <li onclick="openEspecificDialog('#Logout')"><a href="#Logout">🚪 Logout</a></li>
                 </ul>
             </li>
         </ul>
+
     </div>
 
 
@@ -291,62 +297,155 @@
 
 
     <div id="overlay">
-        <div id="container_dialog_choose_links">
+        <div id="base_dialog">
             <div class="dialog_title">
-                <p>Escolha uma opção para prosseguir</p>
-                <img class="close_dialog_choose_links" id="close_dialog_choose_links" src="../SRC/IMGs/close.png"
-                    alt="close dialog">
+                <p id="dialog_title">Titulo do diálogo</p>
+                <img id="img_close_dialog" src="../SRC/IMGs/close.png" alt="close dialog">
             </div>
-            <p id="p_link_descri">Você tem <strong id="dialog_title_tasks_remaining">x</strong> pesquisas no nível
-                <strong id="dialog_title_level_name">y</strong> para realizar por
-                dia. Após a conclusão
-                de cada opção, <strong>ela levará 24 horas para reiniciar</strong> (contando a partir do momento em que
-                você concluiu a
-                respectiva tarefa).
-            </p>
 
-            <div class="container_the_links_table">
-                <table id="table_links">
-                    <thead id="thead_links">
-                        <tr>
-                            <th>Tarefa</th>
-                            <th>Pontuação</th>
-                            <th>Status</th>
-                        </tr>
-                    </thead>
+            <!--Container all Dialogs_UI-->
+            <div class="main_container_all_dialogs">
 
-                    <tbody id="tbody_links">
-                        <!--
-                          <tr class="tbody_tr_links">
-                            <td>Tarefa <strong>1</strong></td>
-                            <td>+10 <img src="../SRC/IMGs/star.png" class="task_star" alt="Estrela"></td>
-                            <td class="task_td">
-                                <div class="status disponivel">
-                                    <span>Disponível</span>
-                                    <span class="arrow">➔</span>
-                                </div>
-                            </td>
-                        </tr> 
-                        <tr class="tbody_tr_links">
-                            <td><div class="div_task_name_shimmer"></div></td>
-                            <td><div class="div_pontuation_shimmer"></div></td>
-                            <td class="task_td">
-                                <div class="div_status_shimmer">
-                                </div>
-                            </td>
-                        </tr> 
-                        -->
-                    </tbody>
+                <!--Dialog all links-->
+                <div class="the_dialog_container" id="dialog_all_links">
+                    <p id="p_link_descri">Você tem <strong id="dialog_title_tasks_remaining">x</strong> pesquisas no
+                        nível
+                        <strong id="dialog_title_level_name">y</strong> para realizar por
+                        dia. Após a conclusão
+                        de cada opção, <strong>ela levará 24 horas para reiniciar</strong> (contando a partir do momento
+                        em que
+                        você concluiu a
+                        respectiva tarefa).
+                    </p>
 
-                </table>
+                    <div class="container_the_links_table">
+                        <table id="table_links">
+                            <thead id="thead_links">
+                                <tr>
+                                    <th>Tarefa</th>
+                                    <th>Pontuação</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+
+                            <tbody id="tbody_links">
+                                <!--
+                                  <tr class="tbody_tr_links">
+                                    <td>Tarefa <strong>1</strong></td>
+                                    <td>+10 <img src="../SRC/IMGs/star.png" class="task_star" alt="Estrela"></td>
+                                    <td class="task_td">
+                                        <div class="status disponivel">
+                                            <span>Disponível</span>
+                                            <span class="arrow">➔</span>
+                                        </div>
+                                    </td>
+                                </tr> 
+                                <tr class="tbody_tr_links">
+                                    <td><div class="div_task_name_shimmer"></div></td>
+                                    <td><div class="div_pontuation_shimmer"></div></td>
+                                    <td class="task_td">
+                                        <div class="div_status_shimmer">
+                                        </div>
+                                    </td>
+                                </tr> 
+                                -->
+                            </tbody>
+
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Dialog Convert Stars -->
+                <div class="the_dialog_container" id="dialog_convert_stars">
+                    <div class="dialog_content">
+                        <p class="dialog_subtitle">Selecione uma opção e depois clique para converter suas estrelas em saldo:</p>
+                        <div class="conversion_options">
+                            <div class="conversion_option">
+                                <span class="stars">✨ 100 Estrelas</span>
+                                <span class="amount">R$ 1,00</span>
+                            </div>
+                            <div class="conversion_option">
+                                <span class="stars">✨ 500 Estrelas</span>
+                                <span class="amount">R$ 5,00</span>
+                            </div>
+                            <div class="conversion_option">
+                                <span class="stars">✨ 1000 Estrelas</span>
+                                <span class="amount">R$ 10,00</span>
+                            </div>
+                            <div class="conversion_option">
+                                <span class="stars">✨ 5000 Estrelas</span>
+                                <span class="amount">R$ 50,00</span>
+                            </div>
+                            <div class="conversion_option">
+                                <span class="stars">✨ 10000 Estrelas</span>
+                                <span class="amount">R$ 100,00</span>
+                            </div>
+                        </div>
+                        <button class="close_button">Converter Estrelas</button>
+                    </div>
+                </div>
+
+
+                <!--Dialog Convintes: invitations-->
+                <div class="the_dialog_container" id="dialog_convidar_amigos">
+                    <h1>Convidar amigos</h1>
+                </div>
+
+                <!--Dialog Saques: Sacar-->
+                <div class="the_dialog_container" id="dialog_sacar">
+                    <h1>Sacar saldo</h1>
+                </div>
+
+                <!--Dialog Saques: histórico de saques-->
+                <div class="the_dialog_container" id="dialog_historio_de_saques">
+                    <h1>histórico de saques</h1>
+                </div>
+
+                <!--Dialog Notifications: Minhas notifications-->
+                <div class="the_dialog_container" id="dialog_minhas_notificacoes">
+                    <h1>Minhas Notificações</h1>
+                </div>
+
+                <!--Dialog Redes sociais: Instagram-->
+                <div class="the_dialog_container" id="dialog_instagram">
+                    <h1>Instagram</h1>
+                </div>
+
+                <!--Dialog Redes sociais: Telegram-->
+                <div class="the_dialog_container" id="dialog_telegram">
+                    <h1>Telegram</h1>
+                </div>
+
+                <!--Dialog suporte: Gmail-->
+                <div class="the_dialog_container" id="dialog_gmail">
+                    <h1>Gmail</h1>
+                </div>
+
+                <!--Dialog suporte: Youtube-->
+                <div class="the_dialog_container" id="dialog_youtube">
+                    <h1>Youtube</h1>
+                </div>
+
+                <!--Dialog Configuracoes: Perfil-->
+                <div class="the_dialog_container" id="dialog_perfil">
+                    <h1>Perfil</h1>
+                </div>
+
+                <!--Dialog Configuracoes: logout-->
+                <div class="the_dialog_container" id="dialog_logout">
+                    <h1>Logout</h1>
+                </div>
             </div>
+
         </div>
+
+
     </div>
 
 
     <script src="../Js/drawer.js"></script>
     <script src="../Js/GetDashboardInfo.js"></script>
-    <script src="../Js/table_choose_links.js"></script>
+    <script src="../Js/HandleDrawerCliques.js"></script>
 </body>
 
 </html>

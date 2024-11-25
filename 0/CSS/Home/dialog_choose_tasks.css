@@ -9,7 +9,7 @@
     font-size: 1.2em;
 }
 
-#container_dialog_choose_links {
+#container_dialog {
     max-width: 700px;
 }
 
@@ -29,7 +29,7 @@
     padding: 10px;
 }
 
-#container_dialog_choose_links {
+#container_dialog {
     width: 100%;
     height: fit-content;
     padding: 12px 10px 10px 10px;
@@ -37,14 +37,8 @@
     border-radius: 10px;
 }
 
-.dialog_title {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-}
 
-.close_dialog_choose_links {
+#img_close_dialog {
     width: 30px;
     height: 30px;
     background-color: rgb(189, 189, 189);
