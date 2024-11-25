@@ -1,15 +1,6 @@
-async function currentuserTime() {
-    try {
-        const response = await fetch("http://worldtimeapi.org/api/ip");
-        if (!response.ok) {
-            throw new Error("Erro ao obter dados da API.");
-        }
-        const data = await response.json();
-        console.log("Fuso horário detectado pela API:", data.timezone);
-        console.log("Data e hora atual:", data.datetime);
-    } catch (error) {
-        console.error("Erro ao obter fuso horário da API:", error);
-    }
-}
+let ttVal = 6000;
+let juros = 10;
 
-currentuserTime();
+let calc = (juros / 100) * ttVal;
+
+console.log(`10% de 6000 são: ${calc}`);

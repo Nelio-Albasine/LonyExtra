@@ -109,6 +109,11 @@
     animation: pulse 2.5s infinite ease-in-out;
 }
 
+
+#fab_invite_friends{
+    animation: pulse 2.5s infinite ease-in-out;
+}
+
 @keyframes pulse {
     0% {
         transform: scale(1);
@@ -147,6 +152,7 @@
     border: none;
     border-radius: 6px;
     font-size: 12px;
+    cursor: pointer;
 }
 
 .card_option_name.unavailable {
