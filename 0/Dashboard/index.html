@@ -18,12 +18,27 @@
     <link rel="stylesheet" href="../CSS/Home/drawer_v2.css">
 
     <link rel="stylesheet" href="../CSS/Home/base_dialogs.css">
+    <link rel="stylesheet" href="../CSS/Home/popups_and_ui_feedbacks.css">
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
 
 </head>
 
 <body>
+    <div id="alert" class="alert hidden">
+        <span class="icon"></span>
+        <span class="message"></span>
+    </div>
+
+    <div id="confirmation-box_overlay">
+        <div class="confirmation-box success">
+            <div class="icon-box">✔</div>
+            <h1>Success!</h1>
+            <p>Your booking has been confirmed. Check your email for details, including your reservation number.</p>
+            <button>Got it</button>
+        </div>
+    </div>
+
     <header class="header">
         <!-- Conteúdo do cabeçalho -->
         <ul class="header_ul">
@@ -34,10 +49,10 @@
             <li>
                 <div class="container_stars">
                     <img src="../SRC/IMGs/star.png" alt="star">
-                    <p id="userStars">0</p>
+                    <p class="userStars" id="userStars">0</p>
                 </div>
 
-                <p id="userRevenue">R$ 0.00 </p>
+                <p class="userRevenue" id="userRevenue">R$ 0.00 </p>
             </li>
 
             <li>
@@ -53,7 +68,6 @@
             </li>
         </ul>
     </header>
-
 
     <div class="drawer">
         <div class="drawer-header">
@@ -137,7 +151,6 @@
 
     </div>
 
-
     <main class="main-content">
         <!-- Conteúdo principal -->
         <div class="stats-grid">
@@ -147,7 +160,7 @@
             </div>
             <div class="stat-card">
                 <p class="stat-label">Total já acumulado</p>
-                <div class="stat-value"><strong id="userLTRevenue">R$ 0.00</strong></div>
+                <div class="stat-value"><strong class="userLTRevenue" id="userLTRevenue">R$ 0.00</strong></div>
             </div>
             <div class="stat-card">
                 <p class="stat-label p_label_invitation">Amigos Convidados</p>
@@ -358,30 +371,30 @@
                 <!-- Dialog Convert Stars -->
                 <div class="the_dialog_container" id="dialog_convert_stars">
                     <div class="dialog_content">
-                        <p class="dialog_subtitle">Selecione uma opção e depois clique para converter suas estrelas em saldo:</p>
+                        <p class="dialog_subtitle">🎉 Selecione uma opção e depois clique para converter suas estrelas em saldo:</p>
                         <div class="conversion_options">
                             <div class="conversion_option">
-                                <span class="stars">✨ 100 Estrelas</span>
-                                <span class="amount">R$ 1,00</span>
+                                <span class="stars">✨ 600 Estrelas</span>
+                                <span class="amount">💰 R$ 1,00</span>
                             </div>
                             <div class="conversion_option">
-                                <span class="stars">✨ 500 Estrelas</span>
-                                <span class="amount">R$ 5,00</span>
+                                <span class="stars">✨ 2980 Estrelas</span>
+                                <span class="amount">💰 R$ 5,20</span>
                             </div>
                             <div class="conversion_option">
-                                <span class="stars">✨ 1000 Estrelas</span>
-                                <span class="amount">R$ 10,00</span>
+                                <span class="stars">✨ 5955 Estrelas</span>
+                                <span class="amount">💰 R$ 10,50</span>
                             </div>
                             <div class="conversion_option">
-                                <span class="stars">✨ 5000 Estrelas</span>
-                                <span class="amount">R$ 50,00</span>
+                                <span class="stars">✨ 11.905 Estrelas</span>
+                                <span class="amount">💰 R$ 21,30</span>
                             </div>
                             <div class="conversion_option">
-                                <span class="stars">✨ 10000 Estrelas</span>
-                                <span class="amount">R$ 100,00</span>
+                                <span class="stars">✨ 23.805 Estrelas</span>
+                                <span class="amount">💰 R$ 43,19</span>
                             </div>
                         </div>
-                        <button class="close_button">Converter Estrelas</button>
+                        <button class="normalState" id="convertStarsBtn">Converter Estrelas</button>
                     </div>
                 </div>
 

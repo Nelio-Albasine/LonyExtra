@@ -1,6 +1,6 @@
 {
-    "myInviterCode": null,
-    "myReferralCode": "60229D",
-    "totalStarsEarnedByReferral": 12000,
-    "myTotalReferredFriends": 8
+    "userStars": 10000,
+    "userLTStars": 10000,
+    "userRevenue": 0,
+    "userLTRevenue": 0
 }

@@ -4,121 +4,115 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Drawer with Submenus</title>
+    <title>Status Confirmation</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #808080;
+        }
 
-    <link rel="stylesheet" href="../CSS/Home/drawer_v2.css">
+        .confirmation-box {
+            text-align: center;
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            width: 320px;
+            position: relative;
+        }
 
+        .icon-box {
+            position: absolute;
+            top: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            font-size: 24px;
+            color: white;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        }
+
+        .confirmation-box.success .icon-box {
+            background-color: #28a745;
+        }
+
+        .confirmation-box.warning .icon-box {
+            background-color: #ffc107;
+        }
+
+        .confirmation-box.error .icon-box {
+            background-color: #dc3545;
+        }
+
+        .confirmation-box.success button {
+            background-color: #28a745;
+        }
+
+        .confirmation-box.warning button {
+            background-color: #e0a800;
+        }
+
+        .confirmation-box.error button {
+            background-color: #c82333;
+        }
+
+        .confirmation-box button {
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+        }
+
+        .confirmation-box.success button:hover {
+            background-color: #218838;
+        }
+
+        .confirmation-box.warning button:hover {
+            background-color: #d39e00;
+        }
+
+        .confirmation-box.error button:hover {
+            background-color: #bd2130;
+        }
+
+        .confirmation-box h1 {
+            font-size: 24px;
+            color: #333;
+            margin: 35px 0 10px 0;
+        }
+
+        .confirmation-box p {
+            font-size: 14px;
+            color: #555;
+            margin: 0 0 20px 0;
+        }
+    </style>
 </head>
 
 <body>
-    <!-- Drawer -->
-    <div class="drawer">
-        <div class="drawer-header">
-            <button class="toggle-drawer" onclick="toggleDrawer()">☰</button>
-            <h2>Menu</h2>
+    <!-- Dynamic Example -->
+    <div id="confirmation-box_overlay">
+        <div class="confirmation-box success">
+            <div class="icon-box">✔</div>
+            <h1>Success!</h1>
+            <p>Your booking has been confirmed. Check your email for details, including your reservation number.</p>
+            <button>Got it</button>
         </div>
-        <ul class="drawer-menu">
-            <li class="has-submenu">
-                <a href="#dashboard" onclick="toggleSubmenu(event)">
-                    📊 Dashboard
-                    <span class="arrow">▼</span>
-                </a>
-                <ul class="submenu">
-                    <li><a href="#home">🏠 Home</a></li>
-                </ul>
-            </li>
-            <li class="has-submenu">
-                <a href="#convides" onclick="toggleSubmenu(event)">
-                    🤝 Convites
-                    <span class="arrow">▼</span>
-                </a>
-                <ul class="submenu">
-                    <li><a href="#amigos-convidados">👥 Amigos Convidados</a></li>
-                </ul>
-            </li>
-            <li class="has-submenu">
-                <a href="#saques" onclick="toggleSubmenu(event)">
-                    💰 Saques
-                    <span class="arrow">▼</span>
-                </a>
-                <ul class="submenu">
-                    <li><a href="#sacar">💵 Sacar</a></li>
-                    <li><a href="#historico">🔍 Histórico</a></li>
-                </ul>
-            </li>
-            <li class="has-submenu">
-                <a href="#saques" onclick="toggleSubmenu(event)">
-                    🔔 Notificações
-                    <span class="arrow">▼</span>
-                </a>
-                <ul class="submenu">
-                    <li><a href="#historico">🛎️ Minhas Notificações</a></li>
-                </ul>
-            </li>
-            <li class="has-submenu">
-                <a href="#redes-sociais" onclick="toggleSubmenu(event)">
-                    🌐 Redes Sociais
-                    <span class="arrow">▼</span>
-                </a>
-                <ul class="submenu">
-                    <li><a href="#instagram">📸 Instagram</a></li>
-                    <li><a href="#telegram">💬 Telegram</a></li>
-                </ul>
-            </li>
-            <li class="has-submenu">
-                <a href="#suporte" onclick="toggleSubmenu(event)">
-                    📞 Suporte
-                    <span class="arrow">▼</span>
-                </a>
-                <ul class="submenu">
-                    <li><a href="#gmail">📧 Gmail</a></li>
-                    <li><a href="#youtube">🎥 YouTube</a></li>
-                </ul>
-            </li>
-            <li class="has-submenu">
-                <a href="#configuracoes" onclick="toggleSubmenu(event)">
-                    ⚙️ Configurações
-                    <span class="arrow">▼</span>
-                </a>
-                <ul class="submenu">
-                    <li><a href="#perfil">👤 Perfil</a></li>
-                    <li><a href="#logout">🚪 Logout</a></li>
-                </ul>
-            </li>
-        </ul>
     </div>
 
-    <!-- Main Content -->
-    <div class="main-content">
-        <h1>Bem-vindo!</h1>
-        <p>Aqui está o conteúdo principal da sua página...</p>
-    </div>
-
-    <script>
-        function toggleDrawer() {
-            document.querySelector('.drawer').classList.toggle('open');
-            document.querySelector('.main-content').classList.toggle('drawer-open');
-        }
-
-        function toggleSubmenu(event) {
-            event.preventDefault();
-            const parent = event.target.closest('.has-submenu');
-            const arrow = parent.querySelector('.arrow');
-
-            parent.classList.toggle('open');
-
-            // Mostra/esconde o submenu
-            const submenu = parent.querySelector('.submenu');
-            submenu.style.display = submenu.style.display === 'block' ? 'none' : 'block';
-
-            // Atualiza o texto da seta
-            if (submenu.style.display === 'block') {
-                arrow.textContent = '▲'; // Submenu aberto
-            } else {
-                arrow.textContent = '▼'; // Submenu fechado
-            }
-        }
-    </script>
 </body>
 
 </html>
