@@ -18,6 +18,7 @@
     <link rel="stylesheet" href="../CSS/Home/drawer_v2.css">
 
     <link rel="stylesheet" href="../CSS/Home/base_dialogs.css">
+    
     <link rel="stylesheet" href="../CSS/Home/popups_and_ui_feedbacks.css">
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
@@ -233,6 +234,7 @@
         <div>
             <h2 class="h2_outras_formas_de_ganhos">Pesquisas diárias</h2>
             <div class="level-list">
+                <!--Nivel Bronze-->
                 <div class="level-card">
                     <div class="level-badge">
                         <p class="p_option_leven_name">Nivel Bronze</p>
@@ -250,6 +252,7 @@
 
                 </div>
 
+                <!--Nivel Prata-->
                 <div class="level-card">
                     <div class="level-badge">
                         <p class="p_option_leven_name">Nivel Prata</p>
@@ -265,6 +268,7 @@
                     </div>
                 </div>
 
+                <!--Nivel Ouro-->
                 <div class="level-card">
                     <div class="level-badge">
                         <p class="p_option_leven_name">Nivel Ouro</p>
@@ -279,6 +283,7 @@
 
                 </div>
 
+                <!--Nivel Diamante-->
                 <div class="level-card">
                     <div class="level-badge">
                         <p class="p_option_leven_name"> Nivel <span class="span_diamante">Diamante</span></p>
@@ -291,6 +296,23 @@
                     <div id="containerDiamanteChecker" class="timer">
                         <img src="../SRC/IMGs/task.png">
                         <p id="tasksDiamanteRemaining" class="timeOrtaskRemaining">Disponível em <strong>00:00</strong>
+                        </p>
+                    </div>
+                </div>
+
+                <!--Nivel Diamante PLUS-->
+                <div class="level-card">
+                    <div class="level-badge level-badge-platina">
+                        <p class="p_option_leven_name"> Nivel <span class="span_diamante_platina">Platina</span></p>
+                        <div class="level-desc">15 segundos de leitura a cada etapa e devera passar 4 etapa.</div>
+                    </div>
+                    <div class="points points_platina">
+                        <img src="../SRC/IMGs/star.png">80 <span class="span_stars">Stars</span>
+                    </div>
+                    <div class="info"><img src="../SRC/IMGs/info.png"></div>
+                    <div id="containerPlatinaChecker" class="timer">
+                        <img src="../SRC/IMGs/task.png">
+                        <p id="tasksPlatinaRemaining" class="timeOrtaskRemaining">Disponível em <strong>00:00</strong>
                         </p>
                     </div>
                 </div>
@@ -371,7 +393,8 @@
                 <!-- Dialog Convert Stars -->
                 <div class="the_dialog_container" id="dialog_convert_stars">
                     <div class="dialog_content">
-                        <p class="dialog_subtitle">🎉 Selecione uma opção e depois clique para converter suas estrelas em saldo:</p>
+                        <p class="dialog_subtitle">🎉 Selecione uma opção e depois clique para converter suas estrelas
+                            em saldo:</p>
                         <div class="conversion_options">
                             <div class="conversion_option">
                                 <span class="stars">✨ 600 Estrelas</span>

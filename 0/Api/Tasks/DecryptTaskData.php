@@ -20,7 +20,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     exit;
 }
 
-
 function main()
 {
     // Lê e valida os dados recebidos na requisição
@@ -57,7 +56,7 @@ function main()
 try {
     main();
 } catch (\Throwable $th) {
-    error_log("Ocorreum um erro generico no DecrypeTaskData.php: ". $th->getMessage());
+    error_log("Ocorreum um erro generico no DecrypeTaskData.php: " . $th->getMessage());
 }
 exit;
 
@@ -151,6 +150,9 @@ function updateUserPoints($conn, $decryptedData, $userId, $taskId)
         case 3:
             $starsToEarn = 50;
             break;
+        case 4:
+            $starsToEarn = 80;
+            break;
     }
 
     $updatePointsQuery = "
@@ -184,12 +186,12 @@ function updateUserPoints($conn, $decryptedData, $userId, $taskId)
  */
 function updatelinkStatus($conn, $userId, $taskId, $jsonBatchName)
 {
-    $userTimeZone = getUserTimeZone($conn, $userId); 
+    $userTimeZone = getUserTimeZone($conn, $userId);
 
     $userDateTime = new DateTime("now", new DateTimeZone($userTimeZone));
     $timeToStored = $userDateTime->format("Y-m-d H:i:s");
 
-    $isAvailable = false; 
+    $isAvailable = false;
 
     $updateQuery = "
         UPDATE links_availability
@@ -221,8 +223,6 @@ function updatelinkStatus($conn, $userId, $taskId, $jsonBatchName)
     }
 }
 
-
-
 function processUserPointsAndLinkStatus($conn, array $decryptedData): bool
 {
     $userId = $decryptedData["userId"];
@@ -243,6 +243,9 @@ function processUserPointsAndLinkStatus($conn, array $decryptedData): bool
             break;
         case 3:
             $jsonBatchName = "diamanteAvailability";
+            break;
+        case 4:
+            $jsonBatchName = "platinaAvailability";
             break;
     }
 
@@ -310,7 +313,8 @@ function checkIfTaskIdIsAvailable($conn, $userId, $taskId, $jsonBatchName): bool
     return $isAvailable === true;
 }
 
-function getUserTimeZone($conn, $userId) {
+function getUserTimeZone($conn, $userId)
+{
     $query = "SELECT userTimeZone FROM usuarios WHERE userId = ?";
     $stmt = $conn->prepare($query);
 
@@ -340,6 +344,5 @@ function getUserTimeZone($conn, $userId) {
 
     return "America/Sao_Paulo";
 }
-
 
 function updatemyInviterStars() {}

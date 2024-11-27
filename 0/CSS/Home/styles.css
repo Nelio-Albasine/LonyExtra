@@ -183,6 +183,10 @@ body {
     margin: 10px;
 }
 
+.level-badge-platina{
+    background-color: #9e067d;
+}
+
 .timer {
     padding: 12px;
     border-radius: 8px;
@@ -218,6 +222,10 @@ body {
     color: #ffffff;
     height: 65px;
     margin: 10px;
+}
+
+.points_platina{
+    background-color: #070e4b;
 }
 
 .points img {
