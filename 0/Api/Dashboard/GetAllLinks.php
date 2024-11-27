@@ -92,7 +92,8 @@ function insertLinksAvailability($userId, $conn)
         "bronzeAvailability" => createLinkGroup("Bronze", $conn),
         "prataAvailability" => createLinkGroup("Prata", $conn),
         "ouroAvailability" => createLinkGroup("Ouro", $conn),
-        "diamanteAvailability" => createLinkGroup("Diamante", $conn)
+        "diamanteAvailability" => createLinkGroup("Diamante", $conn),
+        "platinaAvailability" => createLinkGroup("Platina", $conn)
     ];
 
     $availabilityJson = json_encode($linksMap, JSON_PRETTY_PRINT);
@@ -158,7 +159,7 @@ function getLinksAvailability($userId, $conn, $batch = null)
 
 function getLinksBatchs($conn)
 {
-    $sql = "SELECT loteBronze, lotePrata, loteOuro, loteDiamante FROM dash_links";
+    $sql = "SELECT loteBronze, lotePrata, loteOuro, loteDiamante, lotePlatina FROM dash_links";
     $stmt = $conn->prepare($sql);
 
     if ($stmt) {
@@ -235,7 +236,6 @@ function updateLinksIfExpired($conn, $userId, &$links, &$isUpdated)
     }
 }
 
-
 function saveExpiredLinksUpdate($conn, $userId, $linksMap)
 {
     $updatedJson = json_encode($linksMap, JSON_PRETTY_PRINT);
@@ -244,7 +244,6 @@ function saveExpiredLinksUpdate($conn, $userId, $linksMap)
     $updateStmt->bind_param("ss", $updatedJson, $userId);
     $updateStmt->execute();
 }
-
 
 function getUserTimeZone($conn, $userId) {
     $query = "SELECT userTimeZone FROM usuarios WHERE userId = ?";
@@ -276,8 +275,6 @@ function getUserTimeZone($conn, $userId) {
 
     return "America/Sao_Paulo";
 }
-
-
 
 
 try {

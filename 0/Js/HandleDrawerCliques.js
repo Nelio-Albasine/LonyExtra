@@ -12,8 +12,22 @@ const hashToDialogData = {
     "#Perfil": { id: "dialog_perfil", title: "Perfil" },
     "#Logout": { id: "dialog_logout", title: "Logout" },
 };
-let imgCloseDialog = document.getElementById("img_close_dialog");
+const starsToValueMap = [
+    { stars: 600, revenue: 1.0 },
+    { stars: 2980, revenue: 5.20 },
+    { stars: 5955, revenue: 10.50 },
+    { stars: 11905, revenue: 21.30 },
+    { stars: 23805, revenue: 43.19 },
+];
 
+let imgCloseDialog = document.getElementById("img_close_dialog");
+let conversionOption = null;
+const userId = "391f58325968d93b6778b9722f953bb063b44254d8e04109955c52b928ac9782";
+
+
+const textUserRevenue = document.querySelectorAll('.userRevenue');
+const textUserLTRevenue = document.querySelectorAll('.userLTRevenue');
+const textUserStars = document.querySelectorAll('.userStars');
 
 document.addEventListener("DOMContentLoaded", () => {
     window.addEventListener("hashchange", updateDialogsVisibility);
@@ -21,7 +35,69 @@ document.addEventListener("DOMContentLoaded", () => {
     updateDialogsVisibility();
     closeDialogContainer();
 
+    whenConvertStarsClicked();
+
 });
+
+
+function whenConvertStarsClicked(){
+    const dialog_subtitle = document.querySelectorAll('.dialog_subtitle');
+    const convertStarsBtn = document.getElementById("convertStarsBtn");
+
+    convertStarsBtn.addEventListener("click", () => {
+        if (conversionOption === null) {
+            dialog_subtitle.forEach(text => {
+                text.style.color = "red";
+                text.style.scale = "1.03";
+                setTimeout(() => {
+                    text.style.color = "#7f8c8d";
+                    text.style.scale = "1";
+                }, 3000)
+            })
+        } else {
+            convertStarsBtn.disabled = true;
+            convertStarsBtn.textContent = "Aguarde...";
+            handleConvertion(conversionOption);
+        }
+    });
+}
+
+function showBoxAlert(message, type) {
+    const overlay = document.getElementById('confirmation-box_overlay');
+    const confirmationBox = overlay.querySelector('.confirmation-box');
+    const iconBox = confirmationBox.querySelector('.icon-box');
+    const title = confirmationBox.querySelector('h1');
+    const messageParagraph = confirmationBox.querySelector('p');
+    const button = confirmationBox.querySelector('button');
+
+    confirmationBox.className = `confirmation-box ${type}`;
+
+    if (type === 'success') {
+        iconBox.textContent = '✔';
+        title.textContent = 'Success!';
+        button.textContent = 'OK';
+    } else if (type === 'warning') {
+        iconBox.textContent = '⚠';
+        title.textContent = 'Warning!';
+        button.textContent = 'Entendido';
+    } else if (type === 'error') {
+        iconBox.textContent = '✖';
+        title.textContent = 'Error!';
+        button.textContent = 'Retry';
+    }
+
+    if (type === 'success') {
+        messageParagraph.innerHTML = message;
+    } else {
+        messageParagraph.textContent = message;
+    }
+
+    overlay.style.display = 'flex';
+
+    button.onclick = () => {
+        overlay.style.display = 'none';
+    };
+}
 
 function closeDialogContainer() {
     imgCloseDialog.addEventListener("click", () => {
@@ -59,10 +135,7 @@ function openEspecificDialog(dialogId) {
     handleDialogActions(dialogId);
 }
 
-
 function handleDialogActions(dialogId) {
-    console.log("Ação passada: ", dialogId);
-
     switch (dialogId) {
         case "#Home":
             console.log("Ação padrão: Home");
@@ -74,7 +147,6 @@ function handleDialogActions(dialogId) {
             break;
 
         case "#ConverterEstrelas":
-            console.log("Ação selecionada: Converter estrelas");
             handleConverterEstrelas();
             break;
 
@@ -120,7 +192,6 @@ function handleDialogActions(dialogId) {
     }
 
 }
-
 
 function updateDialogsVisibility() {
     const hashToDialogData = {
@@ -169,12 +240,101 @@ function updateDialogsVisibility() {
 
 function handleConverterEstrelas() {
     const options = document.querySelectorAll('.conversion_option');
-
-    options.forEach(option => {
+    options.forEach(opt => opt.classList.remove('selected'));
+    options.forEach((option, index) => {
         option.addEventListener('click', () => {
             options.forEach(opt => opt.classList.remove('selected'));
             option.classList.add('selected');
+            conversionOption = index
         });
     });
-
 }
+
+let timeCalled = 1
+async function handleConvertion(index) {
+    console.log(`Funcao handleConvertion chamada ${timeCalled} vezes`)
+    const requestData = {
+        userId: userId,
+        index: index,
+    };
+
+    try {
+        timeCalled ++
+        const response = await fetch("http://localhost/LonyExtra/0/Api/Cashout/ConvertStarsIntoReward.php", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(requestData),
+        });
+
+        if (!response.ok) {
+            throw new Error(`Erro na API: ${response.statusText}`);
+        }
+
+        const responseData = await response.json();
+
+        if (responseData.success) {
+            showBoxAlert(responseData.message, "success");
+            convertStarsBtn.textContent = "Estrelas convertidas com sucesso!";
+            convertStarsBtn.style.backgroundColor = "green";
+
+            let userPointsString = localStorage.getItem("userPoints");
+            let userPointsJson = JSON.parse(userPointsString);
+
+            let availableUserStars = parseInt(userPointsJson.userStars, 10);
+            let availableUserRevenue = parseFloat(userPointsJson.userRevenue);
+            let availableUserLTRevenue = parseFloat(userPointsJson.userLTRevenue);
+
+            const conversionData = starsToValueMap[index];
+
+            const newStars = parseInt(availableUserStars - conversionData.stars, 10);
+            const newRevenue = parseFloat(availableUserRevenue + conversionData.revenue);
+            const newLTRevenue = parseFloat(availableUserLTRevenue + conversionData.revenue);
+
+            userPointsJson.userStars = newStars;
+            userPointsJson.userRevenue = newRevenue;
+            userPointsJson.userLTRevenue = newLTRevenue;
+            localStorage.setItem("userPoints", JSON.stringify(userPointsJson));
+
+            textUserStars.forEach(el => {
+                el.textContent = newStars.toLocaleString("pt-PT");
+            });
+
+            textUserRevenue.forEach(el => {
+                el.textContent = newRevenue.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
+            });
+
+            textUserLTRevenue.forEach(el => {
+                el.textContent = newLTRevenue.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
+            });
+        } else {
+            if (responseData.message === "405") {
+                let msg = "Estrelas insuficientes para conversão!";
+                showBoxAlert(msg, "warning");
+                convertStarsBtn.textContent = "Estrelas insuficientes!";
+                convertStarsBtn.style.backgroundColor = "#c7ba05";
+            } else {
+                showBoxAlert(responseData.message, "error");
+                convertStarsBtn.textContent = "Erro na conversão!";
+                convertStarsBtn.style.backgroundColor = "#e74c3c";
+            }
+        }
+
+        setTimeout(() => {
+            convertStarsBtn.textContent = "Converter Estrelas";
+            convertStarsBtn.style.backgroundColor = "#e74c3c";
+
+            let selectedOptions = document.querySelectorAll('.conversion_option');
+            selectedOptions.forEach(option => {
+                option.classList.remove('selected');
+                conversionOption = null;
+                convertStarsBtn.disabled = false;
+            });
+        }, 4000);
+    } catch (error) {
+        console.error("Erro ao fazer a requisição:", error.message);
+        showAlert("Erro na comunicação com o servidor. Tente novamente.", "error");
+    }
+}
+

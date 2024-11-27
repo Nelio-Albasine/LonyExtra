@@ -1,6 +1,6 @@
-let ttVal = 6000;
-let juros = 10;
+let valorIncial = 1452
+let valorTotal = 1527
 
-let calc = (juros / 100) * ttVal;
+let valorFaltando = valorTotal - valorIncial
 
-console.log(`10% de 6000 são: ${calc}`);
+console.log(`O inicial valor que está faltando é de: ${valorFaltando.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}`)

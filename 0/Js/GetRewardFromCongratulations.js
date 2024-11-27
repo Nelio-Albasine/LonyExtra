@@ -36,32 +36,55 @@ document.addEventListener("DOMContentLoaded", async function () {
 });
 
 
-function showAlert(message, type) {
-    const alertBox = document.getElementById('alert');
-    const iconSpan = alertBox.querySelector('.icon');
-    const messageSpan = alertBox.querySelector('.message');
+function showBoxAlert(message, type) {
+    const overlay = document.getElementById('confirmation-box_overlay');
+    const confirmationBox = overlay.querySelector('.confirmation-box');
+    const iconBox = confirmationBox.querySelector('.icon-box');
+    const title = confirmationBox.querySelector('h1');
+    const messageParagraph = confirmationBox.querySelector('p');
+    const button = confirmationBox.querySelector('button');
+
+    confirmationBox.className = `confirmation-box ${type}`;
 
     if (type === 'success') {
-        alertBox.className = 'alert show success';
-        iconSpan.textContent = '✔';
+        iconBox.textContent = '✔';
+        title.innerHTML = `Você ganhou <strong>+✨ ${pointsToEarn} </strong>`;
+        button.textContent = 'OK';
     } else if (type === 'warning') {
-        alertBox.className = 'alert show warning';
-        iconSpan.textContent = '⚠';
-    } else {
-        alertBox.className = 'alert show error';
-        iconSpan.textContent = '✖';
+        iconBox.textContent = '⚠';
+        title.textContent = 'Tarefas ainda indisponível!';
+        button.textContent = 'Volte dentro de algum tempinho';
+    } else if (type === 'error') {
+        iconBox.textContent = '✖';
+        title.textContent = 'Error!';
+        button.textContent = 'Retry';
     }
 
-    messageSpan.textContent = message;
+    if (type === 'success') {
+        messageParagraph.innerHTML = message;
+    } else {
+        messageParagraph.textContent = message;
+    }
 
-    setTimeout(() => {
-        alertBox.className = 'alert hidden';
+    overlay.style.display = 'flex';
+
+    button.onclick = () => {
         if (type === 'success') {
+            button.textContent = 'Voltando...';
             let url = `http://127.0.0.1:5500/0/Dashboard/index.html#${taskBatch}`;
-            window.open(url , "_self")
+            window.open(url, "_self")
+        } else if (type === 'warning') {
+            button.textContent = 'Voltando...';
+            let url = `http://127.0.0.1:5500/0/Dashboard/index.html#${taskBatch}`;
+            window.open(url, "_self")
+        } else if (type === 'error') {
+            iconBox.textContent = '✖';
+            title.textContent = 'Error!';
+            button.textContent = 'Retry';
+            overlay.style.display = 'none';
         }
-    }, 1500);
-    
+
+    };
 }
 
 function handlePointsToEarnText(index, text) {
@@ -77,6 +100,9 @@ function handlePointsToEarnText(index, text) {
             break;
         case 3:
             pointsToEarn = 50;
+            break;
+        case 4:
+            pointsToEarn = 80;
             break;
     }
 
@@ -125,32 +151,30 @@ async function sendEncryptedDataToServer(encryptedData, iv, btnGetReward, taskIn
         }
 
         const result = await response.json();
-        console.log('Resposta do servidor:', result);
 
         if (result.success) {
             btnGetReward.textContent = "Pontos Adicionados!";
             btnGetReward.style.backgroundColor = "green";
 
             feedbackMessage = "Pontuação adicionada com sucesso!";
-            showAlert(feedbackMessage, "success");
+            showBoxAlert(feedbackMessage, "success");
 
             textUserPoints.textContent = (currentStars + pointsToEarn).toLocaleString("pt-PT");
         } else if (result.message == "204") {
             feedbackMessage = "Tarefa ainda não disponivel!";
-            showAlert(feedbackMessage, "warning");
+            showBoxAlert(feedbackMessage, "warning");
             btnGetReward.textContent = "Volte dentro de algum tempinho!";
             btnGetReward.style.backgroundColor = "#c7ba05";
         } else {
             btnGetReward.disabled = false;
             console.error(result.message)
             feedbackMessage = "Ocorreu um erro ao somar estrelas!";
-            showAlert(feedbackMessage, "success");
+            showBoxAlert(feedbackMessage, "success");
         }
     } catch (error) {
         console.error('Erro ao enviar os dados:', error);
     }
 }
-
 
 function getTaskBatch() {
     const taskIndex = parseInt(localStorage.getItem("taskIndex"));
@@ -167,6 +191,9 @@ function getTaskBatch() {
             break;
         case 3:
             taskBatch = "tarefas_diamante";
+            break;
+        case 4:
+            taskBatch = "tarefas_platina";
             break;
         default:
             console.error("Índice de tarefa inválido:", taskIndex);

@@ -3,3 +3,60 @@
     margin-bottom: 8px;
     margin-top: 10px;
 }
+
+
+
+.alert {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    z-index: 999;
+    height: 40px;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    background-color: #296d2b;
+    color: white;
+    padding: 4px 20px;
+    border-radius: 5px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.alert.hidden {
+    transform: translateX(-50%) translateY(-20px);
+    opacity: 0;
+}
+
+.alert.show {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateX(-50%) translateY(0);
+}
+
+.alert.success {
+    background-color: #319234;
+}
+
+.alert.error {
+    background-color: #c72c1b;
+}
+
+.alert.warning {
+    background-color: #c7ba05;
+}
+
+.alert .icon {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.alert .message {
+    flex: 1;
+    color: white;
+    font-size: 14px;
+
+}

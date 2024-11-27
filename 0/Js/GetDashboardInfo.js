@@ -24,7 +24,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     const userInfo = dashInfo.userInfo;
     const userPoints = JSON.parse(userInfo.userPointsJSON);
     const userInvitationInfo = JSON.parse(userInfo.userInvitationJSON);
-    console.log("user Invite Info : ", userInvitationInfo);
+    console.log("user Invite Info : ", userInfo);
 
 
     saveUserPointsToLocalStorage(userPoints);
@@ -51,8 +51,15 @@ function handleStartTasksClicks() {
     const containerPrataChecker = document.getElementById("containerPrataChecker");
     const containerOuroChecker = document.getElementById("containerOuroChecker");
     const containerDiamanteChecker = document.getElementById("containerDiamanteChecker");
+    const containerPlatinaChecker = document.getElementById("containerPlatinaChecker");
 
-    const startTasksBtns = [containerBronzeChecker, containerPrataChecker, containerOuroChecker, containerDiamanteChecker];
+    const startTasksBtns = [
+        containerBronzeChecker,
+        containerPrataChecker,
+        containerOuroChecker,
+        containerDiamanteChecker,
+        containerPlatinaChecker
+    ];
 
     startTasksBtns.forEach((btn, index) => {
         btn.addEventListener("click", () => {
@@ -112,6 +119,10 @@ async function loadLinksIntoTable(levelIndex) {
         case 3:
             previusLinksFetched = allLinks.diamanteAvailability;
             pointsToEarnByLevel = 50;
+            break;
+        case 4:
+            previusLinksFetched = allLinks.platinaAvailability;
+            pointsToEarnByLevel = 80;
             break;
     }
     updateHashSilently(currentURL_hash);
@@ -280,7 +291,6 @@ async function loadLinksIntoTable(levelIndex) {
     }
 }
 
-
 function handleDialogChooseTask(levelIndex) {
     const overlay = document.getElementById("overlay");
 
@@ -288,28 +298,13 @@ function handleDialogChooseTask(levelIndex) {
         overlay.style.display = "none";
         isOverlayVisible = !isOverlayVisible
     } else {
-        const hashToDialogData = {
-            "#TodosLinks": { id: "dialog_all_links", title: "Todos os Links" },
-            "#ConverterEstrelas": { id: "dialog_convert_stars", title: "Converter Estrelas" },
-            "#ConvidarAmigos": { id: "dialog_convidar_amigos", title: "Convidar Amigos" },
-            "#Sacar": { id: "dialog_sacar", title: "Sacar Saldo" },
-            "#HistoricoSaques": { id: "dialog_historio_de_saques", title: "Histórico de Saques" },
-            "#MinhasNotificacoes": { id: "dialog_minhas_notificacoes", title: "Minhas Notificações" },
-            "#Instagram": { id: "dialog_instagram", title: "Instagram" },
-            "#Telegram": { id: "dialog_telegram", title: "Telegram" },
-            "#Gmail": { id: "dialog_gmail", title: "Gmail" },
-            "#YouTube": { id: "dialog_youtube", title: "YouTube" },
-            "#Perfil": { id: "dialog_perfil", title: "Perfil" },
-            "#Logout": { id: "dialog_logout", title: "Logout" },
-        };
-
         overlay.style.display = "flex";
         isOverlayVisible = !isOverlayVisible
 
         const dialog_title = document.getElementById("dialog_title");
         const dialog_title_level_name = document.getElementById("dialog_title_level_name");
 
-        const levelsNames = ["Bronze", "Prata", "Ouro", "Diamante"];
+        const levelsNames = ["Bronze", "Prata", "Ouro", "Diamante", "Platina"];
         dialog_title_level_name.textContent = levelsNames[levelIndex]
         dialog_title.textContent = "Escolha uma tarefa para prosseguir!";
 
@@ -365,6 +360,11 @@ function handleLinkAvailabilityChecker(data) {
         {
             container: document.getElementById("containerDiamanteChecker"),
             textTask: document.getElementById("tasksDiamanteRemaining"),
+            availability: data.diamanteAvailability
+        },
+        {
+            container: document.getElementById("containerPlatinaChecker"),
+            textTask: document.getElementById("tasksPlatinaRemaining"),
             availability: data.diamanteAvailability
         }
     ];
@@ -450,6 +450,9 @@ function handleURLHashs() {
             break;
         case "tarefas_diamante":
             index = 3;
+            break;
+        case "tarefas_platina":
+            index = 4;
             break;
     }
 
