@@ -111,7 +111,7 @@
     width: 100%;
     margin-top: 20px;
     padding: 15px 24px;
-    background: #e74c3c;
+    background: #7e7e7e;
     color: #fff;
     font-size: 1rem;
     font-weight: 600;
@@ -127,7 +127,7 @@
 
 
 .normalState{
-    background: #e74c3c
+    background: #7e7e7e
 }
 
 .successState{
@@ -150,3 +150,6 @@
 .conversion_option.selected .amount {
     color: #ffffff;
 }
+
+
+

@@ -1,118 +1,144 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Status Confirmation</title>
-    <style>
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-color: #808080;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Custom Select</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f5f5f5;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
 
-        .confirmation-box {
-            text-align: center;
-            background: white;
-            border-radius: 8px;
-            padding: 20px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-            width: 320px;
-            position: relative;
-        }
+    .custom-select-container {
+      position: relative;
+      width: 300px;
+    }
 
-        .icon-box {
-            position: absolute;
-            top: -25px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            font-size: 24px;
-            color: white;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-        }
+    .custom-select {
+      position: relative;
+      display: flex;
+      align-items: center;
+      padding: 10px;
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      cursor: pointer;
+    }
 
-        .confirmation-box.success .icon-box {
-            background-color: #28a745;
-        }
+    .custom-select img {
+      width: 24px;
+      height: 24px;
+      margin-right: 10px;
+      display: none;
+      /* Ícone começa invisível */
+    }
 
-        .confirmation-box.warning .icon-box {
-            background-color: #ffc107;
-        }
+    .custom-select span {
+      flex-grow: 1;
+      color: #333;
+    }
 
-        .confirmation-box.error .icon-box {
-            background-color: #dc3545;
-        }
+    .custom-select::after {
+      content: "▼";
+      font-size: 12px;
+      color: #666;
+      margin-left: 10px;
+    }
 
-        .confirmation-box.success button {
-            background-color: #28a745;
-        }
+    .dropdown {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      margin-top: 5px;
+      overflow: hidden;
+      display: none;
+      z-index: 1000;
+    }
 
-        .confirmation-box.warning button {
-            background-color: #e0a800;
-        }
+    .dropdown.active {
+      display: block;
+    }
 
-        .confirmation-box.error button {
-            background-color: #c82333;
-        }
+    .dropdown div {
+      padding: 10px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+    }
 
-        .confirmation-box button {
-            color: white;
-            border: none;
-            padding: 12px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 16px;
-            width: 100%;
-        }
+    .dropdown div:hover {
+      background: #f0f0f0;
+    }
 
-        .confirmation-box.success button:hover {
-            background-color: #218838;
-        }
+    .dropdown div img {
+      width: 18px;
+      height: 18px;
+      margin-right: 10px;
+    }
 
-        .confirmation-box.warning button:hover {
-            background-color: #d39e00;
-        }
-
-        .confirmation-box.error button:hover {
-            background-color: #bd2130;
-        }
-
-        .confirmation-box h1 {
-            font-size: 24px;
-            color: #333;
-            margin: 35px 0 10px 0;
-        }
-
-        .confirmation-box p {
-            font-size: 14px;
-            color: #555;
-            margin: 0 0 20px 0;
-        }
-    </style>
+    #selected_gatway_icon {
+      width: 17px;
+      height: 17px;
+    }
+  </style>
 </head>
 
 <body>
-    <!-- Dynamic Example -->
-    <div id="confirmation-box_overlay">
-        <div class="confirmation-box success">
-            <div class="icon-box">✔</div>
-            <h1>Success!</h1>
-            <p>Your booking has been confirmed. Check your email for details, including your reservation number.</p>
-            <button>Got it</button>
-        </div>
+  <div class="custom-select-container">
+    <div class="custom-select" onclick="toggleDropdown()">
+      <img id="selected_gatway_icon" src="#" alt="Icone Selecionado">
+      <span>Selecione uma opção</span>
     </div>
+    <div class="dropdown">
+      <div onclick="selectOption('Paypal', '../SRC/IMGs/icon_paypal_256x256.png')">
+        <img src="../SRC/IMGs/icon_paypal_256x256.png" alt="Icon paypal">
+        <span>Paypal</span>
+      </div>
+      <div onclick="selectOption('Pix', '../SRC/IMGs/icon_pix_240x240.png')">
+        <img src="../SRC/IMGs/icon_pix_240x240.png" alt="Icon pix">
+        <span>Pix</span>
+      </div>
+    </div>
+  </div>
 
+  <script>
+    function toggleDropdown() {
+      const dropdown = document.querySelector('.dropdown');
+      dropdown.classList.toggle('active');
+    }
+
+    function selectOption(optionText, iconSrc) {
+      const select = document.querySelector('.custom-select span');
+      const icon = document.getElementById('selected_gatway_icon');
+
+      // Atualiza o texto e o ícone
+      select.textContent = optionText;
+      icon.src = iconSrc;
+      icon.style.display = 'inline-block'; // Torna o ícone visível
+
+      console.log(`Opção selecionada: ${optionText}`);
+      toggleDropdown();
+    }
+
+    document.addEventListener('click', (event) => {
+      const container = document.querySelector('.custom-select-container');
+      if (!container.contains(event.target)) {
+        const dropdown = document.querySelector('.dropdown');
+        dropdown.classList.remove('active');
+      }
+    });
+  </script>
 </body>
 
 </html>

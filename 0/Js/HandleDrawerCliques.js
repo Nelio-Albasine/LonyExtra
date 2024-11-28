@@ -21,6 +21,8 @@ const starsToValueMap = [
 ];
 
 let imgCloseDialog = document.getElementById("img_close_dialog");
+const convertStarsBtn = document.getElementById("convertStarsBtn");
+
 let conversionOption = null;
 const userId = "391f58325968d93b6778b9722f953bb063b44254d8e04109955c52b928ac9782";
 
@@ -34,15 +36,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
     updateDialogsVisibility();
     closeDialogContainer();
-
     whenConvertStarsClicked();
+    handleCashoutDialog();
 
 });
 
 
-function whenConvertStarsClicked(){
+function whenConvertStarsClicked() {
     const dialog_subtitle = document.querySelectorAll('.dialog_subtitle');
-    const convertStarsBtn = document.getElementById("convertStarsBtn");
 
     convertStarsBtn.addEventListener("click", () => {
         if (conversionOption === null) {
@@ -57,7 +58,7 @@ function whenConvertStarsClicked(){
         } else {
             convertStarsBtn.disabled = true;
             convertStarsBtn.textContent = "Aguarde...";
-            handleConvertion(conversionOption);
+            handleConvertion(conversionOption, convertStarsBtn);
         }
     });
 }
@@ -240,26 +241,28 @@ function updateDialogsVisibility() {
 
 function handleConverterEstrelas() {
     const options = document.querySelectorAll('.conversion_option');
+    convertStarsBtn.style.backgroundColor = "#7e7e7e";
     options.forEach(opt => opt.classList.remove('selected'));
+
     options.forEach((option, index) => {
         option.addEventListener('click', () => {
             options.forEach(opt => opt.classList.remove('selected'));
             option.classList.add('selected');
+            convertStarsBtn.style.backgroundColor = "#043277";
+            convertStarsBtn.textContent = "Converter Estrelas";
             conversionOption = index
         });
     });
 }
 
-let timeCalled = 1
-async function handleConvertion(index) {
-    console.log(`Funcao handleConvertion chamada ${timeCalled} vezes`)
+async function handleConvertion(index, convertStarsBtn) {
+    convertStarsBtn.disabled = true;
     const requestData = {
         userId: userId,
         index: index,
     };
 
     try {
-        timeCalled ++
         const response = await fetch("http://localhost/LonyExtra/0/Api/Cashout/ConvertStarsIntoReward.php", {
             method: "POST",
             headers: {
@@ -277,6 +280,7 @@ async function handleConvertion(index) {
         if (responseData.success) {
             showBoxAlert(responseData.message, "success");
             convertStarsBtn.textContent = "Estrelas convertidas com sucesso!";
+            convertStarsBtn.textContent = "Conversão bem sucedida!";
             convertStarsBtn.style.backgroundColor = "green";
 
             let userPointsString = localStorage.getItem("userPoints");
@@ -317,13 +321,13 @@ async function handleConvertion(index) {
             } else {
                 showBoxAlert(responseData.message, "error");
                 convertStarsBtn.textContent = "Erro na conversão!";
-                convertStarsBtn.style.backgroundColor = "#e74c3c";
+                convertStarsBtn.style.backgroundColor = "#7e7e7e";
             }
         }
 
         setTimeout(() => {
-            convertStarsBtn.textContent = "Converter Estrelas";
-            convertStarsBtn.style.backgroundColor = "#e74c3c";
+            convertStarsBtn.textContent = "Escolha uma opção!";
+            convertStarsBtn.style.backgroundColor = "#7e7e7e";
 
             let selectedOptions = document.querySelectorAll('.conversion_option');
             selectedOptions.forEach(option => {
@@ -331,10 +335,83 @@ async function handleConvertion(index) {
                 conversionOption = null;
                 convertStarsBtn.disabled = false;
             });
-        }, 4000);
+        }, 3000);
     } catch (error) {
+        convertStarsBtn.disabled = false;
+        convertStarsBtn.textContent = "Escolha uma opção!";
+        convertStarsBtn.style.backgroundColor = "#7e7e7e";
+        conversionOption = null;
+        let selectedOptions = document.querySelectorAll('.conversion_option');
+        selectedOptions.forEach(option => {
+            option.classList.remove('selected');
+            conversionOption = null;
+            convertStarsBtn.disabled = false;
+        });
         console.error("Erro ao fazer a requisição:", error.message);
-        showAlert("Erro na comunicação com o servidor. Tente novamente.", "error");
+        showBoxAlert("Erro na comunicação com o servidor. Tente novamente.", "error");
     }
 }
+
+function handleCashoutDialog(l) {
+    function handleGiftCardSelection() {
+        const giftCards = document.querySelectorAll('.gift-card');
+      
+        giftCards.forEach((card, index) => {
+          card.addEventListener('click', () => {
+            giftCards.forEach(c => c.classList.remove('selected'));
+      
+            card.classList.add('selected');
+      
+            const selectedValue = card.querySelector('p').textContent;
+            console.log(`Valor selecionado: ${selectedValue} do index: ${index}`);
+          });
+        });
+      }
+      
+      handleGiftCardSelection();
+
+      
+    function toggleDropdown() {
+        const dropdown = document.querySelector('.dropdown');
+        dropdown.classList.toggle('active');
+    }
+
+    function selectOption(optionText, iconSrc) {
+        const select = document.querySelector('.custom-select span');
+        const icon = document.getElementById('selected_gatway_icon');
+        const gift_gateway_icon = document.querySelectorAll('.gift_gateway_icon');
+
+        select.textContent = optionText;
+        icon.src = iconSrc;
+        gift_gateway_icon.forEach(icon => {
+            icon.src = iconSrc;
+        })
+
+        console.log(`Opção selecionada: ${optionText}`);
+        toggleDropdown();
+    }
+
+    const customSelect = document.querySelector('.custom-select');
+    customSelect.addEventListener('click', toggleDropdown);
+
+    // Evento para selecionar uma opção
+    const dropdownOptions = document.querySelectorAll('.dropdown > div');
+    dropdownOptions.forEach(option => {
+        option.addEventListener('click', () => {
+            const optionText = option.querySelector('span').textContent;
+            const iconSrc = option.querySelector('img').src;
+            selectOption(optionText, iconSrc);
+        });
+    });
+
+    // Evento para fechar o dropdown ao clicar fora
+    document.addEventListener('click', (event) => {
+        const container = document.querySelector('.custom-select-container');
+        if (!container.contains(event.target)) {
+            const dropdown = document.querySelector('.dropdown');
+            dropdown.classList.remove('active');
+        }
+    });
+}
+
 
