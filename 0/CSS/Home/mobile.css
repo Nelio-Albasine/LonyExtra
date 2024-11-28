@@ -2,7 +2,7 @@
     display: none;
 }
 
-@media screen and (max-width: 769px) {
+@media screen and (max-width: 600px) {
     main {
         margin-top: 80px;
     }
@@ -115,8 +115,27 @@
     }
 
 
-
     .stats-grid {
         margin-bottom: 10px;
+    }
+
+
+
+    /*Dialog Convert stars*/
+    .conversion_option .stars {
+        font-size: 0.93rem;
+    }
+
+    .conversion_option .amount {
+        font-size: 0.93rem;
+    }
+
+    .dialog_subtitle {
+        font-size: 0.94rem;
+        margin-bottom: 15px;
+    }
+
+    #convertStarsBtn {
+        font-size: 0.9rem;
     }
 }

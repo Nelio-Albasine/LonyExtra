@@ -9,7 +9,7 @@ let currentServerDate;
 
 document.addEventListener("DOMContentLoaded", async function () {
     const userName = document.getElementById("userName");
-    const userRevenue = document.getElementById("userRevenue");
+    const userRevenue = document.querySelectorAll(".userRevenue");
     const userLTRevenue = document.getElementById("userLTRevenue");
     const userStars = document.getElementById("userStars");
     const userLTStars = document.getElementById("userLTStars");
@@ -36,7 +36,9 @@ document.addEventListener("DOMContentLoaded", async function () {
     userName.textContent = `${userInfo.userName} ${userInfo.userSurname}`;
     userEmail.textContent = userInfo.userEmail;
 
-    userRevenue.textContent = userPoints.userRevenue.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
+    userRevenue.forEach(text => {
+        text.textContent = userPoints.userRevenue.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
+    });
     userLTRevenue.textContent = userPoints.userLTRevenue.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
 
     userStars.textContent = userPoints.userStars.toLocaleString("pt-PT");
@@ -473,7 +475,5 @@ function saveUserPointsToLocalStorage(jsonPoints) {
     const userPoints = JSON.stringify(jsonPoints);
     localStorage.setItem("userPoints", userPoints);
 }
-
-
 
 

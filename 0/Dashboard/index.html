@@ -9,17 +9,19 @@
     <link rel="stylesheet" href="../CSS/Home/header.css">
     <link rel="stylesheet" href="../CSS/Home/ui_settings.css">
     <link rel="stylesheet" href="../CSS/Home/pc.css">
-    <link rel="stylesheet" href="../CSS/Home/mobile.css">
     <link rel="stylesheet" href="../CSS/Home/dialog_choose_tasks.css">
     <link rel="stylesheet" href="../CSS/Home/ganhos_turbo_boxes.css">
-    <link rel="stylesheet" href="../CSS/Home/invitation.css">
 
     <link rel="stylesheet" href="../CSS/Home/generic.css">
     <link rel="stylesheet" href="../CSS/Home/drawer_v2.css">
 
     <link rel="stylesheet" href="../CSS/Home/base_dialogs.css">
-    
+
     <link rel="stylesheet" href="../CSS/Home/popups_and_ui_feedbacks.css">
+    <link rel="stylesheet" href="../CSS/Home/mobile.css">
+
+    <link rel="stylesheet" href="../CSS/Home/invitation.css">
+    <link rel="stylesheet" href="../CSS/Home/cashout.css">
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
 
@@ -335,6 +337,7 @@
         <div id="base_dialog">
             <div class="dialog_title">
                 <p id="dialog_title">Titulo do diálogo</p>
+                <p class="userRevenue dialog_cashout_available_revenue" id="userRevenue">R$ 0.00 </p>
                 <img id="img_close_dialog" src="../SRC/IMGs/close.png" alt="close dialog">
             </div>
 
@@ -417,7 +420,7 @@
                                 <span class="amount">💰 R$ 43,19</span>
                             </div>
                         </div>
-                        <button class="normalState" id="convertStarsBtn">Converter Estrelas</button>
+                        <button class="normalState" id="convertStarsBtn">Escolha uma opção!</button>
                     </div>
                 </div>
 
@@ -428,8 +431,86 @@
                 </div>
 
                 <!--Dialog Saques: Sacar-->
-                <div class="the_dialog_container" id="dialog_sacar">
-                    <h1>Sacar saldo</h1>
+                <div class="the_dialog_container" id="dialog_sacar">   
+                    <div class="withdraw_base">
+                        <p class="escolha_um_metodo">Escolha o método de saque e o valor desejado abaixo:</p>
+
+                        <div class="custom-select-container">
+                            <div class="custom-select">
+                                <img id="selected_gatway_icon" src="#" alt="Icone Selecionado">
+                                <span>Selecione uma opção</span>
+                            </div>
+                            <div class="dropdown">
+                                <div>
+                                    <img src="../SRC/IMGs/icon_paypal_256x256.png" alt="Icon paypal">
+                                    <span class="p_option_select_gateway" >Paypal</span>
+                                </div>
+                                <div>
+                                    <img src="../SRC/IMGs/icon_pix_240x240.png" alt="Icon pix">
+                                    <span class="p_option_select_gateway" >Pix</span>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="section">
+                            <h2>Valor do Saque:</h2>
+                            <div class="amount-options">
+                                <div class="gift-card">
+                                    <img class="gift_gateway_icon" src="../SRC/IMGs/cartoon_money.png"
+                                        alt="paypal_icon">
+                                    <p>💰 R$ 1,00</p>
+                                </div>
+
+                                <div class="gift-card">
+                                    <img class="gift_gateway_icon" src="../SRC/IMGs/cartoon_money.png"
+                                        alt="paypal_icon">
+                                    <p>💰 R$ 5,20</p>
+                                </div>
+
+                                <div class="gift-card">
+                                    <img class="gift_gateway_icon" src="../SRC/IMGs/cartoon_money.png"
+                                        alt="paypal_icon">
+                                    <p>💰 R$ 10,50</p>
+                                </div>
+
+                                <div class="gift-card">
+                                    <img class="gift_gateway_icon" src="../SRC/IMGs/cartoon_money.png"
+                                        alt="paypal_icon">
+                                    <p>💰 R$ 21,30</p>
+                                </div>
+
+                                <div class="gift-card">
+                                    <img class="gift_gateway_icon" src="../SRC/IMGs/cartoon_money.png"
+                                        alt="paypal_icon">
+                                    <p>💰 R$ 30,50</p>
+                                </div>
+
+                                <div class="gift-card">
+                                    <img class="gift_gateway_icon" src="../SRC/IMGs/cartoon_money.png"
+                                        alt="paypal_icon">
+                                    <p>💰 R$ 48,30</p>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <form class="withdraw-form">
+                            <label for="full-name">Nome Completo</label>
+                            <input type="text" id="full-name" placeholder="Digite seu nome" required>
+
+                            <label for="email">E-mail (PayPal ou PIX)</label>
+                            <input type="email" id="email" placeholder="Digite seu e-mail" required>
+
+                            <div class="info-box">
+                                <p>Os pagamentos são feitos em <strong>até 48 horas</strong> após o saque. Não nos
+                                    responsabilizamos por dados incorretos
+                                    fornecidos pelo usuário.</p>
+                            </div>
+
+                            <button type="submit" class="withdraw-button">Efetuar Saque</button>
+                        </form>
+                    </div>
                 </div>
 
                 <!--Dialog Saques: histórico de saques-->
