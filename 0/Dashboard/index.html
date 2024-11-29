@@ -18,6 +18,8 @@
     <link rel="stylesheet" href="../CSS/Home/base_dialogs.css">
 
     <link rel="stylesheet" href="../CSS/Home/popups_and_ui_feedbacks.css">
+    <link rel="stylesheet" href="../CSS/Home/dialog_success_cashout.css">
+
     <link rel="stylesheet" href="../CSS/Home/mobile.css">
 
     <link rel="stylesheet" href="../CSS/Home/invitation.css">
@@ -41,6 +43,52 @@
             <button>Got it</button>
         </div>
     </div>
+
+    <div id="success_cashout_overlay">
+        <div class="withdrawal-dialog">
+            <div class="dialog-header">
+                <h2>Detalhes do Saque:</h2>
+                <button id="closeSuccessCashoutDialog" class="close-btn">✖</button>
+            </div>
+            <div class="dialog-content">
+                <img src="../SRC/IMGs/success_icon.png" alt="Delivery Sucesso" class="status-image">
+                <div class="details">
+                    <div class="detail-row">
+                        <p>Método de Retirada</p>
+                        <div class="detail-value">
+                            <img src="../SRC/IMGs/icon_paypal_256x256.png" alt="Ícone Método" class="icon">
+                            <p class="span_mutable_texts">PayPal</p>
+                        </div>
+                    </div>
+                    <div class="detail-row">
+                        <p>Quantia</p>
+                        <p class="span_mutable_texts">R$ 100,00</p>
+                    </div>
+                    <div class="detail-row">
+                        <p>Nome</p>
+                        <p class="span_mutable_texts">João Silva</p>
+                    </div>
+                    <div class="detail-row">
+                        <p>Endereço de Pagamento</p>
+                        <p class="span_mutable_texts">joao.silva@email.com</p>
+                    </div>
+                    <div class="detail-row">
+                        <p>ID da Transação</p>
+                        <p class="span_mutable_texts">123456</p>
+                    </div>
+                    <div class="detail-row">
+                        <p>Status</p>
+                        <p class="status-pending">Pendente</p>
+                    </div>
+                </div>
+            </div>
+            <div class="dialog-footer">
+                <button class="status-btn">Acompanhar Status</button>
+                <p>© LonyExtra All Right Reserved</p>
+            </div>
+        </div>
+    </div>
+   
 
     <header class="header">
         <!-- Conteúdo do cabeçalho -->
@@ -337,7 +385,7 @@
         <div id="base_dialog">
             <div class="dialog_title">
                 <p id="dialog_title">Titulo do diálogo</p>
-                <p class="userRevenue dialog_cashout_available_revenue" id="userRevenue">R$ 0.00 </p>
+                <p class="userRevenue p_dialog_available_revenue" id="userRevenue">R$ 0.00 </p>
                 <img id="img_close_dialog" src="../SRC/IMGs/close.png" alt="close dialog">
             </div>
 
@@ -431,10 +479,10 @@
                 </div>
 
                 <!--Dialog Saques: Sacar-->
-                <div class="the_dialog_container" id="dialog_sacar">   
+                <div class="the_dialog_container" id="dialog_sacar">
                     <div class="withdraw_base">
                         <p class="escolha_um_metodo">Escolha o método de saque e o valor desejado abaixo:</p>
-
+                        <h2>Método de saque:</h2>
                         <div class="custom-select-container">
                             <div class="custom-select">
                                 <img id="selected_gatway_icon" src="#" alt="Icone Selecionado">
@@ -443,11 +491,11 @@
                             <div class="dropdown">
                                 <div>
                                     <img src="../SRC/IMGs/icon_paypal_256x256.png" alt="Icon paypal">
-                                    <span class="p_option_select_gateway" >Paypal</span>
+                                    <span class="p_option_select_gateway">Paypal</span>
                                 </div>
                                 <div>
                                     <img src="../SRC/IMGs/icon_pix_240x240.png" alt="Icon pix">
-                                    <span class="p_option_select_gateway" >Pix</span>
+                                    <span class="p_option_select_gateway">Pix</span>
                                 </div>
                             </div>
                         </div>
@@ -497,10 +545,11 @@
 
                         <form class="withdraw-form">
                             <label for="full-name">Nome Completo</label>
-                            <input type="text" id="full-name" placeholder="Digite seu nome" required>
+                            <input type="text" id="full-name" placeholder="Digite seu nome" maxlength="27" required>
 
-                            <label for="email">E-mail (PayPal ou PIX)</label>
-                            <input type="email" id="email" placeholder="Digite seu e-mail" required>
+                            <label id="label_payment_adress" for="email">Endereço de pagamento</label>
+                            <input type="email" id="email" placeholder="Digite seu endereço de pagamento..."
+                                maxlength="45" required>
 
                             <div class="info-box">
                                 <p>Os pagamentos são feitos em <strong>até 48 horas</strong> após o saque. Não nos
@@ -508,7 +557,7 @@
                                     fornecidos pelo usuário.</p>
                             </div>
 
-                            <button type="submit" class="withdraw-button">Efetuar Saque</button>
+                            <button id="btnCashOutRevenue" class="withdraw-button">Efetuar Saque</button>
                         </form>
                     </div>
                 </div>

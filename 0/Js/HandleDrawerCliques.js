@@ -19,26 +19,47 @@ const starsToValueMap = [
     { stars: 11905, revenue: 21.30 },
     { stars: 23805, revenue: 43.19 },
 ];
+const indexCashoutToAmountToValues = {
+    0: 1.0,
+    1: 5.2,
+    2: 10.5,
+    3: 21.3,
+    4: 30.5,
+    5: 48.3
+};
+
 
 let imgCloseDialog = document.getElementById("img_close_dialog");
 const convertStarsBtn = document.getElementById("convertStarsBtn");
-
-let conversionOption = null;
-const userId = "391f58325968d93b6778b9722f953bb063b44254d8e04109955c52b928ac9782";
-
-
+const btnCashoutRevenue = document.getElementById('btnCashOutRevenue');
+const giftCards = document.querySelectorAll('.gift-card');
 const textUserRevenue = document.querySelectorAll('.userRevenue');
 const textUserLTRevenue = document.querySelectorAll('.userLTRevenue');
 const textUserStars = document.querySelectorAll('.userStars');
+const custom_selectPaymentMethod_container = document.querySelector('.custom-select-container');
+const gift_gateway_icon = document.querySelectorAll('.gift_gateway_icon');
+
+
+let conversionOption = null;
+let paymentMethodSelected = null
+let indexToCashOut = null;
+let userCashoutName = null;
+let userCashoutAdress = null;
+let optionText = null;
+const userId = "391f58325968d93b6778b9722f953bb063b44254d8e04109955c52b928ac9782";
+
+
+
 
 document.addEventListener("DOMContentLoaded", () => {
     window.addEventListener("hashchange", updateDialogsVisibility);
 
     updateDialogsVisibility();
     closeDialogContainer();
-    whenConvertStarsClicked();
     handleCashoutDialog();
 
+    whenConvertStarsClicked();
+    whenCashoutRevenueClicked();
 });
 
 
@@ -79,7 +100,7 @@ function showBoxAlert(message, type) {
         button.textContent = 'OK';
     } else if (type === 'warning') {
         iconBox.textContent = '⚠';
-        title.textContent = 'Warning!';
+        title.textContent = 'Atenção!';
         button.textContent = 'Entendido';
     } else if (type === 'error') {
         iconBox.textContent = '✖';
@@ -87,11 +108,7 @@ function showBoxAlert(message, type) {
         button.textContent = 'Retry';
     }
 
-    if (type === 'success') {
-        messageParagraph.innerHTML = message;
-    } else {
-        messageParagraph.textContent = message;
-    }
+    messageParagraph.innerHTML = message;
 
     overlay.style.display = 'flex';
 
@@ -354,23 +371,20 @@ async function handleConvertion(index, convertStarsBtn) {
 
 function handleCashoutDialog(l) {
     function handleGiftCardSelection() {
-        const giftCards = document.querySelectorAll('.gift-card');
-      
         giftCards.forEach((card, index) => {
-          card.addEventListener('click', () => {
-            giftCards.forEach(c => c.classList.remove('selected'));
-      
-            card.classList.add('selected');
-      
-            const selectedValue = card.querySelector('p').textContent;
-            console.log(`Valor selecionado: ${selectedValue} do index: ${index}`);
-          });
+            card.addEventListener('click', () => {
+                giftCards.forEach(c => c.classList.remove('selected'));
+                card.classList.add('selected');
+                btnCashoutRevenue.style.backgroundColor = "#043277";
+                const selectedValue = card.querySelector('p').textContent;
+                indexToCashOut = index;
+            });
         });
-      }
-      
-      handleGiftCardSelection();
+    }
 
-      
+    handleGiftCardSelection();
+
+
     function toggleDropdown() {
         const dropdown = document.querySelector('.dropdown');
         dropdown.classList.toggle('active');
@@ -379,14 +393,19 @@ function handleCashoutDialog(l) {
     function selectOption(optionText, iconSrc) {
         const select = document.querySelector('.custom-select span');
         const icon = document.getElementById('selected_gatway_icon');
-        const gift_gateway_icon = document.querySelectorAll('.gift_gateway_icon');
+        const label_payment_adress = document.getElementById('label_payment_adress');
 
         select.textContent = optionText;
+        icon.style.display = "inline-block";
         icon.src = iconSrc;
         gift_gateway_icon.forEach(icon => {
             icon.src = iconSrc;
         })
+        label_payment_adress.textContent = optionText === "Paypal"
+            ? "Seu Email do PayPal"
+            : "Sua chave ou email do Pix";
 
+        paymentMethodSelected = optionText
         console.log(`Opção selecionada: ${optionText}`);
         toggleDropdown();
     }
@@ -394,24 +413,175 @@ function handleCashoutDialog(l) {
     const customSelect = document.querySelector('.custom-select');
     customSelect.addEventListener('click', toggleDropdown);
 
-    // Evento para selecionar uma opção
     const dropdownOptions = document.querySelectorAll('.dropdown > div');
     dropdownOptions.forEach(option => {
         option.addEventListener('click', () => {
-            const optionText = option.querySelector('span').textContent;
+            optionText = option.querySelector('span').textContent;
             const iconSrc = option.querySelector('img').src;
             selectOption(optionText, iconSrc);
         });
     });
 
-    // Evento para fechar o dropdown ao clicar fora
     document.addEventListener('click', (event) => {
-        const container = document.querySelector('.custom-select-container');
-        if (!container.contains(event.target)) {
+        if (!custom_selectPaymentMethod_container.contains(event.target)) {
             const dropdown = document.querySelector('.dropdown');
             dropdown.classList.remove('active');
         }
     });
 }
 
+
+function whenCashoutRevenueClicked() {
+    btnCashoutRevenue.addEventListener("click", async (event) => {
+        event.preventDefault();
+
+        userCashoutName = document.getElementById("full-name").value.trim();
+        userCashoutAdress = document.getElementById("email").value.trim();
+
+        if (!paymentMethodSelected) {
+            showBoxAlert("Escolha o <strong>método</strong> de saque!", "warning");
+            return
+        }
+        if (indexToCashOut == null) {
+            console.log(`Index no if: ${indexToCashOut}`)
+            showBoxAlert("Escolha o <strong>valor 💰</strong> a sacar", "warning");
+            return
+        }
+        if (!userCashoutName) {
+            let text = optionText === "Paypal"
+                ? "Insira o <strong>nome</strong> da sua conta paypal"
+                : "Insira o <strong>nome</strong> da sua conta Pix";
+            showBoxAlert(text, "warning");
+            return
+        }
+        if (!userCashoutAdress) {
+            let text = optionText === "Paypal"
+                ? "Insira seu <strong>Email do</strong> PayPal"
+                : "Insira sua <strong>chave ou email do</strong> Pix";
+            showBoxAlert(text, "warning");
+            return
+        }
+
+        const data = {
+            userId: userId,
+            gatewayName: paymentMethodSelected.toLowerCase(),
+            amountIndex: indexToCashOut,
+            userPaymentName: userCashoutName,
+            userPaymentAddress: userCashoutAdress,
+        }
+
+        btnCashoutRevenue.disabled = true;
+        btnCashoutRevenue.textContent = "Aguarde...";
+        await makeRequestToCashOut(data, btnCashoutRevenue);
+    })
+}
+
+
+function showSuccessDialogCashout(data) {
+    console.log(`dados recebidos: `, data)
+    const closeSuccessCashoutDialog = document.getElementById("closeSuccessCashoutDialog");
+    const success_cashout_overlay = document.getElementById("success_cashout_overlay");
+
+    success_cashout_overlay.style.display = "flex";
+
+    const methodElement = document.querySelector(".details .detail-row:nth-child(1) .span_mutable_texts");
+    const amountElement = document.querySelector(".details .detail-row:nth-child(2) .span_mutable_texts");
+    const nameElement = document.querySelector(".details .detail-row:nth-child(3) .span_mutable_texts");
+    const addressElement = document.querySelector(".details .detail-row:nth-child(4) .span_mutable_texts");
+    const transactionIdElement = document.querySelector(".details .detail-row:nth-child(5) .span_mutable_texts");
+    const statusElement = document.querySelector(".details .detail-row:nth-child(6) .status-pending");
+
+    methodElement.textContent = data.metodo || "Método desconhecido";
+    amountElement.textContent = `💰 ${data.amountCashedOut.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}` || "Valor não informado";
+    nameElement.textContent = data.userPaymentName || "Nome não informado";
+    addressElement.textContent = data.userPaymentAddress || "Endereço não informado";
+    transactionIdElement.textContent = data.cashOutId || "ID não informado";
+
+    statusElement.textContent = "Pendente";
+    statusElement.classList.add("status-pending");
+    statusElement.classList.remove("status-success");
+
+    closeSuccessCashoutDialog.addEventListener("click", () => {
+        success_cashout_overlay.style.display = "none";
+    });
+}
+
+
+async function makeRequestToCashOut(requestData, btnCashoutRevenue) {
+    try {
+        const response = await fetch("http://localhost/LonyExtra/0/Api/Cashout/CashOutRevenue.php", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(requestData),
+        });
+
+        if (!response.ok) {
+            throw new Error(`Erro na API: ${response.statusText}`);
+        }
+
+        const responseData = await response.json();
+
+        if (responseData.success) {
+            btnCashoutRevenue.style.backgroundColor = "green";
+            btnCashoutRevenue.textContent = responseData.message;
+
+            let userPointsString = localStorage.getItem("userPoints");
+            let userPointsJson = JSON.parse(userPointsString);
+
+            let amountToCashout = parseFloat(indexCashoutToAmountToValues[requestData.amountIndex]);
+
+            console.log(`O let amountToCashout guardou: ${amountToCashout}`)
+
+            let remaingRevenue = (parseFloat(userPointsJson.userRevenue) - amountToCashout)
+
+            userPointsJson.userRevenue = remaingRevenue
+            localStorage.setItem("userPoints", JSON.stringify(userPointsJson));
+
+            textUserRevenue.forEach(text => {
+                text.textContent = remaingRevenue.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
+            })
+
+            const dataForSuccessDialog = {
+                metodo: requestData.gatewayName, //is: paypal or pix
+                amountCashedOut: amountToCashout,
+                userPaymentName: requestData.userPaymentName,
+                userPaymentAddress: requestData.userPaymentAddress,
+                cashOutId: responseData.cashOutId,
+            }
+
+            showSuccessDialogCashout(dataForSuccessDialog);
+        } else if (responseData.message == "405") {
+            let msg = "Saldo insuficiente!";
+            btnCashoutRevenue.textContent = msg;
+            showBoxAlert(msg, "warning")
+            btnCashoutRevenue.style.backgroundColor = "#ffc107";
+        } else {
+            showBoxAlert(responseData.message, "error")
+            btnCashoutRevenue.textContent = "Ocorreu um erro!";
+            btnCashoutRevenue.style.backgroundColor = "red";
+            console.error("Ocorreu um erro!", responseData.message);
+        }
+    } catch (error) {
+        showBoxAlert("Um erro inesperado ocorreu", "error")
+        btnCashoutRevenue.textContent = "Ocorreu um erro!";
+        btnCashoutRevenue.style.backgroundColor = "red";
+        console.error("Um erro inesperado ocorreu", error.message);
+    }
+    setTimeout(() => {
+        const dropdown = document.querySelector('.dropdown');
+        dropdown.classList.remove('active');
+        const icon = document.getElementById('selected_gatway_icon');
+        icon.style.display = "none";
+        const select = document.querySelector('.custom-select span');
+        select.textContent = "Selecione uma opção";
+        giftCards.forEach(c => c.classList.remove('selected'));
+        gift_gateway_icon.forEach(icon => icon.src = "../SRC/IMGs/cartoon_money.png");
+        btnCashoutRevenue.textContent = "Efetuar Saque";
+        btnCashoutRevenue.style.backgroundColor = "#707070";
+        indexToCashOut = null;
+        btnCashoutRevenue.disabled = false;
+    }, 2000)
+}
 

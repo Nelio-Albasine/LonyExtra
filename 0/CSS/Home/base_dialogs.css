@@ -26,6 +26,20 @@
 }
 
 
+.p_dialog_available_revenue {
+    max-width: 110px;
+    padding: 5px 10px;
+    background-color: rgb(109, 117, 109);
+    color: white !important;
+    font-weight: bold;
+    font-size: 12px;
+    border-radius: 8px;
+    text-align: center;
+    flex: 1;
+    margin: 0 auto;
+}
+
+
 .main_container_all_dialogs {
     display: flex;
     flex-direction: column;

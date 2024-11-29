@@ -15,7 +15,8 @@
 
 
 #overlay,
-#confirmation-box_overlay {
+#confirmation-box_overlay,
+#success_cashout_overlay {
     display: none;
     position: fixed;
     top: 0;
@@ -30,7 +31,8 @@
     padding: 10px;
 }
 
-#confirmation-box_overlay {
+#confirmation-box_overlay,
+#success_cashout_overlay {
     z-index: 999;
 }
 
