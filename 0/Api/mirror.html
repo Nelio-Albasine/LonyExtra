@@ -1,144 +1,72 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="en">
 
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Custom Select</title>
+  <title>Document</title>
+  <link rel="stylesheet" href="../CSS/Home/dialog_success_cashout.css">
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #f5f5f5;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
+    * {
       margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
     }
 
-    .custom-select-container {
-      position: relative;
-      width: 300px;
-    }
-
-    .custom-select {
-      position: relative;
+    body {
+      background-color: #ffffff;
       display: flex;
-      align-items: center;
-      padding: 10px;
-      background: #fff;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      cursor: pointer;
-    }
-
-    .custom-select img {
-      width: 24px;
-      height: 24px;
-      margin-right: 10px;
-      display: none;
-      /* Ícone começa invisível */
-    }
-
-    .custom-select span {
-      flex-grow: 1;
-      color: #333;
-    }
-
-    .custom-select::after {
-      content: "▼";
-      font-size: 12px;
-      color: #666;
-      margin-left: 10px;
-    }
-
-    .dropdown {
-      position: absolute;
-      top: 100%;
-      left: 0;
-      right: 0;
-      background: #fff;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      margin-top: 5px;
-      overflow: hidden;
-      display: none;
-      z-index: 1000;
-    }
-
-    .dropdown.active {
-      display: block;
-    }
-
-    .dropdown div {
-      padding: 10px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-    }
-
-    .dropdown div:hover {
-      background: #f0f0f0;
-    }
-
-    .dropdown div img {
-      width: 18px;
-      height: 18px;
-      margin-right: 10px;
-    }
-
-    #selected_gatway_icon {
-      width: 17px;
-      height: 17px;
+      flex-direction: column;
+      min-height: 100vh;
     }
   </style>
 </head>
 
 <body>
-  <div class="custom-select-container">
-    <div class="custom-select" onclick="toggleDropdown()">
-      <img id="selected_gatway_icon" src="#" alt="Icone Selecionado">
-      <span>Selecione uma opção</span>
+  <div class="withdrawal-dialog">
+    <div class="dialog-header">
+      <h2>Detalhes do Saque:</h2>
+      <button id="closeSuccessCashoutDialog" class="close-btn">✖</button>
     </div>
-    <div class="dropdown">
-      <div onclick="selectOption('Paypal', '../SRC/IMGs/icon_paypal_256x256.png')">
-        <img src="../SRC/IMGs/icon_paypal_256x256.png" alt="Icon paypal">
-        <span>Paypal</span>
+    <div class="dialog-content">
+      <img src="../SRC/IMGs/success_icon.png" alt="Delivery Sucesso" class="status-image">
+      <div class="details">
+        <div class="detail-row">
+          <p>Método de Retirada</p>
+          <div class="detail-value">
+            <img src="../SRC/IMGs/icon_paypal_256x256.png" alt="Ícone Método" class="icon">
+            <p class="span_mutable_texts">PayPal</p>
+          </div>
+        </div>
+        <div class="detail-row">
+          <p>Quantia</p>
+          <p class="span_mutable_texts">R$ 100,00</p>
+        </div>
+        <div class="detail-row">
+          <p>Nome</p>
+          <p class="span_mutable_texts">João Silva</p>
+        </div>
+        <div class="detail-row">
+          <p>Endereço de Pagamento</p>
+          <p class="span_mutable_texts">joao.silva@email.com</p>
+        </div>
+        <div class="detail-row">
+          <p>ID da Transação</p>
+          <p class="span_mutable_texts">123456</p>
+        </div>
+        <div class="detail-row">
+          <p>Status</p>
+          <p class="status-pending">Pendente</p>
+        </div>
       </div>
-      <div onclick="selectOption('Pix', '../SRC/IMGs/icon_pix_240x240.png')">
-        <img src="../SRC/IMGs/icon_pix_240x240.png" alt="Icon pix">
-        <span>Pix</span>
-      </div>
+    </div>
+    <div class="dialog-footer">
+      <button class="status-btn">Acompanhar Status</button>
+      <p>© LonyExtra All Right Reserved</p>
     </div>
   </div>
 
-  <script>
-    function toggleDropdown() {
-      const dropdown = document.querySelector('.dropdown');
-      dropdown.classList.toggle('active');
-    }
-
-    function selectOption(optionText, iconSrc) {
-      const select = document.querySelector('.custom-select span');
-      const icon = document.getElementById('selected_gatway_icon');
-
-      // Atualiza o texto e o ícone
-      select.textContent = optionText;
-      icon.src = iconSrc;
-      icon.style.display = 'inline-block'; // Torna o ícone visível
-
-      console.log(`Opção selecionada: ${optionText}`);
-      toggleDropdown();
-    }
-
-    document.addEventListener('click', (event) => {
-      const container = document.querySelector('.custom-select-container');
-      if (!container.contains(event.target)) {
-        const dropdown = document.querySelector('.dropdown');
-        dropdown.classList.remove('active');
-      }
-    });
-  </script>
 </body>
 
 </html>
