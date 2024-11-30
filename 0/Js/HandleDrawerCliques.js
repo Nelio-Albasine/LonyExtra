@@ -51,7 +51,7 @@ const userId = "391f58325968d93b6778b9722f953bb063b44254d8e04109955c52b928ac9782
 
 
 document.addEventListener("DOMContentLoaded", () => {
-    openEspecificDialog(window.location.hash)
+    openEspecificDialog(window.location.hash);
     closeDialogContainer();
     whenConvertStarsClicked();
     whenCashoutRevenueClicked();
@@ -64,6 +64,7 @@ function copyToClipboard(text) {
 
 function openEspecificDialog(dialogIdHasHashFormat = null) {
     const dialogs = document.querySelectorAll(".main_container_all_dialogs .the_dialog_container");
+    const p_available_revenue = document.querySelectorAll(".p_dialog_available_revenue");
     const overlay = document.getElementById("overlay");
     const textDialogTitle = document.querySelector("#dialog_title");
 
@@ -73,6 +74,10 @@ function openEspecificDialog(dialogIdHasHashFormat = null) {
         if (!dialogIdHasHashFormat) {
             return;
         }
+
+        p_available_revenue.forEach(text =>{
+            text.style.display = hashToDialogData[dialogIdHasHashFormat].id == "dialog_sacar" ? "flex" : "none";
+        })
 
         let targetDialogId = hashToDialogData[dialogIdHasHashFormat].id
         let dialogTitle = hashToDialogData[dialogIdHasHashFormat]?.title
@@ -110,7 +115,7 @@ function handleActionsToEspecifiedHash(dialogId) {
 
         case "#HistoricoSaques":
             console.log(`Case #HistoricoSaques`)
-            handleCashoutHistoryDialog();
+            loadMyCashoutsToTable();
             break;
 
         case "#MinhasNotificacoes":
@@ -606,8 +611,7 @@ async function makeRequestToCashOut(requestData, btnCashoutRevenue) {
     }, 2000)
 }
 
-
-async function handleCashoutHistoryDialog() {
+async function loadMyCashoutsToTable() {
     const tableBody = document.getElementById("tbody_cashout_history");
     const emptyHistory = document.getElementById("empty_history");
     const loading_or_empty_awesome_icon = document.getElementById("loading_or_empty_awesome_icon");

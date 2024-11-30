@@ -1,106 +1,230 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Histórico de Saques</title>
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="../CSS/Home/cashout_history.css">
-  <script src="script.js" defer></script>
-</head>
-<body>
-  <div class="container">
-    <h1>Histórico de Saques</h1>
-    <table class="withdraw-table">
-      <thead>
-        <tr>
-          <th>Método</th>
-          <th>Quantia</th>
-          <th>ID</th>
-          <th>Status</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>
-            <div>
-              <p class="gatway_name"><i class="fa-brands fa-paypal"></i> Paypal</p>
-            </div>
-          </td>
-          <td>
-            <div><p>R$ 200.00</p></div>
-          </td>
-          <td>
-            <div>
-              <p>123456</p>
-              <i class="fa-solid fa-copy copy-icon" onclick="copyToClipboard('123456')" title="Copiar ID"></i>
-            </div>
-          </td>
-          <td>
-            <div>
-              <p class="status paid">Pago</p>
-              <i class="fa-solid fa-circle-info info-icon" onclick="showDetails('123456', 'Paypal', 'R$ 200.00', 'Pago')" title="Detalhes"></i>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <div>
-              <p class="gatway_name"><i class="fa-solid fa-money-check"></i> Pix</p>
-            </div>
-          </td>
-          <td>
-            <div><p>R$ 350.00</p></div>
-          </td>
-          <td>
-            <div>
-              <p>654321</p>
-              <i class="fa-solid fa-copy copy-icon" onclick="copyToClipboard('654321')" title="Copiar ID"></i>
-            </div>
-          </td>
-          <td>
-            <div>
-              <p class="status pending">Pendente</p>
-              <i class="fa-solid fa-circle-info info-icon" onclick="showDetails('654321', 'Pix', 'R$ 350.00', 'Pendente')" title="Detalhes"></i>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <div>
-              <p class="gatway_name"><i class="fa-brands fa-paypal"></i> Paypal</p>
-            </div>
-          </td>
-          <td>
-            <div><p>R$ 100.00</p></div>
-          </td>
-          <td>
-            <div>
-              <p>112233</p>
-              <i class="fa-solid fa-copy copy-icon" onclick="copyToClipboard('112233')" title="Copiar ID"></i>
-            </div>
-          </td>
-          <td>
-            <div>
-              <p class="status declined">Recusado</p>
-              <i class="fa-solid fa-circle-info info-icon" onclick="showDetails('112233', 'Paypal', 'R$ 100.00', 'Recusado')" title="Detalhes"></i>
-            </div>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+  <title>Convidar Amigos</title>
+  <link rel="stylesheet" href="../CSS/Home/invitation.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
 
-  <!-- Modal para exibir detalhes -->
-  <div id="details-modal" class="modal">
-    <div class="modal-content">
-      <span class="close-btn" onclick="closeModal()">&times;</span>
-      <h2>Detalhes do Saque</h2>
-      <p><strong>ID da Transação:</strong> <span id="modal-id"></span></p>
-      <p><strong>Método:</strong> <span id="modal-method"></span></p>
-      <p><strong>Quantia:</strong> <span id="modal-amount"></span></p>
-      <p><strong>Status:</strong> <span id="modal-status"></span></p>
+</head>
+
+<body>
+  <div class="invite-container">
+    <div class="banner">
+      <img src="https://via.placeholder.com/800x200" alt="Banner de convite">
+    </div>
+
+    <!-- Estatísticas -->
+    <div class="div_base_onvitation_statistics">
+      <h3 class="invitation_titles">Estatísticas de Convinte</h3>
+
+      <div class="invitation_statistic">
+        <p><strong>Amigos Convidados:</strong> <span class="span_stats_item">🤝 6</span></p>
+        <p><strong>Estrelas Ganhas:</strong> <span class="span_stats_item">✨ 120</span></p>
+      </div>
+
+      <!-- Código de Convite -->
+      <div class="invite_code_container">
+        <div>
+          <div class="container_invitation_url">
+            <p>https://lonyextra.com?invite=45672</p>
+            <i class="fa-solid fa-copy copy-icon"></i>
+          </div>
+          <p class="link_and_invite_code_description">Link de convinte</p>
+        </div>
+
+        <div>
+          <div class="container_invitation_url">
+            <p>45672</p>
+            <i class="fa-solid fa-copy copy-icon"></i>
+          </div>
+          <p class="link_and_invite_code_description">Codigo de convinte</p>
+        </div>
+      </div>
+    </div>
+
+
+    <hr class="hr_in_invitation_dialog">
+
+    <!-- Inserir Código -->
+    <h3 class="invitation_titles h3_tem_algum_codigo">Tem algum código de convite?</h3>
+
+    <div class="insert-code">
+      <input type="text" id="code-input" placeholder="Digite o código aqui">
+      <button class="submit-button">Enviar</button>
+    </div>
+
+    <hr class="hr_in_invitation_dialog">
+
+
+    <!-- Lista de Amigos Convidados -->
+    <div class="friend_list_container">
+      <h3 class="invitation_titles">Amigos Convidados</h3>
+
+      <div class="container_table_invited_list">
+        <table class="table_invited_friends">
+          <tbody id="tbody_invited_friends">
+            <tr>
+              <td>
+                <div class="friend-info">
+                  <img src="https://via.placeholder.com/50" alt="Foto do amigo">
+
+                  <div class="container_friends_referred_img_name_email">
+                    <p class="invited_name"><strong>João Silva</strong></p>
+                    <p class="invited_email">nelioa****@gmail.com</p>
+                  </div>
+                  <div class="container_earned_stars_for_this_friend">
+                    <p>✨ +34 567</p>
+                  </div>
+                </div>
+              </td>
+            </tr>
+
+            <tr>
+              <td>
+                <div class="friend-info">
+                  <img src="https://via.placeholder.com/50" alt="Foto do amigo">
+
+                  <div class="container_friends_referred_img_name_email">
+                    <p class="invited_name"><strong>João Silva</strong></p>
+                    <p class="invited_email">nelioa****@gmail.com</p>
+                  </div>
+                  <div class="container_earned_stars_for_this_friend">
+                    <p>✨ +34 567</p>
+                  </div>
+                </div>
+              </td>
+            </tr>
+
+            <tr>
+              <td>
+                <div class="friend-info">
+                  <img src="https://via.placeholder.com/50" alt="Foto do amigo">
+
+                  <div class="container_friends_referred_img_name_email">
+                    <p class="invited_name"><strong>João Silva</strong></p>
+                    <p class="invited_email">nelioa****@gmail.com</p>
+                  </div>
+                  <div class="container_earned_stars_for_this_friend">
+                    <p>✨ +34 567</p>
+                  </div>
+                </div>
+              </td>
+            </tr>
+
+            
+            <tr>
+              <td>
+                <div class="friend-info">
+                  <img src="https://via.placeholder.com/50" alt="Foto do amigo">
+
+                  <div class="container_friends_referred_img_name_email">
+                    <p class="invited_name"><strong>João Silva</strong></p>
+                    <p class="invited_email">nelioa****@gmail.com</p>
+                  </div>
+                  <div class="container_earned_stars_for_this_friend">
+                    <p>✨ +34 567</p>
+                  </div>
+                </div>
+              </td>
+            </tr>
+
+            
+            <tr>
+              <td>
+                <div class="friend-info">
+                  <img src="https://via.placeholder.com/50" alt="Foto do amigo">
+
+                  <div class="container_friends_referred_img_name_email">
+                    <p class="invited_name"><strong>João Silva</strong></p>
+                    <p class="invited_email">nelioa****@gmail.com</p>
+                  </div>
+                  <div class="container_earned_stars_for_this_friend">
+                    <p>✨ +34 567</p>
+                  </div>
+                </div>
+              </td>
+            </tr>
+
+            
+            <tr>
+              <td>
+                <div class="friend-info">
+                  <img src="https://via.placeholder.com/50" alt="Foto do amigo">
+
+                  <div class="container_friends_referred_img_name_email">
+                    <p class="invited_name"><strong>João Silva</strong></p>
+                    <p class="invited_email">nelioa****@gmail.com</p>
+                  </div>
+                  <div class="container_earned_stars_for_this_friend">
+                    <p>✨ +34 567</p>
+                  </div>
+                </div>
+              </td>
+            </tr>
+
+            
+            <tr>
+              <td>
+                <div class="friend-info">
+                  <img src="https://via.placeholder.com/50" alt="Foto do amigo">
+
+                  <div class="container_friends_referred_img_name_email">
+                    <p class="invited_name"><strong>João Silva</strong></p>
+                    <p class="invited_email">nelioa****@gmail.com</p>
+                  </div>
+                  <div class="container_earned_stars_for_this_friend">
+                    <p>✨ +34 567</p>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!--
+      <div class="friend-info">
+        <img src="https://via.placeholder.com/50" alt="Foto do amigo">
+
+        <div class="container_friends_referred_img_name_email">
+          <p class="invited_name"><strong>João Silva</strong></p>
+          <p class="invited_email">nelioa****@gmail.com</p>
+        </div>
+        <div class="container_earned_stars_for_this_friend">
+          <p>✨ +34 567</p>
+        </div>
+      </div>
+
+      <div class="friend-info">
+        <img src="https://via.placeholder.com/50" alt="Foto do amigo">
+
+        <div class="container_friends_referred_img_name_email">
+          <p class="invited_name"><strong>João Silva</strong></p>
+          <p class="invited_email">nelioa****@gmail.com</p>
+        </div>
+        <div class="container_earned_stars_for_this_friend">
+          <p>✨ +34 567</p>
+        </div>
+      </div>
+
+      <div class="friend-info">
+        <img src="https://via.placeholder.com/50" alt="Foto do amigo">
+
+        <div class="container_friends_referred_img_name_email">
+          <p class="invited_name"><strong>João Silva</strong></p>
+          <p class="invited_email">nelioa****@gmail.com</p>
+        </div>
+        <div class="container_earned_stars_for_this_friend">
+          <p>+✨ +34 567</p>
+        </div>
+      </div>
+      -->
+
     </div>
   </div>
 </body>
+
 </html>
