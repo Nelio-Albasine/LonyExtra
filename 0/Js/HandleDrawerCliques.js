@@ -12,6 +12,7 @@ const hashToDialogData = {
     "#Perfil": { id: "dialog_perfil", title: "Perfil" },
     "#Logout": { id: "dialog_logout", title: "Logout" },
 };
+
 const starsToValueMap = [
     { stars: 600, revenue: 1.0 },
     { stars: 2980, revenue: 5.20 },
@@ -19,6 +20,7 @@ const starsToValueMap = [
     { stars: 11905, revenue: 21.30 },
     { stars: 23805, revenue: 43.19 },
 ];
+
 const indexCashoutToAmountToValues = {
     0: 1.0,
     1: 5.2,
@@ -27,7 +29,6 @@ const indexCashoutToAmountToValues = {
     4: 30.5,
     5: 48.3
 };
-
 
 let imgCloseDialog = document.getElementById("img_close_dialog");
 const convertStarsBtn = document.getElementById("convertStarsBtn");
@@ -50,11 +51,8 @@ const userId = "391f58325968d93b6778b9722f953bb063b44254d8e04109955c52b928ac9782
 
 
 document.addEventListener("DOMContentLoaded", () => {
-    window.addEventListener("hashchange", updateDialogsVisibility);
-
-    updateDialogsVisibility();
+    openEspecificDialog()
     closeDialogContainer();
-
     whenConvertStarsClicked();
     whenCashoutRevenueClicked();
 });
@@ -64,36 +62,46 @@ function copyToClipboard(text) {
     alert("ID copiado: " + text);
 }
 
-function openEspecificDialog(dialogId) {
-    const dialogs = document.querySelectorAll(".main_container_all_dialogs .the_dialog_container");
-    const overlay = document.getElementById("overlay");
+function openEspecificDialog(dialogIdHasHashFormat = null) {
+    console.log("Dentro da funcao: openEspecificDialog() e o id passado é: ", dialogIdHasHashFormat);
 
-    dialogs.forEach(dialog => {
-        dialog.style.display = dialog.id === dialogId ? "block" : "none";
-    });
+    if (!dialogIdHasHashFormat) {
+        let pageLoadedWithHash = window.location.hash
+        dialogIdHasHashFormat = pageLoadedWithHash
 
-    const hashEntry = Object.entries(hashToDialogData).find(([, data]) => data.id === dialogId);
-    if (hashEntry) {
-        const [hash] = hashEntry;
-        window.location.hash = hash;
-
-        const titleElement = document.querySelector("#dialog_title");
-        if (titleElement) {
-            titleElement.textContent = hashToDialogData[hash]?.title || "Desconhecido";
+        if (pageLoadedWithHash === "#home") {
+            dialogs.forEach(dialog => (dialog.style.display = "none"));
+            overlay.style.display = "none";
+            const titleElement = document.querySelector("#dialog_title");
+            if (titleElement) titleElement.textContent = "";
+            return;
         }
-
-        overlay.style.display = "flex";
-    } else {
-        closeDialogContainer();
     }
 
-    handleDialogActions(dialogId);
+
+    const dialogs = document.querySelectorAll(".main_container_all_dialogs .the_dialog_container");
+    const overlay = document.getElementById("overlay");
+    const textDialogTitle = document.querySelector("#dialog_title");
+
+    let targetDialogId = hashToDialogData[dialogIdHasHashFormat].id
+    let dialogTitle = hashToDialogData[dialogIdHasHashFormat]?.title
+
+    dialogs.forEach(dialog => {
+        dialog.style.display = "none";
+    });
+
+    overlay.style.display = "flex";
+    document.getElementById(targetDialogId).style.display = "flex";
+
+    textDialogTitle.textContent = dialogTitle || "Desconhecido";
+
+    handleActionsToEspecifiedHash(dialogIdHasHashFormat);
 }
 
-let chamadashandleDialogActions = 1
+let chamadashandleActionsToEspecifiedHash = 1
 
-function handleDialogActions(dialogId) {
-    console.log(`Funcao handleDialogActions chamada ${chamadashandleDialogActions++} vezes`)
+function handleActionsToEspecifiedHash(dialogId) {
+    console.log(`Funcao handleActionsToEspecifiedHash chamada ${chamadashandleActionsToEspecifiedHash++} vezes`)
 
     switch (dialogId) {
         case "#Home":
@@ -215,51 +223,6 @@ function closeDialogContainer() {
     });
 }
 
-
-function updateDialogsVisibility() {
-    const hashToDialogData = {
-        "#TodosLinks": { id: "dialog_all_links", title: "Todos os Links" },
-        "#ConverterEstrelas": { id: "dialog_convert_stars", title: "Converter Estrelas" },
-        "#ConvidarAmigos": { id: "dialog_convidar_amigos", title: "Convidar Amigos" },
-        "#Sacar": { id: "dialog_sacar", title: "Sacar Saldo" },
-        "#HistoricoSaques": { id: "dialog_historio_de_saques", title: "Histórico de Saques" },
-        "#MinhasNotificacoes": { id: "dialog_minhas_notificacoes", title: "Minhas Notificações" },
-        "#Instagram": { id: "dialog_instagram", title: "Instagram" },
-        "#Telegram": { id: "dialog_telegram", title: "Telegram" },
-        "#Gmail": { id: "dialog_gmail", title: "Gmail" },
-        "#YouTube": { id: "dialog_youtube", title: "YouTube" },
-        "#Perfil": { id: "dialog_perfil", title: "Perfil" },
-        "#Logout": { id: "dialog_logout", title: "Logout" }
-    };
-
-    const hash = window.location.hash || "";
-    const overlay = document.getElementById("overlay");
-    const dialogs = document.querySelectorAll(".main_container_all_dialogs .the_dialog_container");
-
-    handleDialogActions(hash);
-
-
-    // Gerenciar visibilidade com base no hash
-    if (hash === "#home") {
-        dialogs.forEach(dialog => (dialog.style.display = "none"));
-        overlay.style.display = "none";
-        const titleElement = document.querySelector("#dialog_title");
-        if (titleElement) titleElement.textContent = "";
-        return;
-    }
-
-    const dialogData = hashToDialogData[hash] || null;
-    dialogs.forEach(dialog => {
-        dialog.style.display = dialogData && dialog.id === dialogData.id ? "block" : "none";
-    });
-
-    overlay.style.display = dialogData ? "flex" : "none"; // Mostra/oculta overlay
-
-    const titleElement = document.querySelector("#dialog_title");
-    if (titleElement) {
-        titleElement.textContent = dialogData?.title || "Desconhecido";
-    }
-}
 
 function handleConverterEstrelas() {
     const options = document.querySelectorAll('.conversion_option');
@@ -515,7 +478,6 @@ function formatarData(dataISO, userTimeZone) {
     return `${dia} de ${mes} ${ano}, ${horas} `;
 }
 
-
 function showSuccessDialogCashout(data, isByHistoryTable = null) {
     const closeSuccessCashoutDialog = document.getElementById("closeSuccessCashoutDialog");
     const success_cashout_overlay = document.getElementById("success_cashout_overlay");
@@ -545,7 +507,7 @@ function showSuccessDialogCashout(data, isByHistoryTable = null) {
         btn_see_cashou_status.style.display = "none";
         methodElement.textContent = data.gatewayName == "paypal" ? "Paypal" : "Pix"
         icon.src = `../SRC/IMGs/${data.gatewayName == "paypal" ? "icon_paypal_256x256" : "icon_pix_240x240"}.png`;
-    
+
         const statusMap = {
             0: "pending",
             1: "paid",
@@ -557,15 +519,21 @@ function showSuccessDialogCashout(data, isByHistoryTable = null) {
 
         statusElement.textContent = statusClass === "paid" ? "Pago" : statusClass === "pending" ? "Pendente" : "Recusado";
     } else {
+        const status_image = document.querySelectorAll(".status-image");
+        status_image.forEach(img => img.style.display = "flex")
+        btn_see_cashou_status.style.display = "flex";
+        
         methodElement.textContent = data.metodo || "Método desconhecido";
         icon.src = `../SRC/IMGs/${data.metodo == "paypal" ? "icon_paypal_256x256" : "icon_pix_240x240"}.png`;
 
-        
+
         statusElement.className = `status pending status_from_dialog`;
         statusElement.textContent = "Pendente";
 
         btn_see_cashou_status.addEventListener("click", () => {
-            openEspecificDialog("#HistoricoSaques");
+            let hashHistorico = "#HistoricoSaques"
+            window.location.hash = hashHistorico;
+            openEspecificDialog(hashHistorico);
             success_cashout_overlay.style.display = "none";
         });
     }
@@ -655,10 +623,8 @@ async function makeRequestToCashOut(requestData, btnCashoutRevenue) {
     }, 2000)
 }
 
-let chamadas = 1
-async function handleCashoutHistoryDialog() {
-    console.log(`Funcao chamada ${chamadas++} vezes`)
 
+async function handleCashoutHistoryDialog() {
     const tableBody = document.getElementById("tbody_cashout_history");
     const emptyHistory = document.getElementById("empty_history");
     const loading_or_empty_awesome_icon = document.getElementById("loading_or_empty_awesome_icon");
