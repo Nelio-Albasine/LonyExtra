@@ -51,7 +51,7 @@ const userId = "391f58325968d93b6778b9722f953bb063b44254d8e04109955c52b928ac9782
 
 
 document.addEventListener("DOMContentLoaded", () => {
-    openEspecificDialog()
+    openEspecificDialog(window.location.hash)
     closeDialogContainer();
     whenConvertStarsClicked();
     whenCashoutRevenueClicked();
@@ -63,52 +63,35 @@ function copyToClipboard(text) {
 }
 
 function openEspecificDialog(dialogIdHasHashFormat = null) {
-    console.log("Dentro da funcao: openEspecificDialog() e o id passado é: ", dialogIdHasHashFormat);
-
-    if (!dialogIdHasHashFormat) {
-        let pageLoadedWithHash = window.location.hash
-        dialogIdHasHashFormat = pageLoadedWithHash
-
-        if (pageLoadedWithHash === "#home") {
-            dialogs.forEach(dialog => (dialog.style.display = "none"));
-            overlay.style.display = "none";
-            const titleElement = document.querySelector("#dialog_title");
-            if (titleElement) titleElement.textContent = "";
-            return;
-        }
-    }
-
-
     const dialogs = document.querySelectorAll(".main_container_all_dialogs .the_dialog_container");
     const overlay = document.getElementById("overlay");
     const textDialogTitle = document.querySelector("#dialog_title");
 
-    let targetDialogId = hashToDialogData[dialogIdHasHashFormat].id
-    let dialogTitle = hashToDialogData[dialogIdHasHashFormat]?.title
+    if (dialogIdHasHashFormat === "#Home") {
+        document.querySelector('.drawer').classList.remove('open');
+    } else {
+        if (!dialogIdHasHashFormat) {
+            return;
+        }
 
-    dialogs.forEach(dialog => {
-        dialog.style.display = "none";
-    });
+        let targetDialogId = hashToDialogData[dialogIdHasHashFormat].id
+        let dialogTitle = hashToDialogData[dialogIdHasHashFormat]?.title
 
-    overlay.style.display = "flex";
-    document.getElementById(targetDialogId).style.display = "flex";
+        dialogs.forEach(dialog => {
+            dialog.style.display = "none";
+        });
 
-    textDialogTitle.textContent = dialogTitle || "Desconhecido";
+        overlay.style.display = "flex";
+        document.getElementById(targetDialogId).style.display = "flex";
 
-    handleActionsToEspecifiedHash(dialogIdHasHashFormat);
+        textDialogTitle.textContent = dialogTitle || "Desconhecido";
+
+        handleActionsToEspecifiedHash(dialogIdHasHashFormat);
+    }
 }
 
-let chamadashandleActionsToEspecifiedHash = 1
-
 function handleActionsToEspecifiedHash(dialogId) {
-    console.log(`Funcao handleActionsToEspecifiedHash chamada ${chamadashandleActionsToEspecifiedHash++} vezes`)
-
     switch (dialogId) {
-        case "#Home":
-            console.log("Ação padrão: Home");
-            document.querySelector('.drawer').classList.toggle('open');
-            document.querySelector('.main-content').classList.toggle('drawer-open');
-            break;
         case "#TodosLinks":
             //this menu is alread handled in GetDashBoardInf.js
             break;
@@ -522,7 +505,7 @@ function showSuccessDialogCashout(data, isByHistoryTable = null) {
         const status_image = document.querySelectorAll(".status-image");
         status_image.forEach(img => img.style.display = "flex")
         btn_see_cashou_status.style.display = "flex";
-        
+
         methodElement.textContent = data.metodo || "Método desconhecido";
         icon.src = `../SRC/IMGs/${data.metodo == "paypal" ? "icon_paypal_256x256" : "icon_pix_240x240"}.png`;
 
