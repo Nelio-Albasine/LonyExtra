@@ -184,7 +184,7 @@ body {
 }
 
 .level-badge-platina{
-    background-color: #9e067d;
+    background-color: #9e067d !important;
 }
 
 .timer {
@@ -374,10 +374,6 @@ body {
         border-radius: 8px;
     }
 
-    .stat-label {
-        font-size: 13px;
-        padding: 2px;
-    }
 
     .stat-value {
         font-size: 15px;
@@ -451,18 +447,6 @@ body {
         display: flex;
         justify-content: space-between;
         align-items: center;
-    }
-
-    .level-badge {
-        background-color: #dc2626;
-        padding: 8px;
-        border-radius: 8px;
-        color: #ffffff;
-        width: 100%;
-        height: fit-content;
-        margin: 5px;
-        font-size: 14px;
-        padding-bottom: 8px;
     }
 
     .timer {

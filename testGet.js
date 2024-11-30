@@ -1,9 +1,6 @@
 async function GetDashboardInfo(userId) {
-    let responseIndex = 2;
-    let responseMessage = "Ocorreu um erro ao autenticar!";
-
     try {
-        const response = await fetch(`http://localhost/LonyExtra/0/Api/Dashboard/GetDashboardInfo.php?userId=${userId}`, {
+        const response = await fetch(`http://localhost/LonyExtra/0/Api/Cashout/GetMyCashouts.php?userId=${userId}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
@@ -14,9 +11,9 @@ async function GetDashboardInfo(userId) {
             throw new Error(`Erro na requisição: ${response.status}`);
         }
 
-        const dashInfoResponse = await response.json();
+        const result = await response.json();
 
-        return dashInfoResponse;
+        return result;
     } catch (error) {
         console.error(responseMessage, error);
     }
@@ -25,8 +22,8 @@ async function GetDashboardInfo(userId) {
 (async () => {
     const userId = "391f58325968d93b6778b9722f953bb063b44254d8e04109955c52b928ac9782";
     try {
-        const dashInfo = await GetDashboardInfo(userId);
-        console.log(dashInfo);
+        const response = await GetDashboardInfo(userId);
+        console.log(response);
     } catch (error) {
         console.error("Erro ao obter informações do dashboard:", error);
     }
