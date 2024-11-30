@@ -25,6 +25,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $userPaymentName = $cashOutRequest['userPaymentName'] ?? null;
     $userPaymentAddress = $cashOutRequest['userPaymentAddress'] ?? null;
     $cashOutId = null;
+    $created_at = gmdate('Y-m-d H:i:s');
+
 
     $allowedGateways = ['paypal', 'pix'];
     $indexAmountToValues = [
@@ -66,7 +68,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $remainingBalance = $userRevenueJson['userRevenue'] - $amountToCashOut;
         $userRevenueJson['userRevenue'] = $remainingBalance;
 
-        $insertResponse = insertCashOutIntoTable($conn, $userId, $gatewayName, $amountToCashOut, $userPaymentName, $userPaymentAddress, $cashOutId);
+        $insertResponse = insertCashOutIntoTable($conn, $userId, $created_at,  $gatewayName, $amountToCashOut, $userPaymentName, $userPaymentAddress, $cashOutId);
         if (!$insertResponse['success']) {
             echo json_encode($insertResponse);
             exit;
@@ -77,7 +79,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             echo json_encode([
                 'success' => true,
                 'message' => 'Saque realizado com sucesso!',
-                'cashOutId' => $cashOutId
+                'cashOutId' => $cashOutId,
+                'created_at' => $created_at
             ]);
         } else {
             echo json_encode(['success' => false, 'message' => 'Erro ao atualizar os dados do usuário.']);
@@ -96,6 +99,7 @@ function createTableSaquesIfNotExists($conn)
             gatewayName VARCHAR(10) NOT NULL,
             cashOutId VARCHAR(6) UNIQUE NOT NULL,
             amountCashedOut DECIMAL(10,2),
+            cashOutStatus INT(1),
             userPaymentName VARCHAR(27) NOT NULL,
             userPaymentAddress VARCHAR(45) NOT NULL,
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
@@ -125,18 +129,19 @@ function checkIfUserHasSufficientRevenue($conn, $userId)
     }
 }
 
-
-function insertCashOutIntoTable($conn, $userId, $gatewayName, $amountCashedOut, $userPaymentName, $userPaymentAddress, &$cashOutId)
+function insertCashOutIntoTable($conn, $userId, $created_at, $gatewayName, $amountCashedOut, $userPaymentName, $userPaymentAddress, &$cashOutId)
 {
+    $cashOutStatusDefault = 0;
+
     try {
         $cashOutId = generateNumericID();
         $query = "
             INSERT INTO Saques (
-                userId, gatewayName, cashOutId, amountCashedOut, userPaymentName, userPaymentAddress
-            ) VALUES (?, ?, ?, ?, ?, ?)
+                userId, gatewayName, cashOutId, created_at, cashOutStatus, amountCashedOut, userPaymentName, userPaymentAddress
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
         ";
         $stmt = $conn->prepare($query);
-        $stmt->execute([$userId, $gatewayName, $cashOutId, $amountCashedOut, $userPaymentName, $userPaymentAddress]);
+        $stmt->execute([$userId, $gatewayName, $cashOutId, $created_at, $cashOutStatusDefault, $amountCashedOut, $userPaymentName, $userPaymentAddress]);
 
         return ['success' => true, 'message' => 'Novo registro inserido com sucesso!'];
     } catch (Exception $e) {

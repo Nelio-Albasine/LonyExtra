@@ -59,7 +59,7 @@ try {
 // Função para obter as informações do dashboard do usuário
 function getDashboardInfo($conn, $userId)
 {
-    $query = "SELECT userId, userName, userSurname, userEmail, myReferralCode, userGender, userAge, userJoinedAt, userPointsJSON, userInvitationJSON 
+    $query = "SELECT userId, userName, userSurname, userEmail, userTimeZone, myReferralCode, userGender, userAge, userJoinedAt, userPointsJSON, userInvitationJSON 
             FROM Usuarios 
             WHERE userId = ?";
 

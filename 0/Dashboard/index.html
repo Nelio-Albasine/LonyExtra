@@ -23,9 +23,13 @@
     <link rel="stylesheet" href="../CSS/Home/mobile.css">
 
     <link rel="stylesheet" href="../CSS/Home/invitation.css">
+
     <link rel="stylesheet" href="../CSS/Home/cashout.css">
+    <link rel="stylesheet" href="../CSS/Home/cashout_history.css">
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+
 
 </head>
 
@@ -56,13 +60,17 @@
                     <div class="detail-row">
                         <p>Método de Retirada</p>
                         <div class="detail-value">
-                            <img src="../SRC/IMGs/icon_paypal_256x256.png" alt="Ícone Método" class="icon">
+                            <img id="img_metod_in_dialog_success_withdraw" src="../SRC/IMGs/icon_paypal_256x256.png" alt="Ícone Método" class="icon">
                             <p class="span_mutable_texts">PayPal</p>
                         </div>
                     </div>
                     <div class="detail-row">
                         <p>Quantia</p>
                         <p class="span_mutable_texts">R$ 100,00</p>
+                    </div>
+                    <div class="detail-row">
+                        <p>Data</p>
+                        <p class="span_mutable_texts">Loading...</p>
                     </div>
                     <div class="detail-row">
                         <p>Nome</p>
@@ -78,17 +86,17 @@
                     </div>
                     <div class="detail-row">
                         <p>Status</p>
-                        <p class="status-pending">Pendente</p>
+                        <p id="status_from_dialog" class="status paid status_from_dialog">Pendente</p>
                     </div>
                 </div>
             </div>
             <div class="dialog-footer">
-                <button class="status-btn">Acompanhar Status</button>
+                <button  id="btn_see_cashou_status" class="status-btn">Acompanhar Status</button>
                 <p>© LonyExtra All Right Reserved</p>
             </div>
         </div>
     </div>
-   
+
 
     <header class="header">
         <!-- Conteúdo do cabeçalho -->
@@ -564,7 +572,109 @@
 
                 <!--Dialog Saques: histórico de saques-->
                 <div class="the_dialog_container" id="dialog_historio_de_saques">
-                    <h1>histórico de saques</h1>
+                    <table id="withdraw-table" class="withdraw-table">
+                        <thead>
+                            <tr>
+                                <th>Método</th>
+                                <th>Quantia</th>
+                                <th>Saque</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tbody_cashout_history">
+                            <!--
+                             <tr>
+                                <td>
+                                    <div>
+                                        <img class="teable_icon_gateway" src="../SRC/IMGs/icon_paypal_256x256.png" alt="cashout mthod icon">
+                                        <p class="gatway_name"> Paypal</p>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div>
+                                        <p class="textCashoutAmount">R$ 200.00</p>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div>
+                                        <p class="textCashoutID">123456</p>
+                                        <i class="fa-solid fa-copy copy-icon" onclick="copyToClipboard('123456')"
+                                            title="Copiar ID"></i>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div>
+                                        <p class="status paid">Pago</p>
+                                        <i class="fa-solid fa-circle-info info-icon"
+                                            onclick="showDetails('123456', 'Paypal', 'R$ 200.00', 'Pago')"
+                                            title="Detalhes"></i>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div>
+                                        <img class="teable_icon_gateway" src="../SRC/IMGs/icon_pix_240x240.png" alt="cashout mthod icon">
+                                        <p class="gatway_name"> Pix</p>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div>
+                                        <p class="textCashoutAmount">R$ 350.00</p>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div>
+                                        <p class="textCashoutID">654321</p>
+                                        <i class="fa-solid fa-copy copy-icon" onclick="copyToClipboard('654321')"
+                                            title="Copiar ID"></i>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div>
+                                        <p class="status pending">Pendente</p>
+                                        <i class="fa-solid fa-circle-info info-icon"
+                                            onclick="showDetails('654321', 'Pix', 'R$ 350.00', 'Pendente')"
+                                            title="Detalhes"></i>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div>
+                                        <img class="teable_icon_gateway" src="../SRC/IMGs/icon_paypal_256x256.png" alt="cashout mthod icon">
+                                        <p class="gatway_name"> Paypal</p>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div>
+                                        <p class="textCashoutAmount">R$ 100.00</p>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div>
+                                        <p class="textCashoutID">112233</p>
+                                        <i class="fa-solid fa-copy copy-icon" onclick="copyToClipboard('112233')"
+                                            title="Copiar ID"></i>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div>
+                                        <p class="status declined">Recusado</p>
+                                        <i class="fa-solid fa-circle-info info-icon"
+                                            onclick="showDetails('112233', 'Paypal', 'R$ 100.00', 'Recusado')"
+                                            title="Detalhes"></i>
+                                    </div>
+                                </td>
+                            </tr>
+                            -->
+                        </tbody>
+                    </table>
+
+                    <div id="empty_history">
+                        <i id="loading_or_empty_awesome_icon" class="fa-solid fa-history history-icon"></i>
+                        <p class="p_sem_saques">Sem saques!</p>
+                    </div>
                 </div>
 
                 <!--Dialog Notifications: Minhas notifications-->

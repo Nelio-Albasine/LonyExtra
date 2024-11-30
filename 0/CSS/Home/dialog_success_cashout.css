@@ -1,6 +1,10 @@
 .withdrawal-dialog {
-  width: 400px;
+  width: 100%;
+  max-width: 500px;
   margin: 50px auto;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   background: white;
   border-radius: 12px;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
@@ -78,12 +82,10 @@
   height: 12px;
 }
 
-.status-pending {
-  background: rgba(255, 223, 0, 0.2);
-  color: #856404;
+.status_from_dialog {
   padding: 4px 8px;
   border-radius: 8px;
-  font-size: 3px;
+  font-size: 13px;
 }
 
 .dialog-footer {

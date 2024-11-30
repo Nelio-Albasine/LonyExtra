@@ -6,6 +6,9 @@ let pointsToEarnByLevel = 10
 let currentURL_hash;
 let currentServerDate;
 
+//global vars
+var userTimeZone = null;
+
 
 document.addEventListener("DOMContentLoaded", async function () {
     const userName = document.getElementById("userName");
@@ -20,11 +23,12 @@ document.addEventListener("DOMContentLoaded", async function () {
 
     const userId = "391f58325968d93b6778b9722f953bb063b44254d8e04109955c52b928ac9782";
     const dashInfo = await GetDashboardInfo(userId);
-
     const userInfo = dashInfo.userInfo;
     const userPoints = JSON.parse(userInfo.userPointsJSON);
     const userInvitationInfo = JSON.parse(userInfo.userInvitationJSON);
-    console.log("user Invite Info : ", userInfo);
+
+    userTimeZone = userInfo.userTimeZone
+
 
 
     saveUserPointsToLocalStorage(userPoints);

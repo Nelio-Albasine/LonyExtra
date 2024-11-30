@@ -3,6 +3,9 @@
 }
 
 @media screen and (max-width: 600px) {
+    .header{
+        padding-top: 5px;
+    }
     main {
         margin-top: 80px;
     }
@@ -15,12 +18,20 @@
         padding: 6px 6px 0 6px !important;
     }
 
+    .stat-label {
+        font-size: 12.5px;
+        padding: 2px;
+    }
+
     .stat-value {
         margin-top: 4px;
     }
 
     .banner {
         display: none;
+    }
+    .ads_banner{
+        display: none !important;
     }
 
     .section-title {
@@ -44,13 +55,26 @@
 
     .level-card {
         background-color: white;
+        overflow: hidden;
         padding: 0 !important;
         height: 60px;
+        gap: 6px;
+        margin-top: 4px;
+    }
+
+    .level-card div{
+        margin: 0;
+    }
+    .level-card div span{
+        font-size: 13px !important;
+    }
+    .level-card div p{
+        font-size: 13px;
     }
 
     .level-badge {
         height: 100%;
-        width: 105px !important;
+        width: 100px !important;
         white-space: nowrap;
         padding: 6px 15px;
         display: flex;
@@ -58,8 +82,17 @@
         align-items: center;
         justify-content: center;
         text-align: center;
+        height: 90%;
+
     }
 
+    .level-badge {
+        background-color: #dc2626;
+        border-radius: 8px;
+        color: #ffffff;
+        width: 100%;
+        margin: 10px;
+    }
 
     #fab_invite_friends {
         width: 60px;
@@ -90,7 +123,7 @@
 
 
     .points {
-        width: 100px !important;
+        width: 75px !important;
     }
 
     .timer p {

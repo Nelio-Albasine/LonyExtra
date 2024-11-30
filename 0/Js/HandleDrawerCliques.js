@@ -49,19 +49,109 @@ let optionText = null;
 const userId = "391f58325968d93b6778b9722f953bb063b44254d8e04109955c52b928ac9782";
 
 
-
-
 document.addEventListener("DOMContentLoaded", () => {
     window.addEventListener("hashchange", updateDialogsVisibility);
 
     updateDialogsVisibility();
     closeDialogContainer();
-    handleCashoutDialog();
 
     whenConvertStarsClicked();
     whenCashoutRevenueClicked();
 });
 
+function copyToClipboard(text) {
+    navigator.clipboard.writeText(text);
+    alert("ID copiado: " + text);
+}
+
+function openEspecificDialog(dialogId) {
+    const dialogs = document.querySelectorAll(".main_container_all_dialogs .the_dialog_container");
+    const overlay = document.getElementById("overlay");
+
+    dialogs.forEach(dialog => {
+        dialog.style.display = dialog.id === dialogId ? "block" : "none";
+    });
+
+    const hashEntry = Object.entries(hashToDialogData).find(([, data]) => data.id === dialogId);
+    if (hashEntry) {
+        const [hash] = hashEntry;
+        window.location.hash = hash;
+
+        const titleElement = document.querySelector("#dialog_title");
+        if (titleElement) {
+            titleElement.textContent = hashToDialogData[hash]?.title || "Desconhecido";
+        }
+
+        overlay.style.display = "flex";
+    } else {
+        closeDialogContainer();
+    }
+
+    handleDialogActions(dialogId);
+}
+
+let chamadashandleDialogActions = 1
+
+function handleDialogActions(dialogId) {
+    console.log(`Funcao handleDialogActions chamada ${chamadashandleDialogActions++} vezes`)
+
+    switch (dialogId) {
+        case "#Home":
+            console.log("Ação padrão: Home");
+            document.querySelector('.drawer').classList.toggle('open');
+            document.querySelector('.main-content').classList.toggle('drawer-open');
+            break;
+        case "#TodosLinks":
+            //this menu is alread handled in GetDashBoardInf.js
+            break;
+
+        case "#ConverterEstrelas":
+            handleConverterEstrelas();
+            break;
+
+        case "#ConvidarAmigos":
+            console.log("Ação selecionada: Convidar Amigos");
+            break;
+
+        case "#Sacar":
+            handleCashoutDialog();
+            break;
+
+        case "#HistoricoSaques":
+            console.log(`Case #HistoricoSaques`)
+            handleCashoutHistoryDialog();
+            break;
+
+        case "#MinhasNotificacoes":
+            console.log("Ação selecionada: Minhas Notificações");
+            break;
+
+        case "#Instagram":
+            console.log("Ação selecionada: Instagram");
+            break;
+
+        case "#Telegram":
+            console.log("Ação selecionada: Telegram");
+            break;
+
+        case "#Gmail":
+            console.log("Ação selecionada: Gmail");
+            break;
+
+        case "#YouTube":
+            console.log("Ação selecionada: YouTube");
+            break;
+
+        case "#Perfil":
+            console.log("Ação selecionada: Perfil");
+            break;
+
+        case "#Logout":
+            console.log("Ação selecionada: Logout");
+            break;
+    }
+
+}
 
 function whenConvertStarsClicked() {
     const dialog_subtitle = document.querySelectorAll('.dialog_subtitle');
@@ -125,91 +215,6 @@ function closeDialogContainer() {
     });
 }
 
-function openEspecificDialog(dialogId) {
-    const dialogs = document.querySelectorAll(".main_container_all_dialogs .the_dialog_container");
-    const overlay = document.getElementById("overlay");
-
-    dialogs.forEach(dialog => {
-        dialog.style.display = dialog.id === dialogId ? "block" : "none";
-    });
-
-    const hashEntry = Object.entries(hashToDialogData).find(([, data]) => data.id === dialogId);
-    if (hashEntry) {
-        const [hash] = hashEntry;
-        window.location.hash = hash;
-
-        const titleElement = document.querySelector("#dialog_title");
-        if (titleElement) {
-            titleElement.textContent = hashToDialogData[hash]?.title || "Desconhecido";
-        }
-
-        overlay.style.display = "flex";
-    } else {
-        closeDialogContainer();
-    }
-
-    console.log("Ação selecionada:", dialogId);
-
-    handleDialogActions(dialogId);
-}
-
-function handleDialogActions(dialogId) {
-    switch (dialogId) {
-        case "#Home":
-            console.log("Ação padrão: Home");
-            document.querySelector('.drawer').classList.toggle('open');
-            document.querySelector('.main-content').classList.toggle('drawer-open');
-            break;
-        case "#TodosLinks":
-            console.log("Ação selecionada: Todos os Links");
-            break;
-
-        case "#ConverterEstrelas":
-            handleConverterEstrelas();
-            break;
-
-        case "#ConvidarAmigos":
-            console.log("Ação selecionada: Convidar Amigos");
-            break;
-
-        case "#Sacar":
-            console.log("Ação selecionada: Sacar");
-            break;
-
-        case "#HistoricoSaques":
-            console.log("Ação selecionada: Histórico de Saques");
-            break;
-
-        case "#MinhasNotificacoes":
-            console.log("Ação selecionada: Minhas Notificações");
-            break;
-
-        case "#Instagram":
-            console.log("Ação selecionada: Instagram");
-            break;
-
-        case "#Telegram":
-            console.log("Ação selecionada: Telegram");
-            break;
-
-        case "#Gmail":
-            console.log("Ação selecionada: Gmail");
-            break;
-
-        case "#YouTube":
-            console.log("Ação selecionada: YouTube");
-            break;
-
-        case "#Perfil":
-            console.log("Ação selecionada: Perfil");
-            break;
-
-        case "#Logout":
-            console.log("Ação selecionada: Logout");
-            break;
-    }
-
-}
 
 function updateDialogsVisibility() {
     const hashToDialogData = {
@@ -369,14 +374,13 @@ async function handleConvertion(index, convertStarsBtn) {
     }
 }
 
-function handleCashoutDialog(l) {
+function handleCashoutDialog() {
     function handleGiftCardSelection() {
         giftCards.forEach((card, index) => {
             card.addEventListener('click', () => {
                 giftCards.forEach(c => c.classList.remove('selected'));
                 card.classList.add('selected');
                 btnCashoutRevenue.style.backgroundColor = "#043277";
-                const selectedValue = card.querySelector('p').textContent;
                 indexToCashOut = index;
             });
         });
@@ -387,7 +391,11 @@ function handleCashoutDialog(l) {
 
     function toggleDropdown() {
         const dropdown = document.querySelector('.dropdown');
-        dropdown.classList.toggle('active');
+        if (dropdown.classList.contains('active')) {
+            dropdown.classList.remove('active');
+        } else {
+            dropdown.classList.add('active');
+        }
     }
 
     function selectOption(optionText, iconSrc) {
@@ -429,7 +437,6 @@ function handleCashoutDialog(l) {
         }
     });
 }
-
 
 function whenCashoutRevenueClicked() {
     btnCashoutRevenue.addEventListener("click", async (event) => {
@@ -476,9 +483,40 @@ function whenCashoutRevenueClicked() {
     })
 }
 
+function formatarData(dataISO, userTimeZone) {
+    const data = new Date(dataISO);
 
-function showSuccessDialogCashout(data) {
-    console.log(`dados recebidos: `, data)
+    const meses = [
+        "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho",
+        "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"
+    ];
+
+    const horas = data.toLocaleTimeString("pt-BR", {
+        timeZone: userTimeZone,
+        hour: "2-digit",
+        minute: "2-digit"
+    });
+
+    const dia = data.toLocaleDateString("pt-BR", {
+        timeZone: userTimeZone,
+        day: "2-digit"
+    });
+
+    const mes = meses[data.toLocaleDateString("pt-BR", {
+        timeZone: userTimeZone,
+        month: "numeric"
+    }) - 1];
+
+    const ano = data.toLocaleDateString("pt-BR", {
+        timeZone: userTimeZone,
+        year: "numeric"
+    });
+
+    return `${dia} de ${mes} ${ano}, ${horas} `;
+}
+
+
+function showSuccessDialogCashout(data, isByHistoryTable = null) {
     const closeSuccessCashoutDialog = document.getElementById("closeSuccessCashoutDialog");
     const success_cashout_overlay = document.getElementById("success_cashout_overlay");
 
@@ -486,26 +524,56 @@ function showSuccessDialogCashout(data) {
 
     const methodElement = document.querySelector(".details .detail-row:nth-child(1) .span_mutable_texts");
     const amountElement = document.querySelector(".details .detail-row:nth-child(2) .span_mutable_texts");
-    const nameElement = document.querySelector(".details .detail-row:nth-child(3) .span_mutable_texts");
-    const addressElement = document.querySelector(".details .detail-row:nth-child(4) .span_mutable_texts");
-    const transactionIdElement = document.querySelector(".details .detail-row:nth-child(5) .span_mutable_texts");
-    const statusElement = document.querySelector(".details .detail-row:nth-child(6) .status-pending");
+    const dateElement = document.querySelector(".details .detail-row:nth-child(3) .span_mutable_texts");
+    const nameElement = document.querySelector(".details .detail-row:nth-child(4) .span_mutable_texts");
+    const addressElement = document.querySelector(".details .detail-row:nth-child(5) .span_mutable_texts");
+    const transactionIdElement = document.querySelector(".details .detail-row:nth-child(6) .span_mutable_texts");
+    const statusElement = document.getElementById("status_from_dialog");
+    let icon = document.getElementById("img_metod_in_dialog_success_withdraw");
+    let btn_see_cashou_status = document.getElementById("btn_see_cashou_status");
 
-    methodElement.textContent = data.metodo || "Método desconhecido";
-    amountElement.textContent = `💰 ${data.amountCashedOut.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}` || "Valor não informado";
+
+    amountElement.textContent = `R$ ${data.amountCashedOut.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}` || "Valor não informado";
     nameElement.textContent = data.userPaymentName || "Nome não informado";
     addressElement.textContent = data.userPaymentAddress || "Endereço não informado";
     transactionIdElement.textContent = data.cashOutId || "ID não informado";
+    dateElement.textContent = formatarData(data.created_at, userTimeZone);
 
-    statusElement.textContent = "Pendente";
-    statusElement.classList.add("status-pending");
-    statusElement.classList.remove("status-success");
+    if (isByHistoryTable) {
+        const status_image = document.querySelectorAll(".status-image");
+        status_image.forEach(img => img.style.display = "none")
+        btn_see_cashou_status.style.display = "none";
+        methodElement.textContent = data.gatewayName == "paypal" ? "Paypal" : "Pix"
+        icon.src = `../SRC/IMGs/${data.gatewayName == "paypal" ? "icon_paypal_256x256" : "icon_pix_240x240"}.png`;
+    
+        const statusMap = {
+            0: "pending",
+            1: "paid",
+            2: "declined"
+        };
+
+        const statusClass = statusMap[data.cashOutStatus];
+        statusElement.className = `status ${statusClass} status_from_dialog`;
+
+        statusElement.textContent = statusClass === "paid" ? "Pago" : statusClass === "pending" ? "Pendente" : "Recusado";
+    } else {
+        methodElement.textContent = data.metodo || "Método desconhecido";
+        icon.src = `../SRC/IMGs/${data.metodo == "paypal" ? "icon_paypal_256x256" : "icon_pix_240x240"}.png`;
+
+        
+        statusElement.className = `status pending status_from_dialog`;
+        statusElement.textContent = "Pendente";
+
+        btn_see_cashou_status.addEventListener("click", () => {
+            openEspecificDialog("#HistoricoSaques");
+            success_cashout_overlay.style.display = "none";
+        });
+    }
 
     closeSuccessCashoutDialog.addEventListener("click", () => {
         success_cashout_overlay.style.display = "none";
     });
 }
-
 
 async function makeRequestToCashOut(requestData, btnCashoutRevenue) {
     try {
@@ -549,6 +617,7 @@ async function makeRequestToCashOut(requestData, btnCashoutRevenue) {
                 userPaymentName: requestData.userPaymentName,
                 userPaymentAddress: requestData.userPaymentAddress,
                 cashOutId: responseData.cashOutId,
+                created_at: responseData.created_at
             }
 
             showSuccessDialogCashout(dataForSuccessDialog);
@@ -581,7 +650,139 @@ async function makeRequestToCashOut(requestData, btnCashoutRevenue) {
         btnCashoutRevenue.textContent = "Efetuar Saque";
         btnCashoutRevenue.style.backgroundColor = "#707070";
         indexToCashOut = null;
+        paymentMethodSelected = null;
         btnCashoutRevenue.disabled = false;
     }, 2000)
 }
+
+let chamadas = 1
+async function handleCashoutHistoryDialog() {
+    console.log(`Funcao chamada ${chamadas++} vezes`)
+
+    const tableBody = document.getElementById("tbody_cashout_history");
+    const emptyHistory = document.getElementById("empty_history");
+    const loading_or_empty_awesome_icon = document.getElementById("loading_or_empty_awesome_icon");
+    const p_sem_saques = document.querySelectorAll(".p_sem_saques");
+
+    loading_or_empty_awesome_icon.className = "fa-regular fa-hourglass history-icon";
+    p_sem_saques.forEach(text => text.textContent = "Carregando...");
+
+    tableBody.innerHTML = "";
+
+    const historyData = await makeRequestToGetMyCAshouts()
+
+    if (historyData.length > 0) {
+        emptyHistory.style.display = "none";
+
+        historyData.forEach((item) => {
+            const row = document.createElement("tr");
+
+            // Coluna Método
+            const methodCell = document.createElement("td");
+            const methodDiv = document.createElement("div");
+            const methodImg = document.createElement("img");
+            methodImg.className = "teable_icon_gateway";
+            methodImg.src = `../SRC/IMGs/${item.gatewayName == "paypal" ? "icon_paypal_256x256" : "icon_pix_240x240"}.png`;
+            methodImg.alt = "cashout method icon";
+            const methodText = document.createElement("p");
+            methodText.className = "gatway_name";
+            methodText.textContent = item.gatewayName == "paypal" ? "PayPal" : "Pix";
+            methodDiv.appendChild(methodImg);
+            methodDiv.appendChild(methodText);
+            methodCell.appendChild(methodDiv);
+            row.appendChild(methodCell);
+
+            // Coluna Quantia
+            const amountCell = document.createElement("td");
+            const amountDiv = document.createElement("div");
+            const amountText = document.createElement("p");
+            amountText.className = "textCashoutAmount";
+            amountText.textContent = "R$ " + item.amountCashedOut.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
+            amountDiv.appendChild(amountText);
+            amountCell.appendChild(amountDiv);
+            row.appendChild(amountCell);
+
+            // Coluna Saque
+            const idCell = document.createElement("td");
+            const idDiv = document.createElement("div");
+            const idText = document.createElement("p");
+            idText.className = "textCashoutID";
+            idText.textContent = item.cashOutId;
+            const copyIcon = document.createElement("i");
+            copyIcon.className = "fa-solid fa-copy copy-icon";
+            copyIcon.title = "Copiar ID";
+            copyIcon.onclick = () => copyToClipboard(item.cashOutId);
+            idDiv.appendChild(idText);
+            idDiv.appendChild(copyIcon);
+            idCell.appendChild(idDiv);
+            row.appendChild(idCell);
+
+            // Coluna Status
+            const statusCell = document.createElement("td");
+            const statusDiv = document.createElement("div");
+            const statusText = document.createElement("p");
+
+            // Mapeamento dos status
+            const statusMap = {
+                0: "pending",
+                1: "paid",
+                2: "declined"
+            };
+
+
+
+            const statusClass = statusMap[item.cashOutStatus];
+            statusText.className = `status ${statusClass}`;
+            statusText.textContent =
+                statusClass === "paid"
+                    ? "Pago"
+                    : statusClass === "pending"
+                        ? "Pendente"
+                        : "Recusado";
+
+            const infoIcon = document.createElement("i");
+            infoIcon.className = "fa-solid fa-circle-info info-icon";
+            infoIcon.title = "Detalhes";
+            infoIcon.onclick = () =>
+                showSuccessDialogCashout(item, true);
+
+            statusDiv.appendChild(statusText);
+            statusDiv.appendChild(infoIcon);
+            statusCell.appendChild(statusDiv);
+            row.appendChild(statusCell);
+
+            // Adicionar linha à tabela
+            tableBody.appendChild(row);
+        });
+    } else {
+        loading_or_empty_awesome_icon.className = "fa-solid fa-history history-icon";
+        p_sem_saques.forEach(text => text.textContent = "Sem saques!");
+    }
+
+}
+
+async function makeRequestToGetMyCAshouts() {
+    try {
+        const response = await fetch(`http://localhost/LonyExtra/0/Api/Cashout/GetMyCashouts.php?userId=${userId}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error(`Erro na requisição: ${response.status}`);
+        }
+
+        const result = await response.json();
+
+        return result;
+    } catch (error) {
+        console.error(responseMessage, error);
+    }
+}
+
+
+
+
 

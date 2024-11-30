@@ -19,7 +19,7 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    font-size: 1.1rem;
+    font-size: 1.05rem;
     font-weight: 700;
     color: #2c3e50;
     margin-bottom: 10px;
@@ -32,7 +32,7 @@
     background-color: rgb(109, 117, 109);
     color: white !important;
     font-weight: bold;
-    font-size: 12px;
+    font-size: 12.5px !important;
     border-radius: 8px;
     text-align: center;
     flex: 1;
