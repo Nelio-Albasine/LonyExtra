@@ -18,8 +18,3 @@ function getMySQLConnection()
 
     return $conn;
 }
-
-/*
-User: qyagfite_Nelio_Albasine
-Database: qyagfite_Lony_Extra
-*/
