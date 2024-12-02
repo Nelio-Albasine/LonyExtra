@@ -740,8 +740,30 @@ async function makeRequestToGetMyCAshouts() {
 }
 
 
-function makeRequestToApplyInvitedCode(inviteCodeInserted){
-    
+async function makeRequestToApplyInvitedCode(inviteCodeInserted, btn){
+    const requestData = {
+        inviteCodeInserted: inviteCodeInserted,
+        userId: userId
+    }
+    try {
+        const response = await fetch("http://localhost/LonyExtra/0/api/invitation/updateWhoInvitedMe.php", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(requestData),
+        });
+
+        if (!response.ok) {
+            throw new Error(`Erro na API: ${response.statusText}`);
+        }
+
+        const responseData = await response.json();
+
+        if
+    } catch (error) {
+        console.error("Erro ao fazer a requisição:", error.message);
+    }
 }
 
 function handleInviteFriendsDialog() {
@@ -783,12 +805,11 @@ function handleInviteFriendsDialog() {
                 return;
             }
 
-            makeRequestToApplyInvitedCode(codeInserted);
+            makeRequestToApplyInvitedCode(codeInserted, btnVerifyInvitationCode);
         });
 
     });
 }
-
 
 
 
