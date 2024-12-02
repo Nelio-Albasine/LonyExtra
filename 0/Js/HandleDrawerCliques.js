@@ -236,7 +236,7 @@ async function handleConvertion(index, convertStarsBtn) {
     };
 
     try {
-        const response = await fetch("http://localhost/LonyExtra/0/api/Cashout/ConvertStarsIntoReward.php", {
+        const response = await fetch("http://localhost/LonyExtra/0/api/cashout/ConvertStarsIntoReward.php", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -494,7 +494,7 @@ function showSuccessDialogCashout(data, isByHistoryTable = null) {
         status_image.forEach(img => img.style.display = "none")
         btn_see_cashou_status.style.display = "none";
         methodElement.textContent = data.gatewayName == "paypal" ? "Paypal" : "Pix"
-        icon.src = `../SRC/IMGs/${data.gatewayName == "paypal" ? "icon_paypal_256x256" : "icon_pix_240x240"}.png`;
+        icon.src = `../src/IMGs/${data.gatewayName == "paypal" ? "icon_paypal_256x256" : "icon_pix_240x240"}.png`;
 
         const statusMap = {
             0: "pending",
@@ -512,7 +512,7 @@ function showSuccessDialogCashout(data, isByHistoryTable = null) {
         btn_see_cashou_status.style.display = "flex";
 
         methodElement.textContent = data.metodo || "Método desconhecido";
-        icon.src = `../SRC/IMGs/${data.metodo == "paypal" ? "icon_paypal_256x256" : "icon_pix_240x240"}.png`;
+        icon.src = `../src/IMGs/${data.metodo == "paypal" ? "icon_paypal_256x256" : "icon_pix_240x240"}.png`;
 
 
         statusElement.className = `status pending status_from_dialog`;
@@ -533,7 +533,7 @@ function showSuccessDialogCashout(data, isByHistoryTable = null) {
 
 async function makeRequestToCashOut(requestData, btnCashoutRevenue) {
     try {
-        const response = await fetch("http://localhost/LonyExtra/0/api/Cashout/CashOutRevenue.php", {
+        const response = await fetch("http://localhost/LonyExtra/0/api/cashout/CashOutRevenue.php", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -602,7 +602,7 @@ async function makeRequestToCashOut(requestData, btnCashoutRevenue) {
         const select = document.querySelector('.custom-select span');
         select.textContent = "Selecione uma opção";
         giftCards.forEach(c => c.classList.remove('selected'));
-        gift_gateway_icon.forEach(icon => icon.src = "../SRC/IMGs/cartoon_money.png");
+        gift_gateway_icon.forEach(icon => icon.src = "../src/IMGs/cartoon_money.png");
         btnCashoutRevenue.textContent = "Efetuar Saque";
         btnCashoutRevenue.style.backgroundColor = "#707070";
         indexToCashOut = null;
@@ -635,7 +635,7 @@ async function loadMyCashoutsToTable() {
             const methodDiv = document.createElement("div");
             const methodImg = document.createElement("img");
             methodImg.className = "teable_icon_gateway";
-            methodImg.src = `../SRC/IMGs/${item.gatewayName == "paypal" ? "icon_paypal_256x256" : "icon_pix_240x240"}.png`;
+            methodImg.src = `../src/IMGs/${item.gatewayName == "paypal" ? "icon_paypal_256x256" : "icon_pix_240x240"}.png`;
             methodImg.alt = "cashout method icon";
             const methodText = document.createElement("p");
             methodText.className = "gatway_name";
@@ -716,7 +716,7 @@ async function loadMyCashoutsToTable() {
 
 async function makeRequestToGetMyCAshouts() {
     try {
-        const response = await fetch(`http://localhost/LonyExtra/0/api/Cashout/GetMyCashouts.php?userId=${userId}`, {
+        const response = await fetch(`http://localhost/LonyExtra/0/api/cashout/GetMyCashouts.php?userId=${userId}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'

@@ -21,7 +21,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     taskBatch = getTaskBatch();
     const backLink = document.getElementById("backLink");
     if (taskBatch) {
-        backLink.href = `http://127.0.0.1:5500/0/Dashboard/index.html#${taskBatch}`;
+        backLink.href = `http://127.0.0.1:5500/0/dashboard/index.html#${taskBatch}`;
     } else {
         console.error("Task batch inválido, o link não foi atualizado.");
     }
@@ -71,11 +71,11 @@ function showBoxAlert(message, type) {
     button.onclick = () => {
         if (type === 'success') {
             button.textContent = 'Voltando...';
-            let url = `http://127.0.0.1:5500/0/Dashboard/index.html#${taskBatch}`;
+            let url = `http://127.0.0.1:5500/0/dashboard/index.html#${taskBatch}`;
             window.open(url, "_self")
         } else if (type === 'warning') {
             button.textContent = 'Voltando...';
-            let url = `http://127.0.0.1:5500/0/Dashboard/index.html#${taskBatch}`;
+            let url = `http://127.0.0.1:5500/0/dashboard/index.html#${taskBatch}`;
             window.open(url, "_self")
         } else if (type === 'error') {
             iconBox.textContent = '✖';
@@ -135,7 +135,7 @@ async function sendEncryptedDataToServer(encryptedData, iv, btnGetReward, taskIn
     let feedbackMessage = null;
 
     try {
-        const response = await fetch('http://localhost/LonyExtra/0/api/Tasks/DecryptTaskData.php', {
+        const response = await fetch('http://localhost/LonyExtra/0/api/tasks/DecryptTaskData.php', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

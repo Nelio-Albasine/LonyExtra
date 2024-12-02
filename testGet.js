@@ -1,6 +1,6 @@
 async function GetDashboardInfo(userId) {
     try {
-        const response = await fetch(`http://localhost/LonyExtra/0/api/Cashout/GetMyCashouts.php?userId=${userId}`, {
+        const response = await fetch(`http://localhost/LonyExtra/0/api/cashout/GetMyCashouts.php?userId=${userId}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'

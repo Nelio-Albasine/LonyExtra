@@ -136,7 +136,7 @@ limitateInputsMaxChars();
 
 
 async function sendOTPtoVerifyEmail(data) {
-    const url = 'http://localhost/LonyExtra/0/api/access/OTP/VerifyOTP_and_CreateUser.php';
+    const url = 'http://localhost/LonyExtra/0/api/access/otp/VerifyOTP_and_CreateUser.php';
 
     try {
         const response = await fetch(url, {

@@ -2,7 +2,7 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 ini_set('log_errors', 1);
-ini_set('error_log', __DIR__ . '../../Logs/send_OTP.log');
+ini_set('error_log', __DIR__ . '../../logs/send_OTP.log');
 
 // Definindo os cabeçalhos CORS diretamente 
 header('Access-Control-Allow-Origin: *');

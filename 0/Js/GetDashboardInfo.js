@@ -96,7 +96,7 @@ function handleStartTasksClicks() {
 async function FetchAllLinks(userId, batch = null) {
     try {
         const batchParam = batch ? `&batch=${batch}` : '';
-        const response = await fetch(`http://localhost/LonyExtra/0/api/Dashboard/GetAllLinks.php?userId=${userId}${batchParam}`, {
+        const response = await fetch(`http://localhost/LonyExtra/0/api/dashboard/GetAllLinks.php?userId=${userId}${batchParam}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
@@ -199,7 +199,7 @@ async function loadLinksIntoTable(levelIndex) {
 
     async function encrypteData(data) {
         try {
-            const response = await fetch('http://localhost/LonyExtra/0/api/Tasks/EncryptTaskData.php', {
+            const response = await fetch('http://localhost/LonyExtra/0/api/tasks/EncryptTaskData.php', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -258,7 +258,7 @@ async function loadLinksIntoTable(levelIndex) {
             tr.appendChild(tdNome);
 
             const tdPontos = document.createElement("td");
-            tdPontos.innerHTML = `+${tarefa.pontos} <img src="../SRC/IMGs/star.png" alt="Estrela" class="task_star">`;
+            tdPontos.innerHTML = `+${tarefa.pontos} <img src="../src/IMGs/star.png" alt="Estrela" class="task_star">`;
             tr.appendChild(tdPontos);
 
             const tdStatus = document.createElement("td");
@@ -345,7 +345,7 @@ async function GetDashboardInfo(userId) {
     const responseMessage = "Ocorreu um erro ao autenticar!";
 
     try {
-        const response = await fetch(`http://localhost/LonyExtra/0/api/Dashboard/GetDashboardInfo.php?userId=${userId}`, {
+        const response = await fetch(`http://localhost/LonyExtra/0/api/dashboard/GetDashboardInfo.php?userId=${userId}`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json"

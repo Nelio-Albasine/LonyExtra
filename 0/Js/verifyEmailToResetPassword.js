@@ -70,7 +70,7 @@ function showAlert(alertIndex, message) {
 }
 
 async function sendCodeToResetEmail(email) {
-    const url = 'http://localhost/LonyExtra/0/api/access/Password/SendOTPtoResetPassword.php';
+    const url = 'http://localhost/LonyExtra/0/api/access/password/SendOTPtoResetPassword.php';
 
     let data = {
         email: email
@@ -99,7 +99,7 @@ async function sendCodeToResetEmail(email) {
 }
 
 async function VerifyEmailBeforeResetPassword(code, email) {
-    const url = 'http://localhost/LonyExtra/0/api/access/Password/VerifyEmailBeforeResetPassword.php';
+    const url = 'http://localhost/LonyExtra/0/api/access/password/VerifyEmailBeforeResetPassword.php';
 
     let data = {
         email: email,

@@ -44,7 +44,7 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 async function verifyOTP(data) {
-    const url = 'http://localhost/LonyExtra/0/api/access/OTP/VerifyOTP.php';
+    const url = 'http://localhost/LonyExtra/0/api/access/otp/VerifyOTP.php';
     try {
         const response = await fetch(url, {
             method: 'POST',
@@ -68,7 +68,7 @@ async function verifyOTP(data) {
 }
 
 async function resendOTP(data) {
-    const url = 'http://localhost/LonyExtra/0/api/access/OTP/SendOTP.php';
+    const url = 'http://localhost/LonyExtra/0/api/access/otp/SendOTP.php';
 
     try {
         const response = await fetch(url, {

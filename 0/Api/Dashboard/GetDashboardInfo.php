@@ -1,7 +1,7 @@
 <?php
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
-ini_set('error_log', __DIR__ . '/../Logs/get_dash_info.log');
+ini_set('error_log', __DIR__ . '/../logs/get_dash_info.log');
 
 
 // Definindo os cabeçalhos CORS

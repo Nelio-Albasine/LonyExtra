@@ -1,6 +1,6 @@
 async function convertStars(requestData) {
     try {
-        const response = await fetch("http://localhost/LonyExtra/0/api/Cashout/CashOutRevenue.php", {
+        const response = await fetch("http://localhost/LonyExtra/0/api/cashout/CashOutRevenue.php", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
