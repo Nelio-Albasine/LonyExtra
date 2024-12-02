@@ -2,7 +2,7 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 ini_set('log_errors', 1);
-ini_set('error_log', __DIR__ . '../../Logs/password_reset_OTP.log');
+ini_set('error_log', __DIR__ . '../../logs/password_reset_OTP.log');
 
 // Definindo os cabeçalhos CORS diretamente 
 header('Access-Control-Allow-Origin: *');
@@ -30,7 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if (checkIfOTPtoResetPasswordIsValid($conn, $email, $code)) {
             $output = [
                 'success' => true,
-                'redirectTo' => "http://127.0.0.1:5500/0/Access/update-password.html?email=" . $email,
+                'redirectTo' => "http://127.0.0.1:5500/0/access/update-password.html?email=" . $email,
                 'message' => 'Código OTP válido.'
             ];
         } else {

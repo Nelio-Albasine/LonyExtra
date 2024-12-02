@@ -1,7 +1,7 @@
 <?php
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
-ini_set('error_log', __DIR__ . '/../Logs/GetMyCashouts.log');
+ini_set('error_log', __DIR__ . '/../logs/GetMyCashouts.log');
 
 require_once "../Wamp64Connection.php";
 header('Access-Control-Allow-Origin: *');

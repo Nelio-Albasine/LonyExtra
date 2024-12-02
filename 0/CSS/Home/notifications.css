@@ -1,0 +1,14 @@
+.div_base_notifications{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 300px;
+    width: 100%;
+}
+
+.div_base_notifications img{
+    width: 100px;
+    height: auto;
+    margin-bottom: 20px;
+}

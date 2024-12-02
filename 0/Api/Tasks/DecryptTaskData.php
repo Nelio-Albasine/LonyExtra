@@ -11,7 +11,7 @@ header('Content-Type: application/json');
 // Configurações de ambiente
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
-define('LOG_FILE_PATH', __DIR__ . '/../Logs/EncryptAndDecryption.log');
+define('LOG_FILE_PATH', __DIR__ . '/../logs/EncryptAndDecryption.log');
 ini_set('error_log', LOG_FILE_PATH);
 
 // Trata requisições OPTIONS (pré-voo)

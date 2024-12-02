@@ -1,0 +1,63 @@
+.div_base_gmail {
+    width: 90%;
+    height: fit-content;
+    padding-top: 15px;
+}
+
+.div_base_gmail label {
+    margin: 0;
+    font-size: 15px;
+    text-align: left;
+    color: #333;
+}
+
+.input-group {
+    margin-bottom: 15px;
+}
+
+.input-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #555;
+}
+
+.input-group input,
+.input-group textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.input-group textarea {
+    resize: vertical;
+}
+
+#descricaoGmailSuporte{
+    min-height: 100px;
+    max-height: 200px;
+}
+
+#tituloCounter {
+    font-size: 12px;
+    color: #777;
+    float: right;
+    margin-top: 5px;
+}
+
+button {
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 25px;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+}

@@ -48,12 +48,12 @@ main {
     margin-right: 15px;
 }
 
-#userName {
+.userName {
     font-weight: bold;
     font-size: 14px;
 }
 
-#userEmail {
+.userEmail {
     font-size: 14px;
 }
 
