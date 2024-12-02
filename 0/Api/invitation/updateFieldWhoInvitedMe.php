@@ -22,7 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     require_once "../Wamp64Connection.php";
 
     $outPut = [
-        "status" => false,
+        "success" => false,
         "myInviterInfo" => null,
         "message" => null,
     ];
@@ -34,12 +34,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         try {
             if (thisInviteCodeReallyExists($conn, $inviteCodeInserted)) {
-                if (!empty(isInviterCodeEmptyOrNull($conn, $userId))) {
+                if (empty(isInviterCodeEmptyOrNull($conn, $userId))) {
                     if (getMyOwnInviteCode($conn, $userId) != $inviteCodeInserted) {
                         if (updateFieldWhoInvitedMe($conn, $userId, $inviteCodeInserted)) {
                             if (updateUserStars($conn, $userId)) {
                                 $getMyInviterInfo = getMyInviterInfo($conn, getMyInviterUserId($conn, $inviteCodeInserted));
-                                $outPut["status"] = true;
+                                $outPut["success"] = true;
                                 $outPut["myInviterInfo"] = $getMyInviterInfo;
                                 $outPut["message"] = "Código de convinte inserido com sucesso!";
                             } else {

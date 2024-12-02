@@ -91,7 +91,7 @@ function openEspecificDialog(dialogIdHasHashFormat = null) {
 
         textDialogTitle.textContent = dialogTitle || "Desconhecido";
 
-        if (dialogIdHasHashFormat =="#ConvidarAmigos") {
+        if (dialogIdHasHashFormat == "#ConvidarAmigos") {
             //quando o user clica naquele arrow de convite na tela Home
             window.location.hash = "ConvidarAmigos";
         }
@@ -739,14 +739,29 @@ async function makeRequestToGetMyCAshouts() {
     }
 }
 
+function hadeUIwhenInvitedCodeIsInserted(){
+    let myInviterInfo = document.querySelectorAll(".container_div_who_invited_me");
+    let insert_invite_code = document.querySelectorAll(".insert_invite_code");
+    let h3_tem_algum_codigo = document.querySelectorAll(".h3_tem_algum_codigo");
+    let textLabelInsiraEreceba = document.getElementById("textLabelInsiraEreceba");
 
-async function makeRequestToApplyInvitedCode(inviteCodeInserted, btn){
+    textLabelInsiraEreceba.textContent = "Você recebeu:"
+    h3_tem_algum_codigo.forEach(t => t.textContent = "Código de convite já inserido!");
+    insert_invite_code.forEach(e=> e.style.display = "none");
+    myInviterInfo.forEach(e=> e.style.display = "flex");
+}
+
+async function makeRequestToApplyInvitedCode(inviteCodeInserted, btn) {
+    btn.textContent = "Aguarde...";
+    btn.disabled = true
+
     const requestData = {
         inviteCodeInserted: inviteCodeInserted,
         userId: userId
     }
+
     try {
-        const response = await fetch("http://localhost/LonyExtra/0/api/invitation/updateWhoInvitedMe.php", {
+        const response = await fetch("http://localhost/LonyExtra/0/api/invitation/updateFieldWhoInvitedMe.php", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -760,10 +775,19 @@ async function makeRequestToApplyInvitedCode(inviteCodeInserted, btn){
 
         const responseData = await response.json();
 
-        if
+        if (responseData.success) {
+            hadeUIwhenInvitedCodeIsInserted()
+            btn.style.backgroundColor = "green";
+            showBoxAlert(responseData.message, "success");
+            
+        } else {
+            showBoxAlert(responseData.message, "warning");
+        }
     } catch (error) {
         console.error("Erro ao fazer a requisição:", error.message);
     }
+    btn.textContent = "Enviar";
+    btn.disabled = true
 }
 
 function handleInviteFriendsDialog() {
@@ -793,6 +817,10 @@ function handleInviteFriendsDialog() {
             });
         });
 
+        if(invite.myInviterCode){
+            hadeUIwhenInvitedCodeIsInserted();
+        }
+
         btnVerifyInvitationCode.addEventListener("click", () => {
             let codeInserted = invitation_code_input.value.trim()
             if (!codeInserted) {
@@ -810,7 +838,6 @@ function handleInviteFriendsDialog() {
 
     });
 }
-
 
 
 function updateCounter(input, counterId, maxLength) {

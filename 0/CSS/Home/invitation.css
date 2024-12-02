@@ -226,12 +226,14 @@
     font-size: 17px;
 }
 
-
+#textLabelInsiraEreceba{
+    margin-top: 8px;
+}
 .p_stars_to_receive_as_invite_reward {
     background-color: rgb(70, 3, 87);
     padding: 5px 20px;
     width: fit-content;
-    margin: 4px auto 10px auto;
+    margin: 4px auto 5px auto;
     color: white;
     font-size: 13.5px !important;
     border-radius: 25px;
@@ -269,6 +271,54 @@
     border: none;
     cursor: pointer;
     font-size: 14px;
+}
+
+.user_info_from_invite{
+    height: 50px !important;
+}
+
+.container_div_who_invited_me {
+    display: none;
+    flex-direction: column;
+}
+
+.card_layout_from_invite {
+    width: fit-content !important;
+    margin: 0 auto 15px auto !important;
+}
+
+.profile_initials_from_invite {
+    width: 45px !important;
+    height: auto;
+}
+
+#myInviterInitial{
+    font-size: 16px !important;
+}
+
+.base_name_and_rating{
+    margin-top: 20px;
+}
+
+.p_vc_foi_convidado_por {
+    font-size: 14px;
+    text-align: center;
+    margin: 10px 2px !important;
+}
+
+.rating_from_invite {
+    padding: 1px 10px !important;
+    margin-top: 5px !important;
+    width: fit-content !important;
+}
+
+.stars_my_inviter_has{
+    font-size: 12px !important;
+}
+
+#nameWhoInvitedMe{
+    width: fit-content !important;
+    max-width: max-content !important;
 }
 
 @media screen and (max-width: 600px) {

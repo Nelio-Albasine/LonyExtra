@@ -44,7 +44,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 
 
-   <link rel="icon" href="../src/favicon_io/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="../src/favicon_io/favicon.ico" type="image/x-icon">
 </head>
 
 <body>
@@ -251,7 +251,8 @@
                         <img src="../src/IMGs/star.png" alt="star">
                         <p><strong class="textTotalStarsEarnedByReferrals">0</strong></p>
                     </div>
-                    <img class="seeInvitattionDetails" onclick="openEspecificDialog('#ConvidarAmigos')"  src="../src/IMGs/dropdown_icon.png" alt="dropdown_icon">
+                    <img class="seeInvitattionDetails" onclick="openEspecificDialog('#ConvidarAmigos')"
+                        src="../src/IMGs/dropdown_icon.png" alt="dropdown_icon">
                 </div>
             </div>
         </div>
@@ -573,19 +574,48 @@
                         <hr class="hr_in_invitation_dialog">
 
                         <!-- Inserir Código -->
-                         <div class="container_insert_cde_and_titles">
+                        <div class="container_insert_cde_and_titles">
+
                             <div class="container_invite_bonus_titles">
                                 <h3 class="invitation_titles h3_tem_algum_codigo">Tem algum código de convite?</h3>
-                                <p >Insira e receba:</p>
+                                <p id="textLabelInsiraEreceba">Insira e receba:</p>
                                 <p class="p_stars_to_receive_as_invite_reward">✨+20</p>
+                            </div>
+
+
+
+
+                            <div class="container_div_who_invited_me">
+                                <p class="p_vc_foi_convidado_por">Convidado por:</p>
+                                <div class="card_layout card_layout_from_invite">
+                                    <div class="profile_initials profile_initials_from_invite">
+                                        <p id="myInviterInitial">NA</p>
+                                    </div>
+
+                                    <div class="user_info user_info_from_invite">
+                                        <div class="base_name_and_rating">
+                                            <p id="nameWhoInvitedMe" class="user_top10_name ">Nome do usuário aqui</p>
+                                        </div>
+
+                                        <div class="rating rating_from_invite">
+                                            <span class="rating-value stars_my_inviter_has">49 345</span>
+                                            <span class="rating_icon stars_my_inviter_has">⭐</span>
+                                        </div>
+
+                                        <div style="visibility: hidden;" class="social_info">
+                                            <span class="trophy_icon">🏆</span>
+                                            <span class="top_ranking">Top 01</span>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
 
                             <div class="insert_invite_code">
                                 <input type="text" id="invitation_code_input" placeholder="Digite o código aqui">
                                 <p id="btnVerifyInvitationCode">Enviar</p>
                             </div>
-                         </div>
-                       
+                        </div>
+
 
 
 
