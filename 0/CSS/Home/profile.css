@@ -1,0 +1,85 @@
+.div_base_profile {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.container_profile_info {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.container_profile_info img {
+    width: 80px;
+    height: auto;
+    margin-bottom: 15px;
+}
+
+.container_profile_info .userName {
+    font-size: 18px;
+    color: rgb(73, 73, 73);
+}
+
+.container_profile_info .userEmail {
+    font-size: 15.5px;
+    margin-top: 2px;
+    color: rgb(73, 73, 73);
+    margin-bottom: 15px;
+}
+
+#memberShipText {
+    width: 90%;
+    margin-bottom: 10px;
+    font-size: 13.8px;
+    color: rgb(73, 73, 73);
+    text-align: center;
+}
+
+.div_container_profile_points_history {
+    background-color: rgb(238, 238, 238);
+    width: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    border-radius: 10px;
+    margin: 10px;
+    padding: 15px;
+}
+
+.div_base_historic_earn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: fit-content;
+}
+
+.textLThistoric {
+    color: white;
+    font-weight: bold;
+    font-size: 14px;
+    background-color: rgb(0, 97, 0);
+    border-radius: 25px;
+    padding: 8px 20px;
+
+}
+
+
+.theLTtexts {
+    background-color: rgb(112, 63, 7) !important;
+}
+
+
+.textLThistoricDescription{
+    font-size: 11.5px;
+    margin-top: 5px;
+    color: rgb(102, 102, 102);
+}

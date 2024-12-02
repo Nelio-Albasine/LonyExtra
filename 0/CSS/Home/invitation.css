@@ -60,6 +60,11 @@
     gap: 50px;
 }
 
+.container_invite_the_item{
+    margin-top: 10px;
+    height: 30px;
+}
+
 .span_stats_item {
     display: flex;
     background: rgb(255, 255, 255);

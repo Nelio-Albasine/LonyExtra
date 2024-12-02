@@ -27,6 +27,17 @@
     <link rel="stylesheet" href="../CSS/Home/cashout.css">
     <link rel="stylesheet" href="../CSS/Home/cashout_history.css">
 
+    <link rel="stylesheet" href="../CSS/Home/notifications.css">
+
+    <link rel="stylesheet" href="../CSS/Home/social_network.css">
+
+    <link rel="stylesheet" href="../CSS/Home/gmail_support.css">
+
+    <link rel="stylesheet" href="../CSS/Home/profile.css">
+
+    <link rel="stylesheet" href="../CSS/Home/signout.css">
+
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 
@@ -120,8 +131,8 @@
 
             <li>
                 <div id="container_name_and_email">
-                    <p id="userName">Nome do Usuário</p>
-                    <p id="userEmail">emaildousuario@gmail.com</p>
+                    <p class="userName">Nome do Usuário</p>
+                    <p class="userEmail">emaildousuario@gmail.com</p>
                 </div>
                 <img id="profile_icon" src="../SRC/IMGs/profile.png" alt="">
             </li>
@@ -184,6 +195,7 @@
                 <ul class="submenu">
                     <li onclick="openEspecificDialog('#Instagram')"><a href="#Instagram">📸 Instagram</a></li>
                     <li onclick="openEspecificDialog('#Telegram')"><a href="#Telegram">💬 Telegram</a></li>
+                    <a href="https://www.youtube.com" target="_blank">🎥 YouTube</a>
                 </ul>
             </li>
             <li class="has-submenu">
@@ -193,7 +205,6 @@
                 </a>
                 <ul class="submenu">
                     <li onclick="openEspecificDialog('#Gmail')"><a href="#Gmail">📧 Gmail</a></li>
-                    <li onclick="openEspecificDialog('#YouTube')"><a href="#YouTube">🎥 YouTube</a></li>
                 </ul>
             </li>
             <li class="has-submenu">
@@ -226,7 +237,7 @@
                 <div id="div_container_ttl_invite" class="div_container_invtation">
                     <div class="container_stars container_stars_from_invite">
                         <img style="transform: rotate(0deg);" src="../SRC/IMGs/friends.png" alt="friends">
-                        <p><strong id="textTotalInvitedFriends">0</strong></p>
+                        <p><strong class="textTotalInvitedFriends">0</strong></p>
                     </div>
                 </div>
             </div>
@@ -235,9 +246,10 @@
                 <div class="stat-value div_container_invtation">
                     <div class="container_stars container_stars_from_invite">
                         <img src="../SRC/IMGs/star.png" alt="star">
-                        <p><strong id="textTotalStarsEarnedByReferrals">0</strong></p>
+                        <p><strong class="textTotalStarsEarnedByReferrals">0</strong></p>
                     </div>
-                    <img class="seeInvitattionDetails" src="../SRC/IMGs/dropdown_icon.png" alt="dropdown_icon">
+                    <img class="seeInvitattionDetails" onclick="openEspecificDialog('#ConvidarAmigos')"
+                        src="../SRC/IMGs/dropdown_icon.png" alt="dropdown_icon">
                 </div>
             </div>
         </div>
@@ -488,24 +500,38 @@
                         <!-- Estatísticas -->
                         <div class="div_base_onvitation_statistics">
                             <div class="invitation_statistic">
-                                <p><strong>Amigos Convidados:</strong> <span class="span_stats_item">🤝 6</span></p>
-                                <p><strong>Estrelas Ganhas:</strong> <span class="span_stats_item">✨ 120</span></p>
+                                <div>
+                                    <p><strong>Amigos Convidados:</strong></p>
+                                    <div class="container_stars container_stars_from_invite container_invite_the_item">
+                                        <img style="transform: rotate(0deg);" src="../SRC/IMGs/friends.png"
+                                            alt="friends">
+                                        <p><strong class="textTotalInvitedFriends">0</strong></p>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <p><strong>Estrelas Ganhas:</strong></p>
+                                    <div class="container_stars container_stars_from_invite container_invite_the_item">
+                                        <img src="../SRC/IMGs/star.png" alt="star">
+                                        <p><strong class="textTotalStarsEarnedByReferrals">0</strong></p>
+                                    </div>
+                                </div>
                             </div>
 
                             <!-- Código de Convite -->
                             <div class="invite_code_container">
                                 <div>
                                     <div class="container_invitation_url">
-                                        <p>https://lonyextra.com?invite=45672</p>
-                                        <i class="fa-solid fa-copy copy-icon"></i>
+                                        <p id="textInvitationLink">https://lonyextra.com?invite=.....</p>
+                                        <i class="fa-solid fa-copy copy-icon copy_my_invite_code_or_link"></i>
                                     </div>
                                     <p class="link_and_invite_code_description">Link de convinte</p>
                                 </div>
 
                                 <div>
                                     <div class="container_invitation_url">
-                                        <p>45672</p>
-                                        <i class="fa-solid fa-copy copy-icon"></i>
+                                        <p id="textInvitationCode">45672</p>
+                                        <i class="fa-solid fa-copy copy-icon copy_my_invite_code_or_link"></i>
                                     </div>
                                     <p class="link_and_invite_code_description">Codigo de convinte</p>
                                 </div>
@@ -564,7 +590,7 @@
                                             </td>
                                         </tr>
 
-                                        
+
                                     </tbody>
                                 </table>
 
@@ -811,37 +837,143 @@
 
                 <!--Dialog Notifications: Minhas notifications-->
                 <div class="the_dialog_container" id="dialog_minhas_notificacoes">
-                    <h1>Minhas Notificações</h1>
+                    <div class="div_base_notifications">
+                        <img src="../SRC/IMGs/bell.png" alt="Notification icon">
+
+                        <p>Sem Notificações!</p>
+                    </div>
                 </div>
 
                 <!--Dialog Redes sociais: Instagram-->
                 <div class="the_dialog_container" id="dialog_instagram">
-                    <h1>Instagram</h1>
+                    <div class="div_base_redes_sociais">
+                        <img src="../SRC/IMGs/instagram.png" alt="Instagram">
+                        <div class="descricao_instagram_telegram">
+                            <h2>Siga-nos no Instagram e fique por dentro!</h2>
+                            <ul>
+                                <li>
+                                    <h3>💰 <strong>Provas de Pagamento</strong>:</h3>
+                                    <p>Receba prints e confirmações de pagamentos em primeira mão.</p>
+                                </li>
+                                <li>
+                                    <h3>📢 <strong>Novidades Exclusivas</strong>:</h3>
+                                    <p>Descubra novas plataformas e oportunidades de renda extra.</p>
+                                </li>
+                                <li>
+                                    <h3>📲 <strong>Suporte Direto</strong>:</h3>
+                                    <p>Tire dúvidas de forma rápida e fácil pelo nosso direct.</p>
+                                </li>
+                                <li>
+                                    <h3>🎁 <strong>Sorteios e Benefícios</strong>:</h3>
+                                    <p>Participe de promoções exclusivas para seguidores.</p>
+                                </li>
+                            </ul>
+                        </div>
+                        <button>Seguir</button>
+                    </div>
+
                 </div>
 
                 <!--Dialog Redes sociais: Telegram-->
                 <div class="the_dialog_container" id="dialog_telegram">
-                    <h1>Telegram</h1>
+                    <div class="div_base_redes_sociais">
+                        <img src="../SRC/IMGs/telegram.png" alt="Telegram">
+                        <div class="descricao_instagram_telegram">
+                            <h2>Siga-nos no Telegram e fique por dentro!</h2>
+                            <ul>
+                                <li>
+                                    <h3>💰 <strong>Provas de Pagamento</strong>:</h3>
+                                    <p>Receba prints e confirmações de pagamentos em primeira mão.</p>
+                                </li>
+                                <li>
+                                    <h3>📢 <strong>Novidades Exclusivas</strong>:</h3>
+                                    <p>Descubra novas plataformas e oportunidades de renda extra.</p>
+                                </li>
+                                <li>
+                                    <h3>📲 <strong>Suporte Direto</strong>:</h3>
+                                    <p>Tire dúvidas de forma rápida e fácil pelo nosso direct.</p>
+                                </li>
+                                <li>
+                                    <h3>🎁 <strong>Sorteios e Benefícios</strong>:</h3>
+                                    <p>Participe de promoções exclusivas para seguidores.</p>
+                                </li>
+                            </ul>
+                        </div>
+                        <button>Seguir</button>
+                    </div>
                 </div>
 
                 <!--Dialog suporte: Gmail-->
                 <div class="the_dialog_container" id="dialog_gmail">
-                    <h1>Gmail</h1>
+                    <div class="div_base_gmail">
+                        <form id="supportForm">
+                            <div class="input-group">
+                                <label for="titulo">Título da Dúvida</label>
+                                <input type="text" id="tituloGmailSuporte" name="titulo" maxlength="40"
+                                    placeholder="Insira o título..." oninput="updateCounter(this, 'tituloCounter', 40)">
+                                <span id="tituloCounter">0/40</span>
+                            </div>
+
+                            <div class="input-group">
+                                <label for="descricao">Descrição da Dúvida</label>
+                                <textarea id="descricaoGmailSuporte" name="descricao" rows="5"
+                                    placeholder="Descreva sua dúvida aqui..."></textarea>
+                            </div>
+
+                            <button id="btnSubmitEmailDoubt" type="submit">Enviar</button>
+                        </form>
+                    </div>
                 </div>
 
                 <!--Dialog suporte: Youtube-->
                 <div class="the_dialog_container" id="dialog_youtube">
-                    <h1>Youtube</h1>
+                    <!--Using hasref direct URL enstead of this dialog-->
                 </div>
 
                 <!--Dialog Configuracoes: Perfil-->
                 <div class="the_dialog_container" id="dialog_perfil">
-                    <h1>Perfil</h1>
+                    <div class="div_base_profile">
+                        <div class="container_profile_info">
+                            <img src="../SRC/IMGs/profile.png" alt="">
+                            <p class="userName">User Name</p>
+                            <p class="userEmail">useremail@gmail.com</p>
+                            <p id="memberShipText">
+                                Juntou-se à comunidade @LonyExtra em <span id="joinedDate"></span>. Já se passaram <strong id="timeElapsedText"></strong> desde então 💖!
+                            </p>
+                            
+
+                        </div>
+
+                        <div class="div_container_profile_points_history">
+                            <div class="div_base_historic_earn">
+                                <p class="textLThistoric userRevenue">R$ 0.00</p>
+                                <p class="textLThistoricDescription">Total disponivel</p>
+                            </div>
+                            <div class="div_base_historic_earn">
+                                <p class="textLThistoric theLTtexts userLTRevenue">R$ 0.00</p>
+                                <p class="textLThistoricDescription">Total já ganho</p>
+                            </div>
+                            <div class="div_base_historic_earn">
+                                <p class="textLThistoric theLTtexts userLTCashout">R$ 0.00</p>
+                                <p class="textLThistoricDescription">Total sacado</p>
+                            </div>
+                        </div>
+                        <div>
+
+                        </div>
+                    </div>
                 </div>
 
                 <!--Dialog Configuracoes: logout-->
                 <div class="the_dialog_container" id="dialog_logout">
-                    <h1>Logout</h1>
+                    <div class="div_base_signout">
+                        <h2>Tem certeza de que deseja sair?</h2>
+                        <p>Ao sair, você precisará fazer login novamente para acessar sua conta. (Não se preocupe, seu progresso será salvo!)</p>
+                        <div class="signout_buttons">
+                            <button class="btn_cancel" id="cancelLogout">Cancelar</button>
+                            <button class="btn_signout" id="confirmLogout">Sair</button>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -854,6 +986,7 @@
     <script src="../Js/drawer.js"></script>
     <script src="../Js/GetDashboardInfo.js"></script>
     <script src="../Js/HandleDrawerCliques.js"></script>
+
 </body>
 
 </html>

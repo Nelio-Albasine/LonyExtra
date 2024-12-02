@@ -30,7 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if (checkIfOTPtoResetPasswordIsValid($conn, $email, $code)) {
             $output = [
                 'success' => true,
-                'redirectTo' => "http://127.0.0.1:5500/0/Access/update-password.html?email=" . $email,
+                'redirectTo' => "http://127.0.0.1:5500/0/access/update-password.html?email=" . $email,
                 'message' => 'Código OTP válido.'
             ];
         } else {

@@ -2,7 +2,8 @@
 header('Access-Control-Allow-Origin: *');
 header('Content-Type: application/json; charset=utf-8');
 
-function getMySQLConnection() {
+function getMySQLConnection()
+{
     $dbHost = 'localhost';
     $dbName = "lonyextra";
     $dbUser = 'root';
@@ -17,4 +18,8 @@ function getMySQLConnection() {
 
     return $conn;
 }
-?>
+
+/*
+User: qyagfite_Nelio_Albasine
+Database: qyagfite_Lony_Extra
+*/

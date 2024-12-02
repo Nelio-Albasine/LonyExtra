@@ -1,0 +1,64 @@
+.div_base_signout {
+    background: #ffffff;
+    padding: 20px;
+    text-align: center;
+    width: 100%;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+/* Animação para o diálogo */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.div_base_signout h2 {
+    font-size: 1.1rem;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.div_base_signout p {
+    font-size: 0.9rem;
+    color: #555;
+    margin-bottom: 20px;
+}
+
+.signout_buttons {
+    display: flex;
+    gap: 50px;
+    justify-content: center;
+}
+
+.btn_cancel, .btn_signout {
+    padding: 10px 20px;
+    font-size: 0.9rem;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn_cancel {
+    background: #ddd;
+    color: #333;
+}
+
+.btn_cancel:hover {
+    background: #ccc;
+}
+
+.btn_signout {
+    background: #e74c3c;
+    color: #fff;
+}
+
+.btn_signout:hover {
+    background: #c0392b;
+}

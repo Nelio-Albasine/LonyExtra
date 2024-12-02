@@ -40,7 +40,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     btnRequestReset.style.backgroundColor = "green";
                     btnRequestReset.textContent = "Codigo validado!"
                     setTimeout(() => {
-                        window.location.href = "../Access/update-password.html?email=", userEmail;
+                        window.location.href = "../access/update-password.html?email=", userEmail;
                     }, 2000)
                 } else {
                     btnRequestReset.disabled = false
@@ -70,7 +70,7 @@ function showAlert(alertIndex, message) {
 }
 
 async function sendCodeToResetEmail(email) {
-    const url = 'http://localhost/LonyExtra/0/Api/Access/Password/SendOTPtoResetPassword.php';
+    const url = 'http://localhost/LonyExtra/0/api/access/Password/SendOTPtoResetPassword.php';
 
     let data = {
         email: email
@@ -99,7 +99,7 @@ async function sendCodeToResetEmail(email) {
 }
 
 async function VerifyEmailBeforeResetPassword(code, email) {
-    const url = 'http://localhost/LonyExtra/0/Api/Access/Password/VerifyEmailBeforeResetPassword.php';
+    const url = 'http://localhost/LonyExtra/0/api/access/Password/VerifyEmailBeforeResetPassword.php';
 
     let data = {
         email: email,

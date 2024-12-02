@@ -4,7 +4,7 @@ async function GetDashboardInfo(userId, batch = null) {
     try {
         // Adiciona o parâmetro `batch` se ele for fornecido
         const batchParam = batch ? `&batch=${batch}` : '';
-        const response = await fetch(`http://localhost/LonyExtra/0/Api/Dashboard/GetAllLinks.php?userId=${userId}${batchParam}`, {
+        const response = await fetch(`http://localhost/LonyExtra/0/api/Dashboard/GetAllLinks.php?userId=${userId}${batchParam}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'

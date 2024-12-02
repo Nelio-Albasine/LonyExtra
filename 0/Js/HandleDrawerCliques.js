@@ -7,7 +7,7 @@ const hashToDialogData = {
     "#MinhasNotificacoes": { id: "dialog_minhas_notificacoes", title: "Minhas Notificações" },
     "#Instagram": { id: "dialog_instagram", title: "Instagram" },
     "#Telegram": { id: "dialog_telegram", title: "Telegram" },
-    "#Gmail": { id: "dialog_gmail", title: "Gmail" },
+    "#Gmail": { id: "dialog_gmail", title: "Gmail - Suporte" },
     "#YouTube": { id: "dialog_youtube", title: "YouTube" },
     "#Perfil": { id: "dialog_perfil", title: "Perfil" },
     "#Logout": { id: "dialog_logout", title: "Logout" },
@@ -59,7 +59,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 function copyToClipboard(text) {
     navigator.clipboard.writeText(text);
-    alert("ID copiado: " + text);
+    alert("Copiado com sucesso!");
 }
 
 function openEspecificDialog(dialogIdHasHashFormat = null) {
@@ -75,7 +75,7 @@ function openEspecificDialog(dialogIdHasHashFormat = null) {
             return;
         }
 
-        p_available_revenue.forEach(text =>{
+        p_available_revenue.forEach(text => {
             text.style.display = hashToDialogData[dialogIdHasHashFormat].id == "dialog_sacar" ? "flex" : "none";
         })
 
@@ -106,7 +106,7 @@ function handleActionsToEspecifiedHash(dialogId) {
             break;
 
         case "#ConvidarAmigos":
-            console.log("Ação selecionada: Convidar Amigos");
+            handleInviteFriendsDialog()
             break;
 
         case "#Sacar":
@@ -131,7 +131,7 @@ function handleActionsToEspecifiedHash(dialogId) {
             break;
 
         case "#Gmail":
-            console.log("Ação selecionada: Gmail");
+            handleGmailDialog();
             break;
 
         case "#YouTube":
@@ -139,11 +139,11 @@ function handleActionsToEspecifiedHash(dialogId) {
             break;
 
         case "#Perfil":
-            console.log("Ação selecionada: Perfil");
+            handleProfileDIalog();
             break;
 
         case "#Logout":
-            console.log("Ação selecionada: Logout");
+            handleSignOutDIalog();
             break;
     }
 
@@ -236,7 +236,7 @@ async function handleConvertion(index, convertStarsBtn) {
     };
 
     try {
-        const response = await fetch("http://localhost/LonyExtra/0/Api/Cashout/ConvertStarsIntoReward.php", {
+        const response = await fetch("http://localhost/LonyExtra/0/api/Cashout/ConvertStarsIntoReward.php", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -533,7 +533,7 @@ function showSuccessDialogCashout(data, isByHistoryTable = null) {
 
 async function makeRequestToCashOut(requestData, btnCashoutRevenue) {
     try {
-        const response = await fetch("http://localhost/LonyExtra/0/Api/Cashout/CashOutRevenue.php", {
+        const response = await fetch("http://localhost/LonyExtra/0/api/Cashout/CashOutRevenue.php", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -716,7 +716,7 @@ async function loadMyCashoutsToTable() {
 
 async function makeRequestToGetMyCAshouts() {
     try {
-        const response = await fetch(`http://localhost/LonyExtra/0/Api/Cashout/GetMyCashouts.php?userId=${userId}`, {
+        const response = await fetch(`http://localhost/LonyExtra/0/api/Cashout/GetMyCashouts.php?userId=${userId}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
@@ -736,6 +736,159 @@ async function makeRequestToGetMyCAshouts() {
 }
 
 
+function handleInviteFriendsDialog() {
+    async function waitForInvitation() {
+        while (userInvitationInfo === null) {
+            await new Promise(resolve => setTimeout(resolve, 1000));
+            userInvitationInfo = await userInvitationInfo;
+        }
+        return userInvitationInfo;
+    }
+
+    waitForInvitation().then(invite => {
+        textInvitationLink.textContent = `https://lonyextra.com?invite=${invite.myReferralCode}`;
+        textInvitationCode.textContent = invite.myReferralCode
+
+        let copyIcons = document.querySelectorAll(".copy_my_invite_code_or_link");
+        copyIcons.forEach((icon, index) => {
+            icon.addEventListener("click", () => {
+                if (index === 0) {
+                    copyToClipboard(`https://lonyextra.com?invite=${invite.myReferralCode}`);
+                } else {
+                    copyToClipboard(invite.myReferralCode);
+                }
+            });
+        });
+    });
+}
 
 
+function updateCounter(input, counterId, maxLength) {
+    const counter = document.getElementById(counterId);
+    counter.textContent = `${input.value.length}/${maxLength}`;
+}
 
+
+async function waitForUserInfo() {
+    while (userInfo === null) {
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        userInfo = await userInfo;
+    }
+    return userInfo;
+}
+
+function handleGmailDialog() {
+    waitForUserInfo().then(info => {
+        btnSubmitEmailDoubt.addEventListener("click", (event) => {
+            event.preventDefault();
+            const btnSubmitEmailDoubt = document.getElementById('btnSubmitEmailDoubt');
+            const titulo = document.getElementById('tituloGmailSuporte').value.trim();
+            const descricao = document.getElementById('descricaoGmailSuporte').value.trim();
+
+
+            const userName = userInfo.userName;
+            const userSurname = userInfo.userSurname;
+            const userEmail = userInfo.userEmail;
+
+            if (!titulo) {
+                alert('Por favor, preencha o título da dúvida.');
+                return;
+            }
+
+            if (!descricao) {
+                alert('Por favor, preencha a descrição da dúvida.');
+                return;
+            }
+
+            const emailBody = `
+            ${descricao}
+            ------------------
+            Nome de Cadastro: ${userName} ${userSurname}
+            Email de Cadastro: ${userEmail}`;
+
+            const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=support@lonyextra.com&su=${encodeURIComponent(titulo)}&body=${encodeURIComponent(emailBody)}`;
+
+            btnSubmitEmailDoubt.disabled = true
+            btnSubmitEmailDoubt.textContent = "Aguarde...";
+            window.open(gmailUrl, '_blank', 'noopener,noreferrer');
+            setTimeout(() => {
+                btnSubmitEmailDoubt.disabled = false
+                btnSubmitEmailDoubt.textContent = "Enviar";
+                descricao.value = "";
+                descricao.value = "";
+            });
+        });
+
+
+    });
+}
+
+
+function handleProfileDIalog() {
+    waitForUserInfo().then(info => {
+        let joinedDateElement = document.getElementById("joinedDate");
+        let timeElapsedTextElement = document.getElementById("timeElapsedText");
+
+        let userTimeZone = info.userTimeZone;
+        let userJoinedAt = new Date(info.userJoinedAt);
+        let currentTime = new Date();
+
+        let timeDifference = currentTime - userJoinedAt;
+
+        let seconds = Math.floor(timeDifference / 1000);
+        let minutes = Math.floor(seconds / 60);
+        let hours = Math.floor(minutes / 60);
+        let days = Math.floor(hours / 24);
+        let months = Math.floor(days / 30.44);
+        let years = Math.floor(months / 12);
+
+        let timeElapsedText = "";
+        if (years > 0) {
+            timeElapsedText = `${years} ano${years > 1 ? "s" : ""}`;
+        } else if (months > 0) {
+            timeElapsedText = `${months} mês${months > 1 ? "es" : ""}`;
+        } else if (days > 0) {
+            timeElapsedText = `${days} dia${days > 1 ? "s" : ""}`;
+        } else if (hours > 0) {
+            timeElapsedText = `${hours} hora${hours > 1 ? "s" : ""}`;
+        } else if (minutes > 0) {
+            timeElapsedText = `${minutes} minuto${minutes > 1 ? "s" : ""}`;
+        } else {
+            timeElapsedText = `${seconds} segundo${seconds > 1 ? "s" : ""}`;
+        }
+
+
+        let joinedDate = userJoinedAt.toLocaleDateString("pt-BR", {
+            day: "2-digit",
+            month: "long",
+            year: "numeric",
+            timeZone: userTimeZone
+        });
+
+        joinedDateElement.textContent = joinedDate;
+        timeElapsedTextElement.textContent = timeElapsedText;
+    });
+
+}
+
+
+function handleSignOutDIalog() {
+    waitForUserInfo().then(_ => {
+        const overlay = document.getElementById("overlay");
+        let cancelLogout = document.getElementById("cancelLogout");
+        let confirmLogout = document.getElementById("confirmLogout");
+
+        cancelLogout.addEventListener("click", () => {
+            overlay.style.display = "none";
+            history.replaceState(null, "", location.pathname + location.search);
+        });
+
+        confirmLogout.addEventListener("click", () => {
+            confirmLogout.disabled = true;
+            confirmLogout.textContent = "Deslogando...";
+
+            window.location.href = "../access/login.html";
+        })
+
+    });
+}

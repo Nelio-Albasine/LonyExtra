@@ -135,7 +135,7 @@ async function sendEncryptedDataToServer(encryptedData, iv, btnGetReward, taskIn
     let feedbackMessage = null;
 
     try {
-        const response = await fetch('http://localhost/LonyExtra/0/Api/Tasks/DecryptTaskData.php', {
+        const response = await fetch('http://localhost/LonyExtra/0/api/Tasks/DecryptTaskData.php', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

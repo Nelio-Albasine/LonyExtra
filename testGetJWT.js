@@ -1,5 +1,5 @@
 function encryptDataWithJWT(data) {
-    fetch('http://localhost/LonyExtra/0/Api/Config/GetJWTtokens.php', {
+    fetch('http://localhost/LonyExtra/0/api/Config/GetJWTtokens.php', {
         method: 'GET', 
         headers: {
             'Content-Type': 'application/json',

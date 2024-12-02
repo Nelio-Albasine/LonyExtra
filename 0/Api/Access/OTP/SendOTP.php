@@ -50,7 +50,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $output = [
                 'success' => true,
                 'message' => "OTP enviado com sucesso para o email!",
-                'redirectTo' => "http://127.0.0.1:5500/0/Access/confirme-seu-email.html?data=" . urlencode(json_encode($data))
+                'redirectTo' => "http://127.0.0.1:5500/0/access/confirme-seu-email.html?data=" . urlencode(json_encode($data))
             ];            
         } else {
             $output = [

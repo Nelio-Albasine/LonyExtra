@@ -9,11 +9,11 @@ document.addEventListener("DOMContentLoaded", function () {
     recoverPassword.addEventListener("click", ()=> {
         const inputEmail = document.getElementById("inputEmail").value;
 
-        window.location.href = "http://127.0.0.1:5500/0/Access/recuperar-senha.html?email=" , inputEmail ;
+        window.location.href = "http://127.0.0.1:5500/0/access/recuperar-senha.html?email=" , inputEmail ;
     });
 
     textCreateAccount.addEventListener("click", ()=> {
-        window.location.href = "http://127.0.0.1:5500/0/Access/signup.html";
+        window.location.href = "http://127.0.0.1:5500/0/access/signup.html";
     });
 
     btnStartSession.addEventListener("click", async () => {
@@ -62,7 +62,7 @@ async function handleUserAccess(email, password) {
     let responseMessage = "Ocorreu um erro ao autenticar!";
 
     try {
-        const response = await fetch(`http://localhost/LonyExtra/0/Api/Access/Login.php?email=${email}&password=${password}`, {
+        const response = await fetch(`http://localhost/LonyExtra/0/api/access/Login.php?email=${email}&password=${password}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'

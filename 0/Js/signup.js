@@ -48,7 +48,7 @@ async function getTimeZoneFromAPI() {
 document.addEventListener("DOMContentLoaded", function () {
 
     textStartSession.addEventListener("click", () => {
-        window.location.href = "http://127.0.0.1:5500/0/Access/login.html";
+        window.location.href = "http://127.0.0.1:5500/0/access/login.html";
     });
 
     async function emailToUniqueHash(email) {
@@ -136,7 +136,7 @@ limitateInputsMaxChars();
 
 
 async function sendOTPtoVerifyEmail(data) {
-    const url = 'http://localhost/LonyExtra/0/Api/Access/OTP/VerifyOTP_and_CreateUser.php';
+    const url = 'http://localhost/LonyExtra/0/api/access/OTP/VerifyOTP_and_CreateUser.php';
 
     try {
         const response = await fetch(url, {

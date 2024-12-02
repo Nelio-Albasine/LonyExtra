@@ -7,29 +7,32 @@ let currentURL_hash;
 let currentServerDate;
 
 //global vars
+var userInfo = null;
 var userTimeZone = null;
-
+var userInvitationInfo = null
+var textTotalInvitedFriends = null
+var textTotalStarsEarnedByReferrals = null
+let textInvitationLink = null;
+let textInvitationCode = null;
 
 document.addEventListener("DOMContentLoaded", async function () {
-    const userName = document.getElementById("userName");
+    const userName = document.querySelectorAll(".userName");
+    const userEmail = document.querySelectorAll(".userEmail");
     const userRevenue = document.querySelectorAll(".userRevenue");
-    const userLTRevenue = document.getElementById("userLTRevenue");
+    const userLTRevenue = document.querySelectorAll(".userLTRevenue");
     const userStars = document.getElementById("userStars");
     const userLTStars = document.getElementById("userLTStars");
-    const userEmail = document.getElementById("userEmail");
-
-    const textTotalInvitedFriends = document.getElementById("textTotalInvitedFriends");
-    const textTotalStarsEarnedByReferrals = document.getElementById("textTotalStarsEarnedByReferrals");
+    textInvitationLink = document.getElementById("textInvitationLink");
+    textInvitationCode = document.getElementById("textInvitationCode");
+    textTotalInvitedFriends = document.querySelectorAll(".textTotalInvitedFriends");
+    textTotalStarsEarnedByReferrals = document.querySelectorAll(".textTotalStarsEarnedByReferrals");
 
     const userId = "391f58325968d93b6778b9722f953bb063b44254d8e04109955c52b928ac9782";
     const dashInfo = await GetDashboardInfo(userId);
-    const userInfo = dashInfo.userInfo;
+    userInfo = dashInfo.userInfo;
     const userPoints = JSON.parse(userInfo.userPointsJSON);
-    const userInvitationInfo = JSON.parse(userInfo.userInvitationJSON);
-
+    userInvitationInfo = JSON.parse(userInfo.userInvitationJSON);
     userTimeZone = userInfo.userTimeZone
-
-
 
     saveUserPointsToLocalStorage(userPoints);
     handleLinkAvailabilityChecker(dashInfo.hasValidLinksPerBatch);
@@ -37,19 +40,33 @@ document.addEventListener("DOMContentLoaded", async function () {
     handleURLHashs();
     window.addEventListener("hashchange", handleURLHashs);
 
-    userName.textContent = `${userInfo.userName} ${userInfo.userSurname}`;
-    userEmail.textContent = userInfo.userEmail;
+    userName.forEach(text => {
+        text.textContent = `${userInfo.userName} ${userInfo.userSurname}`;
+    });
+
+    userEmail.forEach(text => {
+        text.textContent = userInfo.userEmail;
+    });
 
     userRevenue.forEach(text => {
         text.textContent = userPoints.userRevenue.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
     });
-    userLTRevenue.textContent = userPoints.userLTRevenue.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
+    
+    userLTRevenue.forEach(text => {
+        text.textContent = userPoints.userLTRevenue.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
+    });
 
     userStars.textContent = userPoints.userStars.toLocaleString("pt-PT");
     userLTStars.textContent = userPoints.userLTStars.toLocaleString("pt-PT");
 
-    textTotalInvitedFriends.textContent = userInvitationInfo.myTotalReferredFriends.toLocaleString("pt-PT");
-    textTotalStarsEarnedByReferrals.textContent = userInvitationInfo.totalStarsEarnedByReferral.toLocaleString("pt-PT");
+
+    textTotalInvitedFriends.forEach(text => {
+        text.textContent = userInvitationInfo.myTotalReferredFriends.toLocaleString("pt-PT");
+    });
+
+    textTotalStarsEarnedByReferrals.forEach(text => {
+        text.textContent = userInvitationInfo.totalStarsEarnedByReferral.toLocaleString("pt-PT");
+    })
 });
 
 function handleStartTasksClicks() {
@@ -79,7 +96,7 @@ function handleStartTasksClicks() {
 async function FetchAllLinks(userId, batch = null) {
     try {
         const batchParam = batch ? `&batch=${batch}` : '';
-        const response = await fetch(`http://localhost/LonyExtra/0/Api/Dashboard/GetAllLinks.php?userId=${userId}${batchParam}`, {
+        const response = await fetch(`http://localhost/LonyExtra/0/api/Dashboard/GetAllLinks.php?userId=${userId}${batchParam}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
@@ -182,7 +199,7 @@ async function loadLinksIntoTable(levelIndex) {
 
     async function encrypteData(data) {
         try {
-            const response = await fetch('http://localhost/LonyExtra/0/Api/Tasks/EncryptTaskData.php', {
+            const response = await fetch('http://localhost/LonyExtra/0/api/Tasks/EncryptTaskData.php', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -328,7 +345,7 @@ async function GetDashboardInfo(userId) {
     const responseMessage = "Ocorreu um erro ao autenticar!";
 
     try {
-        const response = await fetch(`http://localhost/LonyExtra/0/Api/Dashboard/GetDashboardInfo.php?userId=${userId}`, {
+        const response = await fetch(`http://localhost/LonyExtra/0/api/Dashboard/GetDashboardInfo.php?userId=${userId}`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json"
