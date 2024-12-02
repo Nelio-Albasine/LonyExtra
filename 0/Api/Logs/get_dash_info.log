@@ -1,1 +1,0 @@
-[23-Nov-2024 10:31:31 UTC] Ocorreu erro em GetDashboard: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ', myReferralCode, userGender, userAge, userJoinedAt, userPointsJSON, userInvitat' at line 1

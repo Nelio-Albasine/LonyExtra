@@ -51,7 +51,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 'success' => true,
                 'message' => "OTP enviado com sucesso para o email!",
                 'redirectTo' => "http://127.0.0.1:5500/0/access/confirme-seu-email.html?data=" . urlencode(json_encode($data))
-            ];            
+            ];
         } else {
             $output = [
                 'success' => false,
@@ -119,27 +119,161 @@ function sendOTP($conn, $data)
 {
     createOtpTable($conn);
 
-    $otp = str_pad(rand(0, 999999), 6, '0', STR_PAD_LEFT); // Gera um código OTP de 6 dígitos
+    $otp = str_pad(rand(0, 999999), 6, '0', STR_PAD_LEFT);
     $email = $data['email'];
+    $name = $data['name'];
+    $surname = $data['surname'];
+    $userName = "$name $surname";
 
     $query = "INSERT INTO user_otps (email, otp, expires_at) VALUES (?, ?, DATE_ADD(NOW(), INTERVAL 5 MINUTE)) ON DUPLICATE KEY UPDATE otp = VALUES(otp), expires_at = VALUES(expires_at)";
     $stmt = $conn->prepare($query);
     $stmt->bind_param("ss", $email, $otp);
 
-    if ($stmt->execute()) {
-        $subject = "Seu código de verificação";
-        $message = "Seu código de verificação é: $otp. Ele expira em 5 minutos.";
-        $headers = "From: no-reply@seu-dominio.com\r\n";
-
-        error_log($message);
-        /* if (mail($email, $subject, $message, $headers)) {
-            return true;
-        } */
-
+    if (sendOTPtoEmail($userName, $email, $otp)) {
         return true;
     }
 
     return false;
 }
 
-function sendOTPtoEmail() {}
+function sendOTPtoEmail($to_user_name, $to_user_email, $otp)
+{
+    try {
+        $phpMailerPath = "../../../../PHPMailer-master/PHPMailer-master/src/PHPMailer.php";
+        $smtpPath = "../../../../PHPMailer-master/PHPMailer-master/src/SMTP.php";
+        $exceptionPath = "../../../../PHPMailer-master/PHPMailer-master/src/Exception.php";
+
+        if (file_exists($phpMailerPath) && file_exists($smtpPath) && file_exists($exceptionPath)) {
+            require($phpMailerPath);
+            require($smtpPath);
+            require($exceptionPath);
+        } else {
+            error_log("Erro: Um ou mais arquivos PHPMailer-master necessários não foram encontrados.");
+            die;
+        }
+
+        $mail = new PHPMailer\PHPMailer\PHPMailer();
+        $mail->IsSMTP();
+        $mail->SMTPDebug = 1;
+        $mail->SMTPAuth = true;
+        $mail->SMTPSecure = 'ssl';
+        $mail->Host = "mail.lonyextra.com";
+        $mail->Port = 465; // ou 587
+        $mail->IsHTML(true);
+        $mail->Username = "noreply-access@lonyextra.com";
+        $mail->Password = "alfa1vsomega2M@";
+        $mail->SetFrom("noreply-access@lonyextra.com", "Lony Extra");
+        $mail->CharSet = 'UTF-8';
+        $mail->Subject = "Confirme Seu Cadastro";
+
+        $mail->Body = '<!DOCTYPE html>
+                        <html lang="pt-BR">
+                        <head>
+                            <meta charset="UTF-8">
+                            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                            <title>Código de Verificação</title>
+                            <style>
+                                body {
+                                    font-family: Arial, sans-serif;
+                                    background-color: #f4f4f4;
+                                    margin: 0;
+                                    padding: 0;
+                                }
+
+                                .email-container {
+                                    max-width: 600px;
+                                    margin: 20px auto;
+                                    background-color: #ffffff;
+                                    border-radius: 8px;
+                                    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                                    padding: 20px;
+                                    overflow: hidden;
+                                }
+
+                                .header {
+                                    text-align: center;
+                                    padding: 10px 0;
+                                    background-color: #4A90E2;
+                                    color: #ffffff;
+                                    border-top-left-radius: 8px;
+                                    border-top-right-radius: 8px;
+                                }
+
+                                .header h1 {
+                                    font-size: 24px;
+                                    margin: 0;
+                                }
+
+                                .content {
+                                    text-align: center;
+                                    padding: 20px;
+                                }
+
+                                .content p {
+                                    font-size: 16px;
+                                    color: #333333;
+                                    margin-bottom: 20px;
+                                }
+
+                                .otp-code {
+                                    display: inline-block;
+                                    font-size: 32px;
+                                    font-weight: bold;
+                                    color: #4A90E2;
+                                    background-color: #f1f1f1;
+                                    padding: 10px 20px;
+                                    border-radius: 4px;
+                                    letter-spacing: 4px;
+                                }
+
+                                .footer {
+                                    text-align: center;
+                                    padding: 10px;
+                                    font-size: 12px;
+                                    color: #888888;
+                                }
+
+                                .footer a {
+                                    color: #4A90E2;
+                                    text-decoration: none;
+                                }
+                            </style>
+                        </head>
+
+                        <body>
+                            <div class="email-container">
+                                <div class="header">
+                                    <h1>Código de Verificação</h1>
+                                </div>
+
+                                <div class="content">
+                                    <p>Olá, <strong>' . htmlspecialchars($to_user_name) . '</strong>!</p>
+                                    <p>Use o código abaixo para confirmar seu cadastro:</p>
+                                    <div class="otp-code">' . htmlspecialchars($otp) . '</div>
+                                    <p>Este código é válido por 5 minutos.</p>
+                                </div>
+
+                                <div class="footer">
+                                    <p>Se você não solicitou este código, ignore este e-mail.</p>
+                                    <p>© 2024 LonyExtra. Todos os direitos reservados.</p>
+                                </div>
+                            </div>
+                        </body>
+
+                        </html>
+                  ';
+
+        $mail->AddAddress($to_user_email);
+
+        try {
+            $mail->send();
+            return true;
+        } catch (Exception $e) {
+            error_log("Erro ao enviar email: " . $mail->ErrorInfo);
+            return false;
+        }
+    } catch (\Throwable $th) {
+        error_log('Error occurred: ' . $th->getMessage());
+        return false;
+    }
+}

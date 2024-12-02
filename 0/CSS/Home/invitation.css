@@ -39,14 +39,10 @@
     flex-direction: column;
     background-color: #f0f0f0;
     border-radius: 10px;
-    padding: 20px;
-    margin-bottom: 25px;
+    padding-top: 15px;
+    margin-bottom: 10px !important;
 }
 
-.invitation_titles {
-    font-size: 17px;
-    margin-bottom: 25px;
-}
 
 .invitation_statistic {
     display: flex;
@@ -60,7 +56,7 @@
     gap: 50px;
 }
 
-.container_invite_the_item{
+.container_invite_the_item {
     margin-top: 10px;
     height: 30px;
 }
@@ -121,7 +117,6 @@
 
 
 .h3_tem_algum_codigo {
-    margin-bottom: 10px;
     margin-left: 2px;
 }
 
@@ -129,36 +124,6 @@
     width: 90%;
     margin: 0 auto 15px auto;
     border-color: rgb(255, 255, 255);
-}
-
-.insert-code {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-}
-
-.insert-code input {
-    padding: 14px 15px;
-    width: 100%;
-    height: 38px;
-    border: 1px solid #ccc;
-    border-radius: 25px;
-    margin-bottom: 15px;
-    max-width: 300px;
-    text-align: center;
-}
-
-.submit-button {
-    width: 180px;
-    height: 38px;
-    background-color: #4caf50;
-    border-radius: 25px;
-    color: white;
-    border: none;
-    cursor: pointer;
-    margin-bottom: 15px;
 }
 
 
@@ -233,6 +198,79 @@
 }
 
 
+
+.container_insert_cde_and_titles {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+}
+
+.container_insert_cde_and_titles div {
+    width: 100%;
+
+}
+
+.container_invite_bonus_titles {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.container_invite_bonus_titles p {
+    text-align: center;
+    font-size: 15px;
+}
+
+.invitation_titles {
+    font-size: 17px;
+}
+
+
+.p_stars_to_receive_as_invite_reward {
+    background-color: rgb(70, 3, 87);
+    padding: 5px 20px;
+    width: fit-content;
+    margin: 4px auto 10px auto;
+    color: white;
+    font-size: 13.5px !important;
+    border-radius: 25px;
+}
+
+
+.insert_invite_code {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 15px;
+    gap: 40px;
+}
+
+#invitation_code_input {
+    width: 80%;
+    height: 35px;
+    border: 1px solid #ccc;
+    border-radius: 25px;
+    max-width: 300px;
+    text-align: center;
+}
+
+#btnVerifyInvitationCode {
+    width: 180px;
+    height: 35px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #4caf50;
+    border-radius: 25px;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+}
+
 @media screen and (max-width: 600px) {
     .div_base_onvitation_statistics {
         border-radius: 10px;
@@ -241,7 +279,6 @@
 
     .invitation_titles {
         font-size: 14px;
-        margin-bottom: 20px;
     }
 
     .invitation_statistic {
@@ -274,17 +311,11 @@
         margin: 0 auto 8px auto;
     }
 
-    .insert-code input {
-        margin-bottom: 10px;
-        margin-top: 0;
+    .insert_invite_code {
+        margin-bottom: 15px;
+        gap: 20px;
     }
 
-    .submit-button {
-        width: 90%;
-        height: 40px;
-        margin-top: 8px;
-        margin-bottom: 10px;
-    }
 
     .friend_list_container {
         padding: 8px 10px;

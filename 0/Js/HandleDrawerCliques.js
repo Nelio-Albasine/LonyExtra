@@ -91,6 +91,10 @@ function openEspecificDialog(dialogIdHasHashFormat = null) {
 
         textDialogTitle.textContent = dialogTitle || "Desconhecido";
 
+        if (dialogIdHasHashFormat =="#ConvidarAmigos") {
+            //quando o user clica naquele arrow de convite na tela Home
+            window.location.hash = "ConvidarAmigos";
+        }
         handleActionsToEspecifiedHash(dialogIdHasHashFormat);
     }
 }
@@ -736,6 +740,10 @@ async function makeRequestToGetMyCAshouts() {
 }
 
 
+function makeRequestToApplyInvitedCode(inviteCodeInserted){
+    
+}
+
 function handleInviteFriendsDialog() {
     async function waitForInvitation() {
         while (userInvitationInfo === null) {
@@ -750,6 +758,9 @@ function handleInviteFriendsDialog() {
         textInvitationCode.textContent = invite.myReferralCode
 
         let copyIcons = document.querySelectorAll(".copy_my_invite_code_or_link");
+        let invitation_code_input = document.getElementById("invitation_code_input");
+        let btnVerifyInvitationCode = document.getElementById("btnVerifyInvitationCode");
+
         copyIcons.forEach((icon, index) => {
             icon.addEventListener("click", () => {
                 if (index === 0) {
@@ -759,8 +770,26 @@ function handleInviteFriendsDialog() {
                 }
             });
         });
+
+        btnVerifyInvitationCode.addEventListener("click", () => {
+            let codeInserted = invitation_code_input.value.trim()
+            if (!codeInserted) {
+                alert("Insira um código de convinte!")
+                return;
+            }
+
+            if (codeInserted.length < 6) {
+                alert("O código de convinte deve ter 6 dígitos!")
+                return;
+            }
+
+            makeRequestToApplyInvitedCode(codeInserted);
+        });
+
     });
 }
+
+
 
 
 function updateCounter(input, counterId, maxLength) {

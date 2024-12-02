@@ -37,11 +37,14 @@
 
     <link rel="stylesheet" href="../css/home/signout.css">
 
+    <link rel="stylesheet" href="../css/home/top10.css">
+
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 
 
+   <link rel="icon" href="../src/favicon_io/favicon.ico" type="image/x-icon">
 </head>
 
 <body>
@@ -248,10 +251,38 @@
                         <img src="../src/IMGs/star.png" alt="star">
                         <p><strong class="textTotalStarsEarnedByReferrals">0</strong></p>
                     </div>
-                    <img class="seeInvitattionDetails" onclick="openEspecificDialog('#ConvidarAmigos')"
-                        src="../src/IMGs/dropdown_icon.png" alt="dropdown_icon">
+                    <img class="seeInvitattionDetails" onclick="openEspecificDialog('#ConvidarAmigos')"  src="../src/IMGs/dropdown_icon.png" alt="dropdown_icon">
                 </div>
             </div>
+        </div>
+
+        <h2 class="h2_outras_formas_de_ganhos textTitleTop10">Top 10 Usuários</h2>
+
+        <div class="top10_container scroll-container">
+            <table class="top10_table">
+                <tbody id="tbody_tp10">
+                    <!--
+                      <div class="card_layout">
+                        <div class="profile_initials"><p>NA</p></div>
+    
+                        <div class="user_info">
+                            <div class="base_name_and_rating">
+                                <p class="user_top10_name">Nome do usuário aqui</p>
+                                <div class="rating">
+                                    <span class="rating-value">4.5k</span>
+                                    <span class="rating_icon">⭐</span>
+                                </div>
+                            </div>
+    
+                            <div class="social_info">
+                                <span class="trophy_icon">🏆</span>
+                                <span class="top_ranking">Top 01</span>
+                            </div>
+                        </div>
+                    </div>
+                    -->
+                </tbody>
+            </table>
         </div>
 
         <div class="other_earning_ways">
@@ -542,12 +573,19 @@
                         <hr class="hr_in_invitation_dialog">
 
                         <!-- Inserir Código -->
-                        <h3 class="invitation_titles h3_tem_algum_codigo">Tem algum código de convite?</h3>
+                         <div class="container_insert_cde_and_titles">
+                            <div class="container_invite_bonus_titles">
+                                <h3 class="invitation_titles h3_tem_algum_codigo">Tem algum código de convite?</h3>
+                                <p >Insira e receba:</p>
+                                <p class="p_stars_to_receive_as_invite_reward">✨+100</p>
+                            </div>
 
-                        <div class="insert-code">
-                            <input type="text" id="code-input" placeholder="Digite o código aqui">
-                            <button class="submit-button">Enviar</button>
-                        </div>
+                            <div class="insert_invite_code">
+                                <input type="text" id="invitation_code_input" placeholder="Digite o código aqui">
+                                <p id="btnVerifyInvitationCode">Enviar</p>
+                            </div>
+                         </div>
+                       
 
 
 
@@ -938,9 +976,10 @@
                             <p class="userName">User Name</p>
                             <p class="userEmail">useremail@gmail.com</p>
                             <p id="memberShipText">
-                                Juntou-se à comunidade @LonyExtra em <span id="joinedDate"></span>. Já se passaram <strong id="timeElapsedText"></strong> desde então 💖!
+                                Juntou-se à comunidade @LonyExtra em <span id="joinedDate"></span>. Já se passaram
+                                <strong id="timeElapsedText"></strong> desde então 💖!
                             </p>
-                            
+
 
                         </div>
 
@@ -968,7 +1007,8 @@
                 <div class="the_dialog_container" id="dialog_logout">
                     <div class="div_base_signout">
                         <h2>Tem certeza de que deseja sair?</h2>
-                        <p>Ao sair, você precisará fazer login novamente para acessar sua conta. (Não se preocupe, seu progresso será salvo!)</p>
+                        <p>Ao sair, você precisará fazer login novamente para acessar sua conta. (Não se preocupe, seu
+                            progresso será salvo!)</p>
                         <div class="signout_buttons">
                             <button class="btn_cancel" id="cancelLogout">Cancelar</button>
                             <button class="btn_signout" id="confirmLogout">Sair</button>

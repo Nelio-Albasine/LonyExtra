@@ -15,14 +15,16 @@ function createNewUser($conn, $data): bool
     $userPointsJSON = json_encode([
         "userRevenue" => 0.000,
         "userLTRevenue" => 0.000,
+        "userLTCashouts" => 0.000,
         "userStars" => 0,
         "userLTStars" => 0,
     ], JSON_FORCE_OBJECT);
 
+
     $userInvitationJSON = json_encode([
         "myReferralCode" => $myReferralCode,
         "myTotalReferredFriends" => 0,
-        "totalEarnedByReferral" => 0.000,
+        "totalStarsEarnedByReferral" => 0.000,
         "myInviterCode" => $userInviterCode
     ], JSON_FORCE_OBJECT);
 
@@ -34,6 +36,17 @@ function createNewUser($conn, $data): bool
     $stmtInsertUser->bind_param("ssssssssiss", $userId, $userName, $userSurName, $userEmail, $userTimeZone, $userPassword, $myReferralCode, $userGender, $userAge, $userPointsJSON, $userInvitationJSON);
 
     if ($stmtInsertUser->execute()) {
+        if (!empty($userInviterCode)) {
+            $handleInvitationDIR = "../invitation/handleInvitation.php";
+            if (file_exists($handleInvitationDIR)) {
+                require_once "../invitation/handleInvitation.php";
+                if (!empty(getMyInviterUserId($conn, $userInviterCode))) {
+                    increaseMyInviterTotalInvited($conn, $userInviterCode);
+                }
+            } else {
+                error_log("Arquivo handleInvitation.php nao existe!");
+            }
+        }        
         return true;
     } else {
         error_log("Erro ao inserir o usuário: " . $stmtInsertUser->error);
