@@ -32,4 +32,4 @@ jobs:
           password: ${{ secrets.FTP_PASSWORD_LONY_EXTRA }}
           server-dir: /
           exclude: |
-            testScripts/**
+            testscripts/**
