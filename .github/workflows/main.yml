@@ -9,6 +9,7 @@ jobs:
   web-deploy:
     name: 🎉 Deploy
     runs-on: ubuntu-latest
+
     steps:
       - name: 🚚 Get latest code
         uses: actions/checkout@v4
@@ -19,7 +20,6 @@ jobs:
           find . -type f -name "*.php" -exec sed -i 's|"Wamp64Connection.php"|"DBConnection.php"|g' {} +
           find . \( -name "*.php" -o -name "*.js" -o -name "*.html" \) -exec sed -i 's|http://localhost/LonyExtra/|https://lonyextra.com/|g' {} +
           find . \( -name "*.php" -o -name "*.js" -o -name "*.html" \) -exec sed -i 's|http://127.0.0.1:5500/|https://lonyextra.com/|g' {} +
-          find . \( -name "*.php" -o -name "*.js" -o -name "*.html" \) -exec sed -i 's|http://worldtimeapi.org/api/ip|https://worldtimeapi.org/api/ip|g' {} +
 
       - name: 📂 Sync files
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
@@ -29,11 +29,12 @@ jobs:
           password: ${{ secrets.FTP_PASSWORD_LONY_EXTRA }}
           server-dir: /
           exclude: |
-            /testscripts/**       # Exclui a pasta testscripts
-            /node_modules/**      # Exclui a pasta node_modules
-            /.git/**              # Exclui a pasta .git
-            /.github/**           # Exclui a pasta .github
-            .gitignore            # Exclui o arquivo .gitignore
-            composer.*            # Exclui arquivos composer.json e composer.lock
-            !.htaccess            # Mantém o .htaccess no servidor
-          dangerous-clean-slate: false  # Não apaga arquivos no servidor que não estão no repositório (essa regra torna a de !.htacess rdundante/desnecessarias, mas vamos deixar)
+            **/testscripts/**      # Exclui a pasta testscripts em qualquer lugar
+            **/node_modules/**     # Exclui a pasta node_modules em qualquer lugar
+            **/.git/**             # Exclui a pasta .git em qualquer lugar
+            **/.github/**          # Exclui a pasta .github em qualquer lugar
+            .gitignore             # Exclui o arquivo .gitignore
+            composer.*             # Exclui arquivos composer.json e composer.lock
+            !**/.htaccess          # Mantém o .htaccess no servidor (em qualquer lugar)
+
+          dangerous-clean-slate: false  # Não apaga arquivos no servidor que não estão no repositório
