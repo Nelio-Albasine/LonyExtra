@@ -37,4 +37,4 @@ jobs:
             composer.*             # Exclui arquivos composer.json e composer.lock
             !**/.htaccess          # Mantém o .htaccess no servidor (em qualquer lugar)
 
-          dangerous-clean-slate: false  # Não apaga arquivos no servidor que não estão no repositório
+          #dangerous-clean-slate: false  # Não apaga arquivos no servidor que não estão no repositório
