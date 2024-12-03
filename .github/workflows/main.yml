@@ -16,8 +16,10 @@ jobs:
 
       - name: 🔄 Update file paths and URLs
         run: |
-          # Atualizar caminhos de arquivos e URLs
-          find . -type f -name "*.php" -exec sed -i 's|"Wamp64Connection.php"|"DBConnection.php"|g' {} \;
+          # Atualizar o nome do arquivo de conexão do banco de dados
+          find . -type f -name "*.php" -exec sed -i 's|Wamp64Connection\.php|DBConnection.php|g' {} +
+
+          # Atualizar URLs
           find . \( -name "*.php" -o -name "*.js" -o -name "*.html" \) -exec sed -i 's|http://localhost/LonyExtra/|https://lonyextra.com/|g' {} +
           find . \( -name "*.php" -o -name "*.js" -o -name "*.html" \) -exec sed -i 's|http://127.0.0.1:5500/|https://lonyextra.com/|g' {} +
 
@@ -25,7 +27,7 @@ jobs:
         run: |
           # Remover as linhas de erro e cabeçalhos CORS de arquivos PHP
           find . -type f -name "*.php" -exec sed -i '/error_reporting(E_ALL);/d' {} +
-          find . -type f -name "*.php" -exec sed -i '/ini_set("display_errors", 1);/d' {} +
+          find . -type f -name "*.php" -exec sed -i "/ini_set('display_errors', 1);/d" {} +
           find . -type f -name "*.php" -exec sed -i '/header("Access-Control-Allow-Origin: \*");/d' {} +
           find . -type f -name "*.php" -exec sed -i '/header("Access-Control-Allow-Methods: POST, OPTIONS");/d' {} +
           find . -type f -name "*.php" -exec sed -i '/header("Access-Control-Allow-Headers: Content-Type");/d' {} +
@@ -38,6 +40,6 @@ jobs:
           password: ${{ secrets.FTP_PASSWORD_LONY_EXTRA }}
           server-dir: /
           exclude: |
-            !**/php.ini            # Mantém o php.ini no servidor 
-            !**/.htaccess            # Mantém o .htaccess no servidor 
-            !**/.user.ini            # Mantém o .user.ini no servidor 
+            !**/php.ini           # Mantém o php.ini no servidor 
+            !**/.htaccess         # Mantém o .htaccess no servidor 
+            !**/.user.ini         # Mantém o .user.ini no servidor 
