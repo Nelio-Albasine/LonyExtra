@@ -29,12 +29,12 @@ jobs:
           password: ${{ secrets.FTP_PASSWORD_LONY_EXTRA }}
           server-dir: /
           exclude: |
-            **/testscripts/**      # Exclui a pasta testscripts em qualquer lugar
-            **/node_modules/**     # Exclui a pasta node_modules em qualquer lugar
-            **/.git/**             # Exclui a pasta .git em qualquer lugar
-            **/.github/**          # Exclui a pasta .github em qualquer lugar
-            .gitignore             # Exclui o arquivo .gitignore
-            composer.*             # Exclui arquivos composer.json e composer.lock
-            !**/.htaccess          # Mantém o .htaccess no servidor (em qualquer lugar)
-
+            **/testscripts/**        # Exclui a pasta testscripts em qualquer lugar
+            **/node_modules/**       # Exclui a pasta node_modules em qualquer lugar
+            **/.git/**               # Exclui a pasta .git em qualquer lugar
+            **/.github/**            # Exclui a pasta .github em qualquer lugar
+            .gitignore               # Exclui o arquivo .gitignore
+            composer.json            # Exclui o arquivo composer.json
+            composer.lock            # Exclui o arquivo composer.lock
+            !**/.htaccess            # Mantém o .htaccess no servidor (em qualquer lugar)
           #dangerous-clean-slate: false  # Não apaga arquivos no servidor que não estão no repositório
