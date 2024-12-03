@@ -38,7 +38,7 @@ jobs:
           server: ${{ secrets.FTP_SERVER_LONY_EXTRA }}
           username: ${{ secrets.FTP_USERNAME_LONY_EXTRA }}
           password: ${{ secrets.FTP_PASSWORD_LONY_EXTRA }}
-          server-dir: /public_html  # Ajuste o diretório conforme necessário
+          server-dir: /  
           exclude: |
             testscripts/*  # Exclui a pasta de testes e seu conteúdo
             node_modules/*  # Exclui a pasta node_modules (caso tenha no repositório)
