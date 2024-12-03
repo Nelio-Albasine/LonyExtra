@@ -26,11 +26,11 @@ jobs:
       - name: 🔧 Remove debugging and CORS headers from PHP files
         run: |
           # Remover as linhas de erro e cabeçalhos CORS de arquivos PHP
-          find . -type f -name "*.php" -exec sed -i '/error_reporting(E_ALL);/d' {} +
+          find . -type f -name "*.php" -exec sed -i "/error_reporting(E_ALL);/d" {} +
           find . -type f -name "*.php" -exec sed -i "/ini_set('display_errors', 1);/d" {} +
-          find . -type f -name "*.php" -exec sed -i '/header("Access-Control-Allow-Origin: \*");/d' {} +
-          find . -type f -name "*.php" -exec sed -i '/header("Access-Control-Allow-Methods: POST, OPTIONS");/d' {} +
-          find . -type f -name "*.php" -exec sed -i '/header("Access-Control-Allow-Headers: Content-Type");/d' {} +
+          find . -type f -name "*.php" -exec sed -i "/header('Access-Control-Allow-Origin: \*');/d" {} +
+          find . -type f -name "*.php" -exec sed -i "/header('Access-Control-Allow-Methods: POST, OPTIONS');/d" {} +
+          find . -type f -name "*.php" -exec sed -i "/header('Access-Control-Allow-Headers: Content-Type');/d" {} +
 
       - name: 📂 Sync files
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
@@ -42,4 +42,4 @@ jobs:
           exclude: |
             !**/php.ini           # Mantém o php.ini no servidor 
             !**/.htaccess         # Mantém o .htaccess no servidor 
-            !**/.user.ini         # Mantém o .user.ini no servidor 
+            !**/.user.ini         # Mantém o .user.ini no servidor

@@ -15,6 +15,8 @@ require_once "../Wamp64Connection.php";
 if ($_SERVER['REQUEST_METHOD'] == "GET") {
     $conn = getMySQLConnection();
 
+    createTableUserIfNotExists($conn);
+
     $output = [
         "success" => null,
         "message" => null,
@@ -84,4 +86,28 @@ function authenticateUser($email, $passwordInput, $conn): bool
     $stmt->close();
 
     return $passwordFromDatabase && password_verify($passwordInput, $passwordFromDatabase);
+}
+
+
+function createTableUserIfNotExists($conn)
+{
+    $queryCreateUser = "CREATE TABLE IF NOT EXISTS Usuarios (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        userId VARCHAR(191) NOT NULL UNIQUE,
+        userName VARCHAR(15) NOT NULL,
+        userSurname VARCHAR(20) NOT NULL,
+        userEmail VARCHAR(100) NOT NULL UNIQUE,
+        userPassword VARCHAR(255),
+        userTimeZone VARCHAR(50),
+        myReferralCode VARCHAR(6),
+        userGender VARCHAR(10) NOT NULL,
+        userAge INT,
+        userJoinedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        userPointsJSON JSON,
+        userInvitationJSON JSON
+    )";
+
+    if (!mysqli_query($conn, $queryCreateUser)) {
+        die("Erro ao criar a tabela: " . mysqli_error($conn));
+    }
 }

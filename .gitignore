@@ -11,6 +11,10 @@ composer.lock
 # Ignore other common unwanted files
 *.log
 
+# Não ignore a pasta "logs", apenas os arquivos .log dentro dela
+!0/api/logs/
+0/api/logs/*.log
+
 # Ignore temporary build directories (e.g., dist or build)
 dist/
 build/
