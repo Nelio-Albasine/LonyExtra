@@ -6,13 +6,13 @@ const recoverPassword = document.getElementById("recoverPassword");
 const textCreateAccount = document.getElementById("CreateAccount");
 
 document.addEventListener("DOMContentLoaded", function () {
-    recoverPassword.addEventListener("click", ()=> {
+    recoverPassword.addEventListener("click", () => {
         const inputEmail = document.getElementById("inputEmail").value;
 
-        window.location.href = "http://127.0.0.1:5500/0/access/recuperar-senha.html?email=" , inputEmail ;
+        window.location.href = "http://127.0.0.1:5500/0/access/recuperar-senha.html?email=", inputEmail;
     });
 
-    textCreateAccount.addEventListener("click", ()=> {
+    textCreateAccount.addEventListener("click", () => {
         window.location.href = "http://127.0.0.1:5500/0/access/signup.html";
     });
 
@@ -28,16 +28,19 @@ document.addEventListener("DOMContentLoaded", function () {
         btnStartSession.disabled = true;
         btnStartSession.innerText = "Aguarde...";
 
-        const userAccess = await handleUserAccess(inputEmail, inputPassword);
+        const loginResponse = await handleUserAccess(inputEmail, inputPassword);
 
-        if (userAccess.index === 0) {
-            showAlert(userAccess.index, userAccess.message);
+        if (loginResponse.success) {
+            btnStartSession.style.backgroundColor = "green";
+            btnStartSession.innerText = "Redirecionando...!";
+            showAlert(0, loginResponse.message);
             setTimeout(() => {
-                window.location.href = userAccess.redirectTo;
+                window.location.href = loginResponse.redirectTo;
             }, 1500);
         } else {
+            btnStartSession.innerText = "Tentar mais novamente!";
             btnStartSession.disabled = false;
-            showAlert(userAccess.index, userAccess.message);
+            showAlert(2, loginResponse.message);
         }
     });
 });
@@ -50,7 +53,7 @@ function showAlert(alertIndex, message) {
 
     setTimeout(() => {
         divAlertMessage.style.display = "none";
-    }, 4000);
+    }, 3500);
 }
 
 function areAllFieldsFilled(email, password) {
@@ -58,7 +61,7 @@ function areAllFieldsFilled(email, password) {
 }
 
 async function handleUserAccess(email, password) {
-    let responseIndex = 2;
+    let loginResponse;
     let responseMessage = "Ocorreu um erro ao autenticar!";
 
     try {
@@ -73,24 +76,11 @@ async function handleUserAccess(email, password) {
             throw new Error(`Erro na requisição: ${response.status}`);
         }
 
-        const loginResponse = await response.json();
-
-        if (loginResponse.success) {
-            btnStartSession.style.backgroundColor = "green";
-            btnStartSession.innerText = "Redirecionando...!";
-            responseIndex = 0;
-            responseMessage = loginResponse.message;
-        window.location.href = loginResponse.redirectTo;
-        } else {
-            responseMessage = loginResponse.message;
-        }
+        loginResponse = await response.json();
     } catch (error) {
         console.error(responseMessage, error);
     }
 
-    return {
-        index: responseIndex,
-        message: responseMessage,
-        redirectTo: loginResponse?.redirectTo || "#"
-    };
+
+    return loginResponse
 }

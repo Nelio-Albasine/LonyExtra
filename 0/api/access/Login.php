@@ -14,7 +14,12 @@ require_once "../Wamp64Connection.php";
 
 if ($_SERVER['REQUEST_METHOD'] == "GET") {
     $conn = getMySQLConnection();
-    $output = [];
+
+    $output = [
+        "success" => null,
+        "message" => null,
+        "redirectTo" => null
+    ];
 
     if (!$conn) {
         error_log("Erro ao conectar ao banco de dados");
@@ -37,12 +42,12 @@ if ($_SERVER['REQUEST_METHOD'] == "GET") {
                 "success" => true,
                 "message" => "Login feito com sucesso!",
                 "redirectTo" => "http://127.0.0.1:5500/0/dashboard/",
-            ]; 
+            ];
         } else {
             $output = [
                 "success" => false,
                 "message" => "E-mail ou senha incorreto!",
-            ];  
+            ];
         }
     } else {
         $output = [
@@ -55,12 +60,13 @@ if ($_SERVER['REQUEST_METHOD'] == "GET") {
     error_log(print_r($output, true));
 
     echo json_encode($output);
-    $conn->close();  
+    $conn->close();
 } else {
-   error_log("A requisição não é GET");
+    error_log("A requisição não é GET");
 }
 
-function authenticateUser($email, $passwordInput, $conn): bool {
+function authenticateUser($email, $passwordInput, $conn): bool
+{
     $passwordFromDatabase = null;
 
     $query = "SELECT userPassword FROM Usuarios WHERE userEmail = ?";

@@ -1,0 +1,50 @@
+[03-Dec-2024 20:32:08 UTC] A requisição não é GET
+[03-Dec-2024 20:32:08 UTC] Array
+(
+    [success] => 
+    [message] => Usuário não registrado!
+)
+
+[03-Dec-2024 20:43:51 UTC] A requisição não é GET
+[03-Dec-2024 20:43:51 UTC] Array
+(
+    [success] => 
+    [message] => Usuário não registrado!
+)
+
+[03-Dec-2024 20:46:13 UTC] A requisição não é GET
+[03-Dec-2024 20:46:13 UTC] Array
+(
+    [success] => 
+    [message] => Usuário não registrado!
+)
+
+[03-Dec-2024 20:47:30 UTC] A requisição não é GET
+[03-Dec-2024 20:47:30 UTC] Array
+(
+    [success] => 
+    [message] => Usuário não registrado!
+)
+
+[03-Dec-2024 20:48:18 UTC] A requisição não é GET
+[03-Dec-2024 20:48:18 UTC] Array
+(
+    [success] => 
+    [message] => Usuário não registrado!
+)
+
+[03-Dec-2024 20:48:31 UTC] A requisição não é GET
+[03-Dec-2024 20:48:31 UTC] Array
+(
+    [success] => 
+    [message] => E-mail ou senha incorreto!
+)
+
+[03-Dec-2024 20:48:43 UTC] A requisição não é GET
+[03-Dec-2024 20:48:44 UTC] Array
+(
+    [success] => 1
+    [message] => Login feito com sucesso!
+    [redirectTo] => http://127.0.0.1:5500/0/dashboard/
+)
+
