@@ -38,8 +38,11 @@ jobs:
           server: ${{ secrets.FTP_SERVER_LONY_EXTRA }}
           username: ${{ secrets.FTP_USERNAME_LONY_EXTRA }}
           password: ${{ secrets.FTP_PASSWORD_LONY_EXTRA }}
-          server-dir: /
+          server-dir: /public_html  # Ajuste o diretório conforme necessário
           exclude: |
-            testscripts/**
-          dangerous-clean-slate: false # Isso impede que arquivos existentes no servidor sejam excluídos se não estiverem no repositório.
-
+            testscripts/*  # Exclui a pasta de testes e seu conteúdo
+            node_modules/*  # Exclui a pasta node_modules (caso tenha no repositório)
+            .git/**  # Exclui o repositório git
+            ..github/**  # Exclui a pasta de workflows e configurações do GitHub
+            .gitignore  # Exclui o arquivo .gitignore
+          dangerous-clean-slate: false  # Impede que arquivos no servidor que não estão no repositório sejam deletados
