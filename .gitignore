@@ -1,0 +1,20 @@
+# Ignore node_modules folder
+node_modules/
+
+# Ignore any "testscripts" folder in the project
+testscripts/
+
+# Ignore composer files
+composer.json
+composer.lock
+
+# Ignore other common unwanted files
+*.log
+
+# Ignore temporary build directories (e.g., dist or build)
+dist/
+build/
+
+# Ignore OS-generated files
+.DS_Store  # For macOS
+Thumbs.db  # For Windows
