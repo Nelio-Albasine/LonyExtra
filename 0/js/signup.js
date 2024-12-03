@@ -1,3 +1,4 @@
+var userTimeZone = null;
 const textStartSession = document.getElementById("StartSession");
 const btnCreateAccount = document.getElementById("btnCreateAccount");
 
@@ -45,7 +46,14 @@ async function getTimeZoneFromAPI() {
     }
 }
 
-document.addEventListener("DOMContentLoaded", function () {
+
+function getUserTimeZoneFromLocal() {
+    const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    return timeZone;
+}
+
+document.addEventListener("DOMContentLoaded", async function () {
+    userTimeZone = await getTimeZoneFromAPI();
 
     textStartSession.addEventListener("click", () => {
         window.location.href = "http://127.0.0.1:5500/0/access/login.html";
@@ -67,7 +75,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
         let userId = await emailToUniqueHash(inputEmail.value);
 
-        const userTimeZone = await getTimeZoneFromAPI();
+        if(!userTimeZone){
+            userTimeZone = getUserTimeZoneFromLocal();
+        }
 
         const allFields = new Map([
             ["userId", userId],
@@ -77,7 +87,7 @@ document.addEventListener("DOMContentLoaded", function () {
             ["password", inputPassword.value],
             ["gender", selectGender.value],
             ["age", inputAge.value],
-            ["userTimeZone", inputAge.userTimeZone],
+            ["userTimeZone", userTimeZone],
             ["inviterCode", inviterCode]
         ]);
 

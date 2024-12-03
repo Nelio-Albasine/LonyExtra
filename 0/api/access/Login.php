@@ -1,7 +1,7 @@
 <?php
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
-ini_set('error_log', __DIR__ . '../Logs/login_errors.log');
+ini_set('error_log', __DIR__ . '/../Logs/login_errors.log');
 
 // Definindo os cabeçalhos CORS diretamente 
 header('Access-Control-Allow-Origin: *');

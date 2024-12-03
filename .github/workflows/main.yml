@@ -27,6 +27,11 @@ jobs:
           # Alterar a URL da API de http para https
           find . \( -name "*.php" -o -name "*.js" -o -name "*.html" \) -exec sed -i 's|http://worldtimeapi.org/api/ip|https://worldtimeapi.org/api/ip|g' {} +
 
+          # Comentar cabeçalhos CORS em arquivos PHP
+          find . -type f -name "*.php" -exec sed -i 's|header(\'Access-Control-Allow-Origin: \*\');|// header(\'Access-Control-Allow-Origin: *\');|g' {} +
+          find . -type f -name "*.php" -exec sed -i 's|header(\'Access-Control-Allow-Methods: POST, OPTIONS\');|// header(\'Access-Control-Allow-Methods: POST, OPTIONS\');|g' {} +
+          find . -type f -name "*.php" -exec sed -i 's|header(\'Access-Control-Allow-Headers: Content-Type\');|// header(\'Access-Control-Allow-Headers: Content-Type\');|g' {} +
+
       - name: 📂 Sync files
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
