@@ -523,6 +523,7 @@
         <p>Copyright © 2024 Lony Extra, All rights reserved.</p>
     </footer>
 
+
     <script>
         const menuToggle = document.querySelector('.menu-toggle');
         const mobileDrawer = document.querySelector('.mobile-drawer');
@@ -550,6 +551,16 @@
 
         drawerClose.addEventListener('click', closeDrawer);
         overlay.addEventListener('click', closeDrawer);
+
+        document.querySelectorAll(".btn").forEach((btn, index) => {
+            btn.addEventListener("click", () => {
+                if (index == 0 || index == 2) {
+                    window.location.href = "0/access/signup.html"
+                } else {
+                    window.location.href = "0/access/login.html"
+                }
+            });
+        });
     </script>
 </body>
 
