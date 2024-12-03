@@ -423,10 +423,6 @@
         </div>
     </main>
 
-    <div class="ads_banner">
-        <p>Anúncio</p>
-        <div id="the_banner_ad"></div>
-    </div>
 
     <div id="fab_invite_friends" onclick="openEspecificDialog('#ConvidarAmigos')">
         <img src="../src/IMGs/invitation_card.png" />
@@ -588,17 +584,18 @@
                             <div class="container_div_who_invited_me">
                                 <p class="p_vc_foi_convidado_por">Convidado por:</p>
                                 <div class="card_layout card_layout_from_invite">
-                                    <div class="profile_initials profile_initials_from_invite">
-                                        <p id="myInviterInitial">NA</p>
+                                    <div class="profile_initials_from_invite">
+                                        NA
                                     </div>
 
                                     <div class="user_info user_info_from_invite">
-                                        <div class="base_name_and_rating">
-                                            <p id="nameWhoInvitedMe" class="user_top10_name ">Nome do usuário aqui</p>
+                                        <div class="base_name_and_rating_from_invite">
+                                            <p id="nameWhoInvitedMe">Nome do usuário aqui</p>
                                         </div>
 
                                         <div class="rating rating_from_invite">
-                                            <span class="rating-value stars_my_inviter_has">49 345</span>
+                                            <span id="LTstarsWhoInvitedMe" class="rating-value stars_my_inviter_has">49
+                                                345</span>
                                             <span class="rating_icon stars_my_inviter_has">⭐</span>
                                         </div>
 
@@ -615,8 +612,6 @@
                                 <p id="btnVerifyInvitationCode">Enviar</p>
                             </div>
                         </div>
-
-
 
 
                         <!-- Lista de Amigos Convidados -->
@@ -1055,6 +1050,7 @@
 
     <script src="../js/drawer.js"></script>
     <script src="../js/GetDashboardInfo.js"></script>
+    <script src="../js/GetTop10Users.js"></script>
     <script src="../js/HandleDrawerCliques.js"></script>
 
 </body>

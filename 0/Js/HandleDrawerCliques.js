@@ -40,7 +40,6 @@ const textUserStars = document.querySelectorAll('.userStars');
 const custom_selectPaymentMethod_container = document.querySelector('.custom-select-container');
 const gift_gateway_icon = document.querySelectorAll('.gift_gateway_icon');
 
-
 let conversionOption = null;
 let paymentMethodSelected = null
 let indexToCashOut = null;
@@ -739,16 +738,42 @@ async function makeRequestToGetMyCAshouts() {
     }
 }
 
-function hadeUIwhenInvitedCodeIsInserted(){
+function updateCounter(input, counterId, maxLength) {
+    const counter = document.getElementById(counterId);
+    counter.textContent = `${input.value.length}/${maxLength}`;
+}
+
+async function waitForUserInfo() {
+    while (userInfo === null) {
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        userInfo = await userInfo;
+    }
+    return userInfo;
+}
+
+function getInitials(name, surname) {
+    const nameInitial = name && name.trim() ? name.trim()[0].toUpperCase() : "N";
+    const surnameInitial = surname && surname.trim() ? surname.trim()[0].toUpperCase() : "A";
+    return nameInitial + surnameInitial;
+}
+
+function hadeUIwhenInvitedCodeIsInserted(inviterInfo) {
     let myInviterInfo = document.querySelectorAll(".container_div_who_invited_me");
     let insert_invite_code = document.querySelectorAll(".insert_invite_code");
     let h3_tem_algum_codigo = document.querySelectorAll(".h3_tem_algum_codigo");
+    let nameWhoInvitedMe = document.getElementById("nameWhoInvitedMe");
+    let LTstarsWhoInvitedMe = document.getElementById("LTstarsWhoInvitedMe");
+    let myInviterInitial = document.querySelectorAll(".profile_initials_from_invite");
     let textLabelInsiraEreceba = document.getElementById("textLabelInsiraEreceba");
 
-    textLabelInsiraEreceba.textContent = "Você recebeu:"
+    textLabelInsiraEreceba.textContent = "Você já recebeu:"
     h3_tem_algum_codigo.forEach(t => t.textContent = "Código de convite já inserido!");
-    insert_invite_code.forEach(e=> e.style.display = "none");
-    myInviterInfo.forEach(e=> e.style.display = "flex");
+    insert_invite_code.forEach(e => e.style.display = "none");
+    myInviterInfo.forEach(e => e.style.display = "flex");
+
+    myInviterInitial.forEach(text => text.textContent = getInitials(inviterInfo.userName, inviterInfo.userSurname))
+    nameWhoInvitedMe.textContent = `${inviterInfo.userName} ${inviterInfo.userSurname}`;
+    LTstarsWhoInvitedMe.textContent = parseInt(inviterInfo.LTStars).toLocaleString("pt-PT");
 }
 
 async function makeRequestToApplyInvitedCode(inviteCodeInserted, btn) {
@@ -776,10 +801,9 @@ async function makeRequestToApplyInvitedCode(inviteCodeInserted, btn) {
         const responseData = await response.json();
 
         if (responseData.success) {
-            hadeUIwhenInvitedCodeIsInserted()
+            hadeUIwhenInvitedCodeIsInserted(responseData.myInviterInfo)
             btn.style.backgroundColor = "green";
             showBoxAlert(responseData.message, "success");
-            
         } else {
             showBoxAlert(responseData.message, "warning");
         }
@@ -807,6 +831,8 @@ function handleInviteFriendsDialog() {
         let invitation_code_input = document.getElementById("invitation_code_input");
         let btnVerifyInvitationCode = document.getElementById("btnVerifyInvitationCode");
 
+        console.log("Dentro do DIALOG e o myInviterInfo é:", myInviterInfo);
+
         copyIcons.forEach((icon, index) => {
             icon.addEventListener("click", () => {
                 if (index === 0) {
@@ -817,8 +843,8 @@ function handleInviteFriendsDialog() {
             });
         });
 
-        if(invite.myInviterCode){
-            hadeUIwhenInvitedCodeIsInserted();
+        if (invite.myInviterCode) {
+            hadeUIwhenInvitedCodeIsInserted(myInviterInfo);
         }
 
         btnVerifyInvitationCode.addEventListener("click", () => {
@@ -837,21 +863,6 @@ function handleInviteFriendsDialog() {
         });
 
     });
-}
-
-
-function updateCounter(input, counterId, maxLength) {
-    const counter = document.getElementById(counterId);
-    counter.textContent = `${input.value.length}/${maxLength}`;
-}
-
-
-async function waitForUserInfo() {
-    while (userInfo === null) {
-        await new Promise(resolve => setTimeout(resolve, 1000));
-        userInfo = await userInfo;
-    }
-    return userInfo;
 }
 
 function handleGmailDialog() {
@@ -900,7 +911,6 @@ function handleGmailDialog() {
     });
 }
 
-
 function handleProfileDIalog() {
     waitForUserInfo().then(info => {
         let joinedDateElement = document.getElementById("joinedDate");
@@ -947,7 +957,6 @@ function handleProfileDIalog() {
     });
 
 }
-
 
 function handleSignOutDIalog() {
     waitForUserInfo().then(_ => {

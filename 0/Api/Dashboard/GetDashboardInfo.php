@@ -29,13 +29,22 @@ try {
             $userInfo = getDashboardInfo($conn, $userId);
 
             require_once "LinkAvailabilityChecker.php";
+            require_once "../invitation/handleInvitation.php";
 
             $hasValidLinksPerBatch = hasValidLinksPerBatch($userId);
+
+            $myInviterInfo = [];
+            $isInviterCodeEmptyOrNull = isInviterCodeEmptyOrNull($conn, $userId);
+
+            if (!empty($isInviterCodeEmptyOrNull)) {
+                $myInviterInfo = getMyInviterInfo($conn, getMyInviterUserId($conn, $isInviterCodeEmptyOrNull));
+            }
 
             $output = [
                 'success' => $userInfo['success'],
                 'userInfo' => $userInfo['data'] ?? [],
-                'hasValidLinksPerBatch' => json_decode($hasValidLinksPerBatch) ?? []
+                'hasValidLinksPerBatch' => json_decode(json: $hasValidLinksPerBatch) ?? [],
+                'myInviterInfo' => json_encode($myInviterInfo) ?? []
             ];
         } else {
             $output = [

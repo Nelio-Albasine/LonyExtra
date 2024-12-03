@@ -1,11 +1,7 @@
-# -> colocar para exibir myInviter info assim que o ocidog for atualizado
+# => ELiminar s aquivos de testes
+# => Apontar os enderecos de connection php para o server real.
+# => Apontar as url de redirecionamento para a as url reais
 
-# -> COlocar para o server retornar os dados do MYinviterInfo caso ja tenha sido inserido o codigo.
-
-
-
-
-
-
-# -> Listar top na tela Home
-
+#-> Lanacar no server
+..... testes subsequentes apos essas tarefas estiverem concluidas.
+ssh-keygen -t rsa -b 4096 -C "nelioalbasineofficial@gmail.com"

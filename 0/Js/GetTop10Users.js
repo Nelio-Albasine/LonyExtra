@@ -1,18 +1,26 @@
-document.addEventListener("DOMContentLoaded", () => {
-    loadTop10UserIntoTable();
+document.addEventListener("DOMContentLoaded", async function () {
+    const topUsers = await fetchTop10UsersFromServer();
+    if (topUsers?.success && topUsers.data) {
+        const processedUsers = topUsers.data.map((user, index) => ({
+            name: `${user.userName} ${user.userSurname}`,
+            initials: getInitials(user.userName, user.userSurname),
+            rating: user.userLTStars,
+            rank: `#${index + 1}`,
+        }));
+        loadTop10UserIntoTable(processedUsers);
+    } else {
+        console.error("Erro ao carregar usuários top 10 ou dados inválidos.");
+    }
 });
 
+function getInitials(name, surname) {
+    const nameInitial = name && name.trim() ? name.trim()[0].toUpperCase() : "N";
+    const surnameInitial = surname && surname.trim() ? surname.trim()[0].toUpperCase() : "A";
+    return nameInitial + surnameInitial;
+}
 
-function loadTop10UserIntoTable() {
+function loadTop10UserIntoTable(topUsers) {
     const tbody = document.getElementById("tbody_tp10");
-
-    const topUsers = [
-        { initials: "NA", name: "Natasha Adams", rating: "4.5k", rank: "Top 01" },
-        { initials: "JD", name: "John Doe", rating: "3.8k", rank: "Top 02" },
-        { initials: "AS", name: "Alice Smith", rating: "3.5k", rank: "Top 03" },
-        { initials: "BM", name: "Bruce Miller", rating: "2.9k", rank: "Top 04" },
-        { initials: "KW", name: "Karen White", rating: "2.5k", rank: "Top 05" },
-    ];
 
     const getRandomColor = () => {
         const letters = "0123456789ABCDEF";
@@ -33,7 +41,6 @@ function loadTop10UserIntoTable() {
 
         const profileInitials = document.createElement("div");
         profileInitials.className = "profile_initials";
-
         profileInitials.style.backgroundColor = getRandomColor();
 
         const initialsText = document.createElement("p");
@@ -56,7 +63,7 @@ function loadTop10UserIntoTable() {
 
         const ratingValue = document.createElement("span");
         ratingValue.className = "rating-value";
-        ratingValue.textContent = user.rating;
+        ratingValue.textContent = parseInt(user.rating).toLocaleString("pt-PT");
 
         const ratingIcon = document.createElement("span");
         ratingIcon.className = "rating_icon";
@@ -93,4 +100,25 @@ function loadTop10UserIntoTable() {
 
         tbody.appendChild(row);
     });
+}
+
+async function fetchTop10UsersFromServer() {
+    try {
+        const response = await fetch("http://localhost/LonyExtra/0/api/dashboard/GetTop10Users.php", {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json"
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error(`Erro na requisição: ${response.status}`);
+        }
+
+        const top10Response = await response.json();
+        return top10Response;
+    } catch (error) {
+        console.error("Erro ao buscar os dados do servidor:", error);
+        return null;
+    }
 }

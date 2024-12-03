@@ -40,7 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             if (updateUserStars($conn, $userId)) {
                                 $getMyInviterInfo = getMyInviterInfo($conn, getMyInviterUserId($conn, $inviteCodeInserted));
                                 $outPut["success"] = true;
-                                $outPut["myInviterInfo"] = $getMyInviterInfo;
+                                $outPut["myInviterInfo"] = json_encode($getMyInviterInfo) ?? [];
                                 $outPut["message"] = "Código de convinte inserido com sucesso!";
                             } else {
                                 $outPut["message"] = "Ocorreu um erro ao creditar tuas estrelas!";

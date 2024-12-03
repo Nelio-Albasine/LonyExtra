@@ -1,14 +1,556 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lony Extra</title>
-    <link rel="icon" href="../src/favicon_io/favicon.ico" type="image/x-icon">
+    <title>Lony Extra - Business Landing Page</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="icon" href="./0/src/favicon_io/favicon.ico" type="image/x-icon">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        :root {
+            --primary-color: #4834d4;
+            --secondary-color: #686de0;
+            --text-color: #2d3436;
+            --background-color: #f5f6fa;
+        }
+
+        body {
+            background-color: var(--background-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        ::-webkit-scrollbar {
+            display: none;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 5%;
+            background-color: #ffffff;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo {
+            width: 60px;
+            height: 60px;
+            scale: 1.7;
+            margin-right: 30px;
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        .logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            /* Para manter a proporção da imagem */
+            border-radius: 8px;
+            /* Se quiser manter o efeito arredondado */
+        }
+
+        .company-name {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--text-color);
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-menu a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 500;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-menu a:hover {
+            color: var(--primary-color);
+        }
+
+        .nav-menu a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: var(--primary-color);
+            transition: width 0.3s ease;
+        }
+
+        .nav-menu a:hover::after {
+            width: 100%;
+        }
+
+        .auth-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn {
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            border: none;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .btn-login {
+            background-color: transparent;
+            border: 2px solid var(--primary-color);
+            color: var(--primary-color);
+            font-size: 16px;
+            padding: 12px;
+            border-radius: 25px;
+            width: 200px;
+        }
+
+        .btn-login:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .btn-signup {
+            background-color: var(--primary-color);
+            color: white;
+            font-size: 16px;
+            padding: 12px;
+            border-radius: 25px;
+            width: 200px;
+        }
+
+        .btn-signup:hover {
+            background-color: var(--secondary-color);
+        }
+
+        .hero-section {
+            display: flex;
+            padding: 8rem 5%;
+            align-items: center;
+            gap: 2rem;
+            flex: 1;
+        }
+
+        .hero-content {
+            flex: 1;
+        }
+
+        .hero-title {
+            font-size: 3rem;
+            color: var(--text-color);
+            margin-bottom: 1rem;
+        }
+
+        .hero-description {
+            color: #06130c;
+            margin-bottom: 2rem;
+            line-height: 1.5;
+        }
+
+        .hero-image {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+        }
+
+        .hero-image img {
+            max-width: 80%;
+            height: auto;
+        }
+
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--text-color);
+            cursor: pointer;
+        }
+
+        .mobile-drawer {
+            position: fixed;
+            top: 0;
+            right: -300px;
+            width: 300px;
+            height: 100vh;
+            background-color: white;
+            box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+            transition: right 0.3s ease;
+            z-index: 999;
+            padding: 2rem;
+        }
+
+        .mobile-drawer.active {
+            right: 0;
+        }
+
+        .drawer-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-color);
+        }
+
+        .drawer-content {
+            margin-top: 5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .drawer-nav {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .drawer-nav a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 500;
+            padding: 0.5rem 0;
+            transition: color 0.3s ease;
+        }
+
+        .drawer-nav a:hover {
+            color: var(--primary-color);
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 998;
+        }
+
+        .overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .footer {
+            background-color: rgb(218, 232, 255);
+            padding: 1rem;
+            text-align: center;
+            font-size: 13px;
+            box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        @media (max-width: 768px) {
+
+            .nav-menu,
+            .auth-buttons {
+                display: none;
+            }
+
+            .menu-toggle {
+                display: block;
+            }
+
+            .hero-section {
+                flex-direction: column;
+                text-align: center;
+                padding: 2rem 5%;
+            }
+
+            .hero-title {
+                font-size: 2rem;
+            }
+
+            .mobile-drawer {
+                width: 85%;
+                max-width: 300px;
+            }
+        }
+
+        :root {
+            --primary-color: #4834d4;
+            --secondary-color: #686de0;
+            --text-color: #040d48;
+            --background-color: #f5f9fa;
+            --circle-color-1: #4428cd;
+            --circle-color-2: #ff1e1e;
+            --circle-color-3: #ff0202;
+        }
+
+        body {
+            background-color: var(--background-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Elementos flutuantes no fundo */
+        .floating-elements {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1;
+        }
+
+        .floating-elements div {
+            position: absolute;
+            border-radius: 50%;
+            animation: float 10s infinite ease-in-out;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+
+        .circle1 {
+            width: 150px;
+            height: 150px;
+            background-color: var(--circle-color-1);
+            top: 10%;
+            left: 20%;
+            opacity: 0.4;
+            animation-duration: 8s;
+        }
+
+        .circle2 {
+            width: 100px;
+            height: 100px;
+            background-color: var(--circle-color-2);
+            bottom: 15%;
+            right: 25%;
+            opacity: 0.6;
+            animation-duration: 12s;
+        }
+
+        .circle3 {
+            width: 200px;
+            height: 200px;
+            background-color: var(--circle-color-3);
+            top: 50%;
+            left: 70%;
+            opacity: 0.3;
+            animation-duration: 15s;
+        }
+
+
+        .benefits-section {
+            padding: 3rem 5%;
+            background-color: rgb(237, 239, 240);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .benefits-title {
+            font-size: 2.5rem;
+            color: var(--text-color);
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .benefits-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            justify-content: center;
+        }
+
+        .benefit-item {
+            flex: 1 1 300px;
+            text-align: center;
+            padding: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 25px;
+            background-color: var(--background-color);
+        }
+
+        .benefit-item i {
+            font-size: 2rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .benefit-item h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-color);
+        }
+
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2rem;
+            }
+
+            .benefits-title {
+                font-size: 1.6rem;
+            }
+
+            .benefit-item {
+                font-size: 1rem;
+            }
+        }
+    </style>
 </head>
+
 <body>
+    <div class="floating-elements">
+        <div class="circle1"></div>
+        <div class="circle2"></div>
+        <div class="circle3"></div>
+    </div>
+    <header class="header">
+        <div class="logo-container">
+            <div class="logo">
+                <img src="./0/src/imgs/Lony extra.png" alt="logo">
+
+            </div>
+            <span class="company-name">Lony Extra</span>
+        </div>
+
+
+
+        <div class="auth-buttons">
+            <button class="btn btn-login">Criar conta</button>
+            <button class="btn btn-signup">Iniciar sessão</button>
+        </div>
+
+        <button class="menu-toggle">
+            <i class="fas fa-bars"></i>
+        </button>
+    </header>
+
+    <div class="mobile-drawer">
+        <button class="drawer-close">
+            <i class="fas fa-times"></i>
+        </button>
+        <div class="drawer-content">
+            <button class="btn btn-login">Criar conta</button>
+            <button class="btn btn-signup">Iniciar sessão</button>
+        </div>
+    </div>
+
+    <div class="overlay"></div>
+
+    <main class="hero-section">
+        <div class="hero-content">
+            <h1 class="hero-title">Aproveite seu tempo de lazer de forma inteligente!</h1>
+            <p class="hero-description">
+                Complete tarefas ou responda pesquisas e transforme seu tempo em recompensas reais de forma fácil,
+                confiável e
+                gratuita.
+            </p>
+            <button class="btn btn-signup">começar</button>
+        </div>
+        <div class="hero-image">
+            <img src="./0/src/imgs/hero.png" alt="Business illustration">
+        </div>
+
+    </main>
+    <section class="benefits-section">
+        <h2 class="benefits-title">Por que escolher Lony Extra?</h2>
+        <div class="benefits-list">
+            <div class="benefit-item">
+                <i class="fas fa-gift"></i>
+                <h3>Recompensas Reais</h3>
+                <p>Ganhe prêmios por cada tarefa completada.</p>
+            </div>
+            <div class="benefit-item">
+                <i class="fas fa-shield-alt"></i>
+                <h3>Seguro e Confiável</h3>
+                <p>Plataforma 100% segura para usuários.</p>
+            </div>
+            <div class="benefit-item">
+                <i class="fas fa-clock"></i>
+                <h3>Flexível</h3>
+                <p>Gerencie seu tempo e tarefas livremente.</p>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <p>Copyright © 2024 Lony Extra, All rights reserved.</p>
+    </footer>
+
     <script>
-      //  window.location.href = "0/access/login.html"
+        const menuToggle = document.querySelector('.menu-toggle');
+        const mobileDrawer = document.querySelector('.mobile-drawer');
+        const drawerClose = document.querySelector('.drawer-close');
+        const overlay = document.querySelector('.overlay');
+
+        menuToggle.addEventListener('click', () => {
+            if (mobileDrawer.classList.contains("active")) {
+                mobileDrawer.classList.remove("active");
+                overlay.classList.remove("active");
+                document.body.style.overflow = "";
+            } else {
+                mobileDrawer.classList.add("active");
+                overlay.classList.add("active");
+                document.body.style.overflow = "hidden";
+            }
+
+        });
+
+        function closeDrawer() {
+            mobileDrawer.classList.remove('active');
+            overlay.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        drawerClose.addEventListener('click', closeDrawer);
+        overlay.addEventListener('click', closeDrawer);
     </script>
 </body>
+
 </html>

@@ -1,5 +1,6 @@
 <?php
-function getMyInviterUserId($conn, $myInviterReferralCode) {
+function getMyInviterUserId($conn, $myInviterReferralCode)
+{
     $query = "SELECT userId FROM Usuarios WHERE myReferralCode = ?";
     $stmt = $conn->prepare($query);
     $stmt->bind_param("s", $myInviterReferralCode);
@@ -16,7 +17,8 @@ function getMyInviterUserId($conn, $myInviterReferralCode) {
     return $userId;
 }
 
-function increaseMyInviterTotalInvited($conn, $myInviterUserId) {
+function increaseMyInviterTotalInvited($conn, $myInviterUserId)
+{
     $query = "
         UPDATE Usuarios
         SET userInvitationJSON = JSON_SET(
@@ -30,14 +32,15 @@ function increaseMyInviterTotalInvited($conn, $myInviterUserId) {
     $stmt = $conn->prepare($query);
     $stmt->bind_param("s", $myInviterUserId);
     $stmt->execute();
-    
+
     $rowsUpdated = $stmt->affected_rows;
     $stmt->close();
-    
+
     return $rowsUpdated > 0;
 }
 
-function isInviterCodeEmptyOrNull($conn, $userId) {
+function isInviterCodeEmptyOrNull($conn, $userId)
+{
     $query = "
         SELECT JSON_UNQUOTE(JSON_EXTRACT(userInvitationJSON, '$.myInviterCode')) AS inviterCode
         FROM Usuarios
@@ -61,7 +64,8 @@ function isInviterCodeEmptyOrNull($conn, $userId) {
     return $myInviterCode;
 }
 
-function updateFieldWhoInvitedMe($conn, $myUserId, $myInviterReferralCode) {
+function updateFieldWhoInvitedMe($conn, $myUserId, $myInviterReferralCode)
+{
     $query = "
         UPDATE Usuarios
         SET userInvitationJSON = JSON_SET(userInvitationJSON, '$.myInviterCode', ?)
@@ -76,7 +80,8 @@ function updateFieldWhoInvitedMe($conn, $myUserId, $myInviterReferralCode) {
     return $rowsUpdated > 0;
 }
 
-function getMyInviterInfo($conn, $myInviterUserId) {
+function getMyInviterInfo($conn, $myInviterUserId)
+{
     $query = "
         SELECT userName, userSurname, JSON_UNQUOTE(JSON_EXTRACT(userPointsJSON, '$.userLTStars')) AS userLTStars
         FROM Usuarios
@@ -91,18 +96,21 @@ function getMyInviterInfo($conn, $myInviterUserId) {
     $result = $stmt->get_result();
 
     if ($row = $result->fetch_assoc()) {
-        $userName = $row['userName'] ?? "N/A";
-        $userSurname = $row['userSurname'] ?? "N/A";
-        $userLTStars = $row['userLTStars'] ?? "0";
-
-        $inviterInfo = "Name: $userName $userSurname, LT Stars: $userLTStars";
-    } 
+        $inviterInfo = [
+            "userName" => $row['userName'] ?? "N/A" ,
+            "userSurname" => $row['userSurname'] ?? "N/A" ,
+            "LTStars" => $row['userLTStars'] ?? "0"
+        ];
+    } else {
+        $inviterInfo = [];
+    }
 
     $stmt->close();
     return $inviterInfo;
 }
 
-function getMyOwnInviteCode($conn, $userId) {
+function getMyOwnInviteCode($conn, $userId)
+{
     $query = "SELECT myReferralCode FROM Usuarios WHERE userId = ?";
     $myReferralCode = null;
 
@@ -119,7 +127,8 @@ function getMyOwnInviteCode($conn, $userId) {
     return $myReferralCode;
 }
 
-function thisInviteCodeReallyExists($conn, $codeToCheckExistence) {
+function thisInviteCodeReallyExists($conn, $codeToCheckExistence)
+{
     $query = "SELECT myReferralCode FROM Usuarios WHERE myReferralCode = ?";
     $stmt = $conn->prepare($query);
     $stmt->bind_param("s", $codeToCheckExistence);
@@ -162,5 +171,3 @@ function updateUserStars($conn, $userId)
         return false;
     }
 }
-
-

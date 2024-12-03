@@ -1,10 +1,6 @@
-async function GetDashboardInfo(userId, batch = null) {
-    let responseMessage = "Ocorreu um erro ao autenticar!";
-
+async function GetDashboardInfo() {
     try {
-        // Adiciona o parâmetro `batch` se ele for fornecido
-        const batchParam = batch ? `&batch=${batch}` : '';
-        const response = await fetch(`http://localhost/LonyExtra/0/api/dashboard/GetAllLinks.php?userId=${userId}${batchParam}`, {
+        const response = await fetch(`http://localhost/LonyExtra/0/api/dashboard/GetTop10Users.php?`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
@@ -25,19 +21,9 @@ async function GetDashboardInfo(userId, batch = null) {
 
 // Exemplo de uso
 (async () => {
-    const userId = "391f58325968d93b6778b9722f953bb063b44254d8e04109955c52b928ac9782";
-
     try {
-        // Busca todos os lotes
-        const allLinks = await GetDashboardInfo(userId);
-        console.log("Todos os lotes:", allLinks);
-
-        console.log("\n====================\n");
-        console.log("\n====================");
-        console.log("\n====================");
-
-        //const bronzeLinks = await GetDashboardInfo(userId, "bronzeAvailability");
-        // console.log("Lote bronze:", bronzeLinks);
+        const top10 = await GetDashboardInfo();
+        console.log("Todos os top 10:", top10);
     } catch (error) {
         console.error("Erro ao obter informações do dashboard:", error);
     }
