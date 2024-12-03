@@ -15,22 +15,11 @@ jobs:
 
       - name: 🔄 Update file paths and URLs
         run: |
-          # Alterar todas as referências para Wamp64Connection.php por DBConnection.php
+          # Atualizar caminhos de arquivos e URLs
           find . -type f -name "*.php" -exec sed -i 's|"Wamp64Connection.php"|"DBConnection.php"|g' {} +
-
-          # Alterar URLs localhost para URLs de produção
           find . \( -name "*.php" -o -name "*.js" -o -name "*.html" \) -exec sed -i 's|http://localhost/LonyExtra/|https://lonyextra.com/|g' {} +
-
-          # Alterar localhost IP direto para URL de produção
           find . \( -name "*.php" -o -name "*.js" -o -name "*.html" \) -exec sed -i 's|http://127.0.0.1:5500/|https://lonyextra.com/|g' {} +
-
-          # Alterar a URL da API de http para https
           find . \( -name "*.php" -o -name "*.js" -o -name "*.html" \) -exec sed -i 's|http://worldtimeapi.org/api/ip|https://worldtimeapi.org/api/ip|g' {} +
-
-          # Comentar cabeçalhos CORS em arquivos PHP
-          find . -type f -name "*.php" -exec sed -i "s|header('Access-Control-Allow-Origin: \\*');|// header('Access-Control-Allow-Origin: *');|g" {} +
-          find . -type f -name "*.php" -exec sed -i "s|header('Access-Control-Allow-Methods: POST, OPTIONS');|// header('Access-Control-Allow-Methods: POST, OPTIONS');|g" {} +
-          find . -type f -name "*.php" -exec sed -i "s|header('Access-Control-Allow-Headers: Content-Type');|// header('Access-Control-Allow-Headers: Content-Type');|g" {} +
 
       - name: 📂 Sync files
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
@@ -38,11 +27,13 @@ jobs:
           server: ${{ secrets.FTP_SERVER_LONY_EXTRA }}
           username: ${{ secrets.FTP_USERNAME_LONY_EXTRA }}
           password: ${{ secrets.FTP_PASSWORD_LONY_EXTRA }}
-          server-dir: /  
+          server-dir: /
           exclude: |
-            testscripts/*  # Exclui a pasta de testes e seu conteúdo
-            node_modules/*  # Exclui a pasta node_modules (caso tenha no repositório)
-            .git/**  # Exclui o repositório git
-            ..github/**  # Exclui a pasta de workflows e configurações do GitHub
-            .gitignore  # Exclui o arquivo .gitignore
-          dangerous-clean-slate: false  # Impede que arquivos no servidor que não estão no repositório sejam deletados
+            /testscripts/**       # Exclui a pasta testscripts
+            /node_modules/**      # Exclui a pasta node_modules
+            /.git/**              # Exclui a pasta .git
+            /.github/**           # Exclui a pasta .github
+            .gitignore            # Exclui o arquivo .gitignore
+            composer.*            # Exclui arquivos composer.json e composer.lock
+            !.htaccess            # Mantém o .htaccess no servidor
+          dangerous-clean-slate: false  # Não apaga arquivos no servidor que não estão no repositório (essa regra torna a de !.htacess rdundante/desnecessarias, mas vamos deixar)
