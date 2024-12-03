@@ -262,7 +262,7 @@ async function loadLinksIntoTable(levelIndex) {
             tr.appendChild(tdNome);
 
             const tdPontos = document.createElement("td");
-            tdPontos.innerHTML = `+${tarefa.pontos} <img src="../src/IMGs/star.png" alt="Estrela" class="task_star">`;
+            tdPontos.innerHTML = `+${tarefa.pontos} <img src="../src/imgs/star.png" alt="Estrela" class="task_star">`;
             tr.appendChild(tdPontos);
 
             const tdStatus = document.createElement("td");

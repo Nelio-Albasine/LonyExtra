@@ -24,6 +24,9 @@ jobs:
           # Alterar localhost IP direto para URL de produção
           find . \( -name "*.php" -o -name "*.js" -o -name "*.html" \) -exec sed -i 's|http://127.0.0.1:5500/|https://lonyextra.com/|g' {} +
 
+          # Alterar a URL da API de http para https
+          find . \( -name "*.php" -o -name "*.js" -o -name "*.html" \) -exec sed -i 's|http://worldtimeapi.org/api/ip|https://worldtimeapi.org/api/ip|g' {} +
+
       - name: 📂 Sync files
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
