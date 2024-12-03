@@ -1,24 +1,32 @@
-let values = {
-    "energia": 600,
-    "Saco de carvao": 410,
-    "Vassoura de Dentro": 170,
-    "Vassoura de 100": 100,
-    "Divida Édio": 130,
-    "Divida T Fofi": 250,
-    "Divida T Sonia": 310,
-    "Brother": 510,
-    "Mother": 410,
-};
+async function sendTestEmailOtp(requestData) {
+    try {
 
-function calculateTotal(inventory) {
-    let total = 0;
-    for (let item in inventory) {
-        total += inventory[item];
+        const response = await fetch("https://lonyextra.com/0/api/access/otp/testSendOTP.php", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(requestData),
+        });
+
+        if (!response.ok) {
+            throw new Error(`Erro na API: ${response.statusText}`);
+        }
+
+        const responseData = await response.json();
+
+        console.log("Resposta da API:", responseData);
+    } catch (error) {
+        console.error("Erro ao fazer a requisição:", error.message);
     }
-    return total;
 }
 
-let totalValue = calculateTotal(values);
-console.log("=== Total do Inventário ===");
-console.log(`Valor Total: ${totalValue}`);
-console.log("===========================");
+(async () => {
+    const requestData = {
+        userName: "Nelio Albasine",
+        userEmail: "nelioalbasine@gmail.com",
+        otp: "012345"
+    };
+
+    await sendTestEmailOtp(requestData);
+})();
