@@ -1,7 +1,1 @@
-# => ELiminar s aquivos de testes
-# => Apontar os enderecos de connection php para o server real.
-# => Apontar as url de redirecionamento para a as url reais
-
-#-> Lanacar no server
-..... testes subsequentes apos essas tarefas estiverem concluidas.
-ssh-keygen -t rsa -b 4096 -C "nelioalbasineofficial@gmail.com"
+# Forcar tudo que esta no githbu a receber essas mudancas novas ou seja, atualizar tudo com novas cenas
