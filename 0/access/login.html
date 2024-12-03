@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iniciar Sessão</title>
+    <link rel="stylesheet" href="../css/access/access_mobile.css">
+    <link rel="stylesheet" href="../css/access/access_pc.css">
+    <link rel="stylesheet" href="../css/access/general_styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+   <link rel="icon" href="../src/favicon_io/favicon.ico" type="image/x-icon">
+</head>
+
+<body>
+
+    <div class="alert_as_error" id="div_alert_message">
+        <p id="textAlert">alert message</p>
+    </div>
+
+    <main>
+    
+        <header>
+            <img src="../src/IMGs/mobile_login_panel.png" alt="From complete image">
+            <h1>Faça login para continuar</h1>
+            <p>acesse seu portal, e comece a aprender <br> as
+                melhores maneiras de fazer uma renda extra!</p>
+        </header>
+
+        <ul class="ul_inputs">
+            <li class="li_inputs" id="li_email">
+                <p>Insira seu Email</p>
+
+                <div class="div_container_input">
+                    <img src="../src/IMGs/icon_profile_info.svg" alt="info_icon">
+                    <input type="email" name="email" placeholder="usuario@gmail.com" id="inputEmail">
+                </div>
+            </li>
+
+            <li class="li_inputs" id="li_password">
+                <p>Insira sua Senha</p>
+
+                <div class="div_container_input">
+                    <img src="../src/IMGs/icon_profile_info.svg" alt="info_icon">
+                    <input type="password" name="email" placeholder="********" id="inputPassword">
+                </div>
+            </li>
+
+            <div class="div_container_forget_password">
+                <p>Esqueceu a senha? <span id="recoverPassword">Recuperar senha!</span></p>
+            </div>
+
+            <button class="btnStartSession" id="btnStartSession">Iniciar Sessão</button>
+        
+            <div class="div_not_registered_yet">
+                <p>Ainda nao tem uma conta? <span id="CreateAccount">Criar conta...</span></p>
+            </div>
+        </ul>
+    </main>
+    
+    <footer>
+        <p>&copy; 2024 Lony Extra. Todos os direitos reservados.</p>
+    </footer>
+
+    <script src="../js/login.js"></script>
+</body>
+
+</html>

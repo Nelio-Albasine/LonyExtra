@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recuperar Senha</title>
+    <link rel="stylesheet" href="../css/access/general_styles.css">
+
+    <style>
+        /* Reset básico */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        /* Estilização geral */
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #eeeeee;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 400px;
+            padding: 2em;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15);
+            text-align: center;
+        }
+
+        .container h2 {
+            color: #333;
+            font-size: 1.8em;
+            margin-bottom: 1em;
+        }
+
+        .container p {
+            color: #555;
+            font-size: 0.9em;
+            margin-bottom: 2em;
+            line-height: 1.6em;
+        }
+
+        .container input[type="email"] {
+            width: 100%;
+            padding: 0.8em;
+            margin: 0.5em 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1em;
+        }
+
+        .container button {
+            width: 100%;
+            padding: 0.8em;
+            background-color: #1f3596;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 1em;
+            cursor: pointer;
+        }
+
+        .container button:hover {
+            background-color: #5a67d8;
+        }
+
+        .container .footer {
+            margin-top: 1.5em;
+            font-size: 0.9em;
+            color: #888;
+        }
+
+        .container .footer a {
+            color: #667eea;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .container .footer a:hover {
+            color: #5a67d8;
+        }
+
+        #emailToResetPassword{
+            color: green;
+        }
+    </style>
+   <link rel="icon" href="../src/favicon_io/favicon.ico" type="image/x-icon">
+</head>
+
+<body>
+    <div class="alert_as_error" id="div_alert_message">
+        <p id="textAlert">alert message</p>
+    </div>
+
+
+    <div class="container">
+        <h2>Recuperar Senha</h2>
+        <p id="p_description">Insira seu endereço de e-mail e enviaremos um link para redefinir sua senha.</p>
+        <input id="email" type="email" name="email" placeholder="Seu e-mail" required>
+        <button id="btnRequestReset">Obter código de verificação</button>
+
+        <div class="footer">
+            <p><a href="../access/login.html">Voltar ao login</a></p>
+        </div>
+    </div>
+
+    <script src="../js/verifyEmailToResetPassword.js"></script>
+
+</body>
+
+</html>

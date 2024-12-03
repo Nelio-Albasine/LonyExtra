@@ -1,0 +1,1045 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LONY EXTRA</title>
+    <link rel="stylesheet" href="../css/home/styles.css">
+    <link rel="stylesheet" href="../css/home/header.css">
+    <link rel="stylesheet" href="../css/home/ui_settings.css">
+    <link rel="stylesheet" href="../css/home/pc.css">
+    <link rel="stylesheet" href="../css/home/dialog_choose_tasks.css">
+    <link rel="stylesheet" href="../css/home/ganhos_turbo_boxes.css">
+    <link rel="stylesheet" href="../css/home/generic.css">
+    <link rel="stylesheet" href="../css/home/drawer_v2.css">
+    <link rel="stylesheet" href="../css/home/base_dialogs.css">
+    <link rel="stylesheet" href="../css/home/popups_and_ui_feedbacks.css">
+    <link rel="stylesheet" href="../css/home/dialog_success_cashout.css">
+    <link rel="stylesheet" href="../css/home/mobile.css">
+    <link rel="stylesheet" href="../css/home/invitation.css">
+    <link rel="stylesheet" href="../css/home/cashout.css">
+    <link rel="stylesheet" href="../css/home/cashout_history.css">
+    <link rel="stylesheet" href="../css/home/notifications.css">
+    <link rel="stylesheet" href="../css/home/social_network.css">
+    <link rel="stylesheet" href="../css/home/gmail_support.css">
+    <link rel="stylesheet" href="../css/home/profile.css">
+    <link rel="stylesheet" href="../css/home/signout.css">
+    <link rel="stylesheet" href="../css/home/top10.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+
+
+    <link rel="icon" href="../src/favicon_io/favicon.ico" type="image/x-icon">
+</head>
+
+<body>
+    <div id="alert" class="alert hidden">
+        <span class="icon"></span>
+        <span class="message"></span>
+    </div>
+
+    <div id="confirmation-box_overlay">
+        <div class="confirmation-box success">
+            <div class="icon-box">✔</div>
+            <h1>Success!</h1>
+            <p>Your booking has been confirmed. Check your email for details, including your reservation number.</p>
+            <button>Got it</button>
+        </div>
+    </div>
+
+    <div id="success_cashout_overlay">
+        <div class="withdrawal-dialog">
+            <div class="dialog-header">
+                <h2>Detalhes do Saque:</h2>
+                <button id="closeSuccessCashoutDialog" class="close-btn">✖</button>
+            </div>
+            <div class="dialog-content">
+                <img src="../src/IMGs/success_icon.png" alt="Delivery Sucesso" class="status-image">
+                <div class="details">
+                    <div class="detail-row">
+                        <p>Método de Retirada</p>
+                        <div class="detail-value">
+                            <img id="img_metod_in_dialog_success_withdraw" src="../src/IMGs/icon_paypal_256x256.png"
+                                alt="Ícone Método" class="icon">
+                            <p class="span_mutable_texts">PayPal</p>
+                        </div>
+                    </div>
+                    <div class="detail-row">
+                        <p>Quantia</p>
+                        <p class="span_mutable_texts">R$ 100,00</p>
+                    </div>
+                    <div class="detail-row">
+                        <p>Data</p>
+                        <p class="span_mutable_texts">Loading...</p>
+                    </div>
+                    <div class="detail-row">
+                        <p>Nome</p>
+                        <p class="span_mutable_texts">João Silva</p>
+                    </div>
+                    <div class="detail-row">
+                        <p>Endereço de Pagamento</p>
+                        <p class="span_mutable_texts">joao.silva@email.com</p>
+                    </div>
+                    <div class="detail-row">
+                        <p>ID da Transação</p>
+                        <p class="span_mutable_texts">123456</p>
+                    </div>
+                    <div class="detail-row">
+                        <p>Status</p>
+                        <p id="status_from_dialog" class="status paid status_from_dialog">Pendente</p>
+                    </div>
+                </div>
+            </div>
+            <div class="dialog-footer">
+                <button id="btn_see_cashou_status" class="status-btn">Acompanhar Status</button>
+                <p>© LonyExtra All Rights Reserved.</p>
+            </div>
+        </div>
+    </div>
+
+    <header class="header">
+        <!-- Conteúdo do cabeçalho -->
+        <ul class="header_ul">
+            <li>
+                <img class="drawer_icon" id="drawer_icon" src="../src/IMGs/menu.png" alt="drawer icon">
+            </li>
+
+            <li>
+                <div class="container_stars">
+                    <img src="../src/IMGs/star.png" alt="star">
+                    <p class="userStars" id="userStars">0</p>
+                </div>
+
+                <p class="userRevenue" id="userRevenue">R$ 0.00 </p>
+            </li>
+
+            <li>
+                <img id="notification_icon" src="../src/IMGs/bell.png" alt="star">
+            </li>
+
+            <li>
+                <div id="container_name_and_email">
+                    <p class="userName">Nome do Usuário</p>
+                    <p class="userEmail">emaildousuario@gmail.com</p>
+                </div>
+                <img id="profile_icon" src="../src/IMGs/profile.png" alt="">
+            </li>
+        </ul>
+    </header>
+
+    <div class="drawer">
+        <div class="drawer-header">
+            <h2>Menu</h2>
+        </div>
+
+        <ul class="drawer-menu">
+            <li class="has-submenu">
+                <a href="#dashboard" onclick="toggleSubmenu(event)">
+                    📊 Dashboard
+                    <span class="arrow">▼</span>
+                </a>
+                <ul class="submenu">
+                    <li onclick="openEspecificDialog('#Home')"><a>🏠 Home</a></li>
+                    <li onclick="openEspecificDialog('#ConverterEstrelas')"><a href="#ConverterEstrelas">⭐ Converter
+                            Estrelas</a></li>
+                </ul>
+            </li>
+            <li class="has-submenu">
+                <a href="#convites" onclick="toggleSubmenu(event)">
+                    🤝 Convites
+                    <span class="arrow">▼</span>
+                </a>
+                <ul class="submenu">
+                    <li onclick="openEspecificDialog('#ConvidarAmigos')"><a href="#ConvidarAmigos">👥 Convidar
+                            Amigos</a></li>
+                </ul>
+            </li>
+            <li class="has-submenu">
+                <a href="#saques" onclick="toggleSubmenu(event)">
+                    💰 Saques
+                    <span class="arrow">▼</span>
+                </a>
+                <ul class="submenu">
+                    <li onclick="openEspecificDialog('#Sacar')"><a href="#Sacar">💵 Sacar</a></li>
+                    <li onclick="openEspecificDialog('#HistoricoSaques')"><a href="#HistoricoSaques">🔍
+                            Histórico de Saques</a></li>
+                </ul>
+            </li>
+            <li class="has-submenu">
+                <a href="#notificacoes" onclick="toggleSubmenu(event)">
+                    🔔 Notificações
+                    <span class="arrow">▼</span>
+                </a>
+                <ul class="submenu">
+                    <li onclick="openEspecificDialog('#MinhasNotificacoes')"><a href="#MinhasNotificacoes">🛎️
+                            Minhas Notificações</a></li>
+                </ul>
+            </li>
+            <li class="has-submenu">
+                <a href="#redes-sociais" onclick="toggleSubmenu(event)">
+                    🌐 Redes Sociais
+                    <span class="arrow">▼</span>
+                </a>
+                <ul class="submenu">
+                    <li onclick="openEspecificDialog('#Instagram')"><a href="#Instagram">📸 Instagram</a></li>
+                    <li onclick="openEspecificDialog('#Telegram')"><a href="#Telegram">💬 Telegram</a></li>
+                    <a href="https://www.youtube.com" target="_blank">🎥 YouTube</a>
+                </ul>
+            </li>
+            <li class="has-submenu">
+                <a href="#suporte" onclick="toggleSubmenu(event)">
+                    📞 Suporte
+                    <span class="arrow">▼</span>
+                </a>
+                <ul class="submenu">
+                    <li onclick="openEspecificDialog('#Gmail')"><a href="#Gmail">📧 Gmail</a></li>
+                </ul>
+            </li>
+            <li class="has-submenu">
+                <a href="#configuracoes" onclick="toggleSubmenu(event)">
+                    ⚙️ Configurações
+                    <span class="arrow">▼</span>
+                </a>
+                <ul class="submenu">
+                    <li onclick="openEspecificDialog('#Perfil')"><a href="#Perfil">👤 Perfil</a></li>
+                    <li onclick="openEspecificDialog('#Logout')"><a href="#Logout">🚪 Logout</a></li>
+                </ul>
+            </li>
+        </ul>
+
+    </div>
+
+    <main class="main-content">
+        <!-- Conteúdo principal -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <p class="stat-label">Estrelas já acumuladas</p>
+                <div class="stat-value"> <strong id="userLTStars">0</strong></div>
+            </div>
+            <div class="stat-card">
+                <p class="stat-label">Total já acumulado</p>
+                <div class="stat-value"><strong class="userLTRevenue" id="userLTRevenue">R$ 0.00</strong></div>
+            </div>
+            <div class="stat-card">
+                <p class="stat-label p_label_invitation">Amigos Convidados</p>
+                <div id="div_container_ttl_invite" class="div_container_invtation">
+                    <div class="container_stars container_stars_from_invite">
+                        <img style="transform: rotate(0deg);" src="../src/IMGs/friends.png" alt="friends">
+                        <p><strong class="textTotalInvitedFriends">0</strong></p>
+                    </div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <p class="stat-label p_label_invitation">Estrelas dos Convintes</p>
+                <div class="stat-value div_container_invtation">
+                    <div class="container_stars container_stars_from_invite">
+                        <img src="../src/IMGs/star.png" alt="star">
+                        <p><strong class="textTotalStarsEarnedByReferrals">0</strong></p>
+                    </div>
+                    <img class="seeInvitattionDetails" onclick="openEspecificDialog('#ConvidarAmigos')"
+                        src="../src/IMGs/dropdown_icon.png" alt="dropdown_icon">
+                </div>
+            </div>
+        </div>
+
+        <h2 class="h2_outras_formas_de_ganhos textTitleTop10">Top 10 Usuários</h2>
+
+        <div class="top10_container scroll-container">
+            <table class="top10_table">
+                <tbody id="tbody_tp10">
+                    <!--
+                      <div class="card_layout">
+                        <div class="profile_initials"><p>NA</p></div>
+    
+                        <div class="user_info">
+                            <div class="base_name_and_rating">
+                                <p class="user_top10_name">Nome do usuário aqui</p>
+                                <div class="rating">
+                                    <span class="rating-value">4.5k</span>
+                                    <span class="rating_icon">⭐</span>
+                                </div>
+                            </div>
+    
+                            <div class="social_info">
+                                <span class="trophy_icon">🏆</span>
+                                <span class="top_ranking">Top 01</span>
+                            </div>
+                        </div>
+                    </div>
+                    -->
+                </tbody>
+            </table>
+        </div>
+
+        <div class="other_earning_ways">
+            <h2 class="h2_outras_formas_de_ganhos">Ganhos Turbo</h2>
+
+            <ul class="other_earning_ways_ul">
+
+                <li class="li_as_banner_turbo_earnings">
+                    <div class="img_wrapper">
+                        <img class="img_como_fundo" src="../src/IMGs/banner_duelo.webp" alt="banner duelo">
+                        <div id="base_duelo" class="div_como_overlay_para_o_fundo ">
+                            <img class="img_turbo_card_icon" id="sword_icon" src="../src/IMGs/swords.png"
+                                alt="Sword icon">
+                            <button class="card_option_name">Duelar →</button>
+                            <p class="p_know_more">❓</p>
+                        </div>
+                    </div>
+
+                </li>
+
+                <li class="li_as_banner_turbo_earnings">
+                    <div class="img_wrapper">
+                        <img class="img_como_fundo" src="../src/IMGs/banner_bank.webp" alt="banner bank">
+                        <div id="base_duelo" class="div_como_overlay_para_o_fundo ">
+                            <img class="img_turbo_card_icon" id="pig_icon" src="../src/IMGs/bank_pig.png"
+                                alt="Sword icon">
+                            <button class="card_option_name">poupar →</button>
+                            <p class="p_know_more">❓</p>
+                        </div>
+                    </div>
+                </li>
+
+                <li class="li_as_banner_turbo_earnings">
+                    <div class="img_wrapper">
+                        <img class="img_como_fundo" src="../src/IMGs/banner_turbo.webp" alt="banner turbo">
+                        <div class="div_como_overlay_para_o_fundo">
+                            <div class="div_container_coming_soon">
+                                <p>Brevemente...</p>
+                            </div>
+                            <img src="../src/IMGs/cadeado_white.png" alt="Lock white" class="cadeado_icon">
+                            <button class="card_option_name unavailable">Turbinar</button>
+                            <p class="p_know_more unavailable">❓</p>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+
+        </div>
+
+        <div>
+            <h2 class="h2_outras_formas_de_ganhos">Pesquisas diárias</h2>
+            <div class="level-list">
+                <!--Nivel Bronze-->
+                <div class="level-card">
+                    <div class="level-badge">
+                        <p class="p_option_leven_name">Nivel Bronze</p>
+                        <div class="level-desc">15 segundos de leitura a cada etapa e devera passar 1 etapa.</div>
+                    </div>
+                    <div class="points">
+                        <img src="../src/IMGs/star.png">10 <span class="span_stars">Stars</span>
+                    </div>
+                    <div class="info"><img src="../src/IMGs/info.png"></div>
+
+                    <div id="containerBronzeChecker" class="timer">
+                        <img src="../src/IMGs/task.png">
+                        <p id="tasksBronzeRemaining" class="timeOrtaskRemaining">Realizar tarefa (2/10) </p>
+                    </div>
+
+                </div>
+
+                <!--Nivel Prata-->
+                <div class="level-card">
+                    <div class="level-badge">
+                        <p class="p_option_leven_name">Nivel Prata</p>
+                        <div class="level-desc">15 segundos de leitura a cada etapa e devera passar 2 etapa.</div>
+                    </div>
+                    <div class="points">
+                        <img src="../src/IMGs/star.png">20 <span class="span_stars">Stars</span>
+                    </div>
+                    <div class="info"><img src="../src/IMGs/info.png"></div>
+                    <div id="containerPrataChecker" class="timer">
+                        <img src="../src/IMGs/task.png">
+                        <p id="tasksPrataRemaining" class="timeOrtaskRemaining">Disponível em <strong>00:00</strong></p>
+                    </div>
+                </div>
+
+                <!--Nivel Ouro-->
+                <div class="level-card">
+                    <div class="level-badge">
+                        <p class="p_option_leven_name">Nivel Ouro</p>
+                        <div class="level-desc">15 segundos de leitura a cada etapa e devera passar 3 etapa.</div>
+                    </div>
+                    <div class="points"><img src="../src/IMGs/star.png">30 <span class="span_stars">Stars</span></div>
+                    <div class="info"><img src="../src/IMGs/info.png"></div>
+                    <div id="containerOuroChecker" class="timer">
+                        <img src="../src/IMGs/task.png">
+                        <p id="tasksOuroRemaining" class="timeOrtaskRemaining">Disponível em <strong>00:00</strong></p>
+                    </div>
+
+                </div>
+
+                <!--Nivel Diamante-->
+                <div class="level-card">
+                    <div class="level-badge">
+                        <p class="p_option_leven_name"> Nivel <span class="span_diamante">Diamante</span></p>
+                        <div class="level-desc">15 segundos de leitura a cada etapa e devera passar 4 etapa.</div>
+                    </div>
+                    <div class="points">
+                        <img src="../src/IMGs/star.png">50 <span class="span_stars">Stars</span>
+                    </div>
+                    <div class="info"><img src="../src/IMGs/info.png"></div>
+                    <div id="containerDiamanteChecker" class="timer">
+                        <img src="../src/IMGs/task.png">
+                        <p id="tasksDiamanteRemaining" class="timeOrtaskRemaining">Disponível em <strong>00:00</strong>
+                        </p>
+                    </div>
+                </div>
+
+                <!--Nivel Diamante PLUS-->
+                <div class="level-card">
+                    <div class="level-badge level-badge-platina">
+                        <p class="p_option_leven_name"> Nivel <span class="span_diamante_platina">Platina</span></p>
+                        <div class="level-desc">15 segundos de leitura a cada etapa e devera passar 4 etapa.</div>
+                    </div>
+                    <div class="points points_platina">
+                        <img src="../src/IMGs/star.png">80 <span class="span_stars">Stars</span>
+                    </div>
+                    <div class="info"><img src="../src/IMGs/info.png"></div>
+                    <div id="containerPlatinaChecker" class="timer">
+                        <img src="../src/IMGs/task.png">
+                        <p id="tasksPlatinaRemaining" class="timeOrtaskRemaining">Disponível em <strong>00:00</strong>
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+
+    <div id="fab_invite_friends" onclick="openEspecificDialog('#ConvidarAmigos')">
+        <img src="../src/IMGs/invitation_card.png" />
+    </div>
+
+
+    <div id="overlay">
+        <div id="base_dialog">
+            <div class="dialog_title">
+                <p id="dialog_title">Titulo do diálogo</p>
+                <p class="userRevenue p_dialog_available_revenue" id="userRevenue">R$ 0.00 </p>
+                <img id="img_close_dialog" src="../src/IMGs/close.png" alt="close dialog">
+            </div>
+
+            <!--Container all Dialogs_UI-->
+            <div class="main_container_all_dialogs">
+
+                <!--Dialog all links-->
+                <div class="the_dialog_container" id="dialog_all_links">
+                    <p id="p_link_descri">Você tem <strong id="dialog_title_tasks_remaining">x</strong> pesquisas no
+                        nível
+                        <strong id="dialog_title_level_name">y</strong> para realizar por
+                        dia. Após a conclusão
+                        de cada opção, <strong>ela levará 24 horas para reiniciar</strong> (contando a partir do momento
+                        em que
+                        você concluiu a
+                        respectiva tarefa).
+                    </p>
+
+                    <div class="container_the_links_table">
+                        <table id="table_links">
+                            <thead id="thead_links">
+                                <tr>
+                                    <th>Tarefa</th>
+                                    <th>Pontuação</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+
+                            <tbody id="tbody_links">
+                                <!--
+                                  <tr class="tbody_tr_links">
+                                    <td>Tarefa <strong>1</strong></td>
+                                    <td>+10 <img src="../src/IMGs/star.png" class="task_star" alt="Estrela"></td>
+                                    <td class="task_td">
+                                        <div class="status disponivel">
+                                            <span>Disponível</span>
+                                            <span class="arrow">➔</span>
+                                        </div>
+                                    </td>
+                                </tr> 
+                                <tr class="tbody_tr_links">
+                                    <td><div class="div_task_name_shimmer"></div></td>
+                                    <td><div class="div_pontuation_shimmer"></div></td>
+                                    <td class="task_td">
+                                        <div class="div_status_shimmer">
+                                        </div>
+                                    </td>
+                                </tr> 
+                                -->
+                            </tbody>
+
+                        </table>
+                    </div>
+                </div>
+
+
+                <!-- Dialog Convert Stars -->
+                <div class="the_dialog_container" id="dialog_convert_stars">
+                    <div class="dialog_content">
+                        <p class="dialog_subtitle">🎉 Selecione uma opção e depois clique para converter suas estrelas
+                            em saldo:</p>
+                        <div class="conversion_options">
+                            <div class="conversion_option">
+                                <span class="stars">✨ 600 Estrelas</span>
+                                <span class="amount">💰 R$ 1,00</span>
+                            </div>
+                            <div class="conversion_option">
+                                <span class="stars">✨ 2980 Estrelas</span>
+                                <span class="amount">💰 R$ 5,20</span>
+                            </div>
+                            <div class="conversion_option">
+                                <span class="stars">✨ 5955 Estrelas</span>
+                                <span class="amount">💰 R$ 10,50</span>
+                            </div>
+                            <div class="conversion_option">
+                                <span class="stars">✨ 11.905 Estrelas</span>
+                                <span class="amount">💰 R$ 21,30</span>
+                            </div>
+                            <div class="conversion_option">
+                                <span class="stars">✨ 23.805 Estrelas</span>
+                                <span class="amount">💰 R$ 43,19</span>
+                            </div>
+                        </div>
+                        <button class="normalState" id="convertStarsBtn">Escolha uma opção!</button>
+                    </div>
+                </div>
+
+
+                <!--Dialog Convintes: invitations-->
+                <div class="the_dialog_container" id="dialog_convidar_amigos">
+                    <div class="invite-container">
+                        <!-- Estatísticas -->
+                        <div class="div_base_onvitation_statistics">
+                            <div class="invitation_statistic">
+                                <div>
+                                    <p><strong>Amigos Convidados:</strong></p>
+                                    <div class="container_stars container_stars_from_invite container_invite_the_item">
+                                        <img style="transform: rotate(0deg);" src="../src/IMGs/friends.png"
+                                            alt="friends">
+                                        <p><strong class="textTotalInvitedFriends">0</strong></p>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <p><strong>Estrelas Ganhas:</strong></p>
+                                    <div class="container_stars container_stars_from_invite container_invite_the_item">
+                                        <img src="../src/IMGs/star.png" alt="star">
+                                        <p><strong class="textTotalStarsEarnedByReferrals">0</strong></p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Código de Convite -->
+                            <div class="invite_code_container">
+                                <div>
+                                    <div class="container_invitation_url">
+                                        <p id="textInvitationLink">https://lonyextra.com?invite=.....</p>
+                                        <i class="fa-solid fa-copy copy-icon copy_my_invite_code_or_link"></i>
+                                    </div>
+                                    <p class="link_and_invite_code_description">Link de convinte</p>
+                                </div>
+
+                                <div>
+                                    <div class="container_invitation_url">
+                                        <p id="textInvitationCode">45672</p>
+                                        <i class="fa-solid fa-copy copy-icon copy_my_invite_code_or_link"></i>
+                                    </div>
+                                    <p class="link_and_invite_code_description">Codigo de convinte</p>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <hr class="hr_in_invitation_dialog">
+
+                        <!-- Inserir Código -->
+                        <div class="container_insert_cde_and_titles">
+
+                            <div class="container_invite_bonus_titles">
+                                <h3 class="invitation_titles h3_tem_algum_codigo">Tem algum código de convite?</h3>
+                                <p id="textLabelInsiraEreceba">Insira e receba:</p>
+                                <p class="p_stars_to_receive_as_invite_reward">✨+20</p>
+                            </div>
+
+
+
+
+                            <div class="container_div_who_invited_me">
+                                <p class="p_vc_foi_convidado_por">Convidado por:</p>
+                                <div class="card_layout card_layout_from_invite">
+                                    <div class="profile_initials_from_invite">
+                                        NA
+                                    </div>
+
+                                    <div class="user_info user_info_from_invite">
+                                        <div class="base_name_and_rating_from_invite">
+                                            <p id="nameWhoInvitedMe">Nome do usuário aqui</p>
+                                        </div>
+
+                                        <div class="rating rating_from_invite">
+                                            <span id="LTstarsWhoInvitedMe" class="rating-value stars_my_inviter_has">49
+                                                345</span>
+                                            <span class="rating_icon stars_my_inviter_has">⭐</span>
+                                        </div>
+
+                                        <div style="visibility: hidden;" class="social_info">
+                                            <span class="trophy_icon">🏆</span>
+                                            <span class="top_ranking">Top 01</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="insert_invite_code">
+                                <input type="text" id="invitation_code_input" placeholder="Digite o código aqui">
+                                <p id="btnVerifyInvitationCode">Enviar</p>
+                            </div>
+                        </div>
+
+
+                        <!-- Lista de Amigos Convidados -->
+                        <div class="friend_list_container">
+                            <h3 class="invitation_titles h3_invited_friend">Amigos Convidados</h3>
+
+                            <div class="container_table_invited_list">
+                                <table style="display: none;" class="table_invited_friends">
+                                    <tbody id="tbody_invited_friends">
+                                        <tr>
+                                            <td>
+                                                <div class="friend-info">
+                                                    <img src="https://via.placeholder.com/50" alt="Foto do amigo">
+
+                                                    <div class="container_friends_referred_img_name_email">
+                                                        <p class="invited_name"><strong>João Silva</strong></p>
+                                                        <p class="invited_email">nelioa****@gmail.com</p>
+                                                    </div>
+                                                    <div class="container_earned_stars_for_this_friend">
+                                                        <p>✨ +34 567</p>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>
+                                                <div class="friend-info">
+                                                    <img src="https://via.placeholder.com/50" alt="Foto do amigo">
+
+                                                    <div class="container_friends_referred_img_name_email">
+                                                        <p class="invited_name"><strong>João Silva</strong></p>
+                                                        <p class="invited_email">nelioa****@gmail.com</p>
+                                                    </div>
+                                                    <div class="container_earned_stars_for_this_friend">
+                                                        <p>✨ +34 567</p>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+
+
+                                    </tbody>
+                                </table>
+
+                                <div id="empty_invited_friends">
+                                    <i id="loading_or_empty_awesome_icon" class="fa-solid fa-history history-icon"></i>
+                                    <p class="p_sem_saques">Sem amigos convidados!</p>
+                                </div>
+                            </div>
+
+                            <!--
+                          <div class="friend-info">
+                            <img src="https://via.placeholder.com/50" alt="Foto do amigo">
+                    
+                            <div class="container_friends_referred_img_name_email">
+                              <p class="invited_name"><strong>João Silva</strong></p>
+                              <p class="invited_email">nelioa****@gmail.com</p>
+                            </div>
+                            <div class="container_earned_stars_for_this_friend">
+                              <p>✨ +34 567</p>
+                            </div>
+                          </div>
+                    
+                          <div class="friend-info">
+                            <img src="https://via.placeholder.com/50" alt="Foto do amigo">
+                    
+                            <div class="container_friends_referred_img_name_email">
+                              <p class="invited_name"><strong>João Silva</strong></p>
+                              <p class="invited_email">nelioa****@gmail.com</p>
+                            </div>
+                            <div class="container_earned_stars_for_this_friend">
+                              <p>✨ +34 567</p>
+                            </div>
+                          </div>
+                    
+                          <div class="friend-info">
+                            <img src="https://via.placeholder.com/50" alt="Foto do amigo">
+                    
+                            <div class="container_friends_referred_img_name_email">
+                              <p class="invited_name"><strong>João Silva</strong></p>
+                              <p class="invited_email">nelioa****@gmail.com</p>
+                            </div>
+                            <div class="container_earned_stars_for_this_friend">
+                              <p>+✨ +34 567</p>
+                            </div>
+                          </div>
+                          -->
+
+                        </div>
+                    </div>
+                </div>
+
+
+                <!--Dialog Saques: Sacar-->
+                <div class="the_dialog_container" id="dialog_sacar">
+                    <div class="withdraw_base">
+                        <p class="escolha_um_metodo">Escolha o método de saque e o valor desejado abaixo:</p>
+                        <h2>Método de saque:</h2>
+                        <div class="custom-select-container">
+                            <div class="custom-select">
+                                <img id="selected_gatway_icon" src="#" alt="Icone Selecionado">
+                                <span>Selecione uma opção</span>
+                            </div>
+                            <div class="dropdown">
+                                <div>
+                                    <img src="../src/IMGs/icon_paypal_256x256.png" alt="Icon paypal">
+                                    <span class="p_option_select_gateway">Paypal</span>
+                                </div>
+                                <div>
+                                    <img src="../src/IMGs/icon_pix_240x240.png" alt="Icon pix">
+                                    <span class="p_option_select_gateway">Pix</span>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="section">
+                            <h2>Valor do Saque:</h2>
+                            <div class="amount-options">
+                                <div class="gift-card">
+                                    <img class="gift_gateway_icon" src="../src/IMGs/cartoon_money.png"
+                                        alt="paypal_icon">
+                                    <p>💰 R$ 1,00</p>
+                                </div>
+
+                                <div class="gift-card">
+                                    <img class="gift_gateway_icon" src="../src/IMGs/cartoon_money.png"
+                                        alt="paypal_icon">
+                                    <p>💰 R$ 5,20</p>
+                                </div>
+
+                                <div class="gift-card">
+                                    <img class="gift_gateway_icon" src="../src/IMGs/cartoon_money.png"
+                                        alt="paypal_icon">
+                                    <p>💰 R$ 10,50</p>
+                                </div>
+
+                                <div class="gift-card">
+                                    <img class="gift_gateway_icon" src="../src/IMGs/cartoon_money.png"
+                                        alt="paypal_icon">
+                                    <p>💰 R$ 21,30</p>
+                                </div>
+
+                                <div class="gift-card">
+                                    <img class="gift_gateway_icon" src="../src/IMGs/cartoon_money.png"
+                                        alt="paypal_icon">
+                                    <p>💰 R$ 30,50</p>
+                                </div>
+
+                                <div class="gift-card">
+                                    <img class="gift_gateway_icon" src="../src/IMGs/cartoon_money.png"
+                                        alt="paypal_icon">
+                                    <p>💰 R$ 48,30</p>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <form class="withdraw-form">
+                            <label for="full-name">Nome Completo</label>
+                            <input type="text" id="full-name" placeholder="Digite seu nome" maxlength="27" required>
+
+                            <label id="label_payment_adress" for="email">Endereço de pagamento</label>
+                            <input type="email" id="email" placeholder="Digite seu endereço de pagamento..."
+                                maxlength="45" required>
+
+                            <div class="info-box">
+                                <p>Os pagamentos são feitos em <strong>até 48 horas</strong> após o saque. Não nos
+                                    responsabilizamos por dados incorretos
+                                    fornecidos pelo usuário.</p>
+                            </div>
+
+                            <button id="btnCashOutRevenue" class="withdraw-button">Efetuar Saque</button>
+                        </form>
+                    </div>
+                </div>
+
+
+                <!--Dialog Saques: histórico de saques-->
+                <div class="the_dialog_container" id="dialog_historio_de_saques">
+                    <table id="withdraw-table" class="withdraw-table">
+                        <thead>
+                            <tr>
+                                <th>Método</th>
+                                <th>Quantia</th>
+                                <th>Saque</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tbody_cashout_history">
+                            <!--
+                             <tr>
+                                <td>
+                                    <div>
+                                        <img class="teable_icon_gateway" src="../src/IMGs/icon_paypal_256x256.png" alt="cashout mthod icon">
+                                        <p class="gatway_name"> Paypal</p>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div>
+                                        <p class="textCashoutAmount">R$ 200.00</p>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div>
+                                        <p class="textCashoutID">123456</p>
+                                        <i class="fa-solid fa-copy copy-icon" onclick="copyToClipboard('123456')"
+                                            title="Copiar ID"></i>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div>
+                                        <p class="status paid">Pago</p>
+                                        <i class="fa-solid fa-circle-info info-icon"
+                                            onclick="showDetails('123456', 'Paypal', 'R$ 200.00', 'Pago')"
+                                            title="Detalhes"></i>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div>
+                                        <img class="teable_icon_gateway" src="../src/IMGs/icon_pix_240x240.png" alt="cashout mthod icon">
+                                        <p class="gatway_name"> Pix</p>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div>
+                                        <p class="textCashoutAmount">R$ 350.00</p>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div>
+                                        <p class="textCashoutID">654321</p>
+                                        <i class="fa-solid fa-copy copy-icon" onclick="copyToClipboard('654321')"
+                                            title="Copiar ID"></i>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div>
+                                        <p class="status pending">Pendente</p>
+                                        <i class="fa-solid fa-circle-info info-icon"
+                                            onclick="showDetails('654321', 'Pix', 'R$ 350.00', 'Pendente')"
+                                            title="Detalhes"></i>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div>
+                                        <img class="teable_icon_gateway" src="../src/IMGs/icon_paypal_256x256.png" alt="cashout mthod icon">
+                                        <p class="gatway_name"> Paypal</p>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div>
+                                        <p class="textCashoutAmount">R$ 100.00</p>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div>
+                                        <p class="textCashoutID">112233</p>
+                                        <i class="fa-solid fa-copy copy-icon" onclick="copyToClipboard('112233')"
+                                            title="Copiar ID"></i>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div>
+                                        <p class="status declined">Recusado</p>
+                                        <i class="fa-solid fa-circle-info info-icon"
+                                            onclick="showDetails('112233', 'Paypal', 'R$ 100.00', 'Recusado')"
+                                            title="Detalhes"></i>
+                                    </div>
+                                </td>
+                            </tr>
+                            -->
+                        </tbody>
+                    </table>
+
+                    <div id="empty_history">
+                        <i id="loading_or_empty_awesome_icon" class="fa-solid fa-history history-icon"></i>
+                        <p class="p_sem_saques">Sem saques!</p>
+                    </div>
+                </div>
+
+                <!--Dialog Notifications: Minhas notifications-->
+                <div class="the_dialog_container" id="dialog_minhas_notificacoes">
+                    <div class="div_base_notifications">
+                        <img src="../src/IMGs/bell.png" alt="Notification icon">
+
+                        <p>Sem Notificações!</p>
+                    </div>
+                </div>
+
+                <!--Dialog Redes sociais: Instagram-->
+                <div class="the_dialog_container" id="dialog_instagram">
+                    <div class="div_base_redes_sociais">
+                        <img src="../src/IMGs/instagram.png" alt="Instagram">
+                        <div class="descricao_instagram_telegram">
+                            <h2>Siga-nos no Instagram e fique por dentro!</h2>
+                            <ul>
+                                <li>
+                                    <h3>💰 <strong>Provas de Pagamento</strong>:</h3>
+                                    <p>Receba prints e confirmações de pagamentos em primeira mão.</p>
+                                </li>
+                                <li>
+                                    <h3>📢 <strong>Novidades Exclusivas</strong>:</h3>
+                                    <p>Descubra novas plataformas e oportunidades de renda extra.</p>
+                                </li>
+                                <li>
+                                    <h3>📲 <strong>Suporte Direto</strong>:</h3>
+                                    <p>Tire dúvidas de forma rápida e fácil pelo nosso direct.</p>
+                                </li>
+                                <li>
+                                    <h3>🎁 <strong>Sorteios e Benefícios</strong>:</h3>
+                                    <p>Participe de promoções exclusivas para seguidores.</p>
+                                </li>
+                            </ul>
+                        </div>
+                        <button>Seguir</button>
+                    </div>
+
+                </div>
+
+                <!--Dialog Redes sociais: Telegram-->
+                <div class="the_dialog_container" id="dialog_telegram">
+                    <div class="div_base_redes_sociais">
+                        <img src="../src/IMGs/telegram.png" alt="Telegram">
+                        <div class="descricao_instagram_telegram">
+                            <h2>Siga-nos no Telegram e fique por dentro!</h2>
+                            <ul>
+                                <li>
+                                    <h3>💰 <strong>Provas de Pagamento</strong>:</h3>
+                                    <p>Receba prints e confirmações de pagamentos em primeira mão.</p>
+                                </li>
+                                <li>
+                                    <h3>📢 <strong>Novidades Exclusivas</strong>:</h3>
+                                    <p>Descubra novas plataformas e oportunidades de renda extra.</p>
+                                </li>
+                                <li>
+                                    <h3>📲 <strong>Suporte Direto</strong>:</h3>
+                                    <p>Tire dúvidas de forma rápida e fácil pelo nosso direct.</p>
+                                </li>
+                                <li>
+                                    <h3>🎁 <strong>Sorteios e Benefícios</strong>:</h3>
+                                    <p>Participe de promoções exclusivas para seguidores.</p>
+                                </li>
+                            </ul>
+                        </div>
+                        <button>Seguir</button>
+                    </div>
+                </div>
+
+                <!--Dialog suporte: Gmail-->
+                <div class="the_dialog_container" id="dialog_gmail">
+                    <div class="div_base_gmail">
+                        <form id="supportForm">
+                            <div class="input-group">
+                                <label for="titulo">Título da Dúvida</label>
+                                <input type="text" id="tituloGmailSuporte" name="titulo" maxlength="40"
+                                    placeholder="Insira o título..." oninput="updateCounter(this, 'tituloCounter', 40)">
+                                <span id="tituloCounter">0/40</span>
+                            </div>
+
+                            <div class="input-group">
+                                <label for="descricao">Descrição da Dúvida</label>
+                                <textarea id="descricaoGmailSuporte" name="descricao" rows="5"
+                                    placeholder="Descreva sua dúvida aqui..."></textarea>
+                            </div>
+
+                            <button id="btnSubmitEmailDoubt" type="submit">Enviar</button>
+                        </form>
+                    </div>
+                </div>
+
+                <!--Dialog suporte: Youtube-->
+                <div class="the_dialog_container" id="dialog_youtube">
+                    <!--Using hasref direct URL enstead of this dialog-->
+                </div>
+
+                <!--Dialog Configuracoes: Perfil-->
+                <div class="the_dialog_container" id="dialog_perfil">
+                    <div class="div_base_profile">
+                        <div class="container_profile_info">
+                            <img src="../src/IMGs/profile.png" alt="">
+                            <p class="userName">User Name</p>
+                            <p class="userEmail">useremail@gmail.com</p>
+                            <p id="memberShipText">
+                                Juntou-se à comunidade @LonyExtra em <span id="joinedDate"></span>. Já se passaram
+                                <strong id="timeElapsedText"></strong> desde então 💖!
+                            </p>
+
+
+                        </div>
+
+                        <div class="div_container_profile_points_history">
+                            <div class="div_base_historic_earn">
+                                <p class="textLThistoric userRevenue">R$ 0.00</p>
+                                <p class="textLThistoricDescription">Total disponivel</p>
+                            </div>
+                            <div class="div_base_historic_earn">
+                                <p class="textLThistoric theLTtexts userLTRevenue">R$ 0.00</p>
+                                <p class="textLThistoricDescription">Total já ganho</p>
+                            </div>
+                            <div class="div_base_historic_earn">
+                                <p class="textLThistoric theLTtexts userLTCashout">R$ 0.00</p>
+                                <p class="textLThistoricDescription">Total sacado</p>
+                            </div>
+                        </div>
+                        <div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <!--Dialog Configuracoes: logout-->
+                <div class="the_dialog_container" id="dialog_logout">
+                    <div class="div_base_signout">
+                        <h2>Tem certeza de que deseja sair?</h2>
+                        <p>Ao sair, você precisará fazer login novamente para acessar sua conta. (Não se preocupe, seu
+                            progresso será salvo!)</p>
+                        <div class="signout_buttons">
+                            <button class="btn_cancel" id="cancelLogout">Cancelar</button>
+                            <button class="btn_signout" id="confirmLogout">Sair</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+    <script src="../js/drawer.js"></script>
+    <script src="../js/GetDashboardInfo.js"></script>
+    <script src="../js/GetTop10Users.js"></script>
+    <script src="../js/HandleDrawerCliques.js"></script>
+
+</body>
+
+</html>

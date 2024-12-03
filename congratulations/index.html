@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parabéns!</title>
+    <link rel="stylesheet" href="/0/css/congratulations/main.css">
+    <link rel="stylesheet" href="../css/home/popups_and_ui_feedbacks.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+   <link rel="icon" href="../src/favicon_io/favicon.ico" type="image/x-icon">
+</head>
+
+<body>
+    <div id="alert" class="alert hidden">
+        <span class="icon"></span>
+        <span class="message"></span>
+    </div>
+
+    <div id="confirmation-box_overlay">
+        <div class="confirmation-box success">
+            <div class="icon-box">✔</div>
+            <h1>Success!</h1>
+            <p>Your booking has been confirmed. Check your email for details, including your reservation number.</p>
+            <button>Got it</button>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="card">
+            <div class="container_available_revenue">
+                <div id="container_available_points">
+                    <p id="the_available_revenue">R$ 0.00</p>
+                </div>
+            </div>
+
+
+            <div class="container_available_points">
+                <div id="container_available_points">
+                    <p id="the_available_points">0</p>
+                    <img src="../0/src/IMGs/star.png" class="task_star" alt="Estrela">
+                </div>
+            </div>
+
+            <div class="header">
+                <h1>🎉 Parabéns! 🎉</h1>
+            </div>
+            <p class="message">Você concluiu a tarefa com sucesso e merece ser recompensado!</p>
+            <div class="illustration">
+                <img src="../0/src/IMGs/trophy.png" alt="Troféu">
+            </div>
+            <div class="container_points_to_earn">
+                <p id="pointsToEarn">+...</p>
+                <img src="../0/src/IMGs/star.png" class="task_star" alt="Estrela">
+            </div>
+            <button id="btnGetReward" class="btn-premio">Receber Meu Prêmio</button>
+
+            <a id="backLink" href="#">← Voltar</a>
+
+            <p class="hint">Continue conquistando seus objetivos diariamente!</p>
+        </div>
+    </div>
+
+    <script src="../0/js/GetRewardFromCongratulations.js"></script>
+</body>
+
+</html>

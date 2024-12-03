@@ -1,0 +1,17 @@
+#div_alert_message{
+    display: none;
+    width: 100%;
+    padding: 10px;
+    color: white;
+    justify-content: center;
+    position: absolute;
+    text-align: center;
+    top: 0;
+    left: 0;
+    right: 0;
+    font-size: 14px;
+    transition: 0.5s;
+    box-shadow: 1px 4px 6px #dcdee4;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+}

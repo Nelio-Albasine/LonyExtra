@@ -1,0 +1,21 @@
+.div_container_input {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: fit-content; /* Ajuste conforme necessário */
+}
+
+.info-icon {
+    margin-right: 8px;
+}
+
+#birthDate {
+    padding-right: 24px;
+}
+
+.dropdown-icon {
+    position: absolute;
+    right: 10px;
+    color: #888;
+    pointer-events: none; /* Ignora cliques na seta */
+}

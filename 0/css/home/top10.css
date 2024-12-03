@@ -1,0 +1,150 @@
+.textTitleTop10 {
+    margin-top: 15px;
+}
+
+.card_layout {
+    display: flex;
+    align-items: center;
+    width: fit-content;
+    height: 100%;
+    background-color: #f8f8f8;
+    border-radius: 15px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    border-radius: 15px;
+    margin: 8px;
+    padding: 5px;
+}
+
+.profile_initials {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    margin-right: 8px;
+    background-color: #0000ff;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    color: white;
+    text-align: center;
+    justify-content: center;
+}
+
+.profile_initials p {
+    height: fit-content;
+    width: 100%;
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+
+.user_info {
+    display: flex;
+    height: fit-content;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.base_name_and_rating {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.user_top10_name {
+    font-size: 13px;
+    font-weight: normal;
+    color: #0f0f0f;
+    margin: 0;
+    max-width: 100px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-right: 8px;
+}
+
+.base_name_and_rating {
+    display: flex;
+    flex-direction: row;
+    white-space: nowrap;
+}
+
+.rating {
+    display: flex;
+    align-items: center;
+    border-radius: 10px;
+    background-color: green;
+    padding: 1px 6px;
+}
+
+.rating-value {
+    font-size: 10.3px;
+    color: white;
+    margin-right: 2px;
+}
+
+.rating_icon {
+    font-size: 10.3px;
+    color: gold;
+}
+
+.social_info {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background-color: #dbdbdb;
+    width: fit-content;
+    padding: 1px 6px;
+    border-radius: 6px;
+    margin-top: 4px;
+}
+
+.trophy_icon {
+    font-size: 11px;
+    margin-right: 4px;
+}
+
+.top_ranking {
+    font-size: 11px;
+    color: #383838;
+}
+
+.scroll-container {
+    display: flex;
+    overflow-x: auto;
+    white-space: nowrap;
+    padding: 0px;
+}
+
+.top10_table {
+    border-collapse: collapse;
+    display: inline-block;
+}
+
+#tbody_tp10 {
+    display: flex;
+    flex-direction: row;
+}
+
+
+.scroll-container::-webkit-scrollbar {
+    height: 4px;
+}
+
+.scroll-container::-webkit-scrollbar-track {
+    background: #f0f0f0;
+    border-radius: 10px;
+}
+
+.scroll-container::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 10px;
+}
+
+.scroll-container::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+.scroll-container {
+    scrollbar-width: thin;
+    scrollbar-color: #cacaca #f0f0f0;
+}
