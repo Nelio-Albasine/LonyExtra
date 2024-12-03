@@ -17,22 +17,20 @@ jobs:
         run: |
           # Alterar todas as referências para Wamp64Connection.php por DBConnection.php
           find . -type f -name "*.php" -exec sed -i 's|"Wamp64Connection.php"|"DBConnection.php"|g' {} +
+
           # Alterar URLs localhost para URLs de produção
           find . \( -name "*.php" -o -name "*.js" -o -name "*.html" \) -exec sed -i 's|http://localhost/LonyExtra/|https://lonyextra.com/|g' {} +
+
           # Alterar localhost IP direto para URL de produção
           find . \( -name "*.php" -o -name "*.js" -o -name "*.html" \) -exec sed -i 's|http://127.0.0.1:5500/|https://lonyextra.com/|g' {} +
+
           # Alterar a URL da API de http para https
           find . \( -name "*.php" -o -name "*.js" -o -name "*.html" \) -exec sed -i 's|http://worldtimeapi.org/api/ip|https://worldtimeapi.org/api/ip|g' {} +
+
           # Comentar cabeçalhos CORS em arquivos PHP
           find . -type f -name "*.php" -exec sed -i "s|header('Access-Control-Allow-Origin: \\*');|// header('Access-Control-Allow-Origin: *');|g" {} +
           find . -type f -name "*.php" -exec sed -i "s|header('Access-Control-Allow-Methods: POST, OPTIONS');|// header('Access-Control-Allow-Methods: POST, OPTIONS');|g" {} +
           find . -type f -name "*.php" -exec sed -i "s|header('Access-Control-Allow-Headers: Content-Type');|// header('Access-Control-Allow-Headers: Content-Type');|g" {} +
-
-      - name: Remove .git, .github, node_modules
-        run: |
-          rm -rf .git
-          rm -rf .github
-          rm -rf node_modules
 
       - name: 📂 Sync files
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
@@ -42,8 +40,6 @@ jobs:
           password: ${{ secrets.FTP_PASSWORD_LONY_EXTRA }}
           server-dir: /
           exclude: |
-            .git/**
-            .github/**
-            .gitignore
-            node_modules/**
-          dangerous-clean-slate: false
+            testscripts/**
+          dangerous-clean-slate: false # Isso impede que arquivos existentes la no servidor sejam excluídos se não estiverem no repositório.
+
