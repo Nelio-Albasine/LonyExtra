@@ -30,6 +30,6 @@ jobs:
           server: ${{ secrets.FTP_SERVER_LONY_EXTRA }}
           username: ${{ secrets.FTP_USERNAME_LONY_EXTRA }}
           password: ${{ secrets.FTP_PASSWORD_LONY_EXTRA }}
-          server-dir: /home2/qyagfite/lonyextra.com
+          server-dir: /home2/qyagfite/lonyextra.com/
           excludes: |
             testScripts/**
