@@ -32,17 +32,24 @@ function verifyPassword() {
     return inputPassword.value === inputPasswordConfirm.value
 }
 
-async function getTimeZoneFromAPI() {
+async function getTimeZoneFromAPIWithTimeout(timeout = 5000) {
+    const controller = new AbortController();
+    const signal = controller.signal;
+
+    const timeoutId = setTimeout(() => controller.abort(), timeout);
+
     try {
-        const response = await fetch("http://worldtimeapi.org/api/ip");
-        if (!response.ok) {
-            throw new Error("Erro ao obter dados da API.");
-        }
+        const response = await fetch("https://worldtimeapi.org/api/ip", { signal });
+        if (!response.ok) throw new Error("Erro ao obter dados da API.");
         const data = await response.json();
+        console.log("Timezone: ",  data.timezone);
+
         return data.timezone;
     } catch (error) {
         console.error("Erro ao obter fuso horário da API:", error);
-        return null; // Retorna null em caso de erro
+        return null;
+    } finally {
+        clearTimeout(timeoutId);
     }
 }
 
@@ -52,9 +59,12 @@ function getUserTimeZoneFromLocal() {
     return timeZone;
 }
 
-document.addEventListener("DOMContentLoaded", async function () {
-    userTimeZone = await getTimeZoneFromAPI();
+getTimeZoneFromAPIWithTimeout().then((tz) => {
+    userTimeZone = tz || getUserTimeZoneFromLocal();
+});
 
+
+document.addEventListener("DOMContentLoaded", async function () {
     textStartSession.addEventListener("click", () => {
         window.location.href = "http://127.0.0.1:5500/0/access/login.html";
     });
@@ -101,7 +111,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                     btnCreateAccount.disabled = true;
                     btnCreateAccount.innerText = "Aguarde...";
 
-                    let sendResponse = await sendOTPtoVerifyEmail(Object.fromEntries(allFields)); // aguarda o retorno
+                    let sendResponse = await sendOTPtoVerifyEmail(Object.fromEntries(allFields)); 
 
                     if (sendResponse.success) {
                         btnCreateAccount.innerText = "Redirecionando...";
