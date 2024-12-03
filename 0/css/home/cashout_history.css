@@ -1,0 +1,215 @@
+body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(to bottom, #ffffff, #f3f4f6);
+    margin: 0;
+    padding: 10px;
+    color: #333;
+}
+
+.container {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 15px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    text-align: center;
+    font-size: 22px;
+    margin-bottom: 15px;
+    color: #444;
+    font-weight: 600;
+}
+
+.teable_icon_gateway {
+    width: 12px;
+    height: 12px;
+    margin-right: 5px;
+}
+
+.gatway_name {
+    width: 70px;
+    text-align: left;
+}
+
+.gatway_name i {
+    margin-right: 5px;
+}
+
+.withdraw-table {
+    width: 100%;
+    border-collapse: collapse;
+    overflow: hidden;
+    border-radius: 10px;
+    table-layout: fixed;
+}
+
+.withdraw-table th,
+.withdraw-table td {
+    padding: 4px 12px;
+    text-align: center;
+    vertical-align: middle;
+    font-size: 14px;
+    word-wrap: break-word;
+}
+
+.withdraw-table th {
+    background-color: #2c3e50;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-size: 12px;
+    padding: 12px;
+}
+
+.withdraw-table tbody tr {
+    background: #fdfdfd;
+    transition: all 0.2s ease;
+}
+
+.withdraw-table tbody tr:hover {
+    background: #f1f1f1;
+}
+
+.withdraw-table tbody tr:nth-child(even) {
+    background: #f7f7f7;
+}
+
+.withdraw-table div {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin-top: 8px;
+
+}
+
+.withdraw-table td i {
+    margin-left: 6px;
+    color: #3498db;
+    cursor: pointer;
+}
+
+.copy-icon:hover,
+.info-icon:hover {
+    color: #1abc9c;
+}
+
+.copy-icon {
+    color: #969696 !important;
+}
+
+.status {
+    width: 100px;
+    height: 30px;
+    font-weight: 500;
+    text-align: center;
+    padding: 6px 10px;
+    border-radius: 15px;
+    font-size: 12px;
+    margin: 0;
+}
+
+.status_from_dialog {
+    height: 24px !important;
+    font-size: 11.5px !important;
+    padding: 4px 6px !important;
+}
+
+.status.paid {
+    background: #d4edda;
+    color: #155724;
+}
+
+.status.pending {
+    background: #fff3cd;
+    color: #856404;
+}
+
+.status.declined {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+
+#empty_history,
+#empty_invited_friends {
+    width: 100%;
+    padding: 20px;
+    height: 150px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.history-icon {
+    font-size: 30px;
+    color: #707070;
+}
+
+.p_sem_saques {
+    color: #707070;
+    font-size: 14px;
+    margin-top: 15px;
+}
+
+@media screen and (max-width: 600px) {
+    #base_dialog {
+        width: 100%;
+        padding: 8px;
+    }
+
+    .withdraw-table th,
+    .withdraw-table td {
+        padding: 4px 4px;
+        font-size: 12px;
+    }
+
+    .withdraw-table th {
+        font-size: 11px;
+        white-space: nowrap;
+        padding: 12px;
+    }
+
+    .withdraw-table div {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .withdraw-table td i {
+        font-size: 11px;
+    }
+
+
+    .status {
+        width: 80px;
+        height: 25px;
+        padding: 2px 8px !important;
+        border-radius: 8px;
+        font-size: 11.5px;
+        margin: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .status.paid {
+        background: #d4edda;
+        color: #155724;
+    }
+
+    .status.pending {
+        background: #fff3cd;
+        color: #856404;
+    }
+
+    .status.declined {
+        background: #f8d7da;
+        color: #721c24;
+    }
+
+}

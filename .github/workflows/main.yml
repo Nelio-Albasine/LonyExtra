@@ -1,0 +1,35 @@
+on:
+  push:
+    branches:
+      - main
+
+name: 🚀 Deploy website on push
+
+jobs:
+  web-deploy:
+    name: 🎉 Deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🚚 Get latest code
+        uses: actions/checkout@v4
+
+      - name: 🔄 Update file paths and URLs
+        run: |
+          # Alterar todas as referências para Wamp64Connection.php por DBConnection.php
+          find . -type f -name "*.php" -exec sed -i 's|"Wamp64Connection.php"|"DBConnection.php"|g' {} +
+
+          # Alterar URLs localhost para URLs de produção
+          find . \( -name "*.php" -o -name "*.js" -o -name "*.html" \) -exec sed -i 's|http://localhost/LonyExtra/|https://lonyextra.com/|g' {} +
+
+          # Alterar localhost IP direto para URL de produção
+          find . \( -name "*.php" -o -name "*.js" -o -name "*.html" \) -exec sed -i 's|http://127.0.0.1:5500/|https://lonyextra.com/|g' {} +
+
+      - name: 📂 Sync files
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER_LONY_EXTRA }}
+          username: ${{ secrets.FTP_USERNAME_LONY_EXTRA }}
+          password: ${{ secrets.FTP_PASSWORD_LONY_EXTRA }}
+          server-dir: /
+          exclude: |
+            testScripts/**

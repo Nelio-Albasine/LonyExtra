@@ -1,0 +1,94 @@
+.div_base_redes_sociais {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 400px;
+    width: 100%;
+    font-family: Arial, sans-serif;
+}
+
+.div_base_redes_sociais img {
+    width: 60px;
+    height: auto;
+    margin-bottom: 20px;
+    object-fit: contain;
+    margin-right: 20px;
+    border-radius: 10px;
+}
+
+.descricao_instagram_telegram h2 {
+    font-size: 1.1em;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.descricao_instagram_telegram {
+    flex: 1;
+}
+
+
+.descricao_instagram_telegram h3 {
+    font-size: 15px;
+    color: #555;
+    margin: 5px 0;
+}
+
+.descricao_instagram_telegram p {
+    font-size: 13.5px;
+    color: #666;
+    line-height: 1;
+    margin-top: 8px;
+    margin-left: 20px;
+}
+
+.div_base_redes_sociais button {
+    padding: 8px 20px;
+    width: 200px;
+    font-size: 0.9rem;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 25px;
+    margin: 0 auto 10px auto;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+
+.descricao_instagram_telegram ul {
+    list-style: none;
+    padding: 0;
+}
+
+.descricao_instagram_telegram ul li {
+    margin-bottom: 15px;
+}
+
+
+.descricao_instagram_telegram h3 strong {
+    color: #222;
+}
+
+
+
+.descricao_instagram_telegram p strong {
+    color: #222;
+}
+
+button {
+    background-color: #ff4500;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 1em;
+    cursor: pointer;
+    align-self: flex-start;
+    margin-top: 20px;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #e03e00;
+}

@@ -1,0 +1,1 @@
+# Forcar tudo que esta no githbu a receber essas mudancas novas ou seja, atualizar tudo com novas cenas

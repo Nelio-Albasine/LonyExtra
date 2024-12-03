@@ -1,0 +1,409 @@
+.div_container_invtation {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+    justify-content: space-between;
+}
+
+.seeInvitattionDetails {
+    width: 20px;
+    height: 20px;
+    background-color: white;
+    padding: 4px;
+    border-radius: 50%;
+    transform: rotate(270deg);
+    cursor: pointer;
+}
+
+.container_stars_from_invite {
+    background-color: white;
+    color: black;
+    padding: 4px 10px;
+}
+
+#div_container_ttl_invite {
+    transform: translateY(6px);
+}
+
+
+.invite-container {
+    padding: 0 15px;
+    width: 100%;
+}
+
+
+.div_base_onvitation_statistics {
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    background-color: #f0f0f0;
+    border-radius: 10px;
+    padding-top: 15px;
+    margin-bottom: 10px !important;
+}
+
+
+.invitation_statistic {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    margin: 0px 0;
+    font-size: 15px;
+    gap: 50px;
+}
+
+.container_invite_the_item {
+    margin-top: 10px;
+    height: 30px;
+}
+
+.span_stats_item {
+    display: flex;
+    background: rgb(255, 255, 255);
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    width: fit-content;
+    margin: 5px auto;
+    padding: 3px 10px;
+    font-size: 14px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+
+.invite_code_container {
+    max-width: 450px;
+    margin: 0 auto;
+    margin-top: 25px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.container_invitation_url {
+    display: flex;
+    width: fit-content;
+    margin: 0 auto;
+    padding: 10px 20px;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    font-size: 14px;
+    background: rgb(255, 255, 255);
+    border-radius: 25px;
+    white-space: nowrap;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.copy-icon {
+    cursor: pointer;
+}
+
+.link_and_invite_code_description {
+    font-size: 12.5px;
+    text-align: center;
+    margin-top: 5px;
+    color: #5c5c5c;
+}
+
+
+.h3_tem_algum_codigo {
+    margin-left: 2px;
+}
+
+.hr_in_invitation_dialog {
+    width: 90%;
+    margin: 0 auto 15px auto;
+    border-color: rgb(255, 255, 255);
+}
+
+
+.copy-button:hover,
+.submit-button:hover {
+    background-color: #040277;
+}
+
+
+.friend_list_container {
+    padding: 15px;
+    border-radius: 15px;
+    background-color: #f0f0f0;
+    margin-bottom: 8px;
+    height: fit-content;
+    overflow: auto;
+    max-height: 300px;
+}
+
+.container_table_invited_list {
+    display: table;
+    flex-direction: column;
+    width: 100%;
+    padding-bottom: 2px;
+}
+
+
+.friend-info {
+    margin-top: 5px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.h3_invited_friend {
+    margin-bottom: 5px;
+}
+
+.friend-info img {
+    width: 50px;
+    border-radius: 50%;
+}
+
+.container_friends_referred_img_name_email {
+    padding-left: 15px;
+    flex: 1;
+}
+
+.invited_name {
+    margin-bottom: 4.5px;
+}
+
+.invited_email {
+    font-size: 14px;
+}
+
+.container_earned_stars_for_this_friend {
+    background-color: #051391;
+    padding: 3.5px 10px;
+    border-radius: 25px;
+    color: white;
+    font-size: 13px;
+}
+
+
+.table_invited_friends {
+    width: 100%;
+}
+
+.table_invited_friends td {
+    padding: 3px 0;
+}
+
+
+
+.container_insert_cde_and_titles {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+}
+
+.container_insert_cde_and_titles div {
+    width: 100%;
+
+}
+
+.container_invite_bonus_titles {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.container_invite_bonus_titles p {
+    text-align: center;
+    font-size: 15px;
+}
+
+.invitation_titles {
+    font-size: 17px;
+}
+
+#textLabelInsiraEreceba {
+    margin-top: 8px;
+}
+
+.p_stars_to_receive_as_invite_reward {
+    background-color: rgb(70, 3, 87);
+    padding: 5px 20px;
+    width: fit-content;
+    margin: 4px auto 5px auto;
+    color: white;
+    font-size: 13.5px !important;
+    border-radius: 25px;
+}
+
+
+.insert_invite_code {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 15px;
+    gap: 40px;
+}
+
+#invitation_code_input {
+    width: 80%;
+    height: 35px;
+    border: 1px solid #ccc;
+    border-radius: 25px;
+    max-width: 300px;
+    text-align: center;
+}
+
+#btnVerifyInvitationCode {
+    width: 180px;
+    height: 35px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #666666;
+    border-radius: 25px;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.user_info_from_invite {
+    height: 50px !important;
+}
+
+.container_div_who_invited_me {
+    display: none;
+    flex-direction: column;
+}
+
+.card_layout_from_invite {
+    display: flex;
+    width: fit-content !important;
+    margin: 0 auto 15px auto !important;
+}
+
+.profile_initials_from_invite {
+    width: 58px !important;
+    height: 40px !important;
+    background-color: blue;
+    border-radius: 50%;
+    display: flex;
+    color: white;
+    font-weight: bold;
+    align-items: center;
+    justify-content: center;
+    margin-right: 15px;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+
+.base_name_and_rating_from_invite {
+    margin-top: 20px;
+}
+
+.p_vc_foi_convidado_por {
+    font-size: 14px;
+    text-align: center;
+    margin: 10px 2px !important;
+}
+
+.rating_from_invite {
+    padding: 1px 10px !important;
+    margin-top: 5px !important;
+    width: fit-content !important;
+}
+
+.stars_my_inviter_has {
+    font-size: 12px !important;
+}
+
+#nameWhoInvitedMe {
+    width: fit-content !important;
+    max-width: max-content !important;
+    font-size: 13px;
+    font-weight: normal;
+    color: #0f0f0f;
+    margin-right: 8px;
+}
+
+@media screen and (max-width: 600px) {
+    .div_base_onvitation_statistics {
+        border-radius: 10px;
+        padding: 15px;
+    }
+
+    .invitation_titles {
+        font-size: 14px;
+    }
+
+    .invitation_statistic {
+        font-size: 13px;
+        gap: 45px;
+    }
+
+    .span_stats_item {
+        margin: 8px auto;
+    }
+
+    .invite_code_container {
+        margin-top: 15px;
+        flex-direction: column;
+        gap: 15px;
+        margin-bottom: 10px;
+    }
+
+    .link_and_invite_code_description {
+        font-size: 12.5px;
+        margin-top: 4px;
+    }
+
+    .h3_tem_algum_codigo {
+        margin-left: 15px;
+        font-size: 14px;
+    }
+
+    .hr_in_invitation_dialog {
+        margin: 0 auto 8px auto;
+    }
+
+    .insert_invite_code {
+        margin-bottom: 15px;
+        gap: 20px;
+    }
+
+
+    .friend_list_container {
+        padding: 8px 10px;
+    }
+
+    .friend-info {
+        margin-top: 10px;
+    }
+
+    .friend-info img {
+        width: 42px;
+    }
+
+    .invited_name {
+        margin-bottom: 5px;
+        font-size: 14px;
+    }
+
+    .invited_email {
+        font-size: 13.5px;
+    }
+
+    .container_earned_stars_for_this_friend {
+        padding: 5px 8px;
+        font-size: 12px;
+    }
+
+}

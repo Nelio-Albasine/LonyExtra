@@ -1,0 +1,22 @@
+/* Seleciona a largura geral da barra de rolagem */
+::-webkit-scrollbar {
+    width: 6px; /* Define a largura da barra de rolagem vertical */
+    height: 8px; /* Define a altura da barra de rolagem horizontal */
+}
+
+/* Estilo do fundo da barra de rolagem */
+::-webkit-scrollbar-track {
+    background: #f1f1f1; /* Cor do track (fundo da barra) */
+    border-radius: 10px; /* Opcional: bordas arredondadas */
+}
+
+/* Estilo do "polegar" da barra de rolagem (a parte que você move) */
+::-webkit-scrollbar-thumb {
+    background: #c2c2c2; /* Cor do polegar da barra */
+    border-radius: 10px; /* Opcional: bordas arredondadas */
+}
+
+/* Estilo do polegar ao passar o mouse */
+::-webkit-scrollbar-thumb:hover {
+    background: #c0c0c0; /* Cor ao passar o mouse */
+}

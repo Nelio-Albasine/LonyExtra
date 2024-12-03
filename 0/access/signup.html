@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Criar Conta</title>
+    <link rel="stylesheet" href="../css/access/access_mobile.css">
+    <link rel="stylesheet" href="../css/access/access_pc.css">
+    <link rel="stylesheet" href="../css/access/signup.css">
+    <link rel="stylesheet" href="../css/access/datePicker.css">
+    <link rel="stylesheet" href="../css/access/general_styles.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+   <link rel="icon" href="../src/favicon_io/favicon.ico" type="image/x-icon">
+</head>
+
+<body>
+
+    <div class="alert_as_error" id="div_alert_message">
+        <p id="textAlert">alert message</p>
+    </div>
+
+    <main>
+
+        <header>
+            <img src="../src/IMGs/mobile_login_panel.png" alt="From complete image">
+            <h1>Crie sua conta para continuar!</h1>
+            <p>Crie sua conta, e comece a aprender <br> as
+                melhores maneiras de fazer uma renda extra!</p>
+        </header>
+
+        <ul class="ul_inputs">
+
+            <li class="li_inputs" id="li_name">
+                <p>Primeiro Nome</p>
+
+                <div class="div_container_input">
+                    <img src="../src/IMGs/icon_profile_info.svg" alt="info_icon">
+                    <input required type="text" name="name" placeholder="Jhon" id="inputName">
+                </div>
+            </li>
+
+            <li class="li_inputs" id="li_surnamenName">
+                <p>Último Nome</p>
+
+                <div class="div_container_input">
+                    <img src="../src/IMGs/icon_profile_info.svg" alt="info_icon">
+                    <input required type="text" name="surName" placeholder="Doe" id="inputSurName">
+                </div>
+            </li>
+
+            <li class="li_inputs" id="li_email">
+                <p>Insira seu Email</p>
+
+                <div class="div_container_input">
+                    <img src="../src/IMGs/icon_profile_info.svg" alt="info_icon">
+                    <input required type="email" name="email" placeholder="usuario@gmail.com" id="inputEmail">
+                </div>
+            </li>
+
+
+            <li class="li_inputs" id="li_password">
+                <p>Insira sua Senha</p>
+
+                <div class="div_container_input">
+                    <img src="../src/IMGs/icon_profile_info.svg" alt="info_icon">
+                    <input required type="text" name="password" placeholder="********" id="inputPassword">
+                </div>
+            </li>
+
+
+            <li class="li_inputs" id="li_password_confirm">
+                <p>Confirme sua Senha</p>
+
+                <div class="div_container_input">
+                    <img src="../src/IMGs/icon_profile_info.svg" alt="info_icon">
+                    <input required type="text" name="passwordConfirm" placeholder="********" id="inputPasswordConfirm">
+                </div>
+            </li>
+
+
+
+            <li class="li_gender_and_age">
+                <!--Div a esquerda contendo o genero-->
+                <div class="div_container_gender">
+                    <p>Qual seu gênero?</p>
+
+                    <div class="div_container_input base_gender_or_age">
+                        <img src="../src/IMGs/icon_profile_info.svg" alt="info_icon">
+                        <select name="selectGender" id="selectGender">
+                            <option disabled selected value="">Meu gênero é:</option>
+                            <option value="Male">Masculino</option>
+                            <option value="Female">Femenino</option>
+                            <option value="Other">Prefiro nao dizer</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="div_container_gender div_container_age">
+                    <p>Insira sua idade?</p>
+                    <div class="div_container_input base_gender_or_age" id="clickableContainer">
+                        <img src="../src/IMGs/icon_profile_info.svg" alt="info_icon">
+                        <input required type="number" id="birthDate" name="birthDate" placeholder="Idade mínima: 16..." min="16" max="80">
+                    </div>
+                </div>                
+                
+
+            </li>
+
+
+            <button class="btnStartSession" id="btnCreateAccount">Criar Conta</button>
+
+            <div class="div_not_registered_yet">
+                <p>Já tem uma conta? <span id="StartSession">Iniciar Sessão</span></p>
+            </div>
+        </ul>
+    </main>
+
+    <script src="../js/signup.js"></script>
+
+    <script>
+
+    </script>
+</body>
+
+</html>
