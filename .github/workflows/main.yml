@@ -40,4 +40,8 @@ jobs:
           password: ${{ secrets.FTP_PASSWORD_LONY_EXTRA }}
           server-dir: /
           exclude: |
+            .github/**
+            .gitignore
+            node_modules/**
             testscripts/**
+          dangerous-clean-slate: false # Isso impede que arquivos existentes no servidor sejam excluídos se não estiverem no repositório.
