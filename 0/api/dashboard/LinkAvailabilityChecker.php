@@ -18,11 +18,10 @@ function hasValidLinksPerBatch($userId)
     if ($result && $row = $result->fetch_assoc()) {
         $availabilityJson = $row['availabilityJson'];
 
-        // Decodifica o JSON para um objeto PHP
         $linkAvailability = json_decode($availabilityJson, true);
 
         if (!$linkAvailability) {
-            return null; // JSON inválido
+            return null;
         }
 
         function processBatch($links, $validityDays = 30)

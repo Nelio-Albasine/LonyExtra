@@ -34,9 +34,10 @@ document.addEventListener("DOMContentLoaded", function () {
                 } else {
                     showAlert(2, verificationResponse.message || 'Falha ao verificar o OTP. Tente novamente!', true);
                     btnVerifyOTP.disabled = false;
+                    btnVerifyOTP.textContent = "Verificar";
                 }
             } catch (error) {
-                showAlert(2, 'Erro ao verificar o OTP. Tente novamente!');
+                showAlert(2, 'Erro ao verificar o OTP. Tente novamente!', true);
                 btnVerifyOTP.disabled = false;
                 btnVerifyOTP.textContent = "Verificar";
             }
