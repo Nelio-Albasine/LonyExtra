@@ -76,10 +76,7 @@ async function handleUserAccess(email, password) {
             throw new Error(`Erro na requisição: ${response.status}`);
         }
 
-        const textResponse = await response.text();
-        console.log("Raw response: ", textResponse);
-        
-        const loginResponse = JSON.parse(textResponse);
+        loginResponse = await response.json();
     } catch (error) {
         console.error(responseMessage, error);
     }
