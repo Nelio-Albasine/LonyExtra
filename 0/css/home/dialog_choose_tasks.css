@@ -1,11 +1,11 @@
-.status {
+.status_task_availability {
     width: 70%;
     font-size: 14px;
     cursor: pointer;
 }
 
-.status .arrow,
-.status .timer {
+.status_task_availability .arrow,
+.status_task_availability .timer {
     font-size: 1.2em;
 }
 
@@ -145,7 +145,7 @@
 
 
 
-.status {
+.status_task_availability {
     display: inline-flex;
     align-items: center;
     padding: 5px 10px;
@@ -157,17 +157,17 @@
     width: 100%;
 }
 
-.status.disponivel {
+.status_task_availability.disponivel {
     background-color: #2d8b30;
 }
 
-.status.indisponivel {
+.status_task_availability.indisponivel {
     background-color: #5c5c5c;
     color: #f3f3f3;
 }
 
-.status .arrow,
-.status .timer {
+.status_task_availability .arrow,
+.status_task_availability .timer {
     margin-left: 8px;
     font-size: 1.1em;
 }

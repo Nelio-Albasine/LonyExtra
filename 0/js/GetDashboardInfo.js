@@ -269,7 +269,7 @@ async function loadLinksIntoTable(levelIndex) {
 
             const tdStatus = document.createElement("td");
             const statusDiv = document.createElement("div");
-            statusDiv.classList.add("status", tarefa.disponivel ? "disponivel" : "indisponivel");
+            statusDiv.classList.add("status_task_availability", tarefa.disponivel ? "disponivel" : "indisponivel");
 
             statusDiv.innerHTML = tarefa.disponivel
                 ? `<span>${tarefa.status}</span><span class="arrow">➔</span>`
@@ -299,7 +299,7 @@ async function loadLinksIntoTable(levelIndex) {
             }
 
             if (tarefa.key == "Diamante_1") {
-                statusDiv.classList.add("status", "indisponivel");
+                statusDiv.classList.add("status_task_availability", "indisponivel");
                 statusDiv.innerHTML = "Indisponivel";
             }
 
