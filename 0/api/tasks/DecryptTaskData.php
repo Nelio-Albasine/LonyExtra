@@ -315,7 +315,7 @@ function checkIfTaskIdIsAvailable($conn, $userId, $taskId, $jsonBatchName): bool
 
 function getUserTimeZone($conn, $userId)
 {
-    $query = "SELECT userTimeZone FROM usuarios WHERE userId = ?";
+    $query = "SELECT userTimeZone FROM Usuarios WHERE userId = ?";
     $stmt = $conn->prepare($query);
 
     if ($stmt) {

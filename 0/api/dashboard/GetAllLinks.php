@@ -49,6 +49,8 @@ function main()
             echo json_encode($response, JSON_PRETTY_PRINT);
         } catch (Exception $e) {
             $response['message'] = "Erro: " . $e->getMessage();
+            error_log("Erro capturado no GetAllLinks: " . $e->getMessage());            
+
             echo json_encode($response);
         } finally {
             $conn->close();
@@ -68,7 +70,6 @@ function getUserLocalTime($userTimeZone) {
 
     return $currentUtcTime->format("Y-m-d H:i:s");
 }
-
 
 function getLinksAvailability($userId, $conn, $batch = null)
 {
@@ -120,7 +121,6 @@ function getLinksAvailability($userId, $conn, $batch = null)
     return [];
 }
 
-
 function updateLinksIfExpired($conn, $userId, &$links, &$isUpdated)
 {
     $userTimeZone = getUserTimeZone($conn, $userId);
@@ -155,7 +155,7 @@ function saveExpiredLinksUpdate($conn, $userId, $linksMap)
 }
 
 function getUserTimeZone($conn, $userId) {
-    $query = "SELECT userTimeZone FROM usuarios WHERE userId = ?";
+    $query = "SELECT userTimeZone FROM Usuarios WHERE userId = ?";
     $stmt = $conn->prepare($query);
 
     if ($stmt) {
