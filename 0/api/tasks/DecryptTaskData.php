@@ -194,7 +194,7 @@ function updatelinkStatus($conn, $userId, $taskId, $jsonBatchName)
     $isAvailable = false;
 
     $updateQuery = "
-        UPDATE links_availability
+        UPDATE Links_Availability
         SET availabilityJson = JSON_SET(
             availabilityJson,
             '$.$jsonBatchName.$taskId.timeStored', ?,
@@ -288,7 +288,7 @@ function checkIfTaskIdIsAvailable($conn, $userId, $taskId, $jsonBatchName): bool
     // Modifique o caminho JSON para usar aspas duplas nas chaves
     $query = "
         SELECT JSON_EXTRACT(availabilityJson, CONCAT('$.', JSON_QUOTE(?), '.', JSON_QUOTE(?), '.isAvailable')) AS isAvailable
-        FROM links_availability
+        FROM Links_Availability
         WHERE userId = ?
     ";
 
