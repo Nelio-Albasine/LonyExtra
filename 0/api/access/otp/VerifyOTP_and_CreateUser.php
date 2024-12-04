@@ -33,40 +33,47 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $output = ['success' => false, 'message' => null];
     $verifyOTPResponse = verifyOTP($conn, $data['email'], $data['otp']);
 
-    if ($verifyOTPResponse['success']) {
-        require_once '../SignUp.php';
+    try {
+        if ($verifyOTPResponse['success']) {
+            require_once '../SignUp.php';
 
-        if (createNewUser($conn, $data)) {
-            $output = [
-                'success' => true,
-                'message' => "Parabéns, sua conta foi criada com sucesso!",
-                'redirectTo' => "http://127.0.0.1:5500/0/dashboard"
-            ];
+            if (createNewUser($conn, $data)) {
+                $output = [
+                    'success' => true,
+                    'message' => "Parabéns, sua conta foi criada com sucesso!",
+                    'redirectTo' => "http://127.0.0.1:5500/0/dashboard"
+                ];
+            } else {
+                $output = [
+                    'success' => false,
+                    'message' => "Ocorreu um erro ao criar a conta, tente novamente!"
+                ];
+            }
         } else {
             $output = [
                 'success' => false,
-                'message' => "Ocorreu um erro ao criar a conta, tente novamente!"
+                'message' => $verifyOTPResponse['message']
             ];
         }
-    } else {
-        $output = [
-            'success' => false,
-            'message' => $verifyOTPResponse['message']
-        ];
-    }
 
-    echo json_encode($output);
-    exit;
+        echo json_encode($output);
+    } catch (\Throwable $th) {
+        error_log("Ocorreu um erro ao verificar o OTP! O erro: " . $th->getMessage());
+    } finally {
+        $conn = null;
+        exit;
+    }
 } else {
     error_log("A requisição não é POST");
     http_response_code(405);
     die(json_encode(['success' => false, 'message' => 'Método não permitido']));
 }
 
-function verifyOTP($conn, $email, $otp) {
+function verifyOTP($conn, $email, $otp)
+{
     $dbOtp = null;
     $expiresAt = "";
-    
+
     $query = "SELECT otp, expires_at FROM user_otps WHERE email = ? LIMIT 1";
     $stmt = $conn->prepare($query);
     $stmt->bind_param("s", $email);
@@ -90,4 +97,3 @@ function verifyOTP($conn, $email, $otp) {
         return ['success' => false, 'message' => "OTP não encontrado para este e-mail."];
     }
 }
-?>

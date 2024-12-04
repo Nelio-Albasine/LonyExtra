@@ -39,30 +39,37 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         'message' => null
     ];
 
-    require_once "../IsUserRegistered.php";
-    if (IsUserRegistered($data['email'], $conn)) {
-        $output = [
-            'success' => false,
-            'message' => "Este email já está em uso!"
-        ];
-    } else {
-        if (sendOTP($conn, $data)) {
-            $output = [
-                'success' => true,
-                'message' => "OTP enviado com sucesso para o email!",
-                'redirectTo' => "http://127.0.0.1:5500/0/access/confirme-seu-email.html?data=" . urlencode(json_encode($data))
-            ];
-        } else {
+    try {
+        require_once "../IsUserRegistered.php";
+
+        if (IsUserRegistered($data['email'], $conn)) {
             $output = [
                 'success' => false,
-                'message' => "Ocorreu um erro ao enviar o OTP. Tente novamente!"
+                'message' => "Este email já está em uso!"
             ];
+        } else {
+            if (sendOTP($conn, $data)) {
+                $output = [
+                    'success' => true,
+                    'message' => "OTP enviado com sucesso para o email!",
+                    'redirectTo' => "http://127.0.0.1:5500/0/access/confirme-seu-email.html?data=" . urlencode(json_encode($data))
+                ];
+            } else {
+                $output = [
+                    'success' => false,
+                    'message' => "Ocorreu um erro ao enviar o OTP. Tente novamente!"
+                ];
+            }
         }
+
+        echo json_encode($output, JSON_PRETTY_PRINT);
+        exit;
+    } catch (\Throwable $th) {
+        error_log("Ocorreu um erro ao enviar o OTP! O erro: " . $th->getMessage());
+    } finally {
+        $conn = null;
+        exit;
     }
-
-    echo json_encode($output, JSON_PRETTY_PRINT);
-
-    exit;
 } else {
     error_log("A requisição não é POST");
     http_response_code(405);
