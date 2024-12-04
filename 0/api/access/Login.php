@@ -220,7 +220,7 @@ function createDefaultTableDashLinkWithInitialData($conn, $lotes) {
         );
     ";
 
-    $checkTableSQL = "SELECT COUNT(*) AS count FROM Dash_Links_v2";
+    $checkTableSQL = "SELECT COUNT(*) AS count FROM Dash_Links";
 
     $conn->query($createTableSQL);
 
@@ -231,7 +231,7 @@ function createDefaultTableDashLinkWithInitialData($conn, $lotes) {
     }
 
     $insertSQL = "
-        INSERT INTO Dash_Links_v2 (loteBronze, lotePrata, loteOuro, loteDiamante, lotePlatina)
+        INSERT INTO Dash_Links (loteBronze, lotePrata, loteOuro, loteDiamante, lotePlatina)
         VALUES (?, ?, ?, ?, ?)
     ";
     $stmt = $conn->prepare($insertSQL);
