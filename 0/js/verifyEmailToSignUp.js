@@ -81,7 +81,10 @@ async function resendOTP(data) {
             throw new Error('Erro na solicitação');
         }
 
-        const responseData = await response.json();
+        const responseDataText = await response.text();
+        console.log("Resosta do resend: ", responseDataText)
+
+        const responseData = JSON.parse(responseDataText);
         return responseData;
     } catch (error) {
         console.error("Erro:", error);
