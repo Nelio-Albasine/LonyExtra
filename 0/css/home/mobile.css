@@ -4,16 +4,15 @@
 }
 
 @media screen and (max-width: 600px) {
-    main {
-        margin-top: 80px;
+    main{
+        padding-top: 80px;
     }
-
     #notification_icon {
         margin: 0 10px;
     }
 
     .main-content {
-        padding: 6px 6px 0 6px !important;
+        padding: 0  10px !important;
     }
 
     .stat-label {

@@ -1,6 +1,14 @@
 @media screen and (min-width: 770px) {
+  .drawer_icon {
+    left: 40px;
+    margin-left: 60px;
+  }
+  main {
+    padding: 120px 40px 15px 40px;
+  }
+
   .header_ul {
-    padding: 15px 40px;
+    padding: 15px 80px;
   }
 
   .main-content {

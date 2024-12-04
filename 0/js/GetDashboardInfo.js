@@ -76,7 +76,6 @@ document.addEventListener("DOMContentLoaded", async function () {
 });
 
 
-
 function handleStartTasksClicks() {
     const containerBronzeChecker = document.getElementById("containerBronzeChecker");
     const containerPrataChecker = document.getElementById("containerPrataChecker");

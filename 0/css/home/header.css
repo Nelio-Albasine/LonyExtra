@@ -9,10 +9,6 @@ header {
     z-index: 100;
 }
 
-main {
-    margin-top: 100px;
-    padding: 0 15px !important;
-}
 
 .header_ul {
     display: flex;
