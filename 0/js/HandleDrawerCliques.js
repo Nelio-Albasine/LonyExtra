@@ -49,8 +49,6 @@ let userCashoutAdress = null;
 let optionText = null;
 let targetDialogId = null;
 let dialogTitle = null;
-const userId = "391f58325968d93b6778b9722f953bb063b44254d8e04109955c52b928ac9782";
-
 
 document.addEventListener("DOMContentLoaded", () => {
     openEspecificDialog(window.location.hash);

@@ -19,8 +19,9 @@ let textInvitationCode = null;
 const userId = "391f58325968d93b6778b9722f953bb063b44254d8e04109955c52b928ac9782";
 let dashInfo = null;
 
-GetDashboardInfo(userId).then(dashInfo => {
-    console.log(dashInfo);
+GetDashboardInfo(userId).then(resultDashInfo => {
+    dashInfo = resultDashInfo
+    console.log("dashInfo obtido antes do DOM:", dashInfo);
 }).catch(error => {
     console.error('Erro ao obter dados do dashboard:', error);
 });
@@ -133,7 +134,6 @@ async function FetchAllLinks(userId, batch = null) {
 
 async function loadLinksIntoTable(levelIndex) {
     const dialog_title_tasks_remaining = document.getElementById("dialog_title_tasks_remaining");
-    const userId = "391f58325968d93b6778b9722f953bb063b44254d8e04109955c52b928ac9782";
 
     if (previusLinksFetched === null) {
         allLinks = await FetchAllLinks(userId);
