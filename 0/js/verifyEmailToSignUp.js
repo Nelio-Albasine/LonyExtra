@@ -19,6 +19,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         btnVerifyOTP.addEventListener("click", async () => {
             btnVerifyOTP.disabled = true;
+            btnVerifyOTP.textContent = "Aguarde...";
             userData.otp = inputOTP.value.trim();
 
             try {
@@ -37,6 +38,7 @@ document.addEventListener("DOMContentLoaded", function () {
             } catch (error) {
                 showAlert(2, 'Erro ao verificar o OTP. Tente novamente!');
                 btnVerifyOTP.disabled = false;
+                btnVerifyOTP.textContent = "Verificar";
             }
         });
     }

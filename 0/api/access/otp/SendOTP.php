@@ -114,9 +114,9 @@ function createOtpTable($conn)
     ";
 
     if ($conn->query($query) === TRUE) {
-        // echo "Tabela 'user_otps' criada com sucesso.";
+        // echo "Tabela 'Users_OTPs' criada com sucesso.";
     } else {
-        // echo "Erro ao criar a tabela 'user_otps': " . $conn->error;
+        // echo "Erro ao criar a tabela 'Users_OTPs': " . $conn->error;
     }
 }
 

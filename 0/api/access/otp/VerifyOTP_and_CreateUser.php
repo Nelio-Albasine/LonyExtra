@@ -74,7 +74,7 @@ function verifyOTP($conn, $email, $otp)
     $dbOtp = null;
     $expiresAt = "";
 
-    $query = "SELECT otp, expires_at FROM user_otps WHERE email = ? LIMIT 1";
+    $query = "SELECT otp, expires_at FROM Users_OTPs WHERE email = ? LIMIT 1";
     $stmt = $conn->prepare($query);
     $stmt->bind_param("s", $email);
     $stmt->execute();
