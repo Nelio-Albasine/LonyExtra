@@ -159,6 +159,9 @@
     text-align: center !important;
     white-space: nowrap;
 }
+.card_option_name:hover {   
+    color: white;
+}
 
 .card_option_name.unavailable {
     padding: 4px 15px;

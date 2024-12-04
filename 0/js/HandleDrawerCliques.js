@@ -1,5 +1,6 @@
 const hashToDialogData = {
     "#TodosLinks": { id: "dialog_all_links", title: "Todos os Links" },
+    "#TodosLinks": { id: "dialog_all_links", title: "Todos os Links" },
     "#ConverterEstrelas": { id: "dialog_convert_stars", title: "Converter Estrelas" },
     "#ConvidarAmigos": { id: "dialog_convidar_amigos", title: "Convidar Amigos" },
     "#Sacar": { id: "dialog_sacar", title: "Sacar Saldo" },
@@ -46,6 +47,8 @@ let indexToCashOut = null;
 let userCashoutName = null;
 let userCashoutAdress = null;
 let optionText = null;
+let targetDialogId = null;
+let dialogTitle = null;
 const userId = "391f58325968d93b6778b9722f953bb063b44254d8e04109955c52b928ac9782";
 
 
@@ -75,11 +78,19 @@ function openEspecificDialog(dialogIdHasHashFormat = null) {
         }
 
         p_available_revenue.forEach(text => {
-            text.style.display = hashToDialogData[dialogIdHasHashFormat].id == "dialog_sacar" ? "flex" : "none";
+            text.style.display = dialogIdHasHashFormat == "dialog_sacar" ? "flex" : "none";
         })
 
-        let targetDialogId = hashToDialogData[dialogIdHasHashFormat].id
-        let dialogTitle = hashToDialogData[dialogIdHasHashFormat]?.title
+
+        let hashFromTasks = ["#tarefas_bronze", "#tarefas_prata", "#tarefas_ouro", "#tarefas_diamante", "#tarefas_platina"];
+        if (hashFromTasks.includes(dialogIdHasHashFormat)) {
+            targetDialogId = hashToDialogData["#TodosLinks"].id
+            dialogTitle = hashToDialogData["#TodosLinks"]?.title
+        } else {
+            targetDialogId = hashToDialogData[dialogIdHasHashFormat].id
+            dialogTitle = hashToDialogData[dialogIdHasHashFormat]?.title
+        }
+
 
         dialogs.forEach(dialog => {
             dialog.style.display = "none";

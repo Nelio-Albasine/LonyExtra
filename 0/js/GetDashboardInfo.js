@@ -40,7 +40,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     handleLinkAvailabilityChecker(dashInfo.hasValidLinksPerBatch);
     handleStartTasksClicks();
     handleURLHashs();
-    
+
     window.addEventListener("hashchange", handleURLHashs);
 
     userName.forEach(text => {
@@ -54,7 +54,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     userRevenue.forEach(text => {
         text.textContent = userPoints.userRevenue.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
     });
-    
+
     userLTRevenue.forEach(text => {
         text.textContent = userPoints.userLTRevenue.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
     });
@@ -89,6 +89,7 @@ function handleStartTasksClicks() {
 
     startTasksBtns.forEach((btn, index) => {
         btn.addEventListener("click", () => {
+            console.log("clicado, index: ", index)
             handleDialogChooseTask(index);
         });
     });
@@ -329,28 +330,23 @@ async function loadLinksIntoTable(levelIndex) {
 function handleDialogChooseTask(levelIndex) {
     const overlay = document.getElementById("overlay");
 
-    if (isOverlayVisible) {
-        overlay.style.display = "none";
-        isOverlayVisible = !isOverlayVisible
-    } else {
-        overlay.style.display = "flex";
-        isOverlayVisible = !isOverlayVisible
+    overlay.style.display = "flex";
+    isOverlayVisible = !isOverlayVisible
 
-        const dialog_title = document.getElementById("dialog_title");
-        const dialog_title_level_name = document.getElementById("dialog_title_level_name");
+    const dialog_title = document.getElementById("dialog_title");
+    const dialog_title_level_name = document.getElementById("dialog_title_level_name");
 
-        const levelsNames = ["Bronze", "Prata", "Ouro", "Diamante", "Platina"];
-        dialog_title_level_name.textContent = levelsNames[levelIndex]
-        dialog_title.textContent = "Escolha uma tarefa para prosseguir!";
+    const levelsNames = ["Bronze", "Prata", "Ouro", "Diamante", "Platina"];
+    dialog_title_level_name.textContent = levelsNames[levelIndex]
+    dialog_title.textContent = "Escolha uma tarefa para prosseguir!";
 
-        const dialogs = document.querySelectorAll(".main_container_all_dialogs .the_dialog_container");
+    const dialogs = document.querySelectorAll(".main_container_all_dialogs .the_dialog_container");
 
-        dialogs.forEach(dialog => {
-            dialog.style.display = dialog.id === "dialog_all_links" ? "block" : "none";
-        });
+    dialogs.forEach(dialog => {
+        dialog.style.display = dialog.id === "dialog_all_links" ? "block" : "none";
+    });
 
-        loadLinksIntoTable(levelIndex);
-    }
+    loadLinksIntoTable(levelIndex);
 }
 
 async function GetDashboardInfo(userId) {

@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", () => {
     card_option_name.forEach(card => {
         card.addEventListener("click", () => {
             console.log("clicado")
-            //showBoxAlertMessage("Estamos fazendo algumas melhorias...", "warning");
+            showBoxAlertMessage("Estamos fazendo algumas melhorias...", "warning");
         });
     });
 });
