@@ -33,8 +33,11 @@ try {
 
             $hasValidLinksPerBatch = hasValidLinksPerBatch($userId);
 
-            if(empty($hasValidLinksPerBatch())){
+            error_log("O hasValidLinksPerBatch retornouL " . $hasValidLinksPerBatch);
+
+            if (empty($hasValidLinksPerBatch())) {
                 $hasValidLinksPerBatch = insertLinksAvailability($userId, $conn);
+                error_log("O insertLinksAvailability retornouL " . $hasValidLinksPerBatch);
             }
 
             $myInviterInfo = [];
