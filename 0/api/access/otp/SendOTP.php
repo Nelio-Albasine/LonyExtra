@@ -103,7 +103,7 @@ function createTableUserIfNotExists($conn)
 function createOtpTable($conn)
 {
     $query = "
-        CREATE TABLE IF NOT EXISTS user_otps (
+        CREATE TABLE IF NOT EXISTS Users_OTPs (
             id INT AUTO_INCREMENT PRIMARY KEY,
             email VARCHAR(100) NOT NULL,
             otp VARCHAR(6) NOT NULL,
@@ -122,7 +122,7 @@ function createOtpTable($conn)
 
 function sendOTP($conn, $data)
 {
-    createOtpTable($conn);
+    createOtpTable($conn); 
 
     $otp = str_pad(rand(0, 999999), 6, '0', STR_PAD_LEFT);
     $email = $data['email'];
@@ -130,18 +130,23 @@ function sendOTP($conn, $data)
     $surname = $data['surname'];
     $userName = "$name $surname";
 
-    $query = "INSERT INTO user_otps (email, otp, expires_at) VALUES (?, ?, DATE_ADD(NOW(), INTERVAL 5 MINUTE)) ON DUPLICATE KEY UPDATE otp = VALUES(otp), expires_at = VALUES(expires_at)";
+    $query = "INSERT INTO Users_OTPs (email, otp, expires_at)
+              VALUES (?, ?, DATE_ADD(NOW(), INTERVAL 5 MINUTE)) 
+              ON DUPLICATE KEY UPDATE otp = VALUES(otp), expires_at = VALUES(expires_at)";
+
     $stmt = $conn->prepare($query);
     $stmt->bind_param("ss", $email, $otp);
-
-    if (sendOTPtoEmail($userName, $email, $otp)) {
-        error_log("Otp inserido com sucesso na tabela");
-        return true;
+  
+    if ($stmt->execute()) {
+        if (sendOTPtoEmail($userName, $email, $otp)) {
+            error_log("OTP inserido com sucesso na tabela e enviado por e-mail");
+            return true;
+        } else {
+            error_log("Erro ao enviar OTP para o e-mail");
+        }
     } else {
         error_log("Erro ao inserir OTP na tabela");
-        
     }
-
     return false;
 }
 
