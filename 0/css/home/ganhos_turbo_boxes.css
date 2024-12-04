@@ -146,15 +146,18 @@
 .card_option_name {
     position: absolute;
     bottom: 6px;
-    padding: 4px 15px;
+    padding: 4px 5px !important;
     color: black;
     background-color: yellow;
     border: none;
     border-radius: 6px;
     font-size: 12px;
     cursor: pointer;
-    width: 70%;
-    align-self: center;
+    width: 80%;
+    overflow: hidden;
+    align-self: center !important;
+    text-align: center !important;
+    white-space: nowrap;
 }
 
 .card_option_name.unavailable {
