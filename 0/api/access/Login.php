@@ -79,13 +79,23 @@ function authenticateUser($email, $passwordInput, $conn, &$userId): bool
     }
 
     $stmt->bind_param("s", $email);
-    $stmt->execute();
-    $stmt->bind_result($passwordFromDatabase);
+    if (!$stmt->execute()) {
+        error_log("Erro ao executar a consulta: " . $stmt->error);
+        $stmt->close();
+        return false;
+    }
+
+    $stmt->bind_result($passwordFromDatabase, $userId);
     $stmt->fetch();
     $stmt->close();
 
-    return $passwordFromDatabase && password_verify($passwordInput, $passwordFromDatabase);
+    if (!$passwordFromDatabase) {
+        return false;
+    }
+
+    return password_verify($passwordInput, $passwordFromDatabase);
 }
+
 function createTableUserIfNotExists($conn)
 {
     $queryCreateUser = "CREATE TABLE IF NOT EXISTS Usuarios (
