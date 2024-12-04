@@ -210,7 +210,7 @@ function updatelinkStatus($conn, $userId, $taskId, $jsonBatchName)
     }
 
     // Bind dos parâmetros (string para timeStored, boolean para isAvailable, e int para userId)
-    $stmt->bind_param("sii", $timeToStored, $isAvailable, $userId);
+    $stmt->bind_param("sis", $timeToStored, $isAvailable, $userId);
 
     // Executa a query e verifica o resultado
     if ($stmt->execute()) {

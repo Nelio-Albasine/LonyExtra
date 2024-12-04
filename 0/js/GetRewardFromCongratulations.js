@@ -168,6 +168,7 @@ async function sendEncryptedDataToServer(encryptedData, iv, btnGetReward) {
         } else {
             btnGetReward.disabled = false;
             console.error(result.message)
+            btnGetReward.textContent = "Tentar novamente!";
             feedbackMessage = "Ocorreu um erro ao somar estrelas!";
             showBoxAlert(feedbackMessage, "success");
         }
