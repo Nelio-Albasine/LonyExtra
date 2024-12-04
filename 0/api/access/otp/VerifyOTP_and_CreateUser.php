@@ -58,6 +58,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } catch (\Throwable $th) {
         error_log("Ocorreu um erro ao verificar o OTP! O erro: " . $th->getMessage());
     } finally {
+        error_log("Resposta a da veridicacao do OTP e criacao do user : " . print_r($output, true));
         echo json_encode($output);
         $conn = null;
         exit;

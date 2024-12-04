@@ -1,40 +1,41 @@
+var userData = null;
+
+
 document.addEventListener("DOMContentLoaded", function () {
     const btnVerifyOTP = document.getElementById("btnVerifyOTP");
     const inputOTP = document.getElementById("inputOTP");
     const userEmailToVerify = document.getElementById("userEmailToVerify");
 
-    let data = null;
     const urlParams = new URLSearchParams(window.location.search);
 
     if (!urlParams.has('data')) {
         showAlert(2, "Crie sua conta primeiro para poder receber o código de verificação!");
     } else {
-        data = JSON.parse(urlParams.get('data'));
+        userData = JSON.parse(urlParams.get('data'));
 
         startCountdown();
 
-        userEmailToVerify.textContent = data.email;
+        userEmailToVerify.textContent = userData.email;
 
         btnVerifyOTP.addEventListener("click", async () => {
             btnVerifyOTP.disabled = true;
-            data.otp = inputOTP.value.trim();
+            userData.otp = inputOTP.value.trim();
 
             try {
-                const verificationResponse = await verifyOTP(data);
+                const verificationResponse = await verifyOTP(userData);
 
                 if (verificationResponse.success) {
-                    localStorage.setItem("userId", data.userId)
+                    localStorage.setItem("userId", userData.userId)
                     showAlert(0, 'Parabéns, sua conta foi criada com sucesso! Redirecionando para a tela principal...', true);
                     btnVerifyOTP.style.backgroundColor = "green";
                     btnVerifyOTP.textContent = "Conta criada com sucesso!";
                     window.location.href = verificationResponse.redirectTo
                 } else {
-                    showAlert(2, verificationResponse.message || 'Falha ao verificar o OTP. Tente novamente!');
+                    showAlert(2, verificationResponse.message || 'Falha ao verificar o OTP. Tente novamente!', true);
                     btnVerifyOTP.disabled = false;
                 }
             } catch (error) {
                 showAlert(2, 'Erro ao verificar o OTP. Tente novamente!');
-                console.error("Erro:", error);
                 btnVerifyOTP.disabled = false;
             }
         });
@@ -57,7 +58,6 @@ async function verifyOTP(data) {
         }
 
         const responseData = await response.json();
-        console.log("Resposta da API:", responseData);
         return responseData;
     } catch (error) {
         console.error("Erro:", error);
@@ -66,7 +66,7 @@ async function verifyOTP(data) {
 }
 
 async function resendOTP(data) {
-    const url = 'http://localhost/LonyExtra/0/api/access/otp/SendOTP.php';
+    const url = 'http://localhost/LonyExtra/0/api/access/VerifyOTP_and_CreateUser.php';
 
     try {
         const response = await fetch(url, {
@@ -82,7 +82,6 @@ async function resendOTP(data) {
         }
 
         const responseData = await response.json();
-        console.log("Resposta da API:", responseData);
         return responseData;
     } catch (error) {
         console.error("Erro:", error);
@@ -106,7 +105,8 @@ function startCountdown() {
             countdownDisplay.textContent = "Reenviar OTP";
             countdownDisplay.addEventListener("click", () => {
                 startCountdown();
-                resendOTP(data);
+                resendOTP(userData);
+                showAlert(1, "OTP reenviado com sucesso!", true);
             }, { once: true });
         }
     }, 1000);
