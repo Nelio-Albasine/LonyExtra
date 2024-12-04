@@ -75,7 +75,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     exit;
 }
 
-
 function createTableUserIfNotExists($conn)
 {
     $queryCreateUser = "CREATE TABLE IF NOT EXISTS Usuarios (

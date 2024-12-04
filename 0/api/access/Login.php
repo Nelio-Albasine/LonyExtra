@@ -64,7 +64,6 @@ if ($_SERVER['REQUEST_METHOD'] == "GET") {
 } else {
     error_log("A requisição não é GET");
 }
-
 function authenticateUser($email, $passwordInput, $conn): bool
 {
     $passwordFromDatabase = null;
@@ -85,7 +84,6 @@ function authenticateUser($email, $passwordInput, $conn): bool
 
     return $passwordFromDatabase && password_verify($passwordInput, $passwordFromDatabase);
 }
-
 function createTableUserIfNotExists($conn)
 {
     $queryCreateUser = "CREATE TABLE IF NOT EXISTS Usuarios (
@@ -108,7 +106,6 @@ function createTableUserIfNotExists($conn)
         die("Erro ao criar a tabela: " . mysqli_error($conn));
     }
 }
-
 function handleDefaultDashLinksTableCreation($conn) {
     $lotes = [
         'loteBronze' => json_encode([
