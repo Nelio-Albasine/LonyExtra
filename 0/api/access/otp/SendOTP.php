@@ -63,7 +63,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     } catch (\Throwable $th) {
         error_log("Ocorreu um erro ao enviar o OTP! O erro: " . $th->getMessage());
     } finally {
-        error_log("Resposta do SendOTP para o usuarios: : " .print_r($output, true));
         echo json_encode($output);
         $conn->close();
         exit;

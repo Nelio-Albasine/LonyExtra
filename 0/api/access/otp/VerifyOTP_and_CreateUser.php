@@ -55,11 +55,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 'message' => $verifyOTPResponse['message']
             ];
         }
-
-        echo json_encode($output);
     } catch (\Throwable $th) {
         error_log("Ocorreu um erro ao verificar o OTP! O erro: " . $th->getMessage());
     } finally {
+        echo json_encode($output);
         $conn = null;
         exit;
     }

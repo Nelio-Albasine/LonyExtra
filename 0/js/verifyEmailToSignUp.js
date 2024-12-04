@@ -11,8 +11,6 @@ document.addEventListener("DOMContentLoaded", function () {
     } else {
         data = JSON.parse(urlParams.get('data'));
 
-        console.log(data);
-
         startCountdown();
 
         userEmailToVerify.textContent = data.email;
@@ -44,7 +42,7 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 async function verifyOTP(data) {
-    const url = 'http://localhost/LonyExtra/0/api/access/otp/VerifyOTP.php';
+    const url = 'http://localhost/LonyExtra/0/api/access/otp/VerifyOTP_and_CreateUser.php';
     try {
         const response = await fetch(url, {
             method: 'POST',
