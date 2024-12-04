@@ -16,6 +16,15 @@ var myInviterInfo = null
 let textInvitationLink = null;
 let textInvitationCode = null;
 
+const userId = "391f58325968d93b6778b9722f953bb063b44254d8e04109955c52b928ac9782";
+let dashInfo = null;
+
+GetDashboardInfo(userId).then(dashInfo => {
+    console.log(dashInfo);
+}).catch(error => {
+    console.error('Erro ao obter dados do dashboard:', error);
+});
+
 document.addEventListener("DOMContentLoaded", async function () {
     const userName = document.querySelectorAll(".userName");
     const userEmail = document.querySelectorAll(".userEmail");
@@ -28,8 +37,6 @@ document.addEventListener("DOMContentLoaded", async function () {
     textTotalInvitedFriends = document.querySelectorAll(".textTotalInvitedFriends");
     textTotalStarsEarnedByReferrals = document.querySelectorAll(".textTotalStarsEarnedByReferrals");
 
-    const userId = "391f58325968d93b6778b9722f953bb063b44254d8e04109955c52b928ac9782";
-    const dashInfo = await GetDashboardInfo(userId);
     userInfo = dashInfo.userInfo;
     myInviterInfo = JSON.parse(dashInfo.myInviterInfo);
     const userPoints = JSON.parse(userInfo.userPointsJSON);

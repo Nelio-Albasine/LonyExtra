@@ -931,6 +931,27 @@ function handleProfileDIalog() {
         let userJoinedAt = new Date(info.userJoinedAt);
         let currentTime = new Date();
 
+        // Verificar se o cadastro foi hoje ou ontem
+        let isToday = userJoinedAt.toDateString() === currentTime.toDateString();
+        let isYesterday = new Date(currentTime.setDate(currentTime.getDate() - 1)).toDateString() === userJoinedAt.toDateString();
+
+        // Caso o cadastro tenha sido hoje ou ontem
+        if (isToday) {
+            joinedDateElement.textContent = "Hoje";
+        } else if (isYesterday) {
+            joinedDateElement.textContent = "Ontem";
+        } else {
+            // Caso o cadastro tenha sido antes de ontem, mostra a data
+            let joinedDate = userJoinedAt.toLocaleDateString("pt-BR", {
+                day: "2-digit",
+                month: "long",
+                year: "numeric",
+                timeZone: userTimeZone
+            });
+            joinedDateElement.textContent = `em ${joinedDate}`;
+        }
+
+        // Calculando o tempo desde o cadastro
         let timeDifference = currentTime - userJoinedAt;
 
         let seconds = Math.floor(timeDifference / 1000);
@@ -941,33 +962,30 @@ function handleProfileDIalog() {
         let years = Math.floor(months / 12);
 
         let timeElapsedText = "";
-        if (years > 0) {
-            timeElapsedText = `${years} ano${years > 1 ? "s" : ""}`;
-        } else if (months > 0) {
-            timeElapsedText = `${months} mês${months > 1 ? "es" : ""}`;
-        } else if (days > 0) {
-            timeElapsedText = `${days} dia${days > 1 ? "s" : ""}`;
-        } else if (hours > 0) {
+        if (isToday || isYesterday) {
+            // Se foi hoje ou ontem, mostra as horas
             timeElapsedText = `${hours} hora${hours > 1 ? "s" : ""}`;
-        } else if (minutes > 0) {
-            timeElapsedText = `${minutes} minuto${minutes > 1 ? "s" : ""}`;
         } else {
-            timeElapsedText = `${seconds} segundo${seconds > 1 ? "s" : ""}`;
+            // Se foi antes de ontem, mostra o tempo normal
+            if (years > 0) {
+                timeElapsedText = `${years} ano${years > 1 ? "s" : ""}`;
+            } else if (months > 0) {
+                timeElapsedText = `${months} mês${months > 1 ? "es" : ""}`;
+            } else if (days > 0) {
+                timeElapsedText = `${days} dia${days > 1 ? "s" : ""}`;
+            } else if (hours > 0) {
+                timeElapsedText = `${hours} hora${hours > 1 ? "s" : ""}`;
+            } else if (minutes > 0) {
+                timeElapsedText = `${minutes} minuto${minutes > 1 ? "s" : ""}`;
+            } else {
+                timeElapsedText = `${seconds} segundo${seconds > 1 ? "s" : ""}`;
+            }
         }
 
-
-        let joinedDate = userJoinedAt.toLocaleDateString("pt-BR", {
-            day: "2-digit",
-            month: "long",
-            year: "numeric",
-            timeZone: userTimeZone
-        });
-
-        joinedDateElement.textContent = joinedDate;
         timeElapsedTextElement.textContent = timeElapsedText;
     });
-
 }
+
 
 function handleSignOutDIalog() {
     waitForUserInfo().then(_ => {
@@ -983,7 +1001,7 @@ function handleSignOutDIalog() {
         confirmLogout.addEventListener("click", () => {
             confirmLogout.disabled = true;
             confirmLogout.textContent = "Deslogando...";
-
+            localStorage.clear();
             window.location.href = "../access/login.html";
         })
 

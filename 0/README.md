@@ -10,12 +10,13 @@
 
 # - Diálogo de perfil ####### FEITO
 
+# - Diaog perffil para caso o user tenha se cadastrado hj, mostrar: Hj ao iinves de por exemplo: dia x de ####### FEITOy...
+
+## - Fechar diálogo que às vezes apresenta erro
+
+## - Login (Redirecionar para o email especifico dono da sessao)
+
+
 -> AJUSTAR p await n Arquivo: GetDashBoardInfo.js para estar fora do DOMContentLoaded
-
-
-- Login (Redirecionar para o email especifico dono da sessao)
-
-- Fechar diálogo que às vezes apresenta erro
-
 
 -> COLCAR para mudar o userId que foi hardcoded ao enviar pro servidor

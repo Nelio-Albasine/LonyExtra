@@ -36,15 +36,17 @@ if ($_SERVER['REQUEST_METHOD'] == "GET") {
 
     $email = $_GET["email"];
     $password = $_GET["password"];
+    $userId = null;
 
     require_once "IsUserRegistered.php";
 
     if (IsUserRegistered($email, $conn)) {
-        if (authenticateUser($email, $password, $conn)) {
+        if (authenticateUser($email, $password, $conn, $userId)) {
             $output = [
                 "success" => true,
                 "message" => "Login feito com sucesso!",
                 "redirectTo" => "http://127.0.0.1:5500/0/dashboard/",
+                "userId" => $userId
             ];
         } else {
             $output = [
@@ -64,11 +66,11 @@ if ($_SERVER['REQUEST_METHOD'] == "GET") {
 } else {
     error_log("A requisição não é GET");
 }
-function authenticateUser($email, $passwordInput, $conn): bool
+function authenticateUser($email, $passwordInput, $conn, &$userId): bool
 {
     $passwordFromDatabase = null;
 
-    $query = "SELECT userPassword FROM Usuarios WHERE userEmail = ?";
+    $query = "SELECT userPassword, userId FROM Usuarios WHERE userEmail = ?";
     $stmt = $conn->prepare($query);
 
     if (!$stmt) {
@@ -106,7 +108,8 @@ function createTableUserIfNotExists($conn)
         die("Erro ao criar a tabela: " . mysqli_error($conn));
     }
 }
-function handleDefaultDashLinksTableCreation($conn) {
+function handleDefaultDashLinksTableCreation($conn)
+{
     $lotes = [
         'loteBronze' => json_encode([
             'link_1' => 'https://alpharede.com/Bronze_Tarefa_1',
@@ -199,10 +202,11 @@ function handleDefaultDashLinksTableCreation($conn) {
         createDefaultTableDashLinkWithInitialData($conn, $lotes);
     } catch (Exception $e) {
         error_log("ocorreu um erro ao criar a tabela Dash_Links, o erro é: " . $e->getMessage());
-    } 
+    }
 }
 
-function createDefaultTableDashLinkWithInitialData($conn, $lotes) {
+function createDefaultTableDashLinkWithInitialData($conn, $lotes)
+{
     $createTableSQL = "
         CREATE TABLE IF NOT EXISTS Dash_Links (
             id INT AUTO_INCREMENT PRIMARY KEY,
@@ -221,7 +225,7 @@ function createDefaultTableDashLinkWithInitialData($conn, $lotes) {
     $result = $conn->query($checkTableSQL);
     $row = $result->fetch_assoc();
     if ($row['count'] > 0) {
-        return false; 
+        return false;
     }
 
     $insertSQL = "

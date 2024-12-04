@@ -31,6 +31,8 @@ document.addEventListener("DOMContentLoaded", function () {
         const loginResponse = await handleUserAccess(inputEmail, inputPassword);
 
         if (loginResponse.success) {
+            localStorage.clear();
+            localStorage.setItem("userId", loginResponse.userId);
             btnStartSession.style.backgroundColor = "green";
             btnStartSession.innerText = "Redirecionando...!";
             showAlert(0, loginResponse.message);

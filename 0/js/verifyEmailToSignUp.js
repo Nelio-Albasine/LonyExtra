@@ -27,6 +27,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 const verificationResponse = await verifyOTP(userData);
 
                 if (verificationResponse.success) {
+                    localStorage.clear();
                     localStorage.setItem("userId", userData.userId)
                     showAlert(0, 'Parabéns, sua conta foi criada com sucesso! Redirecionando para a tela principal...', true);
                     btnVerifyOTP.style.backgroundColor = "green";

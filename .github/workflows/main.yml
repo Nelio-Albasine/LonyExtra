@@ -23,6 +23,11 @@ jobs:
           find . \( -name "*.php" -o -name "*.js" -o -name "*.html" \) -exec sed -i 's|http://localhost/LonyExtra/|https://lonyextra.com/|g' {} +
           find . \( -name "*.php" -o -name "*.js" -o -name "*.html" \) -exec sed -i 's|http://127.0.0.1:5500/|https://lonyextra.com/|g' {} +
 
+      - name: 🔄 Update userId in JavaScript files
+        run: |
+            # Substituir const userId com valor fixo por const userId = localStorage.getItem("userId")
+            find . -type f -name "*.js" -exec sed -i 's|const userId = "391f58325968d93b6778b9722f953bb063b44254d8e04109955c52b928ac9782";|const userId = localStorage.getItem("userId");|g' {} +
+
       - name: 🔧 Remove debugging and CORS headers from PHP files
         run: |
           # Remover as linhas de erro e cabeçalhos CORS de arquivos PHP
