@@ -32,36 +32,35 @@ function verifyPassword() {
     return inputPassword.value === inputPasswordConfirm.value
 }
 
-async function getTimeZoneFromAPIWithTimeout(timeout = 5000) {
-    const controller = new AbortController();
-    const signal = controller.signal;
-
-    const timeoutId = setTimeout(() => controller.abort(), timeout);
-
+async function getTimeZoneFromAPI() {
     try {
-        const response = await fetch("https://worldtimeapi.org/api/ip", { signal });
-        if (!response.ok) throw new Error("Erro ao obter dados da API.");
-        const data = await response.json();
+        fetch("https://worldtimeapi.org/api/ip")
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("Erro ao obter dados da API.");
+                }
+                return response.json();
+            })
+            .then(data => {
+                userTimeZone = data.timezone
+                console.log("Fuso horário:", data.timezone);
+            })
+            .catch(error => {
+                console.error("Erro ao obter fuso horário da API:", error);
+            });
 
-        return data.timezone;
+        console.log("Requisição enviada!");
     } catch (error) {
-        console.error("Erro ao obter fuso horário da API:", error);
-        return null;
-    } finally {
-        clearTimeout(timeoutId);
+        console.error("Erro no processo:", error);
     }
 }
 
+getTimeZoneFromAPI();
 
 function getUserTimeZoneFromLocal() {
     const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
     return timeZone;
 }
-
-getTimeZoneFromAPIWithTimeout().then((tz) => {
-    userTimeZone = tz || getUserTimeZoneFromLocal();
-});
-
 
 document.addEventListener("DOMContentLoaded", async function () {
     textStartSession.addEventListener("click", () => {
@@ -84,7 +83,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
         let userId = await emailToUniqueHash(inputEmail.value);
 
-        if(!userTimeZone){
+        if (!userTimeZone) {
             userTimeZone = getUserTimeZoneFromLocal();
         }
 
@@ -108,7 +107,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                     btnCreateAccount.disabled = true;
                     btnCreateAccount.innerText = "Aguarde...";
 
-                    let sendResponse = await sendOTPtoVerifyEmail(Object.fromEntries(allFields)); 
+                    let sendResponse = await sendOTPtoVerifyEmail(Object.fromEntries(allFields));
 
                     if (sendResponse.success) {
                         btnCreateAccount.innerText = "Redirecionando...";
