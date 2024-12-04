@@ -11,7 +11,8 @@ document.addEventListener("DOMContentLoaded", function () {
     if (!urlParams.has('data')) {
         showAlert(2, "Crie sua conta primeiro para poder receber o código de verificação!");
     } else {
-        userData = JSON.parse(urlParams.get('data'));
+        const dataEncoded = urlParams.get('data');
+        userData = JSON.parse(atob(dataEncoded));
 
         startCountdown();
 

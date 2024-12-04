@@ -48,10 +48,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             ];
         } else {
             if (sendOTP($conn, $data)) {
+                $dataEncoded = base64_encode(json_encode($data));
                 $output = [
                     'success' => true,
                     'message' => "OTP enviado com sucesso para o email!",
-                    'redirectTo' => "http://127.0.0.1:5500/0/access/confirme-seu-email.html?data=" . urlencode(json_encode($data))
+                    'redirectTo' => "http://127.0.0.1:5500/0/access/confirme-seu-email.html?data=" . urlencode($dataEncoded)
                 ];
             } else {
                 $output = [
