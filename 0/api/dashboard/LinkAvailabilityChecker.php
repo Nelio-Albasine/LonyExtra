@@ -68,30 +68,4 @@ function hasValidLinksPerBatch($userId)
     return null;
 }
 
-/*
-// Exemplo de uso (descomente para teste)
 
-$userId = isset($_GET['userId']) ? $_GET['userId'] : null;
-
-if (!$userId) {
-    die("Erro: userId não fornecido.");
-}
-
-require_once "../Wamp64Connection.php";
-
-$conn = Wamp64Connection();
-
-if ($conn === false) {
-    die("Erro ao conectar ao banco de dados.");
-}
-
-try {
-    $resultJson = hasValidLinksPerBatch($userId);
-    echo $resultJson ?: "Nenhum registro encontrado para o userId.";
-} catch (Exception $e) {
-    echo "Erro ao verificar links: " . $e->getMessage();
-} finally {
-    $conn->close();
-}
-
-*/

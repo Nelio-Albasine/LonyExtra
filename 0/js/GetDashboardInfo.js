@@ -452,9 +452,6 @@ function updateHomeTaskAvailability(container, textTask, availability) {
 
 
         countdownIntervals[intervalKey] = setInterval(() => {
-
-            //let remainingTime = calculateRemainingTime(availability.oldestTimeStored, availability.currentTime);
-
             let remainingTime = 1
 
             if (remainingTime === "Expirado") {
