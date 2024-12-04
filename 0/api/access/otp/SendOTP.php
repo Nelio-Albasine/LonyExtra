@@ -63,7 +63,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     } catch (\Throwable $th) {
         error_log("Ocorreu um erro ao enviar o OTP! O erro: " . $th->getMessage());
     } finally {
-        echo json_encode($output, JSON_PRETTY_PRINT);
+        error_log("Resposta do SendOTP para o usuarios: : " .print_r($output, true));
+        echo json_encode($output);
         $conn->close();
         exit;
     }
@@ -118,7 +119,6 @@ function createOtpTable($conn)
     }
 }
 
-
 function sendOTP($conn, $data)
 {
     createOtpTable($conn);
@@ -158,7 +158,7 @@ function sendOTPtoEmail($to_user_name, $to_user_email, $otp)
 
         $mail = new PHPMailer\PHPMailer\PHPMailer();
         $mail->IsSMTP();
-        $mail->SMTPDebug = 1;
+        $mail->SMTPDebug = 0;
         $mail->SMTPAuth = true;
         $mail->SMTPSecure = 'ssl';
         $mail->Host = "mail.lonyextra.com";
