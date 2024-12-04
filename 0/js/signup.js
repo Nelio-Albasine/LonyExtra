@@ -43,13 +43,10 @@ async function getTimeZoneFromAPI() {
             })
             .then(data => {
                 userTimeZone = data.timezone
-                console.log("Fuso horário:", data.timezone);
             })
             .catch(error => {
                 console.error("Erro ao obter fuso horário da API:", error);
             });
-
-        console.log("Requisição enviada!");
     } catch (error) {
         console.error("Erro no processo:", error);
     }
@@ -165,8 +162,8 @@ async function sendOTPtoVerifyEmail(data) {
         }
 
         const responseData = await response.json();
-        console.log("Resposta da API em JSON:", responseData);
-        return responseData; // Retorna o JSON
+        console.log("Resposta da API SignUp:", responseData);
+        return responseData; 
     } catch (error) {
         console.error("Erro:", error);
         return { success: false, message: "Erro ao comunicar com o servidor" };

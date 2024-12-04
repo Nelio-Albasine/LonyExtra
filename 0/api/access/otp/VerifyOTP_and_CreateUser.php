@@ -22,7 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $conn = Wamp64Connection();
     $data = json_decode(file_get_contents('php://input'), true);
 
-    $requiredFields = ['userId', 'name', 'surname', 'email', 'password', 'gender', 'age', 'otp'];
+    $requiredFields = ['userId', 'name', 'surname', 'email', 'password', 'gender', 'age'];
     $missingFields = array_filter($requiredFields, fn($field) => empty($data[$field]));
 
     if (!empty($missingFields)) {
