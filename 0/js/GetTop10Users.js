@@ -100,7 +100,18 @@ function loadTop10UserIntoTable(topUsers) {
 
         tbody.appendChild(row);
     });
+
+
+    hindeBigOverlayLoader();
 }
+
+
+function hindeBigOverlayLoader() {
+    document.getElementById("full_container_loading").style.display = "none";
+    document.body.style.overflow = 'auto';
+    document.querySelector('.progress').style.animation = 'none';
+}
+
 
 async function fetchTop10UsersFromServer() {
     try {
