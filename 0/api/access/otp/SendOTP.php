@@ -63,6 +63,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     } catch (\Throwable $th) {
         error_log("Ocorreu um erro ao enviar o OTP! O erro: " . $th->getMessage());
     } finally {
+        error_log("Out put do enviar OTP é " .print_r($$output, true));
+
         echo json_encode($output);
         $conn->close();
         exit;
@@ -132,7 +134,11 @@ function sendOTP($conn, $data)
     $stmt->bind_param("ss", $email, $otp);
 
     if (sendOTPtoEmail($userName, $email, $otp)) {
+        error_log("Otp inserido com sucesso na tabela");
         return true;
+    } else {
+        error_log("Erro ao inserir OTP na tabela");
+        
     }
 
     return false;
