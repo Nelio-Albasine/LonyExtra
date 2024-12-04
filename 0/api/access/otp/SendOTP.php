@@ -1,7 +1,6 @@
 <?php
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
-ini_set('log_errors', 1);
 ini_set('error_log', __DIR__ . '/../../logs/send_OTP.log');
 
 // Definindo os cabeçalhos CORS diretamente 
@@ -61,13 +60,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 ];
             }
         }
-
-        echo json_encode($output, JSON_PRETTY_PRINT);
-        exit;
     } catch (\Throwable $th) {
         error_log("Ocorreu um erro ao enviar o OTP! O erro: " . $th->getMessage());
     } finally {
-        $conn = null;
+        echo json_encode($output, JSON_PRETTY_PRINT);
+        $conn->close();
         exit;
     }
 } else {

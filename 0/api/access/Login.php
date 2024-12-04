@@ -59,9 +59,6 @@ if ($_SERVER['REQUEST_METHOD'] == "GET") {
         ];
     }
 
-    //FOR TESTs
-    error_log(print_r($output, true));
-
     echo json_encode($output);
     $conn->close();
 } else {
