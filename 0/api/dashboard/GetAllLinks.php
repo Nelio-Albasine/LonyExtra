@@ -4,6 +4,7 @@ ini_set('display_errors', 1);
 ini_set('error_log', __DIR__ . '/../logs/GetAllLinksToTable.log');
 
 require_once "../Wamp64Connection.php";
+
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: GET, OPTIONS');
 header('Access-Control-Allow-Headers: Content-Type');
@@ -28,7 +29,7 @@ function main()
         exit;
     }
 
-    $conn = getMySQLConnection();
+    $conn = Wamp64Connection();
 
     if ($conn) {
         try {
@@ -159,7 +160,7 @@ function getLinksAvailability($userId, $conn, $batch = null)
 
 function getLinksBatchs($conn)
 {
-    $sql = "SELECT loteBronze, lotePrata, loteOuro, loteDiamante, lotePlatina FROM dash_links";
+    $sql = "SELECT loteBronze, lotePrata, loteOuro, loteDiamante, lotePlatina FROM Dash_Links";
     $stmt = $conn->prepare($sql);
 
     if ($stmt) {
@@ -197,7 +198,7 @@ function createLinkGroup($batch, $conn)
     }
 
     $batchLinks = $linksBatchs[0][$batchKey];
-    for ($i = 1; $i <= 10; $i++) {
+    for ($i = 1; $i <= 15; $i++) {
         $linkKey = "link_" . $i;
         $url = $batchLinks[$linkKey] ?? null;
 

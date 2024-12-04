@@ -31,7 +31,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     textUserPoints.textContent = currentStars.toLocaleString("pt-PT");
 
     btnGetReward.addEventListener("click", async () => {
-        await sendEncryptedDataToServer(getCookie("taskData"), iv, btnGetReward, taskIndex);
+        await sendEncryptedDataToServer(getCookie("taskData"), iv, btnGetReward);
     });
 });
 
@@ -129,7 +129,7 @@ function getCookie(name) {
     return null;
 }
 
-async function sendEncryptedDataToServer(encryptedData, iv, btnGetReward, taskIndex) {
+async function sendEncryptedDataToServer(encryptedData, iv, btnGetReward) {
     btnGetReward.textContent = "Aguarde...";
     btnGetReward.disabled = true;
     let feedbackMessage = null;

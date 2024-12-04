@@ -46,7 +46,7 @@ function main()
         respondWithError('Os dados descriptografados não são um JSON válido.');
     }
 
-    $conn = getMySQLConnection();
+    $conn = Wamp64Connection();
     $linkStatusUpdateResponse = processUserPointsAndLinkStatus($conn, $decryptedData);
 
     // Retorna uma resposta de sucesso

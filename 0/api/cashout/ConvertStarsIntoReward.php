@@ -40,7 +40,7 @@ function main() {
     $userId = $data["userId"];
     $index = (int) $data["index"]; 
 
-    $conn = getMySQLConnection();
+    $conn = Wamp64Connection();
 
     try {
         $response = handleConversion($conn, $userId, $index);

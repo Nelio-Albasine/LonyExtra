@@ -42,7 +42,6 @@ async function getTimeZoneFromAPIWithTimeout(timeout = 5000) {
         const response = await fetch("https://worldtimeapi.org/api/ip", { signal });
         if (!response.ok) throw new Error("Erro ao obter dados da API.");
         const data = await response.json();
-        console.log("Timezone: ",  data.timezone);
 
         return data.timezone;
     } catch (error) {
@@ -101,8 +100,6 @@ document.addEventListener("DOMContentLoaded", async function () {
             ["inviterCode", inviterCode]
         ]);
 
-        console.log(allFields);
-
         const allFieldsFilled = Array.from(allFields.values()).every(field => String(field).trim() !== "");
 
         if (allFieldsFilled) {
@@ -136,9 +133,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
 function limitateInputsMaxChars(maxChars = 20) {
     let num = 0;
-
     let inputs = [inputName, inputSurName];
-
     inputs.forEach(input => {
         input.addEventListener("input", () => {
             if (input.value.length > maxChars) {
@@ -146,7 +141,6 @@ function limitateInputsMaxChars(maxChars = 20) {
             }
 
             num++;
-            console.log(`Texto alterado ${num} vezes no campo ${input.name}`);
         });
     });
 }

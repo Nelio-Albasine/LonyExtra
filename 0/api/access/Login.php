@@ -13,9 +13,10 @@ header('Content-Type: application/json; charset=utf-8');
 require_once "../Wamp64Connection.php";
 
 if ($_SERVER['REQUEST_METHOD'] == "GET") {
-    $conn = getMySQLConnection();
+    $conn = Wamp64Connection();
 
     createTableUserIfNotExists($conn);
+    handleDefaultDashLinksTableCreation($conn);
 
     $output = [
         "success" => null,
@@ -88,7 +89,6 @@ function authenticateUser($email, $passwordInput, $conn): bool
     return $passwordFromDatabase && password_verify($passwordInput, $passwordFromDatabase);
 }
 
-
 function createTableUserIfNotExists($conn)
 {
     $queryCreateUser = "CREATE TABLE IF NOT EXISTS Usuarios (
@@ -110,4 +110,139 @@ function createTableUserIfNotExists($conn)
     if (!mysqli_query($conn, $queryCreateUser)) {
         die("Erro ao criar a tabela: " . mysqli_error($conn));
     }
+}
+
+function handleDefaultDashLinksTableCreation($conn) {
+    $lotes = [
+        'loteBronze' => json_encode([
+            'link_1' => 'https://alpharede.com/Bronze_Tarefa_1',
+            'link_2' => 'https://alpharede.com/Bronze_Tarefa_2',
+            'link_3' => 'https://alpharede.com/Bronze_Tarefa_3',
+            'link_4' => 'https://alpharede.com/Bronze_Tarefa_4',
+            'link_5' => 'https://alpharede.com/Bronze_Tarefa_5',
+            'link_6' => 'https://alpharede.com/Bronze_Tarefa_6',
+            'link_7' => 'https://alpharede.com/Bronze_Tarefa_7',
+            'link_8' => 'https://alpharede.com/Bronze_Tarefa_8',
+            'link_9' => 'https://alpharede.com/Bronze_Tarefa_9',
+            'link_10' => 'https://alpharede.com/Bronze_Tarefa_10',
+            'link_11' => 'https://alpharede.com/Bronze_Tarefa_11',
+            'link_12' => 'https://alpharede.com/Bronze_Tarefa_12',
+            'link_13' => 'https://alpharede.com/Bronze_Tarefa_13',
+            'link_14' => 'https://alpharede.com/Bronze_Tarefa_14',
+            'link_15' => 'https://alpharede.com/Bronze_Tarefa_15'
+        ]),
+        'lotePrata' => json_encode([
+            'link_1' => 'https://alpharede.com/Prata_Tarefa_1',
+            'link_2' => 'https://alpharede.com/Prata_Tarefa_2',
+            'link_3' => 'https://alpharede.com/Prata_Tarefa_3',
+            'link_4' => 'https://alpharede.com/Prata_Tarefa_4',
+            'link_5' => 'https://alpharede.com/Prata_Tarefa_5',
+            'link_6' => 'https://alpharede.com/Prata_Tarefa_6',
+            'link_7' => 'https://alpharede.com/Prata_Tarefa_7',
+            'link_8' => 'https://alpharede.com/Prata_Tarefa_8',
+            'link_9' => 'https://alpharede.com/Prata_Tarefa_9',
+            'link_10' => 'https://alpharede.com/Prata_Tarefa_10',
+            'link_11' => 'https://alpharede.com/Prata_Tarefa_11',
+            'link_12' => 'https://alpharede.com/Prata_Tarefa_12',
+            'link_13' => 'https://alpharede.com/Prata_Tarefa_13',
+            'link_14' => 'https://alpharede.com/Prata_Tarefa_14',
+            'link_15' => 'https://alpharede.com/Prata_Tarefa_15'
+        ]),
+        'loteOuro' => json_encode([
+            'link_1' => 'https://alpharede.com/Ouro_Tarefa_1',
+            'link_2' => 'https://alpharede.com/Ouro_Tarefa_2',
+            'link_3' => 'https://alpharede.com/Ouro_Tarefa_3',
+            'link_4' => 'https://alpharede.com/Ouro_Tarefa_4',
+            'link_5' => 'https://alpharede.com/Ouro_Tarefa_5',
+            'link_6' => 'https://alpharede.com/Ouro_Tarefa_6',
+            'link_7' => 'https://alpharede.com/Ouro_Tarefa_7',
+            'link_8' => 'https://alpharede.com/Ouro_Tarefa_8',
+            'link_9' => 'https://alpharede.com/Ouro_Tarefa_9',
+            'link_10' => 'https://alpharede.com/Ouro_Tarefa_10',
+            'link_11' => 'https://alpharede.com/Ouro_Tarefa_11',
+            'link_12' => 'https://alpharede.com/Ouro_Tarefa_12',
+            'link_13' => 'https://alpharede.com/Ouro_Tarefa_13',
+            'link_14' => 'https://alpharede.com/Ouro_Tarefa_14',
+            'link_15' => 'https://alpharede.com/Ouro_Tarefa_15'
+        ]),
+        'loteDiamante' => json_encode([
+            'link_1' => 'https://alpharede.com/Diamante_Tarefa_1',
+            'link_2' => 'https://alpharede.com/Diamante_Tarefa_2',
+            'link_3' => 'https://alpharede.com/Diamante_Tarefa_3',
+            'link_4' => 'https://alpharede.com/Diamante_Tarefa_4',
+            'link_5' => 'https://alpharede.com/Diamante_Tarefa_5',
+            'link_6' => 'https://alpharede.com/Diamante_Tarefa_6',
+            'link_7' => 'https://alpharede.com/Diamante_Tarefa_7',
+            'link_8' => 'https://alpharede.com/Diamante_Tarefa_8',
+            'link_9' => 'https://alpharede.com/Diamante_Tarefa_9',
+            'link_10' => 'https://alpharede.com/Diamante_Tarefa_10',
+            'link_11' => 'https://alpharede.com/Diamante_Tarefa_11',
+            'link_12' => 'https://alpharede.com/Diamante_Tarefa_12',
+            'link_13' => 'https://alpharede.com/Diamante_Tarefa_13',
+            'link_14' => 'https://alpharede.com/Diamante_Tarefa_14',
+            'link_15' => 'https://alpharede.com/Diamante_Tarefa_15'
+        ]),
+        'lotePlatina' => json_encode([
+            'link_1' => 'https://alpharede.com/Platina_Tarefa_1',
+            'link_2' => 'https://alpharede.com/Platina_Tarefa_2',
+            'link_3' => 'https://alpharede.com/Platina_Tarefa_3',
+            'link_4' => 'https://alpharede.com/Platina_Tarefa_4',
+            'link_5' => 'https://alpharede.com/Platina_Tarefa_5',
+            'link_6' => 'https://alpharede.com/Platina_Tarefa_6',
+            'link_7' => 'https://alpharede.com/Platina_Tarefa_7',
+            'link_8' => 'https://alpharede.com/Platina_Tarefa_8',
+            'link_9' => 'https://alpharede.com/Platina_Tarefa_9',
+            'link_10' => 'https://alpharede.com/Platina_Tarefa_10',
+            'link_11' => 'https://alpharede.com/Platina_Tarefa_11',
+            'link_12' => 'https://alpharede.com/Platina_Tarefa_12',
+            'link_13' => 'https://alpharede.com/Platina_Tarefa_13',
+            'link_14' => 'https://alpharede.com/Platina_Tarefa_14',
+            'link_15' => 'https://alpharede.com/Platina_Tarefa_15'
+        ])
+    ];
+
+    try {
+        createDefaultTableDashLinkWithInitialData($conn, $lotes);
+    } catch (Exception $e) {
+        error_log("ocorreu um erro ao criar a tabela Dash_Links, o erro é: " . $e->getMessage());
+    } 
+}
+
+function createDefaultTableDashLinkWithInitialData($conn, $lotes) {
+    $createTableSQL = "
+        CREATE TABLE IF NOT EXISTS Dash_Links (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            loteBronze JSON NULL,
+            lotePrata JSON NULL,
+            loteOuro JSON NULL,
+            loteDiamante JSON NULL,
+            lotePlatina JSON NULL
+        );
+    ";
+
+    $checkTableSQL = "SELECT COUNT(*) AS count FROM Dash_Links_v2";
+
+    $conn->query($createTableSQL);
+
+    $result = $conn->query($checkTableSQL);
+    $row = $result->fetch_assoc();
+    if ($row['count'] > 0) {
+        return false; 
+    }
+
+    $insertSQL = "
+        INSERT INTO Dash_Links_v2 (loteBronze, lotePrata, loteOuro, loteDiamante, lotePlatina)
+        VALUES (?, ?, ?, ?, ?)
+    ";
+    $stmt = $conn->prepare($insertSQL);
+    $stmt->bind_param(
+        'sssss',
+        $lotes['loteBronze'],
+        $lotes['lotePrata'],
+        $lotes['loteOuro'],
+        $lotes['loteDiamante'],
+        $lotes['lotePlatina']
+    );
+    $stmt->execute();
+    return true;
 }

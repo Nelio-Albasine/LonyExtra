@@ -21,7 +21,7 @@ try {
     require_once "../Wamp64Connection.php";
 
     if ($_SERVER['REQUEST_METHOD'] == "GET") {
-        $conn = getMySQLConnection();
+        $conn = Wamp64Connection();
 
         if (isset($_GET['userId'])) {
             $userId = $_GET['userId'];

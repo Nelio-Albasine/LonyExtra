@@ -2,7 +2,7 @@
 function hasValidLinksPerBatch($userId)
 {
     require_once "../Wamp64Connection.php";
-    $conn = getMySQLConnection();
+    $conn = Wamp64Connection();
 
     $query = "SELECT availabilityJson FROM Links_Availability WHERE userId = ?";
     $stmt = $conn->prepare($query);
@@ -80,7 +80,7 @@ if (!$userId) {
 
 require_once "../Wamp64Connection.php";
 
-$conn = getMySQLConnection();
+$conn = Wamp64Connection();
 
 if ($conn === false) {
     die("Erro ao conectar ao banco de dados.");

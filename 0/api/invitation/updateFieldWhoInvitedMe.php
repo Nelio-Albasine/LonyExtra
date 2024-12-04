@@ -30,7 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (!empty($userId) && !empty($inviteCodeInserted)) {
         require_once "handleInvitation.php";
 
-        $conn = getMySQLConnection();
+        $conn = Wamp64Connection();
 
         try {
             if (thisInviteCodeReallyExists($conn, $inviteCodeInserted)) {

@@ -1,5 +1,5 @@
 <?php
-function getMySQLConnection()
+function Wamp64Connection()
 {
     $dbHost = 'localhost';
     $dbName = "qyagfite_Lony_Extra";

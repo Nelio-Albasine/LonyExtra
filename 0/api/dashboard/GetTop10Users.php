@@ -14,7 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 
 require_once "../Wamp64Connection.php";
 
-$conn = getMySQLConnection();
+$conn = Wamp64Connection();
 
 try {
     $topUsers = getTop10Users($conn);

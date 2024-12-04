@@ -13,7 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     exit;
 }
 
-$conn = getMySQLConnection();
+$conn = Wamp64Connection();
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     $userId = $_GET["userId"];

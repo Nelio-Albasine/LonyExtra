@@ -19,7 +19,7 @@ header('Content-Type: application/json; charset=utf-8');
 require_once "../../Wamp64Connection.php";
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $conn = getMySQLConnection();
+    $conn = Wamp64Connection();
     createTableUserIfNotExists($conn);
 
     $data = json_decode(file_get_contents('php://input'), true);

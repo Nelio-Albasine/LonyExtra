@@ -111,9 +111,11 @@ async function FetchAllLinks(userId, batch = null) {
             throw new Error(`Erro na requisição: ${response.status}`);
         }
 
-        const dashInfoResponse = await response.json();
-        currentServerDate = dashInfoResponse.currentDate
-        return dashInfoResponse.links;
+        const allLinksResponse = await response.json();
+        console.log("Links Fetched: ", allLinksResponse)
+
+        currentServerDate = allLinksResponse.currentDate
+        return allLinksResponse.links;
     } catch (error) {
         console.error("Erro ao buscar links:", error);
         return null;
@@ -161,7 +163,7 @@ async function loadLinksIntoTable(levelIndex) {
             nome: `Tarefa`,
             pontos: pointsToEarnByLevel,
             status: value.isAvailable ? "Disponível" : `⏳ ${timeLeft}`,
-            disponivel: value.isAvailable,
+            disponivel: key == "Diamante_1" ? false : value.isAvailable,
             url: value.url,
             key: key,
         };
@@ -268,6 +270,7 @@ async function loadLinksIntoTable(levelIndex) {
             const tdStatus = document.createElement("td");
             const statusDiv = document.createElement("div");
             statusDiv.classList.add("status", tarefa.disponivel ? "disponivel" : "indisponivel");
+
             statusDiv.innerHTML = tarefa.disponivel
                 ? `<span>${tarefa.status}</span><span class="arrow">➔</span>`
                 : `<span>${tarefa.status}</span>`;
@@ -293,6 +296,11 @@ async function loadLinksIntoTable(levelIndex) {
                         console.error("Ocorreu um erro ao salvar para os cookies: ")
                     }
                 });
+            }
+
+            if (tarefa.key == "Diamante_1") {
+                statusDiv.classList.add("status", "indisponivel");
+                statusDiv.innerHTML = "Indisponivel";
             }
 
             tdStatus.appendChild(statusDiv);
