@@ -22,6 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $data = json_decode(file_get_contents('php://input'), true);
 
     $email = $data['email'];
+
     $output = [
         'success' => null,
         'message' => null,
@@ -49,6 +50,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         ];
     }
 
+    error_log("Resposta da redefinicao da senha: ". print_r($output, true));
     echo json_encode($output);
     $conn->close();
     exit;
@@ -82,17 +84,23 @@ function getUserNameAndSurname($conn, $userEmail)
     }
 }
 
-
 function encryptData($userEmail)
 {
     require_once '../../tasks/Config.php';
 
     $SECRET_KEY = LONY_EXTRA_POINTS_SECRET_KEY;
     $metodo = "AES-256-CBC";
-
     $iv = openssl_random_pseudo_bytes(openssl_cipher_iv_length($metodo));
 
-    $dados_encriptados = openssl_encrypt($userEmail, $metodo, $SECRET_KEY, 0, $iv);
+    $timestamp = time(); 
+    $expiryTime = $timestamp + 15 * 60;  
+
+    $dataToEncrypt = json_encode([
+        'email' => $userEmail,
+        'expiryTime' => $expiryTime
+    ]);
+
+    $dados_encriptados = openssl_encrypt($dataToEncrypt, $metodo, $SECRET_KEY, 0, $iv);
 
     if ($dados_encriptados === false) {
         throw new Exception("Falha ao encriptar os dados.");
@@ -114,7 +122,7 @@ function sendEmailWithURLtoResetPassword($userEmail, $conn)
     $encryptedData = encryptData($userEmail);
 
     //reset password url 
-    $resetURL = "http://127.0.0.1:5500/0/access/redefinir-senha.html?data=" . $encryptedData["encryptedData"] . "&iv=" . $encryptedData["iv"];
+    $resetURL = "http://127.0.0.1:5500/0/access/update-password.html?data=" . $encryptedData["encryptedData"] . "&iv=" . $encryptedData["iv"];
 
     try {
         $phpMailerPath = "../../../../PHPMailer-master/PHPMailer-master/src/PHPMailer.php";
@@ -345,7 +353,7 @@ function sendEmailWithURLtoResetPassword($userEmail, $conn)
                 </html>
                   ';
 
-        $mail->AddAddress($to_user_email);
+        $mail->AddAddress($userEmail);
 
         try {
             $mail->send();

@@ -37,7 +37,7 @@ document.addEventListener("DOMContentLoaded", function () {
             btnStartSession.innerText = "Redirecionando...!";
             showAlert(0, loginResponse.message);
             setTimeout(() => {
-                window.location.href = loginResponse.redirectTo;
+                window.history.replaceState({}, "", loginResponse.redirectTo);
             }, 1500);
         } else {
             btnStartSession.innerText = "Tentar mais novamente!";
@@ -47,16 +47,19 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 
+
 function showAlert(alertIndex, message) {
+    const divAlertMessage = document.getElementById('div_alert_message');
+    const textAlert = document.getElementById('textAlert');
     const alertColors = { 0: "green", 1: "#FFB300", 2: "red" };
-    divAlertMessage.style.display = "flex";
     divAlertMessage.style.backgroundColor = alertColors[alertIndex];
     textAlert.innerText = message;
-
+    divAlertMessage.classList.add('show');
     setTimeout(() => {
-        divAlertMessage.style.display = "none";
+        divAlertMessage.classList.remove('show'); 
     }, 3500);
 }
+
 
 function areAllFieldsFilled(email, password) {
     return email !== "" && password !== "";

@@ -52,20 +52,26 @@
 
     <div id="div_container_otp_verification">
 
-        <img id="otp_big_logo" src="../src/imgs/email_sent.png" alt="Sucess Signup">
+        <img id="otp_big_logo" src="" alt="Sucess Signup">
 
         <h1 id="otp_title">Email de redefinição enviado!</h1>
 
         <p id="otp_description">Enviamos um email com link para redefinicao da sua palavra pase, verifique a
             usa caixa de entrada! </p>
 
-            <button id="btnRedirecting" onclick="window.location.href='login.html';">Ok</button>
+        <button id="btnRedirecting">Ok</button>
 
     </div>
 
     <p id="textSeeYourSpam">
         caso nao tenha recebido apos uns 5 minutos, observe a sua caisa de Spam.
     </p>
+
+    <script>
+        document.getElementById("btnRedirecting").addEventListener("click", () => {
+            window.history.replaceState({}, "", "login.html");
+        });
+    </script>
 </body>
 
 </html>

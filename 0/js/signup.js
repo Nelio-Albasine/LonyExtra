@@ -108,7 +108,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
                     if (sendResponse.success) {
                         btnCreateAccount.innerText = "Redirecionando...";
-                        window.location.href = sendResponse.redirectTo;
+                        window.history.replaceState({}, "", sendResponse.redirectTo);
                     } else {
                         btnCreateAccount.disabled = false;
                         btnCreateAccount.innerText = "Criar Conta";
@@ -163,7 +163,7 @@ async function sendOTPtoVerifyEmail(data) {
 
         const responseData = await response.json();
         console.log("Resposta da API SignUp:", responseData);
-        return responseData; 
+        return responseData;
     } catch (error) {
         console.error("Erro:", error);
         return { success: false, message: "Erro ao comunicar com o servidor" };

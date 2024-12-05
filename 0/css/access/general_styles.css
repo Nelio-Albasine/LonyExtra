@@ -1,17 +1,26 @@
-#div_alert_message{
-    display: none;
+#div_alert_message {
+    display: none; /* Inicialmente oculto */
     width: 100%;
     padding: 10px;
     color: white;
     justify-content: center;
-    position: absolute;
+    position: fixed; /* Alterei para fixed para garantir que ele fique no topo da página */
     text-align: center;
-    top: 0;
+    top: -100px; /* Inicialmente fora da tela, acima */
     left: 0;
     right: 0;
     font-size: 14px;
-    transition: 0.5s;
     box-shadow: 1px 4px 6px #dcdee4;
     border-bottom-left-radius: 15px;
     border-bottom-right-radius: 15px;
+    background-color: #333; /* Cor de fundo, você pode ajustar */
+    transition: top 0.5s ease-in-out, opacity 0.5s ease-in-out; /* Efeito suave ao exibir e ocultar */
+    opacity: 0; /* Começa invisível */
+}
+
+
+#div_alert_message.show {
+    display: block; 
+    top: 0; 
+    opacity: 1; 
 }
