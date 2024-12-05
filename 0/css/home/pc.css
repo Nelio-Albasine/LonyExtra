@@ -23,3 +23,11 @@
     margin-top: 8px;
   }
 }
+
+
+@media only screen and (min-width: 2560px) {
+  body {
+      max-width: 1080px;
+      margin: 0 auto; 
+  }
+}
