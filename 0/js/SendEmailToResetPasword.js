@@ -7,11 +7,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
     let params = new URLSearchParams(window.location.search);
 
-    if (params.has("email") && params.get("email") ) {
+    if (params.has("email") && params.get("email") !== "null") {
         let email = params.get("email");
         inputEmailToResetPassword.value = email;
     }
-
+    
 
     btnResetPassword.addEventListener("click", async (event) => {
         event.preventDefault();
