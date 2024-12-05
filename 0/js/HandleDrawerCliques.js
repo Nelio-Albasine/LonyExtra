@@ -766,7 +766,8 @@ function getInitials(name, surname) {
     return nameInitial + surnameInitial;
 }
 
-function hadeUIwhenInvitedCodeIsInserted(inviterInfo) {
+function hadeUIwhenInvitedCodeIsInserted(inviterInfoString) {
+    const inviterInfo = JSON.parse(inviterInfoString);
     console.log("Dentro do: hadeUIwhenInvitedCodeIsInserted: ", inviterInfo);
     console.log("O userName: ", inviterInfo.userName);
     console.log("O userSurname: ", inviterInfo.userSurname);
@@ -845,7 +846,7 @@ function handleInviteFriendsDialog() {
         let invitation_code_input = document.getElementById("invitation_code_input");
         let btnVerifyInvitationCode = document.getElementById("btnVerifyInvitationCode");
 
-        console.log("Dentro do DIALOG e o myInviterInfo é:", myInviterInfo);
+
 
         copyIcons.forEach((icon, index) => {
             icon.addEventListener("click", () => {
