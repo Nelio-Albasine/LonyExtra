@@ -22,12 +22,12 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
 
-        let response = await tryToSendEmailToResetPassword(value);
         btnResetPassword.disabled = true;
         btnResetPassword.textContent = "Aguarde...";
 
+        let response = await tryToSendEmailToResetPassword(value);
+     
         if (response.success) {
-            window.location.href = response.redirectTo
             window.history.replaceState({}, "", response.redirectTo);
         } else {
             showAlert(2, response.message);
