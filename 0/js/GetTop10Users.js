@@ -102,11 +102,11 @@ function loadTop10UserIntoTable(topUsers) {
     });
 
 
-    hindeBigOverlayLoader();
+    hideBigOverlayLoader();
 }
 
 
-function hindeBigOverlayLoader() {
+function hideBigOverlayLoader() {
     document.getElementById("full_container_loading").style.display = "none";
     document.body.style.overflow = 'auto';
     document.querySelector('.progress').style.animation = 'none';

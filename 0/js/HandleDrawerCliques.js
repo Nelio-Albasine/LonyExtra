@@ -49,6 +49,7 @@ let userCashoutAdress = null;
 let optionText = null;
 let targetDialogId = null;
 let dialogTitle = null;
+let myReferralCode = null;
 
 document.addEventListener("DOMContentLoaded", () => {
     openEspecificDialog(window.location.hash);
@@ -766,13 +767,19 @@ function getInitials(name, surname) {
     return nameInitial + surnameInitial;
 }
 
-function hadeUIwhenInvitedCodeIsInserted(inviterInfoString) {
-    const inviterInfo = JSON.parse(inviterInfoString);
-    console.log("Dentro do: hadeUIwhenInvitedCodeIsInserted: ", inviterInfo);
-    console.log("O userName: ", inviterInfo.userName);
-    console.log("O userSurname: ", inviterInfo.userSurname);
-    console.log("O LT Stars: ", inviterInfo.LTStars);
+function hadeUIwhenInvitedCodeIsInserted(inviterInfoParam) {
+    let inviterInfo = null;
 
+    if (typeof inviterInfoParam === "string") {
+        try {
+            inviterInfo = JSON.parse(inviterInfoParam);
+        } catch (error) {
+            console.error("O parâmetro fornecido não é um JSON válido.", error);
+            inviterInfo = null;
+        }
+    } else {
+        inviterInfo = inviterInfoParam;
+    }
     let myInviterInfo = document.querySelectorAll(".container_div_who_invited_me");
     let insert_invite_code = document.querySelectorAll(".insert_invite_code");
     let h3_tem_algum_codigo = document.querySelectorAll(".h3_tem_algum_codigo");
@@ -829,7 +836,110 @@ async function makeRequestToApplyInvitedCode(inviteCodeInserted, btn) {
     btn.disabled = true
 }
 
-function handleInviteFriendsDialog() {
+async function makeRequestToGetAllInvitedFriends(myReferralCode) {
+    try {
+        const response = await fetch(`http://localhost/LonyExtra/0/api/invitation/GetAllInvitedFriends.php?myReferralCode=${myReferralCode}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error(`Erro na requisição: ${response.status}`);
+        }
+
+        const result = await response.json();
+        console.log("O AllInvited Friends retornou: ", result)
+
+        return result;
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+function loadInvitedFriendsIntoTable(invitedFriendsList) {
+    let empty_invited_friends = document.getElementById("empty_invited_friends");
+    let table_invited_friends = document.querySelectorAll(".table_invited_friends");
+    let tbody_invited_friends = document.getElementById("tbody_invited_friends");
+    let p_SemAmigosConvidados = document.getElementById("p_SemAmigosConvidados");
+
+    // Verifica se a lista de amigos está vazia
+    if (!invitedFriendsList || invitedFriendsList.length === 0) {
+        // Este usuário não tem amigos convidados
+        p_SemAmigosConvidados.textContent = "Sem amigos convidados!";
+        empty_invited_friends.style.display = "flex";
+        table_invited_friends.forEach(t => t.style.display = "none");
+        tbody_invited_friends.style.display = "none";
+        return;
+    }
+
+    // Exibe a tabela e oculta a mensagem de "sem amigos"
+    empty_invited_friends.style.display = "none";
+    table_invited_friends.forEach(t => t.style.display = "block");
+    tbody_invited_friends.style.display = "flex";
+
+    // Limpa o conteúdo atual do tbody antes de preencher
+    tbody_invited_friends.innerHTML = "";
+
+    // Itera sobre a lista de amigos e cria as linhas dinamicamente
+    invitedFriendsList.forEach(friend => {
+        // Cria elementos HTML para a estrutura da tabela
+        let tr = document.createElement("tr");
+
+        let td = document.createElement("td");
+        let divFriendInfo = document.createElement("div");
+        divFriendInfo.classList.add("friend-info");
+
+        let divInitials = document.createElement("div");
+        divInitials.style.width = "40px";
+        divInitials.style.height = "40px";
+        divInitials.style.borderRadius = "50%";
+        divInitials.style.display = "flex";
+        divInitials.style.alignItems = "center";
+        divInitials.style.justifyContent = "center";
+        divInitials.style.backgroundColor = "#007bff";
+        divInitials.style.color = "#fff";
+        divInitials.style.fontWeight = "bold";
+        divInitials.textContent = getInitials(friend.userName, friend.userSurname);
+
+        let divContainerInfo = document.createElement("div");
+        divContainerInfo.classList.add("container_friends_referred_img_name_email");
+
+        let pName = document.createElement("p");
+        pName.classList.add("invited_name");
+        pName.innerHTML = `<strong>${friend.userName} ${friend.userSurname}</strong>`;
+
+        let pEmail = document.createElement("p");
+        pEmail.classList.add("invited_email");
+        pEmail.textContent = "Nivel não disponível"; // Substitua pelo email se estiver disponível no retorno
+
+        let divContainerStars = document.createElement("div");
+        divContainerStars.classList.add("container_earned_stars_for_this_friend");
+
+        let pStars = document.createElement("p");
+        pStars.textContent = `✨ ${friend.userLTStars.toLocaleString()}`;
+
+        // Monta a estrutura
+        divContainerInfo.appendChild(pName);
+        divContainerInfo.appendChild(pEmail);
+
+        divContainerStars.appendChild(pStars);
+
+        divFriendInfo.appendChild(divInitials);
+        divFriendInfo.appendChild(divContainerInfo);
+        divFriendInfo.appendChild(divContainerStars);
+
+        td.appendChild(divFriendInfo);
+        tr.appendChild(td);
+
+        // Adiciona a linha à tabela
+        tbody_invited_friends.appendChild(tr);
+    });
+}
+
+
+async function handleInviteFriendsDialog() {
     async function waitForInvitation() {
         while (userInvitationInfo === null) {
             await new Promise(resolve => setTimeout(resolve, 1000));
@@ -838,22 +948,24 @@ function handleInviteFriendsDialog() {
         return userInvitationInfo;
     }
 
-    waitForInvitation().then(invite => {
-        textInvitationLink.textContent = `https://lonyextra.com?invite=${invite.myReferralCode}`;
-        textInvitationCode.textContent = invite.myReferralCode
+    waitForInvitation().then(async invite => {
+        myInviteCode = invite.myReferralCode
+        textInvitationLink.textContent = `https://lonyextra.com?invite=${myInviteCode}`;
+        textInvitationCode.textContent = myInviteCode
 
         let copyIcons = document.querySelectorAll(".copy_my_invite_code_or_link");
         let invitation_code_input = document.getElementById("invitation_code_input");
         let btnVerifyInvitationCode = document.getElementById("btnVerifyInvitationCode");
 
-
+        let allInvitedFriends = await makeRequestToGetAllInvitedFriends(myInviteCode);
+        loadInvitedFriendsIntoTable(allInvitedFriends)
 
         copyIcons.forEach((icon, index) => {
             icon.addEventListener("click", () => {
                 if (index === 0) {
-                    copyToClipboard(`https://lonyextra.com?invite=${invite.myReferralCode}`);
+                    copyToClipboard(`https://lonyextra.com?invite=${myInviteCode}`);
                 } else {
-                    copyToClipboard(invite.myReferralCode);
+                    copyToClipboard(myInviteCode);
                 }
             });
         });
@@ -878,6 +990,7 @@ function handleInviteFriendsDialog() {
         });
 
     });
+
 }
 
 function handleGmailDialog() {
@@ -936,13 +1049,13 @@ function handleProfileDIalog() {
 
         let currentTime = new Date(new Date().toLocaleString("en-US", { timeZone: userTimeZone }));
 
-        let isToday = userJoinedAt.toLocaleDateString("pt-BR", { timeZone: userTimeZone }) === 
-                      currentTime.toLocaleDateString("pt-BR", { timeZone: userTimeZone });
+        let isToday = userJoinedAt.toLocaleDateString("pt-BR", { timeZone: userTimeZone }) ===
+            currentTime.toLocaleDateString("pt-BR", { timeZone: userTimeZone });
 
         let yesterday = new Date(currentTime);
         yesterday.setDate(yesterday.getDate() - 1);
-        let isYesterday = userJoinedAt.toLocaleDateString("pt-BR", { timeZone: userTimeZone }) === 
-                          yesterday.toLocaleDateString("pt-BR", { timeZone: userTimeZone });
+        let isYesterday = userJoinedAt.toLocaleDateString("pt-BR", { timeZone: userTimeZone }) ===
+            yesterday.toLocaleDateString("pt-BR", { timeZone: userTimeZone });
 
         if (isToday) {
             joinedDateElement.textContent = "Hoje";

@@ -6,6 +6,8 @@
     justify-content: space-between;
 }
 
+
+
 .seeInvitattionDetails {
     width: 20px;
     height: 20px;
@@ -26,10 +28,17 @@
     transform: translateY(6px);
 }
 
+#dialog_convidar_amigos {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
 
 .invite-container {
     padding: 0 15px;
     width: 100%;
+    overflow: hidden;
 }
 
 
@@ -139,7 +148,6 @@
     background-color: #f0f0f0;
     margin-bottom: 8px;
     height: fit-content;
-    overflow: auto;
     max-height: 300px;
 }
 
@@ -148,28 +156,13 @@
     flex-direction: column;
     width: 100%;
     padding-bottom: 2px;
-}
-
-
-.friend-info {
-    margin-top: 5px;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-}
-
-.h3_invited_friend {
-    margin-bottom: 5px;
-}
-
-.friend-info img {
-    width: 50px;
-    border-radius: 50%;
+    overflow: auto;
 }
 
 .container_friends_referred_img_name_email {
     padding-left: 15px;
     flex: 1;
+    width: 100%;
 }
 
 .invited_name {
@@ -188,15 +181,38 @@
     font-size: 13px;
 }
 
-
+#tbody_invited_friends tr{
+    width: 100%;
+    display: flex;
+}
 .table_invited_friends {
     width: 100%;
 }
 
 .table_invited_friends td {
     padding: 3px 0;
+    width: 100%;
 }
 
+.friend-info {
+    width: 100%;
+    margin-top: 5px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background-color: white;
+    border-radius: 10px;
+    padding: 8px 12px;
+}
+
+.h3_invited_friend {
+    margin-bottom: 5px;
+}
+
+.friend-info img {
+    width: 50px;
+    border-radius: 50%;
+}
 
 
 .container_insert_cde_and_titles {

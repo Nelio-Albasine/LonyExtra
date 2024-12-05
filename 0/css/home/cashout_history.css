@@ -138,7 +138,7 @@ h1 {
 #empty_invited_friends {
     width: 100%;
     padding: 20px;
-    height: 150px;
+    height: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -153,7 +153,7 @@ h1 {
 .p_sem_saques {
     color: #707070;
     font-size: 14px;
-    margin-top: 15px;
+    margin-top: 10px;
 }
 
 @media screen and (max-width: 600px) {

@@ -141,7 +141,8 @@
                         <p class="userName">Nome do Usuário</p>
                         <p class="userEmail">emaildousuario@gmail.com</p>
                     </div>
-                    <img onclick="openEspecificDialog('#Perfil')" id="profile_icon" src="../src/imgs/profile.png" href="#Perfil" alt="Profile Icon">
+                    <img onclick="openEspecificDialog('#Perfil')" id="profile_icon" src="../src/imgs/profile.png"
+                        href="#Perfil" alt="Profile Icon">
                 </li>
             </ul>
         </header>
@@ -567,17 +568,14 @@
 
                                     <div>
                                         <div class="container_invitation_url">
-                                            <p id="textInvitationCode">45672</p>
+                                            <p id="textInvitationCode">........</p>
                                             <i class="fa-solid fa-copy copy-icon copy_my_invite_code_or_link"></i>
                                         </div>
                                         <p class="link_and_invite_code_description">Codigo de convinte</p>
                                     </div>
                                 </div>
                             </div>
-
-
                             <hr class="hr_in_invitation_dialog">
-
                             <!-- Inserir Código -->
                             <div class="container_insert_cde_and_titles">
 
@@ -586,8 +584,6 @@
                                     <p id="textLabelInsiraEreceba">Insira e receba:</p>
                                     <p class="p_stars_to_receive_as_invite_reward">✨+20</p>
                                 </div>
-
-
 
 
                                 <div class="container_div_who_invited_me">
@@ -629,8 +625,9 @@
                                 <h3 class="invitation_titles h3_invited_friend">Amigos Convidados</h3>
 
                                 <div class="container_table_invited_list">
-                                    <table style="display: none;" class="table_invited_friends">
+                                    <table class="table_invited_friends">
                                         <tbody id="tbody_invited_friends">
+                                            <!-- 
                                             <tr>
                                                 <td>
                                                     <div class="friend-info">
@@ -641,28 +638,12 @@
                                                             <p class="invited_email">nelioa****@gmail.com</p>
                                                         </div>
                                                         <div class="container_earned_stars_for_this_friend">
-                                                            <p>✨ +34 567</p>
+                                                            <p>✨ 34 567</p>
                                                         </div>
                                                     </div>
                                                 </td>
                                             </tr>
-
-                                            <tr>
-                                                <td>
-                                                    <div class="friend-info">
-                                                        <img src="https://via.placeholder.com/50" alt="Foto do amigo">
-
-                                                        <div class="container_friends_referred_img_name_email">
-                                                            <p class="invited_name"><strong>João Silva</strong></p>
-                                                            <p class="invited_email">nelioa****@gmail.com</p>
-                                                        </div>
-                                                        <div class="container_earned_stars_for_this_friend">
-                                                            <p>✨ +34 567</p>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                            </tr>
-
+                                            -->
 
                                         </tbody>
                                     </table>
@@ -670,47 +651,9 @@
                                     <div id="empty_invited_friends">
                                         <i id="loading_or_empty_awesome_icon"
                                             class="fa-solid fa-history history-icon"></i>
-                                        <p class="p_sem_saques">Sem amigos convidados!</p>
+                                        <p id="p_SemAmigosConvidados" class="p_sem_saques">Carregando...</p>
                                     </div>
                                 </div>
-
-                                <!--
-                              <div class="friend-info">
-                                <img src="https://via.placeholder.com/50" alt="Foto do amigo">
-                        
-                                <div class="container_friends_referred_img_name_email">
-                                  <p class="invited_name"><strong>João Silva</strong></p>
-                                  <p class="invited_email">nelioa****@gmail.com</p>
-                                </div>
-                                <div class="container_earned_stars_for_this_friend">
-                                  <p>✨ +34 567</p>
-                                </div>
-                              </div>
-                        
-                              <div class="friend-info">
-                                <img src="https://via.placeholder.com/50" alt="Foto do amigo">
-                        
-                                <div class="container_friends_referred_img_name_email">
-                                  <p class="invited_name"><strong>João Silva</strong></p>
-                                  <p class="invited_email">nelioa****@gmail.com</p>
-                                </div>
-                                <div class="container_earned_stars_for_this_friend">
-                                  <p>✨ +34 567</p>
-                                </div>
-                              </div>
-                        
-                              <div class="friend-info">
-                                <img src="https://via.placeholder.com/50" alt="Foto do amigo">
-                        
-                                <div class="container_friends_referred_img_name_email">
-                                  <p class="invited_name"><strong>João Silva</strong></p>
-                                  <p class="invited_email">nelioa****@gmail.com</p>
-                                </div>
-                                <div class="container_earned_stars_for_this_friend">
-                                  <p>+✨ +34 567</p>
-                                </div>
-                              </div>
-                              -->
 
                             </div>
                         </div>
