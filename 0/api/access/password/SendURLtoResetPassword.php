@@ -155,12 +155,10 @@ function sendEmailWithURLtoResetPassword($userEmail, $conn)
         $mail->Body = '
                <!DOCTYPE html>
                 <html lang="pt-br">
-
                 <head>
                     <meta charset="UTF-8">
                     <meta name="viewport" content="width=device-width, initial-scale=1.0">
                     <title>Redefinição de Senha</title>
-
                     <style>
                         * {
                             margin: 0;
@@ -175,45 +173,55 @@ function sendEmailWithURLtoResetPassword($userEmail, $conn)
                             line-height: 1.6;
                         }
 
-                        main {
+                        div{
+                            text-align: center;
+                            width: 100%;
+                        }
+
+                        table {
+                            width: 100%;
+                            border-spacing: 0;
+                            border-collapse: collapse;
+                        }
+
+                        .main-table {
+                            width: 100%;
                             max-width: 600px;
                             margin: 0 auto;
                             padding: 20px;
                             min-height: 100vh;
-                            display: flex;
-                            flex-direction: column;
-                        }
-
-                        .main_logo {
-                            width: 100%;
-                            max-width: 200px;
-                            margin: 0 auto 10px auto;
-                            display: block;
+                            background-color: #eeeeee;
                         }
 
                         .content {
-                            border-radius: 10px;
-                            text-align: center;
-                            padding: 20px;
-                            height: 100%;
+                            width: 100%;
                             background-color: white;
-                            flex-grow: 1;
-                            display: flex;
-                            flex-direction: column;
-                            align-items: center;
-                            justify-content: center;
+                            padding: 20px;
+                            border-radius: 10px;
+                        }
+
+                        .content-inner {
+                            width: 100%;
+                            text-align: center;
+                            padding: 8px;
+                        }
+
+                        .content img {
+                            width: 100%;
+                            max-width: 200px;
+                            margin: 15px auto 10px auto;
+                            display: block;
                         }
 
                         .content p {
                             font-size: 13px;
                             color: #555;
-                            margin: 10px 0;
+                            margin: 0;
                         }
 
                         #userName {
-                            text-align: left;
                             font-size: 16px;
-                            margin-bottom: 0px;
+                            margin-bottom: 0;
                         }
 
                         .content strong {
@@ -230,7 +238,8 @@ function sendEmailWithURLtoResetPassword($userEmail, $conn)
                             cursor: pointer;
                             text-transform: uppercase;
                             margin: 20px 0;
-                            transition: background-color 0.3s ease;
+                            display: inline-block;
+                            text-decoration: none;
                         }
 
                         #btnResetPassword:hover {
@@ -256,7 +265,6 @@ function sendEmailWithURLtoResetPassword($userEmail, $conn)
                             margin-top: 30px;
                         }
 
-
                         .footer p {
                             font-size: 12px;
                             color: #888;
@@ -274,26 +282,10 @@ function sendEmailWithURLtoResetPassword($userEmail, $conn)
                             text-decoration: underline;
                         }
 
-
-                        @media (min-width: 514px) {
-                            .content {
-                                padding: 60px;
-                            }
-                        }
-
                         /* Responsividade */
                         @media only screen and (max-width: 600px) {
-                            body {
-                                background-color: white;
-                            }
-
-                            main {
-                                padding: 10px;
-                            }
-
-                            .main_logo {
-                                max-width: 120px;
-                                height: auto;
+                            .content {
+                                padding: 20px;
                             }
 
                             #btnResetPassword {
@@ -311,46 +303,84 @@ function sendEmailWithURLtoResetPassword($userEmail, $conn)
                             }
                         }
                     </style>
-
                 </head>
 
                 <body>
-
-                    <main>
-                        <div class="content">
-                            <img class="main_logo" src="http://localhost/LonyExtra/0/src/imgs/lonyextra_croped.png"
-                                alt="Logo da Lony Extra">
-
-                            <p id="userName">Olá <strong>'.$userName.'</strong></p>
-
-                            <p id="p_a_request_has_been_received">Recebemos uma solicitação para alterar a senha da sua conta Lony
-                                Extra.</p>
-
-                            <a id="btnResetPassword" href="'.$resetURL.'" target="_blank">Redefinir Senha</a>
-
-                            <p id="p_if_u_did_not_initiate_the_request">Se você não fez esta solicitação, entre em contato conosco
-                                imediatamente em <a href="mailto:support@lonyextra.com">support@lonyextra.com</a></p>
-                        </div>
-
-                        <div class="footer">
-                            <div class="footer_mini_logo">
-                                <p>Enviado com Confiança</p>
-                            </div>
-
-                            <p>@Lony Extra 2024 - Todos os Direitos Reservados</p>
-
-                            <div class="our_social_networks">
-                                <a href="https://www.instagram.com/lonyextra?igsh=YzljYTk1ODg3Zg==" target="_blank">Instagram</a>
-                                <a href="https://t.me/LonyExtra" target="_blank">Telegram</a>
-                                <a href="https://youtube.com/@lonyextra?si=9JJXuTr3y9YVpMxb" target="_blank">YouTube</a>
-                            </div>
-                        </div>
-                    </main>
-
-
+                    <table class="main-table" role="presentation">
+                        <tr>
+                            <td>
+                                <table class="content" role="presentation" align="center">
+                                    <tr>
+                                        <td>
+                                            <div class="content-inner">
+                                                <img class="main_logo" src="http://localhost/LonyExtra/0/src/imgs/lonyextra_croped.png"
+                                                    alt="Logo da Lony Extra">
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="content-inner">
+                                                <p id="userName">Olá <strong>'.$userName.'</strong></p>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="content-inner">
+                                                <p id="p_a_request_has_been_received">Recebemos uma solicitação para alterar a senha da sua conta Lony Extra.</p>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="content-inner">
+                                                <a id="btnResetPassword" href="'.$resetURL.'" target="_blank">Redefinir Senha</a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="content-inner">
+                                                <p id="p_if_u_did_not_initiate_the_request">Se você não fez esta solicitação, entre em contato conosco imediatamente em <a href="mailto:support@lonyextra.com">support@lonyextra.com</a></p>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <table class="footer" role="presentation" width="100%">
+                                    <tr>
+                                        <td>
+                                            <div class="footer_mini_logo">
+                                                <p>Enviado com Confiança</p>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <p>@Lony Extra 2024 - Todos os Direitos Reservados</p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="our_social_networks">
+                                                <a href="https://www.instagram.com/lonyextra?igsh=YzljYTk1ODg3Zg==" target="_blank">Instagram</a>
+                                                <a href="https://t.me/LonyExtra" target="_blank">Telegram</a>
+                                                <a href="https://youtube.com/@lonyextra?si=9JJXuTr3y9YVpMxb" target="_blank">YouTube</a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
                 </body>
 
                 </html>
+
                   ';
 
         $mail->AddAddress($userEmail);
