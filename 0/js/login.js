@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", function () {
     recoverPassword.addEventListener("click", () => {
         const inputEmail = document.getElementById("inputEmail").value;
         const encodedEmail = encodeURIComponent(inputEmail);
-        window.location.href = `http://127.0.0.1:5500/0/access/recuperar-senha.html?email=${encodedEmail}`;
+        window.location.href = `http://127.0.0.1:5500/0/access/redefinir-senha.html?email=${encodedEmail}`;
     });
 
     textCreateAccount.addEventListener("click", () => {
