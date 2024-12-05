@@ -3,3 +3,9 @@ O BIG loader, que sobrepõe a página toda, é cancelado quando os top 10 users 
 
 O nome da função que lida com isso é: hideBigOverlayLoader().
 ===============================================================
+
+
+
+# Tasks
+=> PWA
+=> Notificatios

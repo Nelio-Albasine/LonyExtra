@@ -29,9 +29,10 @@ document.addEventListener("DOMContentLoaded", function () {
                 if (verificationResponse.success) {
                     localStorage.clear();
                     localStorage.setItem("userId", userData.userId)
-                    showAlert(0, 'Parabéns, sua conta foi criada com sucesso! Redirecionando para a tela principal...', true);
-                    btnVerifyOTP.style.backgroundColor = "green";
-                    btnVerifyOTP.textContent = "Conta criada com sucesso!";
+                  //  showAlert(0, 'Parabéns, sua conta foi criada com sucesso! Redirecionando para a tela principal...', true);
+                   // btnVerifyOTP.style.backgroundColor = "green";
+                   // btnVerifyOTP.textContent = "Conta criada com sucesso!";
+                    //redirect to congrats activity
                     window.location.href = verificationResponse.redirectTo
                 } else {
                     showAlert(2, verificationResponse.message || 'Falha ao verificar o OTP. Tente novamente!', true);

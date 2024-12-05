@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Enviado!</title>
+    <link rel="stylesheet" href="../css/access/otp_layout.css">
+    <link rel="stylesheet" href="../css/access/access_pc.css">
+    <link rel="icon" href="../src/favicon_io/favicon.ico" type="image/x-icon">
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+
+    <style>
+        #btnRedirecting {
+            background-color: green;
+            padding: 8px;
+            width: 100%;
+            height: calc(55px - 8px);
+            border-radius: 15px;
+            border: none;
+            color: white;
+            font-size: 15px;
+            margin-top: 20px;
+            cursor: pointer;
+        }
+
+        #otp_big_logo {
+            scale: 0.6;
+        }
+
+        @media screen and (max-width: 600px) {
+            body {
+                background-color: white;
+                height: 100%;
+            }
+
+            #div_container_otp_verification {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: cnter;
+                height: 100% !important;
+                margin-top: 20px;
+            }
+        }
+    </style>
+    <link rel="icon" href="../src/favicon_io/favicon.ico" type="image/x-icon">
+</head>
+
+<body>
+
+    <div id="div_container_otp_verification">
+
+        <img id="otp_big_logo" src="../src/imgs/email_sent.png" alt="Sucess Signup">
+
+        <h1 id="otp_title">Email de redefinição enviado!</h1>
+
+        <p id="otp_description">Enviamos um email com link para redefinicao da sua palavra pase, verifique a
+            usa caixa de entrada! </p>
+
+            <button id="btnRedirecting" onclick="window.location.href='login.html';">Ok</button>
+
+    </div>
+
+    <p id="textSeeYourSpam">
+        caso nao tenha recebido apos uns 5 minutos, observe a sua caisa de Spam.
+    </p>
+</body>
+
+</html>

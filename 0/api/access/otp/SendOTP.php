@@ -120,7 +120,7 @@ function createOtpTable($conn)
 
 function sendOTP($conn, $data)
 {
-    createOtpTable($conn); 
+    createOtpTable($conn);
 
     $otp = str_pad(rand(0, 999999), 6, '0', STR_PAD_LEFT);
     $email = $data['email'];
@@ -134,11 +134,11 @@ function sendOTP($conn, $data)
 
     $stmt = $conn->prepare($query);
     $stmt->bind_param("ss", $email, $otp);
-  
+
     if ($stmt->execute()) {
         if (sendOTPtoEmail($userName, $email, $otp)) {
             return true;
-        } 
+        }
     }
     return false;
 }
@@ -207,8 +207,9 @@ function sendOTPtoEmail($to_user_name, $to_user_email, $otp)
                                 }
 
                                 .header h1 {
-                                    font-size: 24px;
+                                    font-size: 20px;
                                     margin: 0;
+                                    text-align: center;
                                 }
 
                                 .content {

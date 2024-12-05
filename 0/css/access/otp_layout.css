@@ -20,13 +20,13 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    height: 100%;
 }
 
 
 
 #div_container_otp_verification {
     width: 100%;
-    height: 100%;
     max-width: 600px;
     display: flex;
     flex-direction: column;
@@ -51,11 +51,19 @@ body {
 }
 
 
-#otp_description {
+#otp_description, #textSeeYourSpam {
     font-size: 14px;
     text-align: center;
     margin-top: 10px;
     color: var(--paragraphColor);
+}
+
+#textSeeYourSpam{
+    font-size: 11px;
+    margin-left: 10px;
+    margin-right: 10px;
+    position: absolute;
+    bottom: 8px;
 }
 
 #userEmailToVerify {
@@ -121,7 +129,7 @@ body {
     color: var(--appRedeMain);
 }
 
-#btnVerifyOTP{
+#btnVerifyOTP {
     padding: 8px;
     width: 100%;
     height: calc(55px - 8px);
@@ -132,4 +140,11 @@ body {
     font-size: 15px;
     margin-top: 20px;
     cursor: pointer;
+}
+
+@media screen and (max-width: 600px) {
+
+    body {
+        background-color: white;
+    }
 }

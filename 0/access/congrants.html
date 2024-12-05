@@ -24,7 +24,7 @@
             cursor: pointer;
         }
     </style>
-   <link rel="icon" href="../src/favicon_io/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="../src/favicon_io/favicon.ico" type="image/x-icon">
 </head>
 
 <body>
@@ -39,6 +39,9 @@
             Hora de fazer uma renda extra!
         </p>
 
+        <!--Para manter o espacamento, vamos apenas tornar isso como invisivel-->
+        <!--Para manter o espacamento, vamos apenas tornar isso como invisivel-->
+        <!--Para manter o espacamento, vamos apenas tornar isso como invisivel-->
         <!--Para manter o espacamento, vamos apenas tornar isso como invisivel-->
         <li style="visibility: hidden;" id="li_otp">
             <p>Insira o código de verificação</p>
@@ -55,9 +58,13 @@
 
 
         <button id="btnRedirecting">Redirecionando...</button>
-
-
     </div>
+
+    <script>
+        setTimeout(()=> {
+            window.location.href = "http://127.0.0.1:5500/0/dashboard";
+        }, 2000);
+    </script>
 
 </body>
 

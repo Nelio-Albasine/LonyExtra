@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reset Your Password</title>
+    <link rel="icon" href="../src/favicon_io/favicon.ico" type="image/x-icon">
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px 30px;
+            max-width: 400px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .logo img {
+            width: 80px;
+            margin-bottom: 20px;
+            scale: 2.4;
+        }
+
+        h1 {
+            font-size: 20px;
+            color: #333;
+        }
+
+        p {
+            color: #555;
+            font-size: 14px;
+            margin: 10px 0;
+        }
+
+        form input {
+            width: 94.2%;
+            padding: 10px;
+            margin: 10px auto !important;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        form button {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        form button:hover {
+            background-color: #45a049;
+        }
+
+        .recaptcha-info {
+            font-size: 11px;
+            color: #777;
+            margin-top: 10px;
+        }
+
+        .footer {
+            margin-top: 20px;
+        }
+
+        .footer a {
+            color: #4CAF50;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        @media screen and (max-width: 600px) {
+            body,
+            .container {
+                background-color: #ffffff;
+                box-shadow: none;
+            }
+            
+        }
+
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="logo">
+            <img src="../src/imgs/Lony extra.png" alt="Stripo Logo">
+        </div>
+        <h1>Redefinir sua senha</h1>
+
+        <p>
+            Insira o e-mail de cadastro que você usou, para que possamos enviar um e-mail de redefinição de senha com a
+            URL para redefinir sua senha.
+        </p>
+
+        <form>
+            <input id="inputEmailToResetPassword" type="email" placeholder="Email address" required>
+            <button id="btnResetPassword" type="submit">Enviar email de redefinição</button>
+        </form>
+        <p class="recaptcha-info">
+            This page is protected by reCAPTCHA and subject to the Google Privacy Policy and Terms of Service.
+        </p>
+        <div class="footer">
+            <p>Don’t have an account? <a href="../access/signup.html">Get started</a></p>
+        </div>
+    </div>
+
+    <script src="../js/SendEmailToResetPasword.js"></script>
+</body>
+
+</html>

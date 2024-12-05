@@ -43,7 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $output = [
                     'success' => true,
                     'message' => "Parabéns, sua conta foi criada com sucesso!",
-                    'redirectTo' => "http://127.0.0.1:5500/0/dashboard"
+                    'redirectTo' => "http://127.0.0.1:5500/0/access/congrants.html"
                 ];
             } else {
                 $output = [
