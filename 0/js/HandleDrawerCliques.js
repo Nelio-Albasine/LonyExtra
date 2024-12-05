@@ -810,6 +810,7 @@ async function makeRequestToApplyInvitedCode(inviteCodeInserted, btn) {
         const responseData = await response.json();
 
         if (responseData.success) {
+            console.log("Resposta da Insercao do invite code: ", responseData.myInviterInfo)
             hadeUIwhenInvitedCodeIsInserted(responseData.myInviterInfo)
             btn.style.backgroundColor = "green";
             showBoxAlert(responseData.message, "success");
@@ -927,19 +928,22 @@ function handleProfileDIalog() {
 
         let userTimeZone = info.userTimeZone;
         let userJoinedAt = new Date(info.userJoinedAt);
-        let currentTime = new Date();
 
-        // Verificar se o cadastro foi hoje ou ontem
-        let isToday = userJoinedAt.toDateString() === currentTime.toDateString();
-        let isYesterday = new Date(currentTime.setDate(currentTime.getDate() - 1)).toDateString() === userJoinedAt.toDateString();
+        let currentTime = new Date(new Date().toLocaleString("en-US", { timeZone: userTimeZone }));
 
-        // Caso o cadastro tenha sido hoje ou ontem
+        let isToday = userJoinedAt.toLocaleDateString("pt-BR", { timeZone: userTimeZone }) === 
+                      currentTime.toLocaleDateString("pt-BR", { timeZone: userTimeZone });
+
+        let yesterday = new Date(currentTime);
+        yesterday.setDate(yesterday.getDate() - 1);
+        let isYesterday = userJoinedAt.toLocaleDateString("pt-BR", { timeZone: userTimeZone }) === 
+                          yesterday.toLocaleDateString("pt-BR", { timeZone: userTimeZone });
+
         if (isToday) {
             joinedDateElement.textContent = "Hoje";
         } else if (isYesterday) {
             joinedDateElement.textContent = "Ontem";
         } else {
-            // Caso o cadastro tenha sido antes de ontem, mostra a data
             let joinedDate = userJoinedAt.toLocaleDateString("pt-BR", {
                 day: "2-digit",
                 month: "long",
@@ -949,7 +953,6 @@ function handleProfileDIalog() {
             joinedDateElement.textContent = `em ${joinedDate}`;
         }
 
-        // Calculando o tempo desde o cadastro
         let timeDifference = currentTime - userJoinedAt;
 
         let seconds = Math.floor(timeDifference / 1000);
@@ -960,11 +963,11 @@ function handleProfileDIalog() {
         let years = Math.floor(months / 12);
 
         let timeElapsedText = "";
-        if (isToday || isYesterday) {
-            // Se foi hoje ou ontem, mostra as horas
+        if (isToday) {
+            timeElapsedText = `${hours} hora${hours > 1 ? "s" : ""}`;
+        } else if (isYesterday) {
             timeElapsedText = `${hours} hora${hours > 1 ? "s" : ""}`;
         } else {
-            // Se foi antes de ontem, mostra o tempo normal
             if (years > 0) {
                 timeElapsedText = `${years} ano${years > 1 ? "s" : ""}`;
             } else if (months > 0) {
@@ -983,7 +986,6 @@ function handleProfileDIalog() {
         timeElapsedTextElement.textContent = timeElapsedText;
     });
 }
-
 
 function handleSignOutDIalog() {
     waitForUserInfo().then(_ => {

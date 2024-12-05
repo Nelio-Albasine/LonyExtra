@@ -129,7 +129,7 @@ function getMyOwnInviteCode($conn, $userId)
 
 function thisInviteCodeReallyExists($conn, $codeToCheckExistence)
 {
-    $query = "SELECT myReferralCode FROM Usuarios WHERE myReferralCode = ?";
+    $query = "SELECT myReferralCode FROM Usuarios WHERE BINARY myReferralCode = ?";
     $stmt = $conn->prepare($query);
     $stmt->bind_param("s", $codeToCheckExistence);
     $stmt->execute();
@@ -140,6 +140,7 @@ function thisInviteCodeReallyExists($conn, $codeToCheckExistence)
     $stmt->close();
     return $exists;
 }
+
 
 
 function updateUserStars($conn, $userId)
