@@ -141,8 +141,6 @@ function thisInviteCodeReallyExists($conn, $codeToCheckExistence)
     return $exists;
 }
 
-
-
 function updateUserStars($conn, $userId)
 {
     $starsToEarn = 20;

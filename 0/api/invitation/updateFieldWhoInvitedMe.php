@@ -29,7 +29,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (!empty($userId) && !empty($inviteCodeInserted)) {
         require_once "handleInvitation.php";
-
         $conn = Wamp64Connection();
 
         try {
@@ -38,7 +37,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     if (getMyOwnInviteCode($conn, $userId) != $inviteCodeInserted) {
                         if (updateFieldWhoInvitedMe($conn, $userId, $inviteCodeInserted)) {
                             if (updateUserStars($conn, $userId)) {
-                                $getMyInviterInfo = getMyInviterInfo($conn, getMyInviterUserId($conn, $inviteCodeInserted));
+                                $myInviterUserId = getMyInviterUserId($conn, $inviteCodeInserted);
+
+                                increaseMyInviterTotalInvited($conn, $myInviterUserId);
+                                $getMyInviterInfo = getMyInviterInfo($conn, $myInviterUserId);
                                 $outPut["success"] = true;
                                 $outPut["myInviterInfo"] = json_encode($getMyInviterInfo) ?? [];
                                 $outPut["message"] = "Código de convinte inserido com sucesso!";
@@ -61,7 +63,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             error_log("Ocorreu um erro no catch: " . $th->getMessage());
         }
 
-        error_log("Resposta da insercao do codigo de convinte: " .print_r($outPut, true));
+        error_log("Resposta da insercao do codigo de convinte: " . print_r($outPut, true));
         echo json_encode($outPut);
         $conn = null;
         exit;

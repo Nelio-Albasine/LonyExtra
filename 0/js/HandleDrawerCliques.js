@@ -767,6 +767,11 @@ function getInitials(name, surname) {
 }
 
 function hadeUIwhenInvitedCodeIsInserted(inviterInfo) {
+    console.log("Dentro do: hadeUIwhenInvitedCodeIsInserted: ", inviterInfo);
+    console.log("O userName: ", inviterInfo.userName);
+    console.log("O userSurname: ", inviterInfo.userSurname);
+    console.log("O LT Stars: ", inviterInfo.LTStars);
+
     let myInviterInfo = document.querySelectorAll(".container_div_who_invited_me");
     let insert_invite_code = document.querySelectorAll(".insert_invite_code");
     let h3_tem_algum_codigo = document.querySelectorAll(".h3_tem_algum_codigo");
@@ -810,7 +815,6 @@ async function makeRequestToApplyInvitedCode(inviteCodeInserted, btn) {
         const responseData = await response.json();
 
         if (responseData.success) {
-            console.log("Resposta da Insercao do invite code: ", responseData.myInviterInfo)
             hadeUIwhenInvitedCodeIsInserted(responseData.myInviterInfo)
             btn.style.backgroundColor = "green";
             showBoxAlert(responseData.message, "success");
