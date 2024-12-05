@@ -8,7 +8,10 @@ const textCreateAccount = document.getElementById("CreateAccount");
 document.addEventListener("DOMContentLoaded", function () {
     recoverPassword.addEventListener("click", () => {
         const inputEmail = document.getElementById("inputEmail").value;
-        const encodedEmail = encodeURIComponent(inputEmail);
+        let encodedEmail = null
+        if(inputEmail){
+            encodedEmail = encodeURIComponent(inputEmail);
+        }
         window.location.href = `http://127.0.0.1:5500/0/access/redefinir-senha.html?email=${encodedEmail}`;
     });
 
