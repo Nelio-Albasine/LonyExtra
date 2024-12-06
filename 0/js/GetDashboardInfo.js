@@ -51,6 +51,8 @@ document.addEventListener("DOMContentLoaded", async function () {
     const userLTRevenue = document.querySelectorAll(".userLTRevenue");
     const userStars = document.getElementById("userStars");
     const userLTStars = document.getElementById("userLTStars");
+    const userLTCashout = document.querySelectorAll(".userLTCashout");
+
     textInvitationLink = document.getElementById("textInvitationLink");
     textInvitationCode = document.getElementById("textInvitationCode");
     textTotalInvitedFriends = document.querySelectorAll(".textTotalInvitedFriends");
@@ -81,6 +83,10 @@ document.addEventListener("DOMContentLoaded", async function () {
 
     userRevenue.forEach(text => {
         text.textContent = userPoints.userRevenue.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
+    });
+
+    userLTCashout.forEach(text => {
+        text.textContent = userPoints.userLTCashouts.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
     });
 
     userLTRevenue.forEach(text => {

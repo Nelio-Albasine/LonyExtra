@@ -66,6 +66,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         $remainingBalance = $userRevenueJson['userRevenue'] - $amountToCashOut;
         $userRevenueJson['userRevenue'] = $remainingBalance;
+        $userRevenueJson['userLTCashouts'] = $userRevenueJson['userLTCashouts'] + $amountToCashOut;
 
         $insertResponse = insertCashOutIntoTable($conn, $userId, $created_at,  $gatewayName, $amountToCashOut, $userPaymentName, $userPaymentAddress, $cashOutId);
         if (!$insertResponse['success']) {
