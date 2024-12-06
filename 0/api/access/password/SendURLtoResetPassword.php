@@ -188,9 +188,8 @@ function sendEmailWithURLtoResetPassword($userEmail, $conn)
                             width: 100%;
                             max-width: 600px;
                             margin: 0 auto;
-                            padding: 20px;
                             min-height: 100vh;
-                            background-color: #eeeeee;
+                            background-color: white;
                         }
 
                         .content {
