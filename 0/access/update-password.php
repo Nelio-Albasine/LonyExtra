@@ -11,12 +11,6 @@ if (isset($_GET['data']) && isset($_GET['iv'])) {
     $encryptedData = base64_decode($_GET['data']);
     $iv = base64_decode($_GET['iv']);
 
-    // Debug: Exibir tamanho e conteúdo do IV
-    echo "<pre>";
-    echo "IV (base64 decoded): " . bin2hex($iv) . "\n";
-    echo "IV Length: " . strlen($iv) . "\n";
-    echo "</pre>";
-
     // Validar o tamanho do IV (16 bytes para AES-256-CBC)
     if (strlen($iv) !== 16) {
         die("IV inválido. Por favor, solicite um novo link.");
@@ -29,23 +23,16 @@ if (isset($_GET['data']) && isset($_GET['iv'])) {
     // Descriptografar os dados
     $decryptedData = openssl_decrypt($encryptedData, $metodo, $SECRET_KEY, 0, $iv);
 
-    // Debug: Exibir dados descriptografados
-    echo "<pre>";
-    echo "Dados descriptografados: " . htmlspecialchars($decryptedData) . "\n";
-    echo "</pre>";
-
     if ($decryptedData === false) {
         die("Falha ao descriptografar os dados. Solicite um novo link.");
     }
 
-    // Converter JSON para array associativo
     $data = json_decode($decryptedData, true);
 
     if (!isset($data['email']) || !isset($data['expiryTime'])) {
         die("Dados inválidos ou corrompidos. Solicite um novo link.");
     }
 
-    // Validar expiração do link
     if (time() > $data['expiryTime']) {
         header("Refresh: 3; url=http://127.0.0.1:5500/0/access/expired-link.html");
         die("O link expirou. Você será redirecionado para solicitar um novo link.");
@@ -53,7 +40,6 @@ if (isset($_GET['data']) && isset($_GET['iv'])) {
 
     $email = $data['email'];
 
-    // Processar redefinição de senha
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $novaSenha = $_POST['novaSenha'];
         $confirmarSenha = $_POST['confirmarSenha'];
@@ -70,7 +56,8 @@ if (isset($_GET['data']) && isset($_GET['iv'])) {
                     $stmt->bind_param("ss", $hashSenha, $email);
                     if ($stmt->execute()) {
                         $mensagemSucesso = "Senha redefinida com sucesso!";
-                        header("Refresh: 3; url=http://127.0.0.1:5500/0/access/login.html");
+                        // Redireciona imediatamente para a página de login
+                        header("Location: http://127.0.0.1:5500/0/access/login.html");
                         exit;
                     } else {
                         $mensagemErro = "Erro ao atualizar a senha.";
@@ -90,7 +77,6 @@ if (isset($_GET['data']) && isset($_GET['iv'])) {
 }
 ?>
 
-
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -98,6 +84,7 @@ if (isset($_GET['data']) && isset($_GET['iv'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Redefinir Senha</title>
+    <link rel="icon" href="../src/favicon_io/favicon.ico" type="image/x-icon">
     <style>
         body {
             font-family: Arial, sans-serif;
