@@ -51,7 +51,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $amountToCashOut = $indexAmountToValues[$amountIndex];
 
     try {
-        createTableSaquesIfNotExists($conn);
 
         $userRevenueJsonString = checkIfUserHasSufficientRevenue($conn, $userId);
         if (!$userRevenueJsonString) {
@@ -90,25 +89,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-function createTableSaquesIfNotExists($conn)
-{
-    $query = "
-        CREATE TABLE IF NOT EXISTS Saques (
-            id INT AUTO_INCREMENT PRIMARY KEY,
-            userId VARCHAR(191) NOT NULL,
-            gatewayName VARCHAR(10) NOT NULL,
-            cashOutId VARCHAR(6) UNIQUE NOT NULL,
-            amountCashedOut DECIMAL(10,2),
-            cashOutStatus INT(1),
-            userPaymentName VARCHAR(27) NOT NULL,
-            userPaymentAddress VARCHAR(45) NOT NULL,
-            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-        );
-    ";
-    if (!mysqli_query($conn, $query)) {
-        die("Erro ao criar a tabela: " . mysqli_error($conn));
-    }
-}
 
 function checkIfUserHasSufficientRevenue($conn, $userId)
 {

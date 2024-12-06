@@ -70,23 +70,20 @@ function getMyAllMyCashouts($conn, $userId): array
 
 function createTableSaquesIfNotExists($conn)
 {
-    $createTableMetadata = "
+    $query = "
         CREATE TABLE IF NOT EXISTS Saques (
             id INT AUTO_INCREMENT PRIMARY KEY,
             userId VARCHAR(191) NOT NULL,
             gatewayName VARCHAR(10) NOT NULL,
             cashOutId VARCHAR(6) UNIQUE NOT NULL,
             amountCashedOut DECIMAL(10,2),
+            cashOutStatus INT(1),
             userPaymentName VARCHAR(27) NOT NULL,
             userPaymentAddress VARCHAR(45) NOT NULL,
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         );
     ";
-
-    // Executa o comando SQL
-    if ($conn->query($createTableMetadata) === TRUE) {
-        //echo "Tabela Saques criada com sucesso ou já existe";
-    } else {
-        // echo "Erro ao criar a tabela: " . $conn->error;
+    if (!mysqli_query($conn, $query)) {
+        die("Erro ao criar a tabela: " . mysqli_error($conn));
     }
 }
