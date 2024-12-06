@@ -703,7 +703,6 @@ async function loadMyCashoutsToTable() {
             };
 
 
-
             const statusClass = statusMap[item.cashOutStatus];
             statusText.className = `status ${statusClass}`;
             statusText.textContent =

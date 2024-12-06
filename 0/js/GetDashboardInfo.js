@@ -39,7 +39,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     if ('serviceWorker' in navigator) {
         navigator.serviceWorker.register('/service-worker.js').then((registration) => {
             console.log('Service Worker registrado com sucesso:', registration);
-            
+
         }).catch((error) => {
             console.error('Falha ao registrar o Service Worker:', error);
         });
@@ -221,11 +221,13 @@ async function loadLinksIntoTable(levelIndex) {
             nome: `Tarefa`,
             pontos: pointsToEarnByLevel,
             status: value.isAvailable ? "Disponível" : `⏳ ${timeLeft}`,
-            disponivel: key == "Diamante_1" ? false : value.isAvailable,
+            disponivel: value.isAvailable,
             url: value.url,
             key: key,
         };
     });
+
+    //disponivel: key == "Diamante_1" ? false : value.isAvailable,
 
     dialog_title_tasks_remaining.textContent = tarefas.length;
 
@@ -356,10 +358,10 @@ async function loadLinksIntoTable(levelIndex) {
                 });
             }
 
-            if (tarefa.key == "Diamante_1") {
+           /* if (tarefa.key == "Diamante_1") {
                 statusDiv.classList.add("status_task_availability", "indisponivel");
                 statusDiv.innerHTML = "Indisponivel";
-            }
+            } */
 
             tdStatus.appendChild(statusDiv);
             tr.appendChild(tdStatus);
