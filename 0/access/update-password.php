@@ -85,60 +85,106 @@ if (isset($_GET['data']) && isset($_GET['iv'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Redefinir Senha</title>
     <link rel="icon" href="../src/favicon_io/favicon.ico" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
     <style>
+        /* Reset some default styles */
+        body, h2, p, form, input, button {
+            margin: 0;
+            padding: 0;
+        }
+
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
+            font-family: 'Roboto', sans-serif;
+            background-color: #f7f7f7;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
         }
 
         .container {
-            max-width: 400px;
-            margin: 50px auto;
-            padding: 20px;
-            background: white;
-            border-radius: 10px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 450px;
+            background: #fff;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            box-sizing: border-box;
+            text-align: center;
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            color: #333;
+            margin-bottom: 20px;
         }
 
         .form-group {
             margin-bottom: 15px;
+            text-align: left;
         }
 
         label {
+            font-weight: 500;
+            color: #555;
             display: block;
-            font-weight: bold;
+            margin-bottom: 5px;
         }
 
         input {
             width: 100%;
             padding: 10px;
-            margin-top: 5px;
             border: 1px solid #ccc;
-            border-radius: 5px;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        input:focus {
+            border-color: #66afe9;
+            outline: none;
         }
 
         button {
             width: 100%;
-            padding: 10px;
-            background: #28a745;
-            color: white;
+            padding: 12px;
             border: none;
-            border-radius: 5px;
-            font-size: 16px;
+            background-color: #4CAF50;
+            color: white;
+            border-radius: 8px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
         }
 
         button:hover {
-            background: #218838;
+            background-color: #45a049;
+        }
+
+        .message {
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+            padding: 10px;
+            border-radius: 8px;
+            color: white;
         }
 
         .error {
-            color: red;
-            margin-bottom: 15px;
+            background-color: #f44336;
         }
 
         .success {
-            color: green;
-            margin-bottom: 15px;
+            background-color: #4caf50;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+            }
+
+            h2 {
+                font-size: 1.5rem;
+            }
         }
     </style>
 </head>
@@ -146,8 +192,8 @@ if (isset($_GET['data']) && isset($_GET['iv'])) {
 <body>
     <div class="container">
         <h2>Redefinir Senha</h2>
-        <?php if (isset($mensagemErro)) echo "<p class='error'>$mensagemErro</p>"; ?>
-        <?php if (isset($mensagemSucesso)) echo "<p class='success'>$mensagemSucesso</p>"; ?>
+        <?php if (isset($mensagemErro)) echo "<p class='message error'>$mensagemErro</p>"; ?>
+        <?php if (isset($mensagemSucesso)) echo "<p class='message success'>$mensagemSucesso</p>"; ?>
         <form method="post">
             <div class="form-group">
                 <label for="novaSenha">Nova Senha</label>
