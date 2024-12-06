@@ -29,7 +29,7 @@ document.addEventListener("DOMContentLoaded", function () {
         console.log("resposta do SendURLtoResetPassword", response);
 
         if (response.success) {
-            window.open(response.redirectTo, "_blank");
+            window.open(response.redirectTo, "_self");
             window.close();
         } else {
             showAlert(2, response.message);

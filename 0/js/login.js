@@ -40,7 +40,7 @@ document.addEventListener("DOMContentLoaded", function () {
             btnStartSession.innerText = "Redirecionando...!";
             showAlert(0, loginResponse.message);
             setTimeout(() => {
-                window.open(loginResponse.redirectTo, "_blank");
+                window.open(loginResponse.redirectTo, "_self");
                 window.close();
             }, 1500);
         } else {
