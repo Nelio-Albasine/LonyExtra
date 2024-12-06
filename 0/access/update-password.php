@@ -1,32 +1,40 @@
 <?php
+// Exibir erros para depuração (remova em produção)
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
-ini_set('error_log', __DIR__ . '../api/logs/UpdateUserPassword.log');
+ini_set('error_log', __DIR__ . '/0/api/logs/UpdateUserPassword.log');
 
+require_once "/0/api/Wamp64Connection.php";
+require_once "/0/api/access/IsUserRegistered.php";
 
-require_once "../api/Wamp64Connection.php";
-require_once "../api/access/IsUserRegistered.php";
-
-// Validar os dados enviados via GET
 if (isset($_GET['data']) && isset($_GET['iv'])) {
     $encryptedData = base64_decode($_GET['data']);
     $iv = base64_decode($_GET['iv']);
+
+    // Validar o tamanho do IV (16 bytes para AES-256-CBC)
+    if (strlen($iv) !== 16) {
+        die("IV inválido. Por favor, solicite um novo link.");
+    }
 
     require_once '../api/tasks/Config.php';
     $SECRET_KEY = LONY_EXTRA_POINTS_SECRET_KEY;
     $metodo = 'AES-256-CBC';
 
+    // Descriptografar os dados
     $decryptedData = openssl_decrypt($encryptedData, $metodo, $SECRET_KEY, 0, $iv);
 
-    error_log("Dados descriptografados: " . print_r($decryptedData, true));
-
     if ($decryptedData === false) {
-        die("Dados inválidos ou corrompidos.");
+        die("Falha ao descriptografar os dados. Solicite um novo link.");
     }
 
+    // Converter JSON para array associativo
     $data = json_decode($decryptedData, true);
 
-    // Verificar expiração do link
+    if (!isset($data['email']) || !isset($data['expiryTime'])) {
+        die("Dados inválidos ou corrompidos. Solicite um novo link.");
+    }
+
+    // Validar expiração do link
     if (time() > $data['expiryTime']) {
         header("Refresh: 3; url=http://127.0.0.1:5500/0/access/expired-link.html");
         die("O link expirou. Você será redirecionado para solicitar um novo link.");
@@ -34,7 +42,7 @@ if (isset($_GET['data']) && isset($_GET['iv'])) {
 
     $email = $data['email'];
 
-    // Página de redefinição de senha
+    // Processar redefinição de senha
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $novaSenha = $_POST['novaSenha'];
         $confirmarSenha = $_POST['confirmarSenha'];
@@ -52,6 +60,7 @@ if (isset($_GET['data']) && isset($_GET['iv'])) {
                     if ($stmt->execute()) {
                         $mensagemSucesso = "Senha redefinida com sucesso!";
                         header("Refresh: 3; url=http://127.0.0.1:5500/0/access/login.html");
+                        exit;
                     } else {
                         $mensagemErro = "Erro ao atualizar a senha.";
                     }
@@ -66,7 +75,7 @@ if (isset($_GET['data']) && isset($_GET['iv'])) {
         }
     }
 } else {
-    die("Parâmetros inválidos.");
+    die("Parâmetros inválidos. Solicite um novo link.");
 }
 ?>
 
@@ -124,7 +133,7 @@ if (isset($_GET['data']) && isset($_GET['iv'])) {
         }
 
         .error {
-            color: white;
+            color: red;
             margin-bottom: 15px;
         }
 
