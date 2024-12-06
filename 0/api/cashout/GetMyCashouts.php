@@ -22,13 +22,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
     $response = getMyAllMyCashouts($conn, $userId);
 
+    error_log("Resposta do cashout: ". print_r($output, true));
+
     echo json_encode($response);
+    $conn->close();
+    exit;
 } else {
     http_response_code(405);
     echo json_encode(["error" => "Método não permitido"]);
 }
 
-function getMyAllMyCashouts($conn, $userId): array {
+function getMyAllMyCashouts($conn, $userId): array
+{
     $query = "SELECT 
         gatewayName, cashOutId, 
         amountCashedOut, cashOutStatus, 
@@ -36,7 +41,7 @@ function getMyAllMyCashouts($conn, $userId): array {
         FROM Saques 
         WHERE userId = ? 
         ORDER BY created_at DESC";
-    
+
     $stmt = $conn->prepare($query);
 
     if (!$stmt) {
@@ -45,7 +50,7 @@ function getMyAllMyCashouts($conn, $userId): array {
     }
 
     $stmt->bind_param("i", $userId);
-    
+
     if (!$stmt->execute()) {
         error_log("Erro ao executar a consulta: " . $stmt->error);
         return ["error" => "Erro interno no servidor"];
@@ -63,7 +68,8 @@ function getMyAllMyCashouts($conn, $userId): array {
 }
 
 
-function createTableSaquesIfNotExists($conn) {
+function createTableSaquesIfNotExists($conn)
+{
     $createTableMetadata = "
         CREATE TABLE IF NOT EXISTS Saques (
             id INT AUTO_INCREMENT PRIMARY KEY,
@@ -79,9 +85,8 @@ function createTableSaquesIfNotExists($conn) {
 
     // Executa o comando SQL
     if ($conn->query($createTableMetadata) === TRUE) {
-        echo "Tabela Saques criada com sucesso ou já existe";
+        //echo "Tabela Saques criada com sucesso ou já existe";
     } else {
-        echo "Erro ao criar a tabela: " . $conn->error;
+        // echo "Erro ao criar a tabela: " . $conn->error;
     }
 }
-
