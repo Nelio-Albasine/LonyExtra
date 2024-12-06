@@ -745,7 +745,7 @@ async function makeRequestToGetMyCAshouts() {
 
         return result;
     } catch (error) {
-        console.error(result, error);
+        console.error(error);
     }
 }
 
