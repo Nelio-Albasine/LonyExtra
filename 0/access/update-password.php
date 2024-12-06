@@ -73,7 +73,7 @@ if (isset($_GET['data']) && isset($_GET['iv'])) {
         }
     }
 } else {
-    die("Parâmetros inválidos. Solicite um novo link.");
+    die("Parâmetros inválidos. Por fvor Solicite um novo link.");
 }
 ?>
 
