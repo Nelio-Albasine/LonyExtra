@@ -94,7 +94,7 @@ function encryptData($userEmail)
     $iv = openssl_random_pseudo_bytes($iv_length);
 
     $timestamp = time();
-    $expiryTime = $timestamp + 60 * 60; 
+    $expiryTime = $timestamp + 10 * 60; 
 
     $dataToEncrypt = json_encode([
         'email' => $userEmail,
@@ -364,7 +364,8 @@ function sendEmailWithURLtoResetPassword($userEmail, $conn)
                                     <tr>
                                         <td>
                                             <div class="footer_mini_logo">
-                                                <p>Enviado com Confiança</p>
+                                                <p>Enviado com Confiança <br>
+                                                Válido por <strong>10 minutos</strong></p>
                                             </div>
                                         </td>
                                     </tr>
