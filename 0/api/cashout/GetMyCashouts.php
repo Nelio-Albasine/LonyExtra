@@ -22,7 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
     $response = getMyAllMyCashouts($conn, $userId);
 
-    error_log("Resposta do cashout: ". print_r($output, true));
+    error_log("Resposta do cashout: ". print_r($response, true));
 
     echo json_encode($response);
     $conn->close();
