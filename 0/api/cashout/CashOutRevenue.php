@@ -59,6 +59,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         $userRevenueJson = json_decode($userRevenueJsonString, true);
+
+        error_log("Json retornado: ". print_r($userRevenueJson, true));
+
         if ($userRevenueJson['userRevenue'] < $amountToCashOut) {
             echo json_encode(['success' => false, 'message' => '405']);
             exit;
@@ -66,7 +69,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         $remainingBalance = $userRevenueJson['userRevenue'] - $amountToCashOut;
         $userRevenueJson['userRevenue'] = $remainingBalance;
-        $userRevenueJson['userLTCashouts'] = $userRevenueJson['userLTCashouts'] + $amountToCashOut;
+
+        $userRevenueJson['userLTCashouts'] += $amountToCashOut;
 
         $insertResponse = insertCashOutIntoTable($conn, $userId, $created_at,  $gatewayName, $amountToCashOut, $userPaymentName, $userPaymentAddress, $cashOutId);
         if (!$insertResponse['success']) {
