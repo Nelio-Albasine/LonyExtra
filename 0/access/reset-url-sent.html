@@ -76,7 +76,8 @@
 
     <script>
         document.getElementById("btnRedirecting").addEventListener("click", () => {
-            window.history.replaceState({}, "", "http://127.0.0.1:5500/0/access/login.html");
+            window.open("login.html", "_blank");
+            window.close();
         });
     </script>
 </body>
