@@ -45,6 +45,7 @@ document.addEventListener("DOMContentLoaded", async function () {
         });
     }
 
+    console.log("Welcome")
 
     const userName = document.querySelectorAll(".userName");
     const userEmail = document.querySelectorAll(".userEmail");
