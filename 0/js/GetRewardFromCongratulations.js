@@ -28,7 +28,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
     textUserRevenue.textContent = userPointsJson.userRevenue.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
     currentStars = userPointsJson.userStars
-    textUserPoints.textContent = currentStars.toLocaleString("pt-PT");
+    textUserPoints.textContent = currentStars.toLocaleString().replace(/,/g, ' ');
 
     btnGetReward.addEventListener("click", async () => {
         await sendEncryptedDataToServer(getCookie("taskData"), iv, btnGetReward);
@@ -159,7 +159,7 @@ async function sendEncryptedDataToServer(encryptedData, iv, btnGetReward) {
             feedbackMessage = "Pontuação adicionada com sucesso!";
             showBoxAlert(feedbackMessage, "success");
 
-            textUserPoints.textContent = (currentStars + pointsToEarn).toLocaleString("pt-PT");
+            textUserPoints.textContent = (currentStars + pointsToEarn).toLocaleString().replace(/,/g, ' ');
         } else if (result.message == "204") {
             feedbackMessage = "Tarefa ainda não disponivel!";
             showBoxAlert(feedbackMessage, "warning");

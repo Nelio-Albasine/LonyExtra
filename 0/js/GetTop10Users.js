@@ -63,7 +63,7 @@ function loadTop10UserIntoTable(topUsers) {
 
         const ratingValue = document.createElement("span");
         ratingValue.className = "rating-value";
-        ratingValue.textContent = parseInt(user.rating).toLocaleString("pt-PT");
+        ratingValue.textContent = parseInt(user.rating).toLocaleString().replace(/,/g, ' ');
 
         const ratingIcon = document.createElement("span");
         ratingIcon.className = "rating_icon";

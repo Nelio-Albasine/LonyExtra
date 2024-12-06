@@ -285,10 +285,11 @@ async function handleConvertion(index, convertStarsBtn) {
             userPointsJson.userStars = newStars;
             userPointsJson.userRevenue = newRevenue;
             userPointsJson.userLTRevenue = newLTRevenue;
+            
             localStorage.setItem("userPoints", JSON.stringify(userPointsJson));
 
             textUserStars.forEach(el => {
-                el.textContent = newStars.toLocaleString("pt-PT");
+                el.textContent = newStars.toLocaleString().replace(/,/g, ' ');
             });
 
             textUserRevenue.forEach(el => {
@@ -744,7 +745,7 @@ async function makeRequestToGetMyCAshouts() {
 
         return result;
     } catch (error) {
-        console.error(responseMessage, error);
+        console.error(result, error);
     }
 }
 
@@ -795,7 +796,7 @@ function hadeUIwhenInvitedCodeIsInserted(inviterInfoParam) {
 
     myInviterInitial.forEach(text => text.textContent = getInitials(inviterInfo.userName, inviterInfo.userSurname))
     nameWhoInvitedMe.textContent = `${inviterInfo.userName} ${inviterInfo.userSurname}`;
-    LTstarsWhoInvitedMe.textContent = parseInt(inviterInfo.LTStars).toLocaleString("pt-PT");
+    LTstarsWhoInvitedMe.textContent = parseInt(inviterInfo.LTStars).toLocaleString().replace(/,/g, ' ');
 }
 
 async function makeRequestToApplyInvitedCode(inviteCodeInserted, btn) {
@@ -937,7 +938,6 @@ function loadInvitedFriendsIntoTable(invitedFriendsList) {
         tbody_invited_friends.appendChild(tr);
     });
 }
-
 
 async function handleInviteFriendsDialog() {
     async function waitForInvitation() {

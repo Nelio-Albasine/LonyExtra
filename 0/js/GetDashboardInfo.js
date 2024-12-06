@@ -87,19 +87,40 @@ document.addEventListener("DOMContentLoaded", async function () {
         text.textContent = userPoints.userLTRevenue.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
     });
 
-    userStars.textContent = userPoints.userStars.toLocaleString("pt-PT");
-    userLTStars.textContent = userPoints.userLTStars.toLocaleString("pt-PT");
+    userStars.textContent = parseInt(userPoints.userStars).toLocaleString().replace(/,/g, ' ');
+    userLTStars.textContent = userPoints.userLTStars.toLocaleString().replace(/,/g, ' ');
 
 
     textTotalInvitedFriends.forEach(text => {
-        text.textContent = userInvitationInfo.myTotalReferredFriends.toLocaleString("pt-PT");
+        text.textContent = userInvitationInfo.myTotalReferredFriends.toLocaleString().replace(/,/g, ' ');
     });
 
     textTotalStarsEarnedByReferrals.forEach(text => {
-        text.textContent = userInvitationInfo.totalStarsEarnedByReferral.toLocaleString("pt-PT");
+        text.textContent = userInvitationInfo.totalStarsEarnedByReferral.toLocaleString().replace(/,/g, ' ');
     });
 });
 
+async function GetDashboardInfo(userId) {
+    const responseMessage = "Ocorreu um erro ao autenticar!";
+
+    try {
+        const response = await fetch(`http://localhost/LonyExtra/0/api/dashboard/GetDashboardInfo.php?userId=${userId}`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json"
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error(`Erro na requisição: ${response.status}`);
+        }
+
+        const dashInfoResponse = await response.json();
+        return dashInfoResponse;
+    } catch (error) {
+        console.error(responseMessage, error);
+    }
+}
 
 function handleStartTasksClicks() {
     const containerBronzeChecker = document.getElementById("containerBronzeChecker");
@@ -125,7 +146,6 @@ function handleStartTasksClicks() {
 
 
 }
-
 
 async function FetchAllLinks(userId, batch = null) {
     try {
@@ -375,28 +395,6 @@ function handleDialogChooseTask(levelIndex) {
     });
 
     loadLinksIntoTable(levelIndex);
-}
-
-async function GetDashboardInfo(userId) {
-    const responseMessage = "Ocorreu um erro ao autenticar!";
-
-    try {
-        const response = await fetch(`http://localhost/LonyExtra/0/api/dashboard/GetDashboardInfo.php?userId=${userId}`, {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json"
-            }
-        });
-
-        if (!response.ok) {
-            throw new Error(`Erro na requisição: ${response.status}`);
-        }
-
-        const dashInfoResponse = await response.json();
-        return dashInfoResponse;
-    } catch (error) {
-        console.error(responseMessage, error);
-    }
 }
 
 function handleLinkAvailabilityChecker(data) {
