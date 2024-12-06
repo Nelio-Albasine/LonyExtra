@@ -45,7 +45,7 @@
 }
 
 
-#img_close_dialog {
+.img_close_dialog {
     width: 25px;
     height: 25px;
     background-color: rgb(189, 189, 189);
