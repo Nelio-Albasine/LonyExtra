@@ -30,12 +30,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $allowedGateways = ['paypal', 'pix'];
     $indexAmountToValues = [
-        0 => 1.0,
-        1 => 5.2,
-        2 => 10.5,
-        3 => 21.3,
-        4 => 30.5,
-        5 => 48.30
+        0 => 1.12,
+        1 => 5.9,
+        2 => 11.9,
+        3 => 23.9,
+        4 => 47.9,
+        5 => 95.90
     ];
 
     if (!in_array($gatewayName, $allowedGateways)) {
