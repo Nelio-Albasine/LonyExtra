@@ -2,14 +2,20 @@
 // Exibir erros para depuração (remova em produção)
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
-ini_set('error_log', __DIR__ . '/../api/logs/UpdateUserPassword.log');
+ini_set('error_log', __DIR__ . '/0/api/logs/UpdateUserPassword.log');
 
-require_once "../api/Wamp64Connection.php";
-require_once "../api/access/IsUserRegistered.php";
+require_once "/0/api/Wamp64Connection.php";
+require_once "/0/api/access/IsUserRegistered.php";
 
 if (isset($_GET['data']) && isset($_GET['iv'])) {
     $encryptedData = base64_decode($_GET['data']);
     $iv = base64_decode($_GET['iv']);
+
+    // Debug: Exibir tamanho e conteúdo do IV
+    echo "<pre>";
+    echo "IV (base64 decoded): " . bin2hex($iv) . "\n";
+    echo "IV Length: " . strlen($iv) . "\n";
+    echo "</pre>";
 
     // Validar o tamanho do IV (16 bytes para AES-256-CBC)
     if (strlen($iv) !== 16) {
@@ -22,6 +28,11 @@ if (isset($_GET['data']) && isset($_GET['iv'])) {
 
     // Descriptografar os dados
     $decryptedData = openssl_decrypt($encryptedData, $metodo, $SECRET_KEY, 0, $iv);
+
+    // Debug: Exibir dados descriptografados
+    echo "<pre>";
+    echo "Dados descriptografados: " . htmlspecialchars($decryptedData) . "\n";
+    echo "</pre>";
 
     if ($decryptedData === false) {
         die("Falha ao descriptografar os dados. Solicite um novo link.");
@@ -78,6 +89,7 @@ if (isset($_GET['data']) && isset($_GET['iv'])) {
     die("Parâmetros inválidos. Solicite um novo link.");
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="pt-br">
