@@ -15,6 +15,7 @@ var textTotalStarsEarnedByReferrals = null
 var myInviterInfo = null
 let textInvitationLink = null;
 let textInvitationCode = null;
+let userLTCashoutsGloabl = null
 
 const userId = "391f58325968d93b6778b9722f953bb063b44254d8e04109955c52b928ac9782";
 
@@ -65,6 +66,8 @@ document.addEventListener("DOMContentLoaded", async function () {
     const userPoints = JSON.parse(userInfo.userPointsJSON);
     userInvitationInfo = JSON.parse(userInfo.userInvitationJSON);
     userTimeZone = userInfo.userTimeZone;
+    userLTCashoutsGloabl = userPoints.userLTCashouts
+
 
     saveUserPointsToLocalStorage(userPoints);
     handleLinkAvailabilityChecker(dashInfo.hasValidLinksPerBatch);
@@ -86,7 +89,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     });
 
     userLTCashout.forEach(text => {
-        text.textContent = userPoints.userLTCashouts.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
+        text.textContent = userLTCashoutsGloabl.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
     });
 
     userLTRevenue.forEach(text => {

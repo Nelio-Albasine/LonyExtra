@@ -15,11 +15,11 @@ const hashToDialogData = {
 };
 
 const starsToValueMap = [
-    { stars: 600, revenue: 1.0 },
-    { stars: 2980, revenue: 5.20 },
-    { stars: 5955, revenue: 10.50 },
-    { stars: 11905, revenue: 21.30 },
-    { stars: 23805, revenue: 43.19 },
+    { stars: 650, revenue: 1.12 },
+    { stars: 2990, revenue: 5.9 },
+    { stars: 5970, revenue: 11.9 },
+    { stars: 11930, revenue: 23.9 },
+    { stars: 23850, revenue: 47.9 },
 ];
 
 const indexCashoutToAmountToValues = {
@@ -496,6 +496,12 @@ function showSuccessDialogCashout(data, isByHistoryTable = null) {
     let icon = document.getElementById("img_metod_in_dialog_success_withdraw");
     let btn_see_cashou_status = document.getElementById("btn_see_cashou_status");
 
+    const userLTCashout = document.querySelectorAll(".userLTCashout");
+    userLTCashoutsGloabl += data.amountCashedOut;
+    
+    userLTCashout.forEach(text => {
+        text.textContent = userLTCashoutsGloabl.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
+    });
 
     amountElement.textContent = `R$ ${data.amountCashedOut.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}` || "Valor não informado";
     nameElement.textContent = data.userPaymentName || "Nome não informado";
