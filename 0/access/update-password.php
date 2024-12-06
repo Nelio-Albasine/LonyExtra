@@ -1,7 +1,7 @@
 <?php
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
-ini_set('error_log', __DIR__ . '/0/api/logs/UpdateUserPassword.log');
+ini_set('error_log', __DIR__ . '../api/logs/UpdateUserPassword.log');
 
 
 require_once "../api/Wamp64Connection.php";
