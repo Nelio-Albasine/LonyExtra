@@ -94,7 +94,7 @@ function encryptData($userEmail)
     $iv = openssl_random_pseudo_bytes($iv_length);
 
     $timestamp = time();
-    $expiryTime = $timestamp + 60 * 60; 
+    $expiryTime = $timestamp + 10 * 60; 
 
     $dataToEncrypt = json_encode([
         'email' => $userEmail,
