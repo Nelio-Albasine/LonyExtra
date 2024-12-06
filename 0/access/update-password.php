@@ -3,7 +3,6 @@ header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: POST, OPTIONS');
 header('Access-Control-Allow-Headers: Content-Type');
 
-
 function decryptData($encryptedData, $iv) {
     require_once '../api/tasks/Config.php';
     $SECRET_KEY = LONY_EXTRA_POINTS_SECRET_KEY;
@@ -20,13 +19,12 @@ function decryptData($encryptedData, $iv) {
     return json_decode($decryptedData, true);
 }
 
-
 if (isset($_GET['data']) && isset($_GET['iv'])) {
     try {
         $encryptedData = $_GET['data'];
         $iv = $_GET['iv'];
 
-       
+        // Descriptografa os dados
         $decryptedData = decryptData($encryptedData, $iv);
         $userEmail = $decryptedData['email'];
         $expiryTime = $decryptedData['expiryTime'];
@@ -49,7 +47,6 @@ if (isset($_GET['data']) && isset($_GET['iv'])) {
     exit;
 }
 
-// Processamento do formulário de redefinição de senha
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['password']) && isset($_POST['confirmPassword']) && isset($_POST['resetToken'])) {
     $password = $_POST['password'];
     $confirmPassword = $_POST['confirmPassword'];
@@ -92,13 +89,42 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['password']) && isset(
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Redefinir Senha</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../css/access/update_password.css">
+    <script>
+        function handleSubmit(event) {
+            event.preventDefault(); // Impede o envio padrão do formulário
+
+            var password = document.getElementById("password").value;
+            var confirmPassword = document.getElementById("confirmPassword").value;
+            var resetToken = document.querySelector('input[name="resetToken"]').value;
+
+            // Verifica se as senhas coincidem antes de enviar os dados
+            if (password === confirmPassword) {
+                var formData = new FormData();
+                formData.append("password", password);
+                formData.append("confirmPassword", confirmPassword);
+                formData.append("resetToken", resetToken);
+
+                // Envia os dados via AJAX (usando Fetch API)
+                fetch("", {
+                    method: "POST",
+                    body: formData
+                }).then(response => response.text()).then(data => {
+                    document.body.innerHTML = data; // Substitui o conteúdo com a resposta do servidor
+                }).catch(error => {
+                    alert("Erro ao enviar o formulário. Tente novamente.");
+                });
+            } else {
+                alert("As senhas não coincidem!");
+            }
+        }
+    </script>
 </head>
 <body>
     <div class="container">
         <h2>Redefinir Senha</h2>
         
-        <form method="POST" action="">
+        <form method="POST" action="" onsubmit="handleSubmit(event)">
             <input type="hidden" name="resetToken" value="<?php echo isset($resetToken) ? $resetToken : ''; ?>">
 
             <label for="password">Nova Senha:</label>
