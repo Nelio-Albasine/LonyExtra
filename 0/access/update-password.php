@@ -87,7 +87,6 @@ if (isset($_GET['data']) && isset($_GET['iv'])) {
     <link rel="icon" href="../src/favicon_io/favicon.ico" type="image/x-icon">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
     <style>
-        /* Reset some default styles */
         body, h2, p, form, input, button {
             margin: 0;
             padding: 0;
@@ -177,6 +176,15 @@ if (isset($_GET['data']) && isset($_GET['iv'])) {
             background-color: #4caf50;
         }
 
+        #loading {
+            display: none;
+            background-color: #ff9800;
+            color: white;
+            padding: 10px;
+            margin-top: 20px;
+            border-radius: 5px;
+        }
+
         @media (max-width: 600px) {
             .container {
                 padding: 20px;
@@ -194,7 +202,7 @@ if (isset($_GET['data']) && isset($_GET['iv'])) {
         <h2>Redefinir Senha</h2>
         <?php if (isset($mensagemErro)) echo "<p class='message error'>$mensagemErro</p>"; ?>
         <?php if (isset($mensagemSucesso)) echo "<p class='message success'>$mensagemSucesso</p>"; ?>
-        <form method="post">
+        <form method="post" onsubmit="showLoadingMessage()">
             <div class="form-group">
                 <label for="novaSenha">Nova Senha</label>
                 <input type="password" id="novaSenha" name="novaSenha" required>
@@ -205,7 +213,16 @@ if (isset($_GET['data']) && isset($_GET['iv'])) {
             </div>
             <button type="submit">Atualizar Senha</button>
         </form>
+
+        <!-- Mensagem de carregamento -->
+        <div id="loading">Aguarde... Estamos verificando seus dados.</div>
     </div>
+
+    <script>
+        function showLoadingMessage() {
+            document.getElementById('loading').style.display = 'block'; // Exibe a mensagem de carregamento
+        }
+    </script>
 </body>
 
 </html>
