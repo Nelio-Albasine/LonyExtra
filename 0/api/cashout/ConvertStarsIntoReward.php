@@ -56,13 +56,14 @@ function main() {
     }
 }
 
+
 function handleConversion($conn, $userId, $index) {
     $starsToValueMap = [
-        0 => ["stars" => 600, "revenue" => 1.0],
-        1 => ["stars" => 2980, "revenue" => 5.20],
-        2 => ["stars" => 5955, "revenue" => 10.50],
-        3 => ["stars" => 11905, "revenue" => 21.30],
-        4 => ["stars" => 23805, "revenue" => 43.19],
+        0 => ["stars" => 650, "revenue" => 1.12],
+        1 => ["stars" => 2990, "revenue" => 5.90],
+        2 => ["stars" => 5970, "revenue" => 11.90],
+        3 => ["stars" => 11930, "revenue" => 23.90],
+        4 => ["stars" => 23850, "revenue" => 47.90],
     ];
 
     $response = new ConversionResponse();

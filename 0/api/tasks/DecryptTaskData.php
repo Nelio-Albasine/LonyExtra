@@ -139,19 +139,19 @@ function updateUserPoints($conn, $decryptedData, $userId, $taskId)
 
     switch ($index) {
         case 0:
-            $starsToEarn = 10;
+            $starsToEarn = 3;
             break;
         case 1:
-            $starsToEarn = 20;
+            $starsToEarn = 6;
             break;
         case 2:
-            $starsToEarn = 30;
+            $starsToEarn = 12;
             break;
         case 3:
-            $starsToEarn = 50;
+            $starsToEarn = 20;
             break;
         case 4:
-            $starsToEarn = 80;
+            $starsToEarn = 25;
             break;
     }
 

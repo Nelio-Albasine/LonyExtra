@@ -90,19 +90,19 @@ function showBoxAlert(message, type) {
 function handlePointsToEarnText(index, text) {
     switch (index) {
         case 0:
-            pointsToEarn = 10;
+            pointsToEarn = 3;
             break;
         case 1:
-            pointsToEarn = 20;
+            pointsToEarn = 6;
             break;
         case 2:
-            pointsToEarn = 30;
+            pointsToEarn = 12;
             break;
         case 3:
-            pointsToEarn = 50;
+            pointsToEarn = 20;
             break;
         case 4:
-            pointsToEarn = 80;
+            pointsToEarn = 25;
             break;
     }
 

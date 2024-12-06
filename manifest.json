@@ -1,0 +1,20 @@
+{
+    "name": "Lony Extra",
+    "short_name": "LonyExtra",
+    "start_url": "0/access/login.html",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "theme_color": "#000000",
+    "icons": [
+        {
+            "src": "0/src/imgs/LonyExtra_192x192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "0/src/imgs/LonyExtra_512x512.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ]
+}

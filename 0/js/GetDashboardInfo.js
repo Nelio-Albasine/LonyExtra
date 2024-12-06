@@ -17,9 +17,34 @@ let textInvitationLink = null;
 let textInvitationCode = null;
 
 const userId = "391f58325968d93b6778b9722f953bb063b44254d8e04109955c52b928ac9782";
+
+if (!userId) {
+    window.location.href = "../access/login.html";
+}
+
 let dashInfo = null;
 
 document.addEventListener("DOMContentLoaded", async function () {
+    if ('Notification' in window && 'serviceWorker' in navigator) {
+        Notification.requestPermission().then((permission) => {
+            if (permission === 'granted') {
+                console.log('Permissão concedida!');
+            } else {
+                console.log('Permissão negada.');
+            }
+        });
+    }
+
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/service-worker.js').then((registration) => {
+            console.log('Service Worker registrado com sucesso:', registration);
+            
+        }).catch((error) => {
+            console.error('Falha ao registrar o Service Worker:', error);
+        });
+    }
+
+
     const userName = document.querySelectorAll(".userName");
     const userEmail = document.querySelectorAll(".userEmail");
     const userRevenue = document.querySelectorAll(".userRevenue");
@@ -130,7 +155,7 @@ async function FetchAllLinks(userId, batch = null) {
 
 async function loadLinksIntoTable(levelIndex) {
     const dialog_title_tasks_remaining = document.getElementById("dialog_title_tasks_remaining");
-  
+
     if (previusLinksFetched === null) {
         allLinks = await FetchAllLinks(userId);
     }
@@ -139,23 +164,23 @@ async function loadLinksIntoTable(levelIndex) {
     switch (levelIndex) {
         case 0:
             previusLinksFetched = allLinks.bronzeAvailability;
-            pointsToEarnByLevel = 10;
+            pointsToEarnByLevel = 3;
             break;
         case 1:
             previusLinksFetched = allLinks.prataAvailability;
-            pointsToEarnByLevel = 20;
+            pointsToEarnByLevel = 6;
             break;
         case 2:
             previusLinksFetched = allLinks.ouroAvailability;
-            pointsToEarnByLevel = 30;
+            pointsToEarnByLevel = 12;
             break;
         case 3:
             previusLinksFetched = allLinks.diamanteAvailability;
-            pointsToEarnByLevel = 50;
+            pointsToEarnByLevel = 20;
             break;
         case 4:
             previusLinksFetched = allLinks.platinaAvailability;
-            pointsToEarnByLevel = 80;
+            pointsToEarnByLevel = 25;
             break;
     }
     updateHashSilently(currentURL_hash);
@@ -444,7 +469,7 @@ function updateHomeTaskAvailability(container, textTask, availability) {
     if (availability.hasValidLinks) {
         container.classList.add("hasSomeTaskAvailable");
         container.classList.remove("dontHasSomeTaskAvailable");
-        textTask.innerHTML = `Realizar tarefa <strong>(${availability.validLinkCount}/10)</strong>`;
+        textTask.innerHTML = `Realizar tarefa <strong>(${availability.validLinkCount}/15)</strong>`;
     } else {
         container.classList.add("dontHasSomeTaskAvailable");
         container.classList.remove("hasSomeTaskAvailable");
