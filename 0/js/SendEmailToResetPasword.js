@@ -29,8 +29,7 @@ document.addEventListener("DOMContentLoaded", function () {
         console.log("resposta do SendURLtoResetPassword", response);
 
         if (response.success) {
-            window.open(response.redirectTo, "_self");
-            window.close();
+            window.location.replace(response.redirectTo);
         } else {
             showAlert(2, response.message);
             btnSendEmailToResetPassword.disabled = false;

@@ -108,8 +108,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
                     if (sendResponse.success) {
                         btnCreateAccount.innerText = "Redirecionando...";
-                        window.open(sendResponse.redirectTo, "_self");
-                        window.close();
+                        window.location.replace(sendResponse.redirectTo);
                     } else {
                         btnCreateAccount.disabled = false;
                         btnCreateAccount.innerText = "Criar Conta";
