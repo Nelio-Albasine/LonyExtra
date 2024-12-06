@@ -633,7 +633,7 @@ async function loadMyCashoutsToTable() {
 
     loading_or_empty_awesome_icon.className = "fa-regular fa-hourglass history-icon";
     p_sem_saques.forEach(text => text.textContent = "Carregando...");
-
+    emptyHistory.style.display = "flex";
     tableBody.innerHTML = "";
 
     const historyData = await makeRequestToGetMyCAshouts()
