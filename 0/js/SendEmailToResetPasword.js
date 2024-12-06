@@ -1,6 +1,6 @@
 let divAlertMessage = null;
 document.addEventListener("DOMContentLoaded", function () {
-    let btnResetPassword = document.getElementById("btnResetPassword")
+    let btnSendEmailToResetPassword = document.getElementById("btnSendEmailToResetPassword")
     let inputEmailToResetPassword = document.getElementById("inputEmailToResetPassword");
     divAlertMessage = document.getElementById("div_alert_message");
 
@@ -11,9 +11,9 @@ document.addEventListener("DOMContentLoaded", function () {
         let email = params.get("email");
         inputEmailToResetPassword.value = email;
     }
-    
 
-    btnResetPassword.addEventListener("click", async (event) => {
+
+    btnSendEmailToResetPassword.addEventListener("click", async (event) => {
         event.preventDefault();
         let value = inputEmailToResetPassword.value.trim();
 
@@ -22,18 +22,20 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
 
-        btnResetPassword.disabled = true;
-        btnResetPassword.textContent = "Aguarde...";
+        btnSendEmailToResetPassword.disabled = true;
+        btnSendEmailToResetPassword.textContent = "Aguarde...";
 
         let response = await tryToSendEmailToResetPassword(value);
-     
+        console.log("resposta do SendURLtoResetPassword", response);
+
         if (response.success) {
+
             window.history.replaceState({}, "", response.redirectTo);
         } else {
             showAlert(2, response.message);
-            btnResetPassword.disabled = false;
-            btnResetPassword.style.backgroundColor = "red";
-            btnResetPassword.textContent = "Tentar novamente!";
+            btnSendEmailToResetPassword.disabled = false;
+            btnSendEmailToResetPassword.style.backgroundColor = "red";
+            btnSendEmailToResetPassword.textContent = "Tentar novamente!";
         }
 
     });
@@ -51,7 +53,7 @@ function showAlert(alertIndex, message) {
     divAlertMessage.classList.add('show');
 
     setTimeout(() => {
-        divAlertMessage.classList.remove('show'); 
+        divAlertMessage.classList.remove('show');
     }, 4000);
 }
 

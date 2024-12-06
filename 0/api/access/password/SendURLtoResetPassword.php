@@ -170,7 +170,7 @@ function sendEmailWithURLtoResetPassword($userEmail, $conn)
                             font-family: \'Arial\', sans-serif;
                             background-color: #eeeeee;
                             color: #333;
-                            line-height: 1.6;
+                            line-height: 1;
                         }
 
                         div{
@@ -284,8 +284,16 @@ function sendEmailWithURLtoResetPassword($userEmail, $conn)
 
                         /* Responsividade */
                         @media only screen and (max-width: 600px) {
+                            body {
+                                    background-color: white;
+                            }
+
                             .content {
                                 padding: 20px;
+                            }
+
+                             .main-table {
+                                padding: 0;
                             }
 
                             #btnResetPassword {
