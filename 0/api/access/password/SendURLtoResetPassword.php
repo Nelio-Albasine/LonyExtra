@@ -122,7 +122,7 @@ function sendEmailWithURLtoResetPassword($userEmail, $conn)
     $encryptedData = encryptData($userEmail);
 
     //reset password url 
-    $resetURL = "http://127.0.0.1:5500/update-password.php?data=" . $encryptedData["encryptedData"] . "&iv=" . $encryptedData["iv"];
+    $resetURL = "http://127.0.0.1:5500/0/access/update-password.php?data=" . $encryptedData["encryptedData"] . "&iv=" . $encryptedData["iv"];
 
     try {
         $phpMailerPath = "../../../../PHPMailer-master/PHPMailer-master/src/PHPMailer.php";

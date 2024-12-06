@@ -1,140 +1,156 @@
 <?php
-header('Access-Control-Allow-Origin: *');
-header('Access-Control-Allow-Methods: POST, OPTIONS');
-header('Access-Control-Allow-Headers: Content-Type');
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+ini_set('error_log', __DIR__ . '/0/api/logs/UpdateUserPassword.log');
 
-function decryptData($encryptedData, $iv) {
+require_once "/0/api/Wamp64Connection.php";
+require_once "/0/api/access/IsUserRegistered.php";
+
+// Validar os dados enviados via GET
+if (isset($_GET['data']) && isset($_GET['iv'])) {
+    $encryptedData = base64_decode($_GET['data']);
+    $iv = base64_decode($_GET['iv']);
+
     require_once '../api/tasks/Config.php';
     $SECRET_KEY = LONY_EXTRA_POINTS_SECRET_KEY;
-    $metodo = "AES-256-CBC";
-    $iv = base64_decode($iv);
-    $encryptedData = base64_decode($encryptedData);
+    $metodo = 'AES-256-CBC';
 
     $decryptedData = openssl_decrypt($encryptedData, $metodo, $SECRET_KEY, 0, $iv);
-    
+
+    error_log("Dados descriptografados: " . print_r($decryptedData, true));
+
     if ($decryptedData === false) {
-        throw new Exception("Falha ao desencriptar os dados.");
+        die("Dados inválidos ou corrompidos.");
     }
 
-    return json_decode($decryptedData, true);
-}
+    $data = json_decode($decryptedData, true);
 
-if (isset($_GET['data']) && isset($_GET['iv'])) {
-    try {
-        $encryptedData = $_GET['data'];
-        $iv = $_GET['iv'];
-
-        // Descriptografa os dados
-        $decryptedData = decryptData($encryptedData, $iv);
-        $userEmail = $decryptedData['email'];
-        $expiryTime = $decryptedData['expiryTime'];
-
-        $currentTime = time();
-
-        if ($currentTime > $expiryTime) {
-            header('Location: expired-link.html');
-            exit;
-        } else {
-            // Caso o link não tenha expirado, cria o token de redefinição
-            $resetToken = base64_encode(json_encode(['email' => $userEmail, 'expiryTime' => $expiryTime]));
-        }
-    } catch (Exception $e) {
-        header('Location: expired-link.html');
-        exit;
+    // Verificar expiração do link
+    if (time() > $data['expiryTime']) {
+        header("Refresh: 3; url=http://127.0.0.1:5500/0/access/expired-link.html");
+        die("O link expirou. Você será redirecionado para solicitar um novo link.");
     }
-} else {
-    header('Location: expired-link.html');
-    exit;
-}
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['password']) && isset($_POST['confirmPassword']) && isset($_POST['resetToken'])) {
-    $password = $_POST['password'];
-    $confirmPassword = $_POST['confirmPassword'];
-    $resetToken = $_POST['resetToken'];
+    $email = $data['email'];
 
-    if ($password === $confirmPassword) {
-        $resetData = json_decode(base64_decode($resetToken), true);
-        $userEmail = $resetData['email'];
-
-        $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-
-        require_once '../api/Wamp64Connection.php';
+    // Página de redefinição de senha
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $novaSenha = $_POST['novaSenha'];
+        $confirmarSenha = $_POST['confirmarSenha'];
         $conn = Wamp64Connection();
 
-        $stmt = $conn->prepare("UPDATE Usuarios SET userPassword = ? WHERE userEmail = ?");
-        $stmt->bind_param('ss', $hashedPassword, $userEmail);
-
-        if ($stmt->execute()) {
-            echo "<script>
-                showAlert(0, 'Senha atualizada com sucesso! Redirecionando para o login...');
-                setTimeout(() => {
-                    window.location.href = 'http://127.0.0.1:5500/0/access/login.html';
-                }, 3000);
-            </script>";
+        if ($novaSenha !== $confirmarSenha) {
+            $mensagemErro = "As senhas não coincidem.";
         } else {
-            echo "<script>showAlert(2, 'Erro ao atualizar a senha. Tente novamente mais tarde.');</script>";
-        }
+            if (IsUserRegistered($email, $conn)) {
+                $hashSenha = password_hash($novaSenha, PASSWORD_BCRYPT);
 
-        $stmt->close();
-        $conn->close();
-    } else {
-        echo "<script>showAlert(2, 'As senhas não coincidem!');</script>";
+                $sql = "UPDATE Usuarios SET userPassword = ? WHERE userEmail = ?";
+                if ($stmt = $conn->prepare($sql)) {
+                    $stmt->bind_param("ss", $hashSenha, $email);
+                    if ($stmt->execute()) {
+                        $mensagemSucesso = "Senha redefinida com sucesso!";
+                        header("Refresh: 3; url=http://127.0.0.1:5500/0/access/login.html");
+                    } else {
+                        $mensagemErro = "Erro ao atualizar a senha.";
+                    }
+                    $stmt->close();
+                } else {
+                    $mensagemErro = "Erro ao preparar a consulta.";
+                }
+                $conn->close();
+            } else {
+                $mensagemErro = "Usuário não registrado!";
+            }
+        }
     }
+} else {
+    die("Parâmetros inválidos.");
 }
 ?>
 
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Redefinir Senha</title>
-    <link rel="stylesheet" href="../css/access/update_password.css">
-    <script>
-        function handleSubmit(event) {
-            event.preventDefault(); // Impede o envio padrão do formulário
-
-            var password = document.getElementById("password").value;
-            var confirmPassword = document.getElementById("confirmPassword").value;
-            var resetToken = document.querySelector('input[name="resetToken"]').value;
-
-            // Verifica se as senhas coincidem antes de enviar os dados
-            if (password === confirmPassword) {
-                var formData = new FormData();
-                formData.append("password", password);
-                formData.append("confirmPassword", confirmPassword);
-                formData.append("resetToken", resetToken);
-
-                // Envia os dados via AJAX (usando Fetch API)
-                fetch("", {
-                    method: "POST",
-                    body: formData
-                }).then(response => response.text()).then(data => {
-                    document.body.innerHTML = data; // Substitui o conteúdo com a resposta do servidor
-                }).catch(error => {
-                    alert("Erro ao enviar o formulário. Tente novamente.");
-                });
-            } else {
-                alert("As senhas não coincidem!");
-            }
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
         }
-    </script>
+
+        .container {
+            max-width: 400px;
+            margin: 50px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background: #218838;
+        }
+
+        .error {
+            color: red;
+            margin-bottom: 15px;
+        }
+
+        .success {
+            color: green;
+            margin-bottom: 15px;
+        }
+    </style>
 </head>
+
 <body>
     <div class="container">
         <h2>Redefinir Senha</h2>
-        
-        <form method="POST" action="" onsubmit="handleSubmit(event)">
-            <input type="hidden" name="resetToken" value="<?php echo isset($resetToken) ? $resetToken : ''; ?>">
-
-            <label for="password">Nova Senha:</label>
-            <input type="password" id="password" name="password" required>
-
-            <label for="confirmPassword">Confirmar Nova Senha:</label>
-            <input type="password" id="confirmPassword" name="confirmPassword" required>
-
-            <button type="submit">Redefinir Senha</button>
+        <?php if (isset($mensagemErro)) echo "<p class='error'>$mensagemErro</p>"; ?>
+        <?php if (isset($mensagemSucesso)) echo "<p class='success'>$mensagemSucesso</p>"; ?>
+        <form method="post">
+            <div class="form-group">
+                <label for="novaSenha">Nova Senha</label>
+                <input type="password" id="novaSenha" name="novaSenha" required>
+            </div>
+            <div class="form-group">
+                <label for="confirmarSenha">Confirmar Nova Senha</label>
+                <input type="password" id="confirmarSenha" name="confirmarSenha" required>
+            </div>
+            <button type="submit">Atualizar Senha</button>
         </form>
     </div>
 </body>
+
 </html>
