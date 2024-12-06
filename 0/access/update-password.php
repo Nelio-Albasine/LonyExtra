@@ -123,7 +123,7 @@ if (isset($_GET['data']) && isset($_GET['iv'])) {
         }
 
         .error {
-            color: red;
+            color: white;
             margin-bottom: 15px;
         }
 
