@@ -90,10 +90,11 @@ function encryptData($userEmail)
 
     $SECRET_KEY = LONY_EXTRA_POINTS_SECRET_KEY;
     $metodo = "AES-256-CBC";
-    $iv = openssl_random_pseudo_bytes(openssl_cipher_iv_length($metodo));
+    $iv_length = openssl_cipher_iv_length($metodo); 
+    $iv = openssl_random_pseudo_bytes($iv_length);
 
-    $timestamp = time(); 
-    $expiryTime = $timestamp + 60 * 60;  
+    $timestamp = time();
+    $expiryTime = $timestamp + 60 * 60; 
 
     $dataToEncrypt = json_encode([
         'email' => $userEmail,
@@ -113,6 +114,7 @@ function encryptData($userEmail)
 
     return $response;
 }
+
 
 function sendEmailWithURLtoResetPassword($userEmail, $conn)
 {
