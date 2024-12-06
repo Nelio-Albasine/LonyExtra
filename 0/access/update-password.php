@@ -2,10 +2,10 @@
 // Exibir erros para depuração (remova em produção)
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
-ini_set('error_log', __DIR__ . '/0/api/logs/UpdateUserPassword.log');
+ini_set('error_log', __DIR__ . '/../api/logs/UpdateUserPassword.log');
 
-require_once "/0/api/Wamp64Connection.php";
-require_once "/0/api/access/IsUserRegistered.php";
+require_once "../api/Wamp64Connection.php";
+require_once "../api/access/IsUserRegistered.php";
 
 if (isset($_GET['data']) && isset($_GET['iv'])) {
     $encryptedData = base64_decode($_GET['data']);
