@@ -28,24 +28,24 @@ function hasValidLinksPerBatch($userId)
         {
             $oldestTimeStored = null;
             $validLinkCount = 0;
-            $currentDate = new DateTime(); 
-        
+            $currentDate = new DateTime();
+
             foreach ($links as $linkData) {
                 $isAvailable = $linkData['isAvailable'];
                 $timeStored = $linkData['timeStored'] ? new DateTime($linkData['timeStored']) : null;
-        
+
                 // Verifica se o link está dentro do prazo de validade
                 $interval = $timeStored ? $currentDate->diff($timeStored)->days : 0;
-        
+
                 if ($isAvailable && ($timeStored === null || $interval <= $validityDays)) {
                     $validLinkCount++;
                 }
-        
+
                 if (!$isAvailable && $timeStored !== null && ($oldestTimeStored === null || $timeStored < $oldestTimeStored)) {
                     $oldestTimeStored = $timeStored;
                 }
             }
-        
+
             return [
                 "hasValidLinks" => $validLinkCount > 0,
                 "oldestTimeStored" => $oldestTimeStored ? $oldestTimeStored->format(DATE_ATOM) : null,
@@ -53,7 +53,7 @@ function hasValidLinksPerBatch($userId)
                 "currentTime" => $currentDate->format(DATE_ATOM)
             ];
         }
-        
+
 
         $result = [
             "ouroAvailability" => processBatch($linkAvailability['ouroAvailability']),
@@ -67,5 +67,3 @@ function hasValidLinksPerBatch($userId)
 
     return null;
 }
-
-

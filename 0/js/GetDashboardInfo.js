@@ -4,7 +4,7 @@ let previusLinksFetched = null;
 let allLinks = null;
 let pointsToEarnByLevel = 10
 let currentURL_hash;
-let currentServerDate;
+var currentServerDate;
 
 //global vars
 var userInfo = null;
@@ -69,7 +69,6 @@ document.addEventListener("DOMContentLoaded", async function () {
     userTimeZone = userInfo.userTimeZone;
     userLTCashoutsGloabl = userPoints.userLTCashouts
 
-    console.log(" userLTCashouts ", userLTCashoutsGloabl)
 
 
     saveUserPointsToLocalStorage(userPoints);
@@ -441,14 +440,11 @@ function handleLinkAvailabilityChecker(data, userTimeZone) {
     ];
 
     checkers.forEach(({ container, textTask, availability }) => {
-        updateHomeTaskAvailability(container, textTask, availability, userTimeZone);
+        updateHomeTaskAvailability(container, textTask, availability);
     });
 }
 
 function calculateRemainingTime(timeStored, currentServerDate) {
-    console.log(`Time stored: ${timeStored}`);
-    console.log(`Current server date: ${currentServerDate}`);
-
     const updatedAt = new Date(timeStored.replace(" ", "T"));
     const serverDate = new Date(currentServerDate.replace(" ", "T"));
 
@@ -465,13 +461,11 @@ function calculateRemainingTime(timeStored, currentServerDate) {
     const seconds = Math.floor((remainingTime % (1000 * 60)) / 1000);
 
     const response = `Disponível em: <strong>${hours}h : ${minutes}min</strong>`;
-    console.log(`Disponível em: ${hours} horas, ${minutes} minutos, ${seconds} segundos`);
-
     return response;
 }
 
 
-function updateHomeTaskAvailability(container, textTask, availability, userTimezone) {
+function updateHomeTaskAvailability(container, textTask, availability) {
     const intervalKey = container.id;
 
     if (countdownIntervals[intervalKey]) {
@@ -486,25 +480,11 @@ function updateHomeTaskAvailability(container, textTask, availability, userTimez
         container.classList.add("dontHasSomeTaskAvailable");
         container.classList.remove("hasSomeTaskAvailable");
 
-        const oldestTimeStored = availability.oldestTimeStored;
-        const storedDate = new Date(oldestTimeStored);
-        const userTimeZoneDate = new Date(storedDate.toLocaleString("en-US", { timeZone: userTimezone }));
-        const expirationTime = new Date(userTimeZoneDate.getTime() + 24 * 60 * 60 * 1000);
-        countdownIntervals[intervalKey] = setInterval(() => {
-            const currentTime = new Date();
-            const userCurrentTime = new Date(currentTime.toLocaleString("en-US", { timeZone: userTimezone }));
-            const remainingTime = expirationTime - userCurrentTime;
+        let currentUtcTime = new Date().toISOString();
 
-            if (remainingTime <= 0) {
-                textTask.innerHTML = `Tempo <strong>Expirado</strong>`;
-                clearInterval(countdownIntervals[intervalKey]);
-            } else {
-                const hours = Math.floor(remainingTime / (1000 * 60 * 60));
-                const minutes = Math.floor((remainingTime % (1000 * 60 * 60)) / (1000 * 60));
-                const seconds = Math.floor((remainingTime % (1000 * 60)) / 1000);
-                textTask.innerHTML = `Disponível em <strong>${hours}h ${minutes}m ${seconds}s</strong>`;
-            }
-        }, 1000);
+        console.log("oldest timeStored: ", availability.oldestTimeStored);
+        //console.log("timeFormated: : ", );
+        textTask.innerHTML = calculateRemainingTime(availability.oldestTimeStored, currentUtcTime)
     }
 }
 
