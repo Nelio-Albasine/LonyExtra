@@ -3,12 +3,10 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1);
 ini_set('error_log', __DIR__ . '/../logs/get_dash_info.log');
 
-
 // Definindo os cabeçalhos CORS
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: GET, OPTIONS');
 header('Access-Control-Allow-Headers: Content-Type');
-
 
 try {
     if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
@@ -34,8 +32,10 @@ try {
             $hasValidLinksPerBatch = hasValidLinksPerBatch($userId);
 
             if (empty($hasValidLinksPerBatch)) {
+                error_log("hasValidLinksPerBatch está vazio...");
                 $hasValidLinksPerBatch = insertLinksAvailability($userId, $conn);
-            }
+                error_log("Após a inserção, hasValidLinksPerBatch é: " . print_r($hasValidLinksPerBatch, true));
+            }            
 
             $myInviterInfo = [];
             $isInviterCodeEmptyOrNull = isInviterCodeEmptyOrNull($conn, $userId);
@@ -47,8 +47,10 @@ try {
             $output = [
                 'success' => $userInfo['success'],
                 'userInfo' => $userInfo['data'] ?? [],
-                'hasValidLinksPerBatch' => json_decode(json: $hasValidLinksPerBatch) ?? [],
-                'myInviterInfo' => json_encode($myInviterInfo) ?? []
+                'hasValidLinksPerBatch' => is_string($hasValidLinksPerBatch) 
+                    ? json_decode($hasValidLinksPerBatch, true) 
+                    : $hasValidLinksPerBatch,
+                'myInviterInfo' => $myInviterInfo
             ];
         } else {
             $output = [
@@ -102,7 +104,6 @@ function getDashboardInfo($conn, $userId)
     }
 }
 
-
 function insertLinksAvailability($userId, $conn)
 {
     $linksMap = [
@@ -123,7 +124,6 @@ function insertLinksAvailability($userId, $conn)
 
     return $linksMap;
 }
-
 
 function createLinkGroup($batch, $conn)
 {
@@ -157,7 +157,6 @@ function createLinkGroup($batch, $conn)
 
     return $group;
 }
-
 
 function getLinksBatchs($conn)
 {
