@@ -576,8 +576,6 @@ async function makeRequestToCashOut(requestData, btnCashoutRevenue) {
 
             let amountToCashout = parseFloat(indexCashoutToAmountToValues[requestData.amountIndex]);
 
-            console.log(`O let amountToCashout guardou: ${amountToCashout}`)
-
             let remaingRevenue = (parseFloat(userPointsJson.userRevenue) - amountToCashout)
 
             userPointsJson.userRevenue = remaingRevenue
@@ -606,12 +604,13 @@ async function makeRequestToCashOut(requestData, btnCashoutRevenue) {
             showBoxAlert(responseData.message, "error")
             btnCashoutRevenue.textContent = "Ocorreu um erro!";
             btnCashoutRevenue.style.backgroundColor = "red";
-            console.error("Ocorreu um erro!", responseData.message);
+            console.error("Ocorreu um erro no Else final do reponse!", responseData.message);
         }
     } catch (error) {
         showBoxAlert("Um erro inesperado ocorreu", "error")
         btnCashoutRevenue.textContent = "Ocorreu um erro!";
         btnCashoutRevenue.style.backgroundColor = "red";
+        console.error("Um erro inesperado ocorreu", error.message);
         console.error("Um erro inesperado ocorreu", error.message);
     }
     setTimeout(() => {

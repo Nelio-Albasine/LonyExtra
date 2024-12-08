@@ -68,6 +68,8 @@ document.addEventListener("DOMContentLoaded", async function () {
     userInvitationInfo = JSON.parse(userInfo.userInvitationJSON);
     userTimeZone = userInfo.userTimeZone;
     userLTCashoutsGloabl = userPoints.userLTCashouts
+    
+    console.log(" userLTCashouts ", userLTCashoutsGloabl)
 
 
     saveUserPointsToLocalStorage(userPoints);

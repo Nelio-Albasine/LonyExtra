@@ -53,6 +53,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     try {
 
         $userRevenueJsonString = checkIfUserHasSufficientRevenue($conn, $userId);
+       
         if (!$userRevenueJsonString) {
             echo json_encode(['success' => false, 'message' => 'Nenhum registro encontrado para o usuário!']);
             exit;
@@ -106,6 +107,8 @@ function checkIfUserHasSufficientRevenue($conn, $userId)
     $stmt->bind_param("s", $userId);
     $stmt->execute();
     $stmt->bind_result($userPointsJSON);
+    
+    error_log("Json retornado na funcao: ". print_r($userPointsJSON, true));
 
     if ($stmt->fetch()) {
         return $userPointsJSON;
