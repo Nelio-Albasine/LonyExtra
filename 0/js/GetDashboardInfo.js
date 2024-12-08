@@ -68,12 +68,12 @@ document.addEventListener("DOMContentLoaded", async function () {
     userInvitationInfo = JSON.parse(userInfo.userInvitationJSON);
     userTimeZone = userInfo.userTimeZone;
     userLTCashoutsGloabl = userPoints.userLTCashouts
-    
+
     console.log(" userLTCashouts ", userLTCashoutsGloabl)
 
 
     saveUserPointsToLocalStorage(userPoints);
-    handleLinkAvailabilityChecker(dashInfo.hasValidLinksPerBatch);
+    handleLinkAvailabilityChecker(dashInfo.hasValidLinksPerBatch, userTimeZone);
     handleStartTasksClicks();
     handleURLHashs();
 
@@ -361,10 +361,10 @@ async function loadLinksIntoTable(levelIndex) {
                 });
             }
 
-           /* if (tarefa.key == "Diamante_1") {
-                statusDiv.classList.add("status_task_availability", "indisponivel");
-                statusDiv.innerHTML = "Indisponivel";
-            } */
+            /* if (tarefa.key == "Diamante_1") {
+                 statusDiv.classList.add("status_task_availability", "indisponivel");
+                 statusDiv.innerHTML = "Indisponivel";
+             } */
 
             tdStatus.appendChild(statusDiv);
             tr.appendChild(tdStatus);
@@ -411,7 +411,7 @@ function handleDialogChooseTask(levelIndex) {
     loadLinksIntoTable(levelIndex);
 }
 
-function handleLinkAvailabilityChecker(data) {
+function handleLinkAvailabilityChecker(data, userTimeZone) {
     const checkers = [
         {
             container: document.getElementById("containerBronzeChecker"),
@@ -441,7 +441,7 @@ function handleLinkAvailabilityChecker(data) {
     ];
 
     checkers.forEach(({ container, textTask, availability }) => {
-        updateHomeTaskAvailability(container, textTask, availability);
+        updateHomeTaskAvailability(container, textTask, availability, userTimeZone);
     });
 }
 
@@ -470,8 +470,8 @@ function calculateRemainingTime(timeStored, currentServerDate) {
     return response;
 }
 
-function updateHomeTaskAvailability(container, textTask, availability) {
 
+function updateHomeTaskAvailability(container, textTask, availability, userTimezone) {
     const intervalKey = container.id;
 
     if (countdownIntervals[intervalKey]) {
@@ -486,20 +486,28 @@ function updateHomeTaskAvailability(container, textTask, availability) {
         container.classList.add("dontHasSomeTaskAvailable");
         container.classList.remove("hasSomeTaskAvailable");
 
-
+        const oldestTimeStored = availability.oldestTimeStored;
+        const storedDate = new Date(oldestTimeStored);
+        const userTimeZoneDate = new Date(storedDate.toLocaleString("en-US", { timeZone: userTimezone }));
+        const expirationTime = new Date(userTimeZoneDate.getTime() + 24 * 60 * 60 * 1000);
         countdownIntervals[intervalKey] = setInterval(() => {
-            let remainingTime = 1
+            const currentTime = new Date();
+            const userCurrentTime = new Date(currentTime.toLocaleString("en-US", { timeZone: userTimezone }));
+            const remainingTime = expirationTime - userCurrentTime;
 
-            if (remainingTime === "Expirado") {
+            if (remainingTime <= 0) {
                 textTask.innerHTML = `Tempo <strong>Expirado</strong>`;
                 clearInterval(countdownIntervals[intervalKey]);
             } else {
-                textTask.innerHTML = `Disponível em <strong>${remainingTime.hours}h ${remainingTime.minutes}m ${remainingTime.seconds}s</strong>`;
+                const hours = Math.floor(remainingTime / (1000 * 60 * 60));
+                const minutes = Math.floor((remainingTime % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((remainingTime % (1000 * 60)) / 1000);
+                textTask.innerHTML = `Disponível em <strong>${hours}h ${minutes}m ${seconds}s</strong>`;
             }
         }, 1000);
-
     }
 }
+
 
 function handleURLHashs() {
     const hash = window.location.hash.substring(1);

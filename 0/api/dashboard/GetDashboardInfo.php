@@ -35,7 +35,6 @@ try {
 
             if (empty($hasValidLinksPerBatch)) {
                 $hasValidLinksPerBatch = insertLinksAvailability($userId, $conn);
-               // error_log("O insertLinksAvailability retornou: " . print_r($hasValidLinksPerBatch, true));
             }
 
             $myInviterInfo = [];
@@ -70,7 +69,6 @@ try {
     error_log("Ocorreu erro em GetDashboard: " . $th->getMessage());
 }
 
-// Função para obter as informações do dashboard do usuário
 function getDashboardInfo($conn, $userId)
 {
     $query = "SELECT userId, userName, userSurname, userEmail, userTimeZone, myReferralCode, userGender, userAge, userJoinedAt, userPointsJSON, userInvitationJSON 

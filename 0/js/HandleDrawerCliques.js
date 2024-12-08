@@ -610,8 +610,8 @@ async function makeRequestToCashOut(requestData, btnCashoutRevenue) {
         showBoxAlert("Um erro inesperado ocorreu", "error")
         btnCashoutRevenue.textContent = "Ocorreu um erro!";
         btnCashoutRevenue.style.backgroundColor = "red";
-        console.error("Um erro inesperado ocorreu", error.message);
-        console.error("Um erro inesperado ocorreu", error.message);
+        console.error("Um erro.message inesperado ocorreu", error.message);
+        console.error("Um error inesperado ocorreu", error);
     }
     setTimeout(() => {
         const dropdown = document.querySelector('.dropdown');
