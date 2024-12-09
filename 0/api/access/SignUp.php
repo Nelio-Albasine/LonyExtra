@@ -199,7 +199,7 @@ function increaseMyInviterTotalInvitedByOne($conn, $myInviterUserId)
             '$.myTotalReferredFriends',
             COALESCE(JSON_EXTRACT(userInvitationJSON, '$.myTotalReferredFriends'), 0) + 1
         )
-        WHERE userId = ?
+        WHERE userId = ? OR myReferralCode = ?
     ";
 
     $stmt = $conn->prepare($query);
