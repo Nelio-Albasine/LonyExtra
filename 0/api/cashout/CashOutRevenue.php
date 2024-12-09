@@ -61,8 +61,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         $userRevenueJson = json_decode($userRevenueJsonString, true);
 
-        error_log("Json retornado: ". print_r($userRevenueJson, true));
-
         if ($userRevenueJson['userRevenue'] < $amountToCashOut) {
             echo json_encode(['success' => false, 'message' => '405']);
             exit;
@@ -107,9 +105,7 @@ function checkIfUserHasSufficientRevenue($conn, $userId)
     $stmt->bind_param("s", $userId);
     $stmt->execute();
     $stmt->bind_result($userPointsJSON);
-    
-    error_log("Json retornado na funcao: ". print_r($userPointsJSON, true));
-
+   
     if ($stmt->fetch()) {
         return $userPointsJSON;
     } else {
