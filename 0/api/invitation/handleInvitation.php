@@ -50,11 +50,18 @@ function creditUserWithInfluencerBonus($conn, $myUID, $indluencerReferrarCode)
 
     require_once "../influencers/CheckIfUserIsInfluencer.php";
     $chefIfInvitingIsInfluencer = chefIfInvitingIsInfluencer($indluencerReferrarCode, $conn);
-    
+
     error_log("Resposta do chefIfInvitingIsInfluencer retornou: ". print_r($chefIfInvitingIsInfluencer, true));
-    
+
+    // Verifique se o campo 'data' é uma string JSON, caso contrário, apenas acesse os dados
+    if (isset($chefIfInvitingIsInfluencer['data']) && is_string($chefIfInvitingIsInfluencer['data'])) {
+        // Decodifique o JSON para um array ou objeto
+        $chefIfInvitingIsInfluencer['data'] = json_decode($chefIfInvitingIsInfluencer['data'], true); // true para retornar um array
+    }
+
     if ($chefIfInvitingIsInfluencer["isInfluencer"]) {
         if ($chefIfInvitingIsInfluencer["isActive"]) {
+            // Agora você pode acessar os dados corretamente
             $pointsToEarn = $chefIfInvitingIsInfluencer["data"]["pointsToEarn"];
             $lifeTimeInfo = $chefIfInvitingIsInfluencer["data"]["lifeTimeInfo"];
 
@@ -66,13 +73,14 @@ function creditUserWithInfluencerBonus($conn, $myUID, $indluencerReferrarCode)
                 $startDay = $lifeTimeInfo["startDay"];
                 $endDay = $lifeTimeInfo["endDay"];
                 $limitUsers = $lifeTimeInfo["limitUsers"];
-               //calc
+                // calc
             }
         }
     } else {
-        //is not influencer or doesn't even exist
+        // is not influencer or doesn't even exist
     }
 }
+
 
 function addUserBonusStarsFromInfluencer($conn, $stars, $userId)
 {
