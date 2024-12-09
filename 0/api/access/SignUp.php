@@ -41,7 +41,8 @@ function createNewUser($conn, $data): bool
 
     if ($stmtInsertUser->execute()) {
         if (!empty($userInviterCode)) {
-            $handleInvitationDIR = "../invitation/handleInvitation.php";
+           // $handleInvitationDIR = "../invitation/handleInvitation.php";
+            $handleInvitationDIR = "lonyextra.com/0/api/invitation/handleInvitation.php";
             if (file_exists($handleInvitationDIR)) {
                 require_once $handleInvitationDIR;
                 if (!empty(getMyInviterUserId($conn, $userInviterCode))) {
