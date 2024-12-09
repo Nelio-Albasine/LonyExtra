@@ -94,7 +94,7 @@ function creditUserWithCustomInfluencerBonus($conn, $myUID, $indluencerReferrarC
             error_log("Informações do influenciador: pontos a ganhar: " . $pointsToEarn . ", isLifetime: " . $isLifetime);
 
             if ($isLifetime) {
-                addUserBonusStarsFromInfluencer($conn, $pointsToEarn, $myUID);
+                addBonusToUserFromInfluencerInvitation($conn, $pointsToEarn, $myUID);
                 error_log("Estrelas bônus adicionadas permanentemente para o usuário ID: " . $myUID);
             } else {
                 $startDay = $lifeTimeInfo["startDay"];
@@ -238,4 +238,35 @@ function getMyInviterUserUID($conn, $myInviterReferralCode)
 
     $stmt->close();
     return $userId;
+}
+
+
+function addBonusToUserFromInfluencerInvitation($conn, $stars, $userId)
+{
+
+    $updatePointsQuery = "
+        UPDATE Usuarios
+        SET userPointsJSON = JSON_SET(
+            userPointsJSON,
+            '$.userStars', JSON_EXTRACT(userPointsJSON, '$.userStars') + ?,
+            '$.userLTStars', JSON_EXTRACT(userPointsJSON, '$.userLTStars') + ?
+        )
+        WHERE userId = ?
+    ";
+
+    $stmt = $conn->prepare($updatePointsQuery);
+    if ($stmt === false) {
+        return false;
+    }
+
+    $stmt->bind_param("iis", $stars, $stars, $userId);
+
+    if ($stmt->execute()) {
+        $stmt->close();
+        error_log("O usuario recebeu com sucesso " . $stars);
+        return true;
+    } else {
+        $stmt->close();
+        return false;
+    }
 }
