@@ -60,9 +60,10 @@ document.addEventListener("DOMContentLoaded", async function () {
 
     dashInfo = await GetDashboardInfo(userId);
 
-    if(window.Location.hash == "#welcome"){
+    if (window.location.hash == "#welcome") {
         window.location.replace("http://127.0.0.1:5500/0/dashboard/");
     }
+    
 
     userInfo = dashInfo.userInfo;
     myInviterInfo = JSON.parse(dashInfo.myInviterInfo);
