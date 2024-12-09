@@ -14,6 +14,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     if (isset($inputData['influencer'])) {
         $conn = Wamp64Connection();
+        
+        createTableInfluencersIfNotExist($conn);
 
         $userId = $inputData['userId'];
         $referralCode = $inputData['referralCode'];
@@ -97,7 +99,7 @@ function checkIfInfluencerExists($conn, $userId)
     $result = $stmt->get_result();
     $row = $result->fetch_assoc();
 
-    return $row['count'] > 0; 
+    return $row['count'] > 0;
 }
 
 function insertInfluencer($conn, $influencer, $userId, $referralCode)
@@ -119,4 +121,20 @@ function sendResponseToUser($response)
     header('Content-Type: application/json');
     echo json_encode($response);
     exit;
+}
+
+
+function createTableInfluencersIfNotExist($conn)
+{
+    $createTableSQL = "
+        CREATE TABLE IF NOT EXISTS Influencers (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            userId VARCHAR(255) NOT NULL,
+            referralCode VARCHAR(6),
+            isActive BOOLEAN DEFAULT TRUE,
+            influencerData JSON NULL
+        );
+    ";
+
+    $conn->query($createTableSQL);
 }
