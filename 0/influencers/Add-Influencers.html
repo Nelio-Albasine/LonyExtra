@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Influenciador</title>
+    <link rel="stylesheet" href="../css/influencers/add_influencers.css">
+    <link rel="icon" href="../src/favicon_io/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="../css/access/general_styles.css">
+
+    <script>
+        function showAlert(alertIndex, message) {
+            const divAlertMessage = document.getElementById('div_alert_message');
+            const textAlert = document.getElementById('textAlert');
+            const alertColors = { 0: "green", 1: "#FFB300", 2: "red" };
+            divAlertMessage.style.backgroundColor = alertColors[alertIndex];
+            textAlert.innerText = message;
+            divAlertMessage.classList.add('show');
+            setTimeout(() => {
+                divAlertMessage.classList.remove('show');
+            }, 3500);
+        }
+
+        function submitForm() {
+            const button = document.querySelector("button[type='submit']");
+            button.disabled = true;
+            button.textContent = "Aguarde..."; 
+
+            const influencerEmail = document.getElementById("influencerEmail").value;
+            const influencerCountry = document.getElementById("influencerCountry").value;
+            const isLifetime = document.getElementById("isLifetime").checked;
+            const startDay = document.getElementById("startDay").value;
+            const endDay = document.getElementById("endDay").value;
+            const limitUsers = document.getElementById("limitUsers").value;
+            const pointsToEarn = document.getElementById("pointsToEarn").value;
+
+            const influencerData = {
+                "data": {
+                    "influencerEmail": influencerEmail,
+                    "influencerName": null,
+                    "influencerCountry": influencerCountry,
+                    "lifeTimeInfo": {
+                        "isLifetime": isLifetime,
+                        "startDay": startDay,
+                        "endDay": endDay,
+                        "limitUsers": limitUsers
+                    },
+                    "pointsToEarn": pointsToEarn
+                },
+                "isInfluencer": true,
+                "isActive": true,
+                "message": "Inserção do influenciador"
+            };
+
+            const data = {
+                "userId": null,
+                "referralCode": null,
+                "influencer": influencerData
+            };
+
+            fetch('http://localhost/LonyExtra/0/api/influencers/InsertNewInfluencer.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        showAlert(0, data.message); 
+                    } else if (data.message === "Influenciador já existe no sistema.") {
+                        showAlert(1, data.message);
+                    } else {
+                        showAlert(2, data.message); 
+                    }
+                })
+                .catch(error => {
+                    console.error('Erro:', error);
+                    showAlert(2, "Ocorreu um erro ao processar a solicitação.");
+                })
+                .finally(() => {
+                    button.disabled = false; // Reativa o botão
+                    button.textContent = "Cadastrar Influenciador"; // Restaura o texto do botão
+                });
+        }
+    </script>
+</head>
+
+<body>
+    <div class="alert_as_error" id="div_alert_message">
+        <p id="textAlert">alert message</p>
+    </div>
+
+    <form onsubmit="event.preventDefault(); submitForm();">
+        <h1>Cadastro de Influenciador</h1>
+
+        <label for="influencerEmail">Email:</label>
+        <input type="email" id="influencerEmail" required><br>
+
+        <label for="influencerCountry">País:</label>
+        <input type="text" id="influencerCountry" required><br>
+
+        <label for="isLifetime">É Lifetime?</label>
+        <input type="checkbox" id="isLifetime" required><br>
+
+        <label for="startDay">Start Day:</label>
+        <input type="date" id="startDay"><br>
+
+        <label for="endDay">End Day:</label>
+        <input type="date" id="endDay"><br>
+
+        <label for="limitUsers">Limite de usuários:</label>
+        <input type="number" id="limitUsers"><br>
+
+        <label for="pointsToEarn">Pontos a serem ganhos:</label>
+        <input type="number" id="pointsToEarn" required><br>
+
+        <button type="submit">Cadastrar Influenciador</button>
+    </form>
+
+</body>
+
+</html>

@@ -40,6 +40,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 $myInviterUserId = getMyInviterUserId($conn, $inviteCodeInserted);
 
                                 increaseMyInviterTotalInvited($conn, $myInviterUserId);
+
+                                creditUserWithInfluencerBonus($conn, $userId, $inviteCodeInserted);
+
                                 $getMyInviterInfo = getMyInviterInfo($conn, $myInviterUserId);
                                 $outPut["success"] = true;
                                 $outPut["myInviterInfo"] = json_encode($getMyInviterInfo) ?? [];

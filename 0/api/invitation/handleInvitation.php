@@ -39,6 +39,61 @@ function increaseMyInviterTotalInvited($conn, $myInviterUserId)
     return $rowsUpdated > 0;
 }
 
+function creditUserWithInfluencerBonus($conn, $myUID, $indluencerReferrarCode)
+{
+    require_once "../influencers/CheckIfUserIsInfluencer.php";
+    $chefIfInvitingIsInfluencer = chefIfInvitingIsInfluencer($indluencerReferrarCode, $conn);
+    if ($chefIfInvitingIsInfluencer["isInfluencer"]) {
+        if ($chefIfInvitingIsInfluencer["isActive"]) {
+            $pointsToEarn = $chefIfInvitingIsInfluencer["data"]["pointsToEarn"];
+            $lifeTimeInfo = $chefIfInvitingIsInfluencer["data"]["lifeTimeInfo"];
+
+            $isLifetime = $lifeTimeInfo["isLifetime"];
+
+            if ($isLifetime) {
+                addUserBonusStarsFromInfluencer($conn, $pointsToEarn, $myUID );
+            } else {
+                $startDay = $lifeTimeInfo["startDay"];
+                $endDay = $lifeTimeInfo["endDay"];
+                $limitUsers = $lifeTimeInfo["limitUsers"];
+               //calc
+            }
+        }
+    } else {
+        //is not influencer or doesn't even exist
+    }
+}
+
+function addUserBonusStarsFromInfluencer($conn, $stars, $userId)
+{
+
+    $updatePointsQuery = "
+        UPDATE Usuarios
+        SET userPointsJSON = JSON_SET(
+            userPointsJSON,
+            '$.userStars', JSON_EXTRACT(userPointsJSON, '$.userStars') + ?,
+            '$.userLTStars', JSON_EXTRACT(userPointsJSON, '$.userLTStars') + ?
+        )
+        WHERE userId = ?
+    ";
+
+    $stmt = $conn->prepare($updatePointsQuery);
+    if ($stmt === false) {
+        return false;
+    }
+
+    $stmt->bind_param("iis", $stars, $stars, $userId);
+
+    if ($stmt->execute()) {
+        $stmt->close();
+        return true;
+    } else {
+        $stmt->close();
+        return false;
+    }
+}
+
+
 function isInviterCodeEmptyOrNull($conn, $userId)
 {
     $query = "
@@ -97,8 +152,8 @@ function getMyInviterInfo($conn, $myInviterUserId)
 
     if ($row = $result->fetch_assoc()) {
         $inviterInfo = [
-            "userName" => $row['userName'] ?? "N/A" ,
-            "userSurname" => $row['userSurname'] ?? "N/A" ,
+            "userName" => $row['userName'] ?? "N/A",
+            "userSurname" => $row['userSurname'] ?? "N/A",
             "LTStars" => $row['userLTStars'] ?? "0"
         ];
     } else {

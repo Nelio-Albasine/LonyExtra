@@ -41,7 +41,9 @@ function createNewUser($conn, $data): bool
             if (file_exists($handleInvitationDIR)) {
                 require_once "../invitation/handleInvitation.php";
                 if (!empty(getMyInviterUserId($conn, $userInviterCode))) {
-                    increaseMyInviterTotalInvited($conn, $userInviterCode);
+                    if (increaseMyInviterTotalInvited($conn, $userInviterCode)) {
+                        creditUserWithInfluencerBonus($conn, $userId, $userInviterCode);
+                    }
                 }
             } else {
                 error_log("Arquivo handleInvitation.php nao existe!");
@@ -53,5 +55,7 @@ function createNewUser($conn, $data): bool
         return false;
     }
 }
+
+
 
 
