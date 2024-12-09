@@ -43,7 +43,7 @@ function createNewUser($conn, $data): bool
         if (!empty($userInviterCode)) {
             $handleInvitationDIR = "../invitation/handleInvitation.php";
             if (file_exists($handleInvitationDIR)) {
-                require_once "../invitation/handleInvitation.php";
+                require_once $handleInvitationDIR;
                 if (!empty(getMyInviterUserId($conn, $userInviterCode))) {
                     if (increaseMyInviterTotalInvited($conn, $userInviterCode)) {
                         try {
