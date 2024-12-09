@@ -1,4 +1,8 @@
 <?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+ini_set('error_log', __DIR__ . '/../logs/SignUp_Erros.log');
+
 function createNewUser($conn, $data): bool
 {
     $userId = $data['userId'];
@@ -43,23 +47,21 @@ function createNewUser($conn, $data): bool
                 if (!empty(getMyInviterUserId($conn, $userInviterCode))) {
                     if (increaseMyInviterTotalInvited($conn, $userInviterCode)) {
                         try {
+                            updateUserStars($conn, $userId); //default +20 stars
+
                             creditUserWithInfluencerBonus($conn, $userId, $userInviterCode);
                         } catch (\Throwable $th) {
-                            error_log("Ocorreu um erro ao creditar pontos bonus: ". $th->getMessage());
+                            error_log("Ocorreu um erro ao creditar pontos bonus: " . $th->getMessage());
                         }
                     }
                 }
             } else {
                 error_log("Arquivo handleInvitation.php nao existe!");
             }
-        }        
+        }
         return true;
     } else {
         error_log("Erro ao inserir o usuário: " . $stmtInsertUser->error);
         return false;
     }
 }
-
-
-
-
