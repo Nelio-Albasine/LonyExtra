@@ -183,10 +183,6 @@
 
 #tbody_invited_friends tr{
     width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
 }
 
 

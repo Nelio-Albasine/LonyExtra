@@ -1,4 +1,8 @@
 <?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+ini_set('error_log', __DIR__ . '/../logs/handleInvitations.log');
+
 function getMyInviterUserId($conn, $myInviterReferralCode)
 {
     $query = "SELECT userId FROM Usuarios WHERE myReferralCode = ?";
@@ -42,8 +46,13 @@ function increaseMyInviterTotalInvited($conn, $myInviterUserId)
 
 function creditUserWithInfluencerBonus($conn, $myUID, $indluencerReferrarCode)
 {
+    error_log("Dentro do credit creditUserWithInfluencerBonus");
+
     require_once "../influencers/CheckIfUserIsInfluencer.php";
     $chefIfInvitingIsInfluencer = chefIfInvitingIsInfluencer($indluencerReferrarCode, $conn);
+    
+    error_log("Resposta do chefIfInvitingIsInfluencer retornou: ", print_r($chefIfInvitingIsInfluencer, true));
+    
     if ($chefIfInvitingIsInfluencer["isInfluencer"]) {
         if ($chefIfInvitingIsInfluencer["isActive"]) {
             $pointsToEarn = $chefIfInvitingIsInfluencer["data"]["pointsToEarn"];
