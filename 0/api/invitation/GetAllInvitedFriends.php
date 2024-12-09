@@ -23,7 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] == "GET") {
                 userSurname, 
                 JSON_EXTRACT(userPointsJSON, '$.userLTStars') AS userLTStars, 
                 JSON_EXTRACT(userInvitationJSON, '$.myReferralCode') AS myReferralCode 
-            FROM usuarios 
+            FROM Usuarios 
             WHERE JSON_EXTRACT(userInvitationJSON, '$.myInviterCode') = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("s", $myReferralCode);
@@ -45,7 +45,6 @@ if ($_SERVER['REQUEST_METHOD'] == "GET") {
         return $b['userLTStars'] - $a['userLTStars'];
     });
 
-    // Resultado final em JSON
     header('Content-Type: application/json');
     echo json_encode($usuariosComMeuCodigo, JSON_PRETTY_PRINT);
 
