@@ -129,6 +129,10 @@
 
     .timeOrtaskRemaining {
         margin-left: 3px;
+        white-space: nowrap;
+        max-width: 140px;
+        text-overflow: ellipsis;
+        overflow: hidden;
     }
 
     .ads_banner {
