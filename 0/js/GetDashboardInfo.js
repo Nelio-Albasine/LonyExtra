@@ -4,7 +4,7 @@ let previusLinksFetched = null;
 let allLinks = null;
 let pointsToEarnByLevel = 10
 let currentURL_hash;
-var currentServerDate;
+let currentServerDate;
 
 //global vars
 var userInfo = null;
@@ -69,10 +69,11 @@ document.addEventListener("DOMContentLoaded", async function () {
     userTimeZone = userInfo.userTimeZone;
     userLTCashoutsGloabl = userPoints.userLTCashouts
 
+    console.log(" userLTCashouts ", userLTCashoutsGloabl)
 
 
     saveUserPointsToLocalStorage(userPoints);
-    handleLinkAvailabilityChecker(dashInfo.hasValidLinksPerBatch, userTimeZone);
+    handleLinkAvailabilityChecker(dashInfo.hasValidLinksPerBatch);
     handleStartTasksClicks();
     handleURLHashs();
 
@@ -410,7 +411,7 @@ function handleDialogChooseTask(levelIndex) {
     loadLinksIntoTable(levelIndex);
 }
 
-function handleLinkAvailabilityChecker(data, userTimeZone) {
+function handleLinkAvailabilityChecker(data) {
     const checkers = [
         {
             container: document.getElementById("containerBronzeChecker"),
@@ -445,6 +446,9 @@ function handleLinkAvailabilityChecker(data, userTimeZone) {
 }
 
 function calculateRemainingTime(timeStored, currentServerDate) {
+    console.log(`Time stored: ${timeStored}`);
+    console.log(`Current server date: ${currentServerDate}`);
+
     const updatedAt = new Date(timeStored.replace(" ", "T"));
     const serverDate = new Date(currentServerDate.replace(" ", "T"));
 
@@ -461,11 +465,13 @@ function calculateRemainingTime(timeStored, currentServerDate) {
     const seconds = Math.floor((remainingTime % (1000 * 60)) / 1000);
 
     const response = `Disponível em: <strong>${hours}h : ${minutes}min</strong>`;
+    console.log(`Disponível em: ${hours} horas, ${minutes} minutos, ${seconds} segundos`);
+
     return response;
 }
 
-
 function updateHomeTaskAvailability(container, textTask, availability) {
+
     const intervalKey = container.id;
 
     if (countdownIntervals[intervalKey]) {
@@ -480,14 +486,37 @@ function updateHomeTaskAvailability(container, textTask, availability) {
         container.classList.add("dontHasSomeTaskAvailable");
         container.classList.remove("hasSomeTaskAvailable");
 
-        let currentUtcTime = new Date().toISOString();
+        let oldestTimeStored = availability.oldestTimeStored;
+        let userTimeZone = "Africa/Maputo"; // Substitua pelo timezone do usuário, se necessário
 
-        console.log("oldest timeStored: ", availability.oldestTimeStored);
-        //console.log("timeFormated: : ", );
-        textTask.innerHTML = calculateRemainingTime(availability.oldestTimeStored, currentUtcTime)
+        // Converter oldestTimeStored e currentLocalTime para o timezone correto
+        let serverTime = new Date(oldestTimeStored).toLocaleString('pt-MZ', { timeZone: userTimeZone });
+        let currentLocalTime = new Date().toLocaleString('pt-MZ', { timeZone: userTimeZone });
+
+        console.log("Hora do servidor formatado:", serverTime);
+        console.log("Hora local atual:", currentLocalTime);
+
+        countdownIntervals[intervalKey] = setInterval(() => {
+            let serverDate = new Date(oldestTimeStored);
+            let currentDate = new Date();
+
+            let diffMs = 24 * 60 * 60 * 1000 - (currentDate - serverDate);
+
+            if (diffMs <= 0) {
+                textTask.innerHTML = `Tempo <strong>Expirado</strong>`;
+                clearInterval(countdownIntervals[intervalKey]);
+            } else {
+                let hours = Math.floor(diffMs / (1000 * 60 * 60));
+                let minutes = Math.floor((diffMs % (1000 * 60 * 60)) / (1000 * 60));
+                let seconds = Math.floor((diffMs % (1000 * 60)) / 1000);
+
+                textTask.innerHTML = `Disponível em <strong>${hours}h ${minutes}m ${seconds}s</strong>`;
+            }
+        }, 1000);
+
+
     }
 }
-
 
 function handleURLHashs() {
     const hash = window.location.hash.substring(1);
