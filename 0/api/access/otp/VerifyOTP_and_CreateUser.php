@@ -58,7 +58,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             ];
         }
     } catch (\Throwable $th) {
-        error_log("Ocorreu um erro ao verificar o OTP! O erro: " . $th->getMessage());
+        error_log("Ocorreu um erro ao verificar o OTP ou no arquivo incluido, o SignUp.php! O erro: " . $th->getMessage());
     } finally {
         echo json_encode($output);
         $conn = null;

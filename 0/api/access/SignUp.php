@@ -41,10 +41,11 @@ function createNewUser($conn, $data): bool
 
     if ($stmtInsertUser->execute()) {
         if (!empty($userInviterCode)) {
-            if (!empty(getMyInviterUserUID($conn, $userInviterCode))) {
+            $myInviterUserId = getMyInviterUserUID($conn, $userInviterCode);
+            if (!empty($myInviterUserId)) {
                 error_log("Convite encontrado para o código do convidado: " . $userInviterCode);
                 
-                if (increaseMyInviterTotalInvitedByOne($conn, $userInviterCode)) {
+                if (increaseMyInviterTotalInvitedByOne($conn, $myInviterUserId)) {
                     error_log("Contagem de convites aumentada para o código do convidado: " . $userInviterCode);
                     
                     try {
@@ -199,7 +200,7 @@ function increaseMyInviterTotalInvitedByOne($conn, $myInviterUserId)
             '$.myTotalReferredFriends',
             COALESCE(JSON_EXTRACT(userInvitationJSON, '$.myTotalReferredFriends'), 0) + 1
         )
-        WHERE userId = ? OR myReferralCode = ?
+        WHERE userId = ?
     ";
 
     $stmt = $conn->prepare($query);
