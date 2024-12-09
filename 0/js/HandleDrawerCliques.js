@@ -954,7 +954,7 @@ async function handleInviteFriendsDialog() {
 
     waitForInvitation().then(async invite => {
         myInviteCode = invite.myReferralCode
-        textInvitationLink.textContent = `https://lonyextra.com?invite=${myInviteCode}`;
+        textInvitationLink.textContent = `https://lonyextra.com/0/access/signup.html?invite=${myInviteCode}`;
         textInvitationCode.textContent = myInviteCode
 
         let copyIcons = document.querySelectorAll(".copy_my_invite_code_or_link");
@@ -967,7 +967,7 @@ async function handleInviteFriendsDialog() {
         copyIcons.forEach((icon, index) => {
             icon.addEventListener("click", () => {
                 if (index === 0) {
-                    copyToClipboard(`https://lonyextra.com?invite=${myInviteCode}`);
+                    copyToClipboard(`https://lonyextra.com/0/access/signup.html?invite=${myInviteCode}`);
                 } else {
                     copyToClipboard(myInviteCode);
                 }
