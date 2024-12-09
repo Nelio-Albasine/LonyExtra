@@ -26,7 +26,7 @@ if (!userId) {
 let dashInfo = null;
 
 document.addEventListener("DOMContentLoaded", async function () {
-    if ('Notification' in window && 'serviceWorker' in navigator) {
+  /*  if ('Notification' in window && 'serviceWorker' in navigator) {
         Notification.requestPermission().then((permission) => {
             if (permission === 'granted') {
                 console.log('Permissão concedida!');
@@ -43,9 +43,7 @@ document.addEventListener("DOMContentLoaded", async function () {
         }).catch((error) => {
             console.error('Falha ao registrar o Service Worker:', error);
         });
-    }
-
-    console.log("Welcome")
+    } */
 
     const userName = document.querySelectorAll(".userName");
     const userEmail = document.querySelectorAll(".userEmail");
@@ -61,6 +59,10 @@ document.addEventListener("DOMContentLoaded", async function () {
     textTotalStarsEarnedByReferrals = document.querySelectorAll(".textTotalStarsEarnedByReferrals");
 
     dashInfo = await GetDashboardInfo(userId);
+
+    if(window.Location.hash == "#welcome"){
+        window.location.replace("http://127.0.0.1:5500/0/dashboard/");
+    }
 
     userInfo = dashInfo.userInfo;
     myInviterInfo = JSON.parse(dashInfo.myInviterInfo);
