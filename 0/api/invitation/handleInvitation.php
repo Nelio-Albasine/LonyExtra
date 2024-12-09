@@ -51,7 +51,7 @@ function creditUserWithInfluencerBonus($conn, $myUID, $indluencerReferrarCode)
     require_once "../influencers/CheckIfUserIsInfluencer.php";
     $chefIfInvitingIsInfluencer = chefIfInvitingIsInfluencer($indluencerReferrarCode, $conn);
     
-    error_log("Resposta do chefIfInvitingIsInfluencer retornou: ", print_r($chefIfInvitingIsInfluencer, true));
+    error_log("Resposta do chefIfInvitingIsInfluencer retornou: ". print_r($chefIfInvitingIsInfluencer, true));
     
     if ($chefIfInvitingIsInfluencer["isInfluencer"]) {
         if ($chefIfInvitingIsInfluencer["isActive"]) {

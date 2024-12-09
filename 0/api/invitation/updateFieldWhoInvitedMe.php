@@ -70,7 +70,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             error_log("Ocorreu um erro no catch: " . $th->getMessage());
         }
 
-        error_log("Resposta da insercao do codigo de convinte: " . print_r($outPut, true));
         echo json_encode($outPut);
         $conn = null;
         exit;
