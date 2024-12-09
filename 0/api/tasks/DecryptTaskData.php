@@ -37,7 +37,7 @@ function main()
         respondWithError('Falha ao descriptografar os dados.');
     }
 
-    logDecryptedData($decryptedData);
+    //logDecryptedData($decryptedData);
 
 
     $decryptedData = json_decode($decryptedData, true);
@@ -307,8 +307,6 @@ function checkIfTaskIdIsAvailable($conn, $userId, $taskId, $jsonBatchName): bool
 
 
     $isAvailable = json_decode($isAvailable);
-
-    error_log("Essa tarefa: $taskId do lote: $jsonBatchName tem o isAvailable como: " . ($isAvailable ? 'true' : 'false'));
 
     return $isAvailable === true;
 }

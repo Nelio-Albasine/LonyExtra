@@ -139,7 +139,7 @@ function updateLinksIfExpired($conn, $userId, &$links, &$isUpdated)
                 $linkData["timeStored"] = null;
                 $isUpdated = true;
             } else {
-                error_log("Horário atual: " . $now->format('Y-m-d H:i:s') . " no fuso horário do usuário: " . $userTimeZone->getName());
+               // error_log("Horário atual: " . $now->format('Y-m-d H:i:s') . " no fuso horário do usuário: " . $userTimeZone->getName());
             }
         }
     }
