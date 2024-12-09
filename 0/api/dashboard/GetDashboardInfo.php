@@ -47,8 +47,8 @@ try {
             $output = [
                 'success' => $userInfo['success'],
                 'userInfo' => $userInfo['data'] ?? [],
-                'hasValidLinksPerBatch' => json_decode(json: $hasValidLinksPerBatch) ?? [],
-                'myInviterInfo' => json_encode($myInviterInfo) ?? []
+                'hasValidLinksPerBatch' => json_encode( $hasValidLinksPerBatch) ?: [],
+                'myInviterInfo' => json_encode($myInviterInfo) ?: []
             ];
         } else {
             $output = [

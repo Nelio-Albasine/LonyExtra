@@ -63,7 +63,6 @@ function hasValidLinksPerBatch($userId)
             $oldestTimeStored = null;
             $validLinkCount = 0;
             $currentDate = new DateTime();
-            $oldestTimeStoredFormatted = null;
         
             foreach ($links as $linkData) {
                 $isAvailable = $linkData['isAvailable'];
@@ -89,8 +88,6 @@ function hasValidLinksPerBatch($userId)
         }
         
         
-
-
         $result = [
             "ouroAvailability" => processBatch($linkAvailability['ouroAvailability'],  $userTimeZone),
             "prataAvailability" => processBatch($linkAvailability['prataAvailability'],  $userTimeZone),
@@ -98,7 +95,7 @@ function hasValidLinksPerBatch($userId)
             "diamanteAvailability" => processBatch($linkAvailability['diamanteAvailability'],  $userTimeZone)
         ];
 
-        return json_encode($result, JSON_PRETTY_PRINT);
+        return $result;
     }
 
     return null;

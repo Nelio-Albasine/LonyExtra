@@ -41,7 +41,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                                 increaseMyInviterTotalInvited($conn, $myInviterUserId);
 
-                                creditUserWithInfluencerBonus($conn, $userId, $inviteCodeInserted);
+                                try {
+                                    creditUserWithInfluencerBonus($conn, $userId, $userInviterCode);
+                                } catch (\Throwable $th) {
+                                    error_log("Ocorreu um erro ao creditar pontos bonus: ". $th->getMessage());
+                                }
 
                                 $getMyInviterInfo = getMyInviterInfo($conn, $myInviterUserId);
                                 $outPut["success"] = true;

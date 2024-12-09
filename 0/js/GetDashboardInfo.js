@@ -66,14 +66,16 @@ document.addEventListener("DOMContentLoaded", async function () {
     myInviterInfo = JSON.parse(dashInfo.myInviterInfo);
     const userPoints = JSON.parse(userInfo.userPointsJSON);
     userInvitationInfo = JSON.parse(userInfo.userInvitationJSON);
+
     userTimeZone = userInfo.userTimeZone;
     userLTCashoutsGloabl = userPoints.userLTCashouts
 
-    console.log(" userLTCashouts ", userLTCashoutsGloabl)
+    const availabilityLinks = JSON.parse(dashInfo.hasValidLinksPerBatch);
 
+   // console.log(" userInfo ", userInfo)
 
     saveUserPointsToLocalStorage(userPoints);
-    handleLinkAvailabilityChecker(dashInfo.hasValidLinksPerBatch);
+    handleLinkAvailabilityChecker(availabilityLinks);
     handleStartTasksClicks();
     handleURLHashs();
 

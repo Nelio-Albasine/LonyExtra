@@ -127,6 +127,10 @@ header {
 
 .timeOrtaskRemaining {
     margin-left: 8px;
+    white-space: nowrap;
+    max-width: 140px;
+    text-overflow: ellipsis;
+    overflow: hidden;
 }
 
 

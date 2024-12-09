@@ -39,6 +39,7 @@ function increaseMyInviterTotalInvited($conn, $myInviterUserId)
     return $rowsUpdated > 0;
 }
 
+
 function creditUserWithInfluencerBonus($conn, $myUID, $indluencerReferrarCode)
 {
     require_once "../influencers/CheckIfUserIsInfluencer.php";

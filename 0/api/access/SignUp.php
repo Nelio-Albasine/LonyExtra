@@ -42,7 +42,11 @@ function createNewUser($conn, $data): bool
                 require_once "../invitation/handleInvitation.php";
                 if (!empty(getMyInviterUserId($conn, $userInviterCode))) {
                     if (increaseMyInviterTotalInvited($conn, $userInviterCode)) {
-                        creditUserWithInfluencerBonus($conn, $userId, $userInviterCode);
+                        try {
+                            creditUserWithInfluencerBonus($conn, $userId, $userInviterCode);
+                        } catch (\Throwable $th) {
+                            error_log("Ocorreu um erro ao creditar pontos bonus: ". $th->getMessage());
+                        }
                     }
                 }
             } else {
