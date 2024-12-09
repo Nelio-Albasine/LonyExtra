@@ -80,8 +80,8 @@ function createTableUserIfNotExists($conn)
     $queryCreateUser = "CREATE TABLE IF NOT EXISTS Usuarios (
         id INT AUTO_INCREMENT PRIMARY KEY,
         userId VARCHAR(191) NOT NULL UNIQUE,
-        userName VARCHAR(15) NOT NULL,
-        userSurname VARCHAR(20) NOT NULL,
+        userName VARCHAR(50) NOT NULL,
+        userSurname VARCHAR(50) NOT NULL,
         userEmail VARCHAR(100) NOT NULL UNIQUE,
         userPassword VARCHAR(255),
         userTimeZone VARCHAR(50),

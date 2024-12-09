@@ -46,12 +46,8 @@ function increaseMyInviterTotalInvited($conn, $myInviterUserId)
 
 function creditUserWithInfluencerBonus($conn, $myUID, $indluencerReferrarCode)
 {
-    error_log("Dentro do credit creditUserWithInfluencerBonus");
-
     require_once "../influencers/CheckIfUserIsInfluencer.php";
     $chefIfInvitingIsInfluencer = chefIfInvitingIsInfluencer($indluencerReferrarCode, $conn);
-
-    error_log("Resposta do chefIfInvitingIsInfluencer retornou: ". print_r($chefIfInvitingIsInfluencer, true));
 
     if (isset($chefIfInvitingIsInfluencer['data']) && is_string($chefIfInvitingIsInfluencer['data'])) {
         $chefIfInvitingIsInfluencer['data'] = json_decode($chefIfInvitingIsInfluencer['data'], true); // true para retornar um array
