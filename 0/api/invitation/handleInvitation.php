@@ -101,7 +101,6 @@ function addUserBonusStarsFromInfluencer($conn, $stars, $userId)
 
     if ($stmt->execute()) {
         $stmt->close();
-        error_log("O usuario recebeu com sucesso " . $stars);
         return true;
     } else {
         $stmt->close();
