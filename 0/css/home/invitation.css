@@ -185,14 +185,21 @@
     width: 100%;
     display: flex;
 }
+
+
 .table_invited_friends {
-    width: 100%;
+    width: 100%; 
+    border-collapse: collapse; /
 }
 
 .table_invited_friends td {
     padding: 3px 0;
-    width: 100%;
+    display: block; 
+    width: 100%; 
+    margin-bottom: 6px;
 }
+
+
 
 .friend-info {
     width: 100%;
