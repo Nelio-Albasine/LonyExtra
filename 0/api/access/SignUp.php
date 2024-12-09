@@ -41,18 +41,29 @@ function createNewUser($conn, $data): bool
 
     if ($stmtInsertUser->execute()) {
         if (!empty($userInviterCode)) {
-           // $handleInvitationDIR = "../invitation/handleInvitation.php";
-            if (!empty(getMyInviterUserIUI($conn, $userInviterCode))) {
+            if (!empty(getMyInviterUserUID($conn, $userInviterCode))) {
+                error_log("Convite encontrado para o código do convidado: " . $userInviterCode);
+                
                 if (increaseMyInviterTotalInvitedByOne($conn, $userInviterCode)) {
+                    error_log("Contagem de convites aumentada para o código do convidado: " . $userInviterCode);
+                    
                     try {
                         updateUserStarsFromNormalInvitation($conn, $userId); //default +20 stars
-
+                        error_log("Estrelas padrão (+20) adicionadas para o usuário ID: " . $userId);
+                        
                         creditUserWithCustomInfluencerBonus($conn, $userId, $userInviterCode);
+                        error_log("Bônus de influenciador creditado para o usuário ID: " . $userId);
+                        
                     } catch (\Throwable $th) {
-                        error_log("Ocorreu um erro ao creditar pontos bonus: " . $th->getMessage());
+                        error_log("Ocorreu um erro ao creditar pontos bônus para o usuário ID: " . $userId . " - " . $th->getMessage());
                     }
+                } else {
+                    error_log("Falha ao aumentar o número de convites para o código do convidado: " . $userInviterCode);
                 }
+            } else {
+                error_log("Nenhum convite encontrado para o código do convidado: " . $userInviterCode);
             }
+            
         }
         return true;
     } else {
@@ -61,9 +72,10 @@ function createNewUser($conn, $data): bool
     }
 }
 
-
 function creditUserWithCustomInfluencerBonus($conn, $myUID, $indluencerReferrarCode)
 {
+    error_log("Verificando se o convidado com código: " . $indluencerReferrarCode . " é um influenciador...");
+    
     $chefIfInvitingIsInfluencer = chefIfCurrentInvitingIsInfluencer($indluencerReferrarCode, $conn);
 
     if (isset($chefIfInvitingIsInfluencer['data']) && is_string($chefIfInvitingIsInfluencer['data'])) {
@@ -71,29 +83,38 @@ function creditUserWithCustomInfluencerBonus($conn, $myUID, $indluencerReferrarC
     }
 
     if ($chefIfInvitingIsInfluencer["isInfluencer"]) {
+        error_log("O código do convidado é de um influenciador ativo!");
+        
         if ($chefIfInvitingIsInfluencer["isActive"]) {
             $pointsToEarn = $chefIfInvitingIsInfluencer["data"]["pointsToEarn"];
             $lifeTimeInfo = $chefIfInvitingIsInfluencer["data"]["lifeTimeInfo"];
 
             $isLifetime = $lifeTimeInfo["isLifetime"];
+            error_log("Informações do influenciador: pontos a ganhar: " . $pointsToEarn . ", isLifetime: " . $isLifetime);
 
             if ($isLifetime) {
-                addUserBonusStarsFromInfluencer($conn, $pointsToEarn, $myUID );
+                addUserBonusStarsFromInfluencer($conn, $pointsToEarn, $myUID);
+                error_log("Estrelas bônus adicionadas permanentemente para o usuário ID: " . $myUID);
             } else {
                 $startDay = $lifeTimeInfo["startDay"];
                 $endDay = $lifeTimeInfo["endDay"];
                 $limitUsers = $lifeTimeInfo["limitUsers"];
+                // aqui você pode adicionar logs para os cálculos conforme necessário
+                error_log("Bônus de influenciador limitado: de " . $startDay . " até " . $endDay . ", limite de usuários: " . $limitUsers);
                 // calc
             }
+        } else {
+            error_log("O influenciador com o código " . $indluencerReferrarCode . " não está ativo.");
         }
     } else {
-        // is not influencer or doesn't even exist
+        error_log("O código " . $indluencerReferrarCode . " não corresponde a um influenciador válido.");
     }
 }
 
-
 function chefIfCurrentInvitingIsInfluencer($invintingIdOrReferralCode, $conn)
 {
+    error_log("Verificando se o código do convidado " . $invintingIdOrReferralCode . " é de um influenciador...");
+
     createTableInfluencersIfNotExist($conn);
 
     $response = null;
@@ -115,15 +136,19 @@ function chefIfCurrentInvitingIsInfluencer($invintingIdOrReferralCode, $conn)
             "isInfluencer" => true,
             "isActive" => $isActive ===1 ? true : false,
             "data" => $influencerDataJson,
-            "message" => "Influencer found!"
+            "message" => "Influenciador encontrado!"
         ];
+        
+        error_log("Influenciador encontrado! Código: " . $invintingIdOrReferralCode . ", Status: " . ($isActive ? "Ativo" : "Inativo"));
     } else {
         $response = [
             "isInfluencer" => null,
             "isActive" => null,
             "data" => null,
-            "message" => "No data found for this id"
+            "message" => "Nenhum influenciador encontrado para este código."
         ];
+        
+        error_log("Nenhum influenciador encontrado para o código: " . $invintingIdOrReferralCode);
     }
 
     return $response;
@@ -132,6 +157,7 @@ function chefIfCurrentInvitingIsInfluencer($invintingIdOrReferralCode, $conn)
 function updateUserStarsFromNormalInvitation($conn, $userId)
 {
     $starsToEarn = 20;
+    error_log("Adicionando estrelas padrão (+20) para o usuário ID: " . $userId);
 
     $updatePointsQuery = "
         UPDATE Usuarios
@@ -145,6 +171,7 @@ function updateUserStarsFromNormalInvitation($conn, $userId)
 
     $stmt = $conn->prepare($updatePointsQuery);
     if ($stmt === false) {
+        error_log("Erro ao preparar a query para atualizar as estrelas do usuário ID: " . $userId);
         return false;
     }
 
@@ -152,15 +179,19 @@ function updateUserStarsFromNormalInvitation($conn, $userId)
 
     if ($stmt->execute()) {
         $stmt->close();
+        error_log("Estrelas do usuário ID " . $userId . " atualizadas com sucesso.");
         return true;
     } else {
         $stmt->close();
+        error_log("Falha ao atualizar as estrelas do usuário ID: " . $userId);
         return false;
     }
 }
 
 function increaseMyInviterTotalInvitedByOne($conn, $myInviterUserId)
 {
+    error_log("Aumentando o número total de convites para o convidador ID: " . $myInviterUserId);
+    
     $query = "
         UPDATE Usuarios
         SET userInvitationJSON = JSON_SET(
@@ -178,11 +209,19 @@ function increaseMyInviterTotalInvitedByOne($conn, $myInviterUserId)
     $rowsUpdated = $stmt->affected_rows;
     $stmt->close();
 
-    return $rowsUpdated > 0;
+    if ($rowsUpdated > 0) {
+        error_log("Número de convites aumentado para o convidador ID: " . $myInviterUserId);
+        return true;
+    } else {
+        error_log("Falha ao aumentar o número de convites para o convidador ID: " . $myInviterUserId);
+        return false;
+    }
 }
 
-function getMyInviterUserIUI($conn, $myInviterReferralCode)
+function getMyInviterUserUID($conn, $myInviterReferralCode)
 {
+    error_log("Buscando o ID do usuário para o código de convite: " . $myInviterReferralCode);
+    
     $query = "SELECT userId FROM Usuarios WHERE myReferralCode = ?";
     $stmt = $conn->prepare($query);
     $stmt->bind_param("s", $myInviterReferralCode);
@@ -193,6 +232,9 @@ function getMyInviterUserIUI($conn, $myInviterReferralCode)
 
     if ($row = $result->fetch_assoc()) {
         $userId = $row['userId'];
+        error_log("Usuário encontrado com o ID: " . $userId);
+    } else {
+        error_log("Nenhum usuário encontrado para o código de convite: " . $myInviterReferralCode);
     }
 
     $stmt->close();
