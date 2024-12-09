@@ -487,14 +487,9 @@ function updateHomeTaskAvailability(container, textTask, availability) {
         container.classList.remove("hasSomeTaskAvailable");
 
         let oldestTimeStored = availability.oldestTimeStored;
-        let userTimeZone = "Africa/Maputo"; // Substitua pelo timezone do usuário, se necessário
 
-        // Converter oldestTimeStored e currentLocalTime para o timezone correto
         let serverTime = new Date(oldestTimeStored).toLocaleString('pt-MZ', { timeZone: userTimeZone });
         let currentLocalTime = new Date().toLocaleString('pt-MZ', { timeZone: userTimeZone });
-
-        console.log("Hora do servidor formatado:", serverTime);
-        console.log("Hora local atual:", currentLocalTime);
 
         countdownIntervals[intervalKey] = setInterval(() => {
             let serverDate = new Date(oldestTimeStored);
