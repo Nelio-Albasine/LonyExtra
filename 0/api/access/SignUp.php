@@ -116,8 +116,6 @@ function chefIfCurrentInvitingIsInfluencer($invintingIdOrReferralCode, $conn)
 {
     error_log("Verificando se o código do convidado " . $invintingIdOrReferralCode . " é de um influenciador...");
 
-    createTableInfluencersIfNotExist($conn);
-
     $response = null;
 
     $sql = "SELECT * FROM Influencers WHERE userId = ? OR referralCode = ?";
