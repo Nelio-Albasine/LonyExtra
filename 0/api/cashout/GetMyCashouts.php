@@ -49,7 +49,7 @@ function getMyAllMyCashouts($conn, $userId): array
         return ["error" => "Erro interno no servidor"];
     }
 
-    $stmt->bind_param("i", $userId);
+    $stmt->bind_param("s", $userId);
 
     if (!$stmt->execute()) {
         error_log("Erro ao executar a consulta: " . $stmt->error);

@@ -1,71 +1,64 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Painel Administrativo</title>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Painel Administrativo</title>
+  <link rel="stylesheet" href="/adm/css/index.css">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400&display=swap" rel="stylesheet">
+
+
 </head>
 <body>
+  <div class="dashboard">
+    <aside class="sidebar">
+      <div class="logo">Lony Extra</div>
+      <nav class="menu">
+        <a href="#" class="active">Home</a>
+        <a href="#">Projects</a>
+        <a href="#">Tasks</a>
+        <a href="#">Team</a>
+        <a href="#">Settings</a>
+      </nav>
+      <div class="pro-upgrade">
+        <button>Upgrade to Pro</button>
+      </div>
+      <a href="#" class="logout">Log out</a>
+    </aside>
 
-    <div class="container">
-        <header>
-            <h1>Painel Administrativo</h1>
-        </header>
+    <main class="main-content">
+      <header class="header">
+        <h1>Hello, Margaret</h1>
+        <p>Track team progress here. You almost reach a goal!</p>
+      </header>
 
-        <div class="stats">
-            <div class="stat">
-                <h2>Usuários</h2>
-                <p id="usuarios">120</p>
-            </div>
-            <div class="stat">
-                <h2>Receita Total</h2>
-                <p id="receitaTotal">R$ 15.000,00</p>
-            </div>
-            <div class="stat">
-                <h2>Receita Disponível</h2>
-                <p id="receitaDisponivel">R$ 5.000,00</p>
-            </div>
-            <div class="stat">
-                <h2>Saques Realizados</h2>
-                <p id="saques">R$ 10.000,00</p>
-            </div>
-        </div>
+      <section class="performance">
+        <h2>Performance</h2>
+        <div class="chart"></div>
+      </section>
 
-        <section class="user-list">
-            <h2>Lista de Usuários</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Nome</th>
-                        <th>Data de Cadastro</th>
-                        <th>Pontos</th>
-                        <th>Saldo</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>João Silva</td>
-                        <td>01/01/2022</td>
-                        <td>500</td>
-                        <td>R$ 200,00</td>
-                    </tr>
-                    <tr>
-                        <td>Ana Pereira</td>
-                        <td>15/03/2022</td>
-                        <td>350</td>
-                        <td>R$ 150,00</td>
-                    </tr>
-                    <tr>
-                        <td>Carlos Souza</td>
-                        <td>20/07/2022</td>
-                        <td>1200</td>
-                        <td>R$ 500,00</td>
-                    </tr>
-                </tbody>
-            </table>
-        </section>
-    </div>
+      <section class="tasks">
+        <h2>Current Tasks</h2>
+        <ul>
+          <li>Product Review for U18 Market <span>In progress • 4h</span></li>
+          <li>UX Research for Product <span>On hold • 8h</span></li>
+          <li>App design and development <span>Done • 32h</span></li>
+        </ul>
+      </section>
+    </main>
 
+    <aside class="activity-panel">
+      <div class="profile">
+        <img src="profile-pic.jpg" alt="Megan Norton">
+        <h3>Megan Norton</h3>
+        <p>@megnorton</p>
+      </div>
+
+      <section class="activity">
+        <h2>Activity</h2>
+        <p>Recent updates from your team will appear here.</p>
+      </section>
+    </aside>
+  </div>
 </body>
 </html>
