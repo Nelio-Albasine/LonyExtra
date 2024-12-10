@@ -485,6 +485,10 @@ function updateHomeTaskAvailability(container, textTask, availability) {
         clearInterval(countdownIntervals[intervalKey]);
     }
 
+    console.log("availability.hasValidLinks : ", availability.hasValidLinks)
+    console.log("availability.validLinkCount: ", availability.validLinkCount)
+
+
     if (availability.hasValidLinks) {
         container.classList.add("hasSomeTaskAvailable");
         container.classList.remove("dontHasSomeTaskAvailable");
@@ -505,8 +509,9 @@ function updateHomeTaskAvailability(container, textTask, availability) {
             let diffMs = 24 * 60 * 60 * 1000 - (currentDate - serverDate);
 
             if (diffMs <= 0) {
-                textTask.innerHTML = `Tempo <strong>Expirado</strong>`;
-                clearInterval(countdownIntervals[intervalKey]);
+                container.classList.add("hasSomeTaskAvailable");
+                container.classList.remove("dontHasSomeTaskAvailable");
+                textTask.innerHTML = `Realizar tarefa <strong>15/15</strong>`;
             } else {
                 let hours = Math.floor(diffMs / (1000 * 60 * 60));
                 let minutes = Math.floor((diffMs % (1000 * 60 * 60)) / (1000 * 60));
