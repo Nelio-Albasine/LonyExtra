@@ -18,6 +18,7 @@ let textInvitationCode = null;
 let userLTCashoutsGloabl = null
 
 const userId = "391f58325968d93b6778b9722f953bb063b44254d8e04109955c52b928ac9782";
+var userEmailAddress = null;
 
 if (!userId) {
     window.location.href = "../access/login.html";
@@ -70,6 +71,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     const userPoints = JSON.parse(userInfo.userPointsJSON);
     userInvitationInfo = JSON.parse(userInfo.userInvitationJSON);
 
+    userEmailAddress =  userInfo.userEmail
     userTimeZone = userInfo.userTimeZone;
     userLTCashoutsGloabl = userPoints.userLTCashouts
 
@@ -89,7 +91,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     });
 
     userEmail.forEach(text => {
-        text.textContent = userInfo.userEmail;
+        text.textContent = userEmailAddress;
     });
 
     userRevenue.forEach(text => {

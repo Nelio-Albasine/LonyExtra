@@ -22,7 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
     $response = getMyAllMyCashouts($conn, $userId);
 
-    error_log("Resposta do cashout: ". print_r($response, true));
+    error_log("Resposta do cashout: " . print_r($response, true));
 
     echo json_encode($response);
     $conn->close();
@@ -34,6 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
 function getMyAllMyCashouts($conn, $userId): array
 {
+
     $query = "SELECT 
         gatewayName, cashOutId, 
         amountCashedOut, cashOutStatus, 
@@ -74,6 +75,7 @@ function createTableSaquesIfNotExists($conn)
         CREATE TABLE IF NOT EXISTS Saques (
             id INT AUTO_INCREMENT PRIMARY KEY,
             userId VARCHAR(191) NOT NULL,
+            userEmail VARCHAR(255) DEFAULT NULL,
             gatewayName VARCHAR(10) NOT NULL,
             cashOutId VARCHAR(6) UNIQUE NOT NULL,
             amountCashedOut DECIMAL(10,2),

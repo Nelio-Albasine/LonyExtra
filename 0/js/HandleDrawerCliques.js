@@ -299,6 +299,10 @@ async function handleConvertion(index, convertStarsBtn) {
             textUserLTRevenue.forEach(el => {
                 el.textContent = newLTRevenue.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
             });
+
+            setTimeout(()=>{
+                window.location.reload()
+            },1000)
         } else {
             if (responseData.message === "405") {
                 let msg = "Estrelas insuficientes para conversão!";
@@ -436,6 +440,7 @@ function whenCashoutRevenueClicked() {
 
         const data = {
             userId: userId,
+            userEmail: userEmailAddress,
             gatewayName: paymentMethodSelected.toLowerCase(),
             amountIndex: indexToCashOut,
             userPaymentName: userCashoutName,
