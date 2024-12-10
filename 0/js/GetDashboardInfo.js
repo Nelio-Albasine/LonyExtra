@@ -27,24 +27,24 @@ if (!userId) {
 let dashInfo = null;
 
 document.addEventListener("DOMContentLoaded", async function () {
-  /*  if ('Notification' in window && 'serviceWorker' in navigator) {
-        Notification.requestPermission().then((permission) => {
-            if (permission === 'granted') {
-                console.log('Permissão concedida!');
-            } else {
-                console.log('Permissão negada.');
-            }
-        });
-    }
-
-    if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('/service-worker.js').then((registration) => {
-            console.log('Service Worker registrado com sucesso:', registration);
-
-        }).catch((error) => {
-            console.error('Falha ao registrar o Service Worker:', error);
-        });
-    } */
+    /*  if ('Notification' in window && 'serviceWorker' in navigator) {
+          Notification.requestPermission().then((permission) => {
+              if (permission === 'granted') {
+                  console.log('Permissão concedida!');
+              } else {
+                  console.log('Permissão negada.');
+              }
+          });
+      }
+  
+      if ('serviceWorker' in navigator) {
+          navigator.serviceWorker.register('/service-worker.js').then((registration) => {
+              console.log('Service Worker registrado com sucesso:', registration);
+  
+          }).catch((error) => {
+              console.error('Falha ao registrar o Service Worker:', error);
+          });
+      } */
 
     const userName = document.querySelectorAll(".userName");
     const userEmail = document.querySelectorAll(".userEmail");
@@ -64,20 +64,20 @@ document.addEventListener("DOMContentLoaded", async function () {
     if (window.location.hash == "#welcome") {
         window.location.replace("http://127.0.0.1:5500/0/dashboard/");
     }
-    
+
 
     userInfo = dashInfo.userInfo;
     myInviterInfo = JSON.parse(dashInfo.myInviterInfo);
     const userPoints = JSON.parse(userInfo.userPointsJSON);
     userInvitationInfo = JSON.parse(userInfo.userInvitationJSON);
 
-    userEmailAddress =  userInfo.userEmail
+    userEmailAddress = userInfo.userEmail
     userTimeZone = userInfo.userTimeZone;
-    userLTCashoutsGloabl = userPoints.userLTCashouts
+    userLTCashoutsGloabl = userPoints.userLTCashouts || 0
 
     const availabilityLinks = JSON.parse(dashInfo.hasValidLinksPerBatch);
 
-   // console.log(" userInfo ", userInfo)
+    // console.log(" userInfo ", userInfo)
 
     saveUserPointsToLocalStorage(userPoints);
     handleLinkAvailabilityChecker(availabilityLinks);

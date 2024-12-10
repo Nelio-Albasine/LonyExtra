@@ -1,64 +1,105 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Painel Administrativo</title>
   <link rel="stylesheet" href="/adm/css/index.css">
   <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400&display=swap" rel="stylesheet">
-
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 </head>
+
 <body>
   <div class="dashboard">
     <aside class="sidebar">
       <div class="logo">Lony Extra</div>
       <nav class="menu">
-        <a href="#" class="active">Home</a>
-        <a href="#">Projects</a>
-        <a href="#">Tasks</a>
-        <a href="#">Team</a>
-        <a href="#">Settings</a>
+        <a href="#" class="menu-item active">
+          <i class="icon-home"></i> Home
+        </a>
+        <a href="#" class="menu-item">
+          <i class="icon-users"></i> Usuários
+        </a>
+        <a href="#" class="menu-item">
+          <i class="icon-wallet"></i> Saques
+        </a>
+        <a href="#" class="menu-item">
+          <i class="icon-admin"></i> Admins
+        </a>
+        <a href="#" class="menu-item">
+          <i class="icon-settings"></i> Configurações
+        </a>
       </nav>
-      <div class="pro-upgrade">
-        <button>Upgrade to Pro</button>
-      </div>
-      <a href="#" class="logout">Log out</a>
     </aside>
+
 
     <main class="main-content">
       <header class="header">
-        <h1>Hello, Margaret</h1>
-        <p>Track team progress here. You almost reach a goal!</p>
+        <h1>Hello, Albasine!</h1>
+        <p>This Dash was made by Nelio Albaine, and no, i won't tookt out this text!</p>
       </header>
 
-      <section class="performance">
+      <section class="statistic">
+        <div class="statistic_div">
+          <i class="fas fa-user"></i>
+          <div>
+            <p>Usuarios totais</p>
+            <p id="totalUsers" class="textItemAmountStatistic">100</p>
+          </div>
+        </div>
+
+        <div class="statistic_div">
+          <i class="fas fa-user"></i>
+          <div>
+            <p>Usuarios online</p>
+            <p id="totalOnlineUsers" class="textItemAmountStatistic">23</p>
+          </div>
+        </div>
+
+        <div class="statistic_div">
+          <i class="fas fa-user"></i>
+          <div>
+            <p>Receita total</p>
+            <p id="totalLTrevenue" class="textItemAmountStatistic">R$ 2.435,23</p>
+          </div>
+        </div>
+
+        <div class="statistic_div">
+          <i class="fas fa-user"></i>
+          <div>
+            <p>Receita disponível</p>
+            <p id="totalRevenue" class="textItemAmountStatistic">R$ 2.435,23</p>
+          </div>
+        </div>
+      </section>
+
+
+
+      <section class="performance chart-container">
         <h2>Performance</h2>
-        <div class="chart"></div>
+        <canvas id="performanceChart"></canvas>
       </section>
 
       <section class="tasks">
-        <h2>Current Tasks</h2>
-        <ul>
-          <li>Product Review for U18 Market <span>In progress • 4h</span></li>
-          <li>UX Research for Product <span>On hold • 8h</span></li>
-          <li>App design and development <span>Done • 32h</span></li>
-        </ul>
+        <h2>Influencers</h2>
+        <div class="div_task">
+
+        </div>
       </section>
     </main>
 
     <aside class="activity-panel">
       <div class="profile">
-        <img src="profile-pic.jpg" alt="Megan Norton">
         <h3>Megan Norton</h3>
         <p>@megnorton</p>
       </div>
-
-      <section class="activity">
-        <h2>Activity</h2>
-        <p>Recent updates from your team will appear here.</p>
-      </section>
     </aside>
   </div>
+
+  <script src="script_graphic_performance.js"></script>
 </body>
+
 </html>

@@ -1,59 +1,141 @@
 /* Global Styles */
 body {
-    font-family: 'Roboto Slab', serif;
-
+    font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
     display: flex;
     height: 100vh;
+    overflow: hidden;
+}
+
+* {
+    margin: 0;
+    padding: 0;
 }
 
 .dashboard {
     display: grid;
-    grid-template-columns: 250px 1fr 300px;
+    grid-template-columns: 250px 1fr 250px;
     grid-gap: 1rem;
     width: 100%;
 }
 
+
 .sidebar {
-    background: #f7f7f7;
-    padding: 2rem;
+    width: 250px;
+    height: 100vh;
+    background: #ffffff;
+    border-right: 1px solid #ddd;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    padding: 20px;
 }
 
 .logo {
     font-size: 1.5rem;
     font-weight: bold;
-}
-
-.menu a {
-    display: block;
-    padding: 0.5rem 0;
     color: #333;
-    text-decoration: none;
+    margin-bottom: 30px;
+    text-align: center;
 }
 
-.menu a.active {
-    font-weight: bold;
+.menu {
+    flex-grow: 1;
+}
+
+.menu-item {
+    display: flex;
+    align-items: center;
+    padding: 10px 15px;
+    font-size: 1rem;
+    color: #555;
+    text-decoration: none;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    transition: all 0.3s ease;
+}
+
+.menu-item i {
+    font-size: 1.2rem;
+    margin-right: 10px;
+}
+
+.menu-item:hover {
+    background: #f0f0f0;
     color: #007bff;
 }
 
-.pro-upgrade button {
+.menu-item.active {
     background: #007bff;
-    color: white;
+    color: #fff;
+}
+
+.menu-item.active i {
+    color: #fff;
+}
+
+.pro-upgrade {
+    margin: 20px 0;
+    text-align: center;
+}
+
+.pro-upgrade button {
+    padding: 10px 20px;
+    background: #007bff;
+    color: #fff;
     border: none;
-    padding: 0.5rem;
-    border-radius: 5px;
+    border-radius: 8px;
+    font-size: 1rem;
     cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.pro-upgrade button:hover {
+    background: #0056b3;
 }
 
 .logout {
-    color: #666;
+    text-align: center;
+    padding: 10px;
+    color: #555;
     text-decoration: none;
-    font-size: 0.9rem;
+    font-size: 1rem;
+    transition: color 0.3s ease;
 }
+
+.logout i {
+    margin-right: 5px;
+    font-size: 1.2rem;
+}
+
+.logout:hover {
+    color: #d9534f;
+}
+
+.icon-home::before {
+    content: "🏠";
+}
+
+.icon-users::before {
+    content: "👥";
+}
+
+.icon-wallet::before {
+    content: "💼";
+}
+
+.icon-admin::before {
+    content: "🛡️";
+}
+
+.icon-settings::before {
+    content: "⚙️";
+}
+
+.icon-logout::before {
+    content: "🚪";
+}
+
 
 /* Main Content */
 .main-content {
@@ -61,14 +143,23 @@ body {
     padding: 1rem;
     display: flex;
     flex-direction: column;
+    overflow: auto;
+}
+
+.header {
+    margin-top: 20px;
+    padding: 10px 10px 10px 0;
 }
 
 .header h1 {
     margin: 0;
+    font-size: 1.4rem;
 }
 
 .header p {
+    margin-top: 6px;
     color: #666;
+    font-size: 14px;
 }
 
 .performance,
@@ -76,20 +167,22 @@ body {
     margin-top: 1rem;
 }
 
-.chart {
+.performance h2 {
+    font-size: 17px;
+}
+
+
+.chart-container {
     background: #f7f7f7;
-    height: 150px;
-    border-radius: 5px;
+    height: 200px;
+    width: 100%;
+    border-radius: 25px;
+    margin-top: 8px;
 }
 
-.tasks ul {
-    list-style: none;
-    padding: 0;
-}
-
-.tasks li {
-    padding: 0.5rem 0;
-    border-bottom: 1px solid #ddd;
+#performanceChart {
+    width: 100%;
+    height: 100%;
 }
 
 /* Activity Panel */
@@ -110,4 +203,85 @@ body {
 
 .activity {
     margin-top: 1rem;
+}
+
+
+
+.statistic {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 20px;
+}
+
+.statistic_div {
+    background-color: #fafafa;
+    padding: 20px;
+    display: flex;
+    flex-direction: row;
+    border-radius: 20px;
+}
+
+.statistic_div i {
+    width: 30px;
+    margin-right: 15px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    align-self: center;
+    text-align: center;
+    border-radius: 25px;
+    color: #666;
+    background-color: rgb(224, 224, 224);
+}
+
+
+.statistic_div p {
+    font-size: 12px;
+    color: #666;
+}
+
+.textItemAmountStatistic {
+    font-weight: bold;
+    margin-top: 4px;
+    padding: 6px 10px;
+    border-radius: 25px;
+    text-align: center;
+    font-size: 12.5px !important;
+    color: rgb(4, 92, 16) !important;
+    background-color: rgba(88, 184, 88, 0.466);
+}
+
+
+#totalUsers {
+    color: #555555 !important;
+    background-color: rgb(224, 224, 224);
+
+}
+
+#totalOnlineUsers {
+    background-color: rgba(112, 144, 211, 0.555);
+    color: #191880 !important;
+}
+
+#totalRevenue {
+    background-color: rgba(216, 165, 89, 0.555);
+    color: #503e05 !important;
+}
+
+
+.tasks {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    font-size: 0.7rem;
+    padding-top: 20px;
+    flex-direction: column;
+}
+
+.div_task {
+    width: 100%;
+    height: 100%;
 }
