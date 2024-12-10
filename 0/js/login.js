@@ -20,8 +20,8 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     btnStartSession.addEventListener("click", async () => {
-        const inputEmail = document.getElementById("inputEmail").value;
-        const inputPassword = document.getElementById("inputPassword").value;
+        const inputEmail = document.getElementById("inputEmail").value.trim();
+        const inputPassword = document.getElementById("inputPassword").value.trim();
 
         if (!areAllFieldsFilled(inputEmail, inputPassword)) {
             showAlert(1, "Por favor, preencha todos os campos!");

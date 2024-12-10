@@ -61,7 +61,7 @@ if ($_SERVER['REQUEST_METHOD'] == "GET") {
         ];
     }
 
-    error_log("Output de login: " . print_r($output));
+    error_log("Output de login: " . print_r($output, true));
     
     echo json_encode($output);
     $conn->close();
