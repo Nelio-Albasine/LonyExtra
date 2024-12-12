@@ -37,13 +37,22 @@ function main()
         respondWithError('Falha ao descriptografar os dados.');
     }
 
-    //logDecryptedData($decryptedData);
-
 
     $decryptedData = json_decode($decryptedData, true);
 
     if ($decryptedData === null || !is_array($decryptedData)) {
         respondWithError('Os dados descriptografados não são um JSON válido.');
+    }
+
+    $allowedReferer = [
+        'https://moneyall.arquivostec.com/money-all-crash/',
+        'https://arquivostec.com/cartao-de-credito/',
+        'https://guis2.com/nos-dias-de-hoje-a-internet-oferece-uma-infinidade-de-oportunidades-para-ganhar-dinheiro/',
+        'https://horoscopeonday.com/o-itau-unibanco/'
+    ];
+
+    if (!in_array($input['referer'], $allowedReferer)) {
+        respondWithError('Você precisa passar pelas etapas de cada tarefa para poder receber sua recompensa.');
     }
 
     $conn = Wamp64Connection();
@@ -53,39 +62,8 @@ function main()
     respondWithSuccess(['success' => $linkStatusUpdateResponse]);
 }
 
-function check_HTTP_REFERER()
-{
-    if (isset($_SERVER['HTTP_REFERER'])) {
-        $referer = $_SERVER['HTTP_REFERER'];
-
-        // Log do referer recebido
-        error_log("Referer recebido: " . $referer);
-
-        $allowedReferer = [
-            'https://moneyall.arquivostec.com/money-all-crash/',
-            'https://arquivostec.com/cartao-de-credito/',
-            'https://guis2.com/nos-dias-de-hoje-a-internet-oferece-uma-infinidade-de-oportunidades-para-ganhar-dinheiro/',
-            'https://horoscopeonday.com/o-itau-unibanco/'
-        ];
-
-        // Verifica se o referer começa com algum dos URLs permitidos
-        foreach ($allowedReferer as $allowed) {
-            if (strpos($referer, $allowed) === 0) { // strpos() retorna a posição inicial, então === 0 é correto
-                error_log("Referer válido: " . $referer);
-                return true;
-            }
-        }
-        
-        error_log("Referer inválido: " . $referer);
-        return false;
-    } else {
-        error_log("Nenhum Referer enviado.");
-        return false;
-    }
-}
-
 try {
-    main(); 
+    main();
 } catch (\Throwable $th) {
     error_log("Ocorreu um erro genérico no DecrypeTaskData.php: " . $th->getMessage());
 }

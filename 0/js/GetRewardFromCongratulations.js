@@ -12,8 +12,6 @@ document.addEventListener("DOMContentLoaded", async function () {
 
     const taskIndex = parseInt(localStorage.getItem("taskIndex"));
     const iv = localStorage.getItem("iv");
-    console.log("o iv é: ", iv)
-
     const userPointsJson = loadUserPointsFromLocal();
 
     handlePointsToEarnText(taskIndex, pointsToEarn);
@@ -133,7 +131,8 @@ async function sendEncryptedDataToServer(encryptedData, iv, btnGetReward) {
     btnGetReward.textContent = "Aguarde...";
     btnGetReward.disabled = true;
     let feedbackMessage = null;
-
+    var referer = document.referrer;
+    console.log("Referer JavaScript: ", referer);
     try {
         const response = await fetch('http://localhost/LonyExtra/0/api/tasks/DecryptTaskData.php', {
             method: 'POST',
@@ -142,6 +141,7 @@ async function sendEncryptedDataToServer(encryptedData, iv, btnGetReward) {
             },
             body: JSON.stringify({
                 iv: iv,
+                referer: referer,
                 encryptedData: encryptedData
             }),
         });
@@ -153,9 +153,9 @@ async function sendEncryptedDataToServer(encryptedData, iv, btnGetReward) {
         let resultText = await response.text();
 
         console.log("Raw response:", resultText);
-        
+
         result = JSON.parse(resultText);
-        
+
         if (result.success) {
             btnGetReward.textContent = "Pontos Adicionados!";
             btnGetReward.style.backgroundColor = "green";
