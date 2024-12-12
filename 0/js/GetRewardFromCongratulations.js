@@ -1,3 +1,5 @@
+const { log } = require("console");
+
 let alertMessage = null;
 let currentStars = 0;
 let pointsToEarn = null;
@@ -150,8 +152,12 @@ async function sendEncryptedDataToServer(encryptedData, iv, btnGetReward) {
             throw new Error(`Erro na requisição: ${response.status}`);
         }
 
-        const result = await response.json();
+        let resultText = await response.text();
 
+        console.log("Raw response:", resultText);
+        
+        result = JSON.parse(resultText);
+        
         if (result.success) {
             btnGetReward.textContent = "Pontos Adicionados!";
             btnGetReward.style.backgroundColor = "green";

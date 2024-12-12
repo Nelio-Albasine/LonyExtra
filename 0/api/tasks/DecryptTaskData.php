@@ -53,7 +53,6 @@ function main()
     respondWithSuccess(['success' => $linkStatusUpdateResponse]);
 }
 
-
 function check_HTTP_REFERER()
 {
     if (isset($_SERVER['HTTP_REFERER'])) {
@@ -66,8 +65,9 @@ function check_HTTP_REFERER()
             'https://horoscopeonday.com/o-itau-unibanco/'
         ];
 
+        // Verifica se o referer começa com algum dos URLs permitidos
         foreach ($allowedReferer as $allowed) {
-            if (strpos($referer, $allowed) === 0) { 
+            if (strpos($referer, $allowed) === 0) { // strpos() retorna a posição inicial, então === 0 é correto
                 return true;
             }
         }
@@ -80,13 +80,18 @@ function check_HTTP_REFERER()
 
 try {
     if (check_HTTP_REFERER()) {
-        main();
+        main(); 
     } else {
-        respondWithError("Você precisa passar pelas etapas de cada tarefa para poder receber sua recompensa.");
+        $response = [
+            "success" => false,
+            "message" => "Você precisa passar pelas etapas de cada tarefa para poder receber sua recompensa."
+        ];
+        respondWithSuccess($response); 
     }
 } catch (\Throwable $th) {
-    error_log("Ocorreum um erro generico no DecrypeTaskData.php: " . $th->getMessage());
+    error_log("Ocorreu um erro genérico no DecrypeTaskData.php: " . $th->getMessage());
 }
+
 exit;
 
 /**
