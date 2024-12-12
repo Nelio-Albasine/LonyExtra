@@ -169,6 +169,11 @@ async function sendEncryptedDataToServer(encryptedData, iv, btnGetReward) {
             showBoxAlert(feedbackMessage, "warning");
             btnGetReward.textContent = "Volte dentro de algum tempinho!";
             btnGetReward.style.backgroundColor = "#c7ba05";
+        } else if (result.message == "206") {
+            feedbackMessage = "Você precisa passar pelas etapas de cada tarefa para poder receber sua recompensa.";
+            showBoxAlert(feedbackMessage, "warning");
+            btnGetReward.textContent = "Etapas nao realizadas!";
+            btnGetReward.style.backgroundColor = "#c7ba05";
         } else {
             btnGetReward.disabled = false;
             console.error(result.message)

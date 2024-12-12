@@ -58,7 +58,7 @@ function main()
         respondWithSuccess(
             [
                 'success' => false,
-                'error' => "Você precisa passar pelas etapas de cada tarefa para poder receber sua recompensa."
+                'error' => "206"
             ]
         );        
     }
