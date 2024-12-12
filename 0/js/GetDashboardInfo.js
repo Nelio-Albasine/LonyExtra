@@ -453,9 +453,6 @@ function handleLinkAvailabilityChecker(data) {
 }
 
 function calculateRemainingTime(timeStored, currentServerDate) {
-    console.log(`Time stored: ${timeStored}`);
-    console.log(`Current server date: ${currentServerDate}`);
-
     const updatedAt = new Date(timeStored.replace(" ", "T"));
     const serverDate = new Date(currentServerDate.replace(" ", "T"));
 
@@ -472,7 +469,6 @@ function calculateRemainingTime(timeStored, currentServerDate) {
     const seconds = Math.floor((remainingTime % (1000 * 60)) / 1000);
 
     const response = `Disponível em: <strong>${hours}h : ${minutes}min</strong>`;
-    console.log(`Disponível em: ${hours} horas, ${minutes} minutos, ${seconds} segundos`);
 
     return response;
 }
@@ -485,10 +481,7 @@ function updateHomeTaskAvailability(container, textTask, availability) {
         clearInterval(countdownIntervals[intervalKey]);
     }
 
-    console.log("availability.hasValidLinks : ", availability.hasValidLinks)
-    console.log("availability.validLinkCount: ", availability.validLinkCount)
-
-
+   
     if (availability.hasValidLinks) {
         container.classList.add("hasSomeTaskAvailable");
         container.classList.remove("dontHasSomeTaskAvailable");

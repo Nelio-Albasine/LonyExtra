@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Saques</title>
+    <link rel="stylesheet" href="/0/css/home/cashout_history.css">
+    <link rel="stylesheet" href="/adm/css/AllCashouts.css">
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+
+</head>
+
+<body>
+    <main>
+        <h1>Gerenciar Saques</h1>
+
+        <div class="toolbar">
+            <div class="toolbar-right">
+                <!-- Pesquisar-->
+                <div class="search-container">
+                    <input type="text" id="searchInput" class="search-input"
+                        placeholder="Pesquisar por endereço, ID, nome ou e-mail" />
+                    <button id="searchButton" class="search-button">Pesquisar</button>
+                    <button id="restoreButton" class="restore-button">Restaurar Tabela</button>
+                </div>
+
+                <!-- Filtro por Data -->
+                <div class="filter-dates">
+                    <label for="startDate">De:</label>
+                    <input type="date" id="startDate" name="startDate">
+                    <label for="endDate">Até:</label>
+                    <input type="date" id="endDate" name="endDate">
+                    <button id="filterByDateBtn">Filtrar</button>
+                </div>
+
+
+
+                <select name="filterCashouts" id="filterCashouts">
+                    <option value="0" disabled>Filtrar Saques por:</option>
+                    <option value="1">Saques Pendentes</option>
+                    <option value="2">Saques Pagos</option>
+                    <option value="3">Saques Recusados</option>
+                    <option value="0" disabled>Gateways</option>
+                    <option value="4">Saques PayPal</option>
+                    <option value="5">Saques Pix</option>
+
+                </select>
+            </div>
+
+        </div>
+
+        <!--Dialog Saques: histórico de saques-->
+        <div class="the_dialog_container dialog_historio_de_saques" id="dialog_historio_de_saques">
+            <table id="withdraw-table" class="withdraw-table">
+                <thead>
+                    <tr>
+                        <th>Index</th>
+                        <th>Nome</th>
+                        <th>Método</th>
+                        <th>Quantia</th>
+                        <th>Adress</th>
+                        <th>Saque</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+
+                <tbody id="tbody_cashout_history">
+
+                    <!--    <tr>
+                        <td>
+                            <div>
+                                <p class="cashoutIndex">1</p>
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                <p class="userPaymentName"> Nelio Albasine</p>
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                <img class="teable_icon_gateway" src="/0/src/imgs/icon_paypal_256x256.png"
+                                    alt="cashout mthod icon">
+                                <p class="gatway_name"> Paypal</p>
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                <p class="textCashoutAmount">R$ 200.00</p>
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                <p class="userPaymentAddress">nelioalbasine@gmail.com</p>
+                                <i class="fa-solid fa-copy copy-icon" title="Copiar ID"></i>
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                <p class="textCashoutID">123456</p>
+                                <i class="fa-solid fa-copy copy-icon" onclick="copyToClipboard('123456')"
+                                    title="Copiar ID"></i>
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                <p class="status paid">Pago</p>
+                                <i class="fa fa-cog"></i>
+                            </div>
+                        </td>
+                    </tr>
+    
+                    <tr>
+                        <td>
+                            <div>
+                                <p class="cashoutIndex">2</p>
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                <p class="userPaymentName"> Nelio Albasine</p>
+                            </div>
+                        </td>
+    
+                        <td>
+                            <div>
+                                <img class="teable_icon_gateway" src="/0/src/imgs/icon_pix_240x240.png"
+                                    alt="cashout mthod icon">
+                                <p class="gatway_name"> Pix</p>
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                <p class="textCashoutAmount">R$ 350.00</p>
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                <p class="userPaymentAddress">80.567.783.43</p>
+                                <i class="fa-solid fa-copy copy-icon" title="Copiar ID"></i>
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                <p class="textCashoutID">654321</p>
+                                <i class="fa-solid fa-copy copy-icon" onclick="copyToClipboard('654321')"
+                                    title="Copiar ID"></i>
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                <p class="status pending">Pendente</p>
+                                <i class="fa fa-cog"></i>
+                            </div>
+                        </td>
+                    </tr>
+    
+                    <tr>
+                        <td>
+                            <div>
+                                <p class="cashoutIndex">3</p>
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                <p class="userPaymentName"> Nelio Albasine</p>
+                            </div>
+                        </td>
+    
+                        <td>
+                            <div>
+                                <img class="teable_icon_gateway" src="/0/src/imgs/icon_paypal_256x256.png"
+                                    alt="cashout mthod icon">
+                                <p class="gatway_name"> Paypal</p>
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                <p class="textCashoutAmount">R$ 100.00</p>
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                <p class="userPaymentAddress">nelioalbasine@gmail.com</p>
+                                <i class="fa-solid fa-copy copy-icon" title="Copiar ID"></i>
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                <p class="textCashoutID">112233</p>
+                                <i class="fa-solid fa-copy copy-icon" title="Copiar ID"></i>
+    
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                <p class="status declined">Recusado</p>
+                                <i class="fa fa-cog"></i>
+                            </div>
+                        </td>
+                    </tr> -->
+
+                </tbody>
+            </table>
+        </div>
+
+    </main>
+
+
+    <script src="GetAllCashOutsToTable.js"></script>
+</body>
+
+</html>
