@@ -150,11 +150,7 @@ async function sendEncryptedDataToServer(encryptedData, iv, btnGetReward) {
             throw new Error(`Erro na requisição: ${response.status}`);
         }
 
-        let resultText = await response.text();
-
-        console.log("Raw response:", resultText);
-
-        result = JSON.parse(resultText);
+        let result = await response.json();
 
         if (result.success) {
             btnGetReward.textContent = "Pontos Adicionados!";
