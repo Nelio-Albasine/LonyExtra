@@ -37,6 +37,10 @@
     background-color: #e7ae03;
 }
 
+.confirmation-box.warningv2 .icon-box {
+    background-color: #e7ae03;
+}
+
 .confirmation-box.error .icon-box {
     background-color: #dc3545;
 }
@@ -46,6 +50,10 @@
 }
 
 .confirmation-box.warning button {
+    background-color: #e0a800;
+}
+
+.confirmation-box.warningv2 button {
     background-color: #e0a800;
 }
 
@@ -70,7 +78,9 @@
 .confirmation-box.warning button:hover {
     background-color: #d39e00;
 }
-
+.confirmation-box.warningv2 button:hover {
+    background-color: #d39e00;
+}
 .confirmation-box.error button:hover {
     background-color: #bd2130;
 }
