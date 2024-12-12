@@ -53,8 +53,37 @@ function main()
     respondWithSuccess(['success' => $linkStatusUpdateResponse]);
 }
 
+
+function check_HTTP_REFERER()
+{
+    if (isset($_SERVER['HTTP_REFERER'])) {
+        $referer = $_SERVER['HTTP_REFERER'];
+
+        $allowedReferer = [
+            'https://moneyall.arquivostec.com/money-all-crash/',
+            'https://arquivostec.com/cartao-de-credito/',
+            'https://guis2.com/nos-dias-de-hoje-a-internet-oferece-uma-infinidade-de-oportunidades-para-ganhar-dinheiro/',
+            'https://horoscopeonday.com/o-itau-unibanco/'
+        ];
+
+        foreach ($allowedReferer as $allowed) {
+            if (strpos($referer, $allowed) === 0) { 
+                return true;
+            }
+        }
+        
+        return false;
+    } else {
+        return false;
+    }
+}
+
 try {
-    main();
+    if (check_HTTP_REFERER()) {
+        main();
+    } else {
+        respondWithError("Você precisa passar pelas etapas de cada tarefa para poder receber sua recompensa.");
+    }
 } catch (\Throwable $th) {
     error_log("Ocorreum um erro generico no DecrypeTaskData.php: " . $th->getMessage());
 }
