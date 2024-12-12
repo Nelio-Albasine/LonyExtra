@@ -223,6 +223,9 @@ body {
 .alert.warning {
     background-color: #c7ba05;
 }
+.alert.warningv2 {
+    background-color: #c7ba05;
+}
 
 .alert .icon {
     font-size: 20px;
