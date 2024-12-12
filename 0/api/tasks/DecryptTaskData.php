@@ -85,15 +85,7 @@ function check_HTTP_REFERER()
 }
 
 try {
-    if (check_HTTP_REFERER()) {
-        main(); 
-    } else {
-        $response = [
-            "success" => false,
-            "message" => "Você precisa passar pelas etapas de cada tarefa para poder receber sua recompensa."
-        ];
-        respondWithSuccess($response); 
-    }
+    main(); 
 } catch (\Throwable $th) {
     error_log("Ocorreu um erro genérico no DecrypeTaskData.php: " . $th->getMessage());
 }
