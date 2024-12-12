@@ -58,7 +58,7 @@ function main()
         respondWithSuccess(
             [
                 'success' => false,
-                'error' => "206"
+                'message' => "206"
             ]
         );        
     }
