@@ -58,6 +58,9 @@ function check_HTTP_REFERER()
     if (isset($_SERVER['HTTP_REFERER'])) {
         $referer = $_SERVER['HTTP_REFERER'];
 
+        // Log do referer recebido
+        error_log("Referer recebido: " . $referer);
+
         $allowedReferer = [
             'https://moneyall.arquivostec.com/money-all-crash/',
             'https://arquivostec.com/cartao-de-credito/',
@@ -68,12 +71,15 @@ function check_HTTP_REFERER()
         // Verifica se o referer começa com algum dos URLs permitidos
         foreach ($allowedReferer as $allowed) {
             if (strpos($referer, $allowed) === 0) { // strpos() retorna a posição inicial, então === 0 é correto
+                error_log("Referer válido: " . $referer);
                 return true;
             }
         }
         
+        error_log("Referer inválido: " . $referer);
         return false;
     } else {
+        error_log("Nenhum Referer enviado.");
         return false;
     }
 }
