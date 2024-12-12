@@ -66,6 +66,31 @@
         </div>
     </div>
 
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var referer = document.referrer;
+            console.log("Referer JavaScript: ", referer);
+
+            var allowedReferers = [
+                'https://moneyall.arquivostec.com/money-all-crash/',
+                'https://arquivostec.com/cartao-de-credito/',
+                'https://guis2.com/nos-dias-de-hoje-a-internet-oferece-uma-infinidade-de-oportunidades-para-ganhar-dinheiro/',
+                'https://horoscopeonday.com/o-itau-unibanco/'
+            ];
+
+            var isValidReferer = allowedReferers.some(function (allowed) {
+                return referer.indexOf(allowed) === 0;
+            });
+
+            if (!isValidReferer) {
+                alert("Você precisa passar pelas etapas de cada tarefa para poder receber sua recompensa.");
+                document.getElementById("btnGetReward").disabled = true;
+            }
+        });
+
+    </script>
+
     <script src="../0/js/GetRewardFromCongratulations.js"></script>
 </body>
 
