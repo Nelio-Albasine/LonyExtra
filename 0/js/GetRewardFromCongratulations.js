@@ -1,5 +1,3 @@
-const { log } = require("console");
-
 let alertMessage = null;
 let currentStars = 0;
 let pointsToEarn = null;
