@@ -79,6 +79,10 @@ function showBoxAlert(message, type) {
             button.textContent = 'Voltando...';
             let url = `http://127.0.0.1:5500/0/dashboard/index.html#${taskBatch}`;
             window.open(url, "_self")
+        } else if (type === 'warningv2') {
+            button.textContent = 'Voltando...';
+            let url = `http://127.0.0.1:5500/0/dashboard/index.html#${taskBatch}`;
+            window.open(url, "_self")
         } else if (type === 'error') {
             iconBox.textContent = '✖';
             title.textContent = 'Error!';
