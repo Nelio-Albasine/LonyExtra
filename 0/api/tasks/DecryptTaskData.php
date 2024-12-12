@@ -55,7 +55,12 @@ function main()
     error_log("Referer passado: " . $refererPassado);
 
     if (!in_array($refererPassado, $allowedReferer)) {
-        respondWithError('Você precisa passar pelas etapas de cada tarefa para poder receber sua recompensa.');
+        respondWithSuccess(
+            [
+                'success' => false,
+                'error' => "Você precisa passar pelas etapas de cada tarefa para poder receber sua recompensa."
+            ]
+        );        
     }
 
     $conn = Wamp64Connection();
