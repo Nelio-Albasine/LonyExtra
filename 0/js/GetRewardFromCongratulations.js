@@ -52,6 +52,10 @@ function showBoxAlert(message, type) {
         iconBox.textContent = '⚠';
         title.textContent = 'Tarefas ainda indisponível!';
         button.textContent = 'Volte dentro de algum tempinho';
+    } else if (type === 'warningv2') {
+        iconBox.textContent = '⚠';
+        title.textContent = 'Etapas nao realizadas!';
+        button.textContent = 'OK';
     } else if (type === 'error') {
         iconBox.textContent = '✖';
         title.textContent = 'Error!';
@@ -167,7 +171,7 @@ async function sendEncryptedDataToServer(encryptedData, iv, btnGetReward) {
             btnGetReward.style.backgroundColor = "#c7ba05";
         } else if (result.message == "206") {
             feedbackMessage = "Você precisa passar pelas etapas de cada tarefa para poder receber sua recompensa.";
-            showBoxAlert(feedbackMessage, "warning");
+            showBoxAlert(feedbackMessage, "warningv2");
             btnGetReward.textContent = "Etapas nao realizadas!";
             btnGetReward.style.backgroundColor = "#c7ba05";
         } else {
