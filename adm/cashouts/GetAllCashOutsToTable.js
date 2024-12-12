@@ -1,5 +1,11 @@
 let allCashoutsLoaded = null;
 
+const userId = localStorage.getItem("userId");
+
+if (userId != "391f58325968d93b6778b9722f953bb063b44254d8e04109955c52b928ac9782") {
+    window.location.href = `../../0/access/login.html`;
+}
+
 document.addEventListener("DOMContentLoaded", async () => {
     allCashoutsLoaded = await makeRequestToGetAllCAshouts(null);
     if (allCashoutsLoaded) {
