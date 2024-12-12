@@ -45,13 +45,16 @@ function main()
     }
 
     $allowedReferer = [
-        'https://moneyall.arquivostec.com/money-all-crash/',
-        'https://arquivostec.com/cartao-de-credito/',
-        'https://guis2.com/nos-dias-de-hoje-a-internet-oferece-uma-infinidade-de-oportunidades-para-ganhar-dinheiro/',
-        'https://horoscopeonday.com/o-itau-unibanco/'
+        'https://moneyall.arquivostec.com/',
+        'https://arquivostec.com/',
+        'https://guis2.com/',
+        'https://horoscopeonday.com/'
     ];
 
-    if (!in_array($input['referer'], $allowedReferer)) {
+    $refererPassado = $input['referer'];
+    error_log("Referer passado: " . $refererPassado);
+
+    if (!in_array($refererPassado, $allowedReferer)) {
         respondWithError('Você precisa passar pelas etapas de cada tarefa para poder receber sua recompensa.');
     }
 
