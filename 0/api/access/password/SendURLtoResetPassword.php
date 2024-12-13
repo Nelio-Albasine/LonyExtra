@@ -50,7 +50,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         ];
     }
 
-    error_log("Resposta da redefinicao da senha: ". print_r($output, true));
     echo json_encode($output);
     $conn->close();
     exit;
@@ -312,7 +311,11 @@ function sendEmailWithURLtoResetPassword($userEmail, $conn)
                             }
                         }
                     </style>
-                </head>
+                <script
+  src="https://js.sentry-cdn.com/a41ea66a6911b5025e8922b0df576302.min.js"
+  crossorigin="anonymous"
+></script>
+</head>
 
                 <body>
                     <table class="main-table" role="presentation">

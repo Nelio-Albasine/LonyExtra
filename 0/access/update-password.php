@@ -195,6 +195,10 @@ if (isset($_GET['data']) && isset($_GET['iv'])) {
             }
         }
     </style>
+<script
+  src="https://js.sentry-cdn.com/a41ea66a6911b5025e8922b0df576302.min.js"
+  crossorigin="anonymous"
+></script>
 </head>
 
 <body>

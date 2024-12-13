@@ -191,6 +191,13 @@ select option {
 }
 
 
-#container_floating_cashou_info{
-    width: 100;
+#container_floating_cashou_info {
+    position: absolute;
+    width: 500px; 
+    height: auto;
+    border-radius: 15px;
+    padding: 10px;
+    color: white;
+    cursor: move;
+    background-color: red;
 }

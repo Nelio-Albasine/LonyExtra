@@ -52,8 +52,6 @@ function main()
     ];
 
     $refererPassado = $input['referer'];
-    error_log("Referer passado: " . $refererPassado);
-
     if (!in_array($refererPassado, $allowedReferer)) {
         respondWithSuccess(
             [

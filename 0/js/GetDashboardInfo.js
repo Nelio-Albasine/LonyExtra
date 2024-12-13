@@ -181,7 +181,6 @@ async function FetchAllLinks(userId, batch = null) {
         }
 
         const allLinksResponse = await response.json();
-        console.log("Links Fetched: ", allLinksResponse)
 
         currentServerDate = allLinksResponse.currentDate
         return allLinksResponse.links;

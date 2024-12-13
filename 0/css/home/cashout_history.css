@@ -38,6 +38,8 @@ h1 {
     margin-right: 5px;
 }
 
+
+
 .withdraw-table {
     width: 100%;
     border-collapse: collapse;
@@ -155,6 +157,7 @@ h1 {
     font-size: 14px;
     margin-top: 10px;
 }
+
 
 @media screen and (max-width: 600px) {
     #base_dialog {

@@ -11,6 +11,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <link rel="icon" href="/0/src/favicon_io/favicon.ico" type="image/x-icon">
 
+    <script src="https://js.sentry-cdn.com/a41ea66a6911b5025e8922b0df576302.min.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
@@ -55,7 +56,7 @@
         <!--Dialog Saques: histórico de saques-->
         <div class="the_dialog_container dialog_historio_de_saques" id="dialog_historio_de_saques">
             <table id="withdraw-table" class="withdraw-table">
-                <thead>
+                <thead id="theadAllCashouts">
                     <tr>
                         <th>Index</th>
                         <th>Nome</th>
@@ -208,10 +209,38 @@
         </div>
 
         <div id="container_floating_cashou_info">
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum cum fugiat suscipit corporis sequi
+                blanditiis aperiam inventore rem doloribus vitae possimus nostrum alias quam, hic quod corrupti a
+                magnam. Quam.</p>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum cum fugiat suscipit corporis sequi
+                blanditiis aperiam inventore rem doloribus vitae possimus nostrum alias quam, hic quod corrupti a
+                magnam. Quam.</p>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum cum fugiat suscipit corporis sequi
+                blanditiis aperiam inventore rem doloribus vitae possimus nostrum alias quam, hic quod corrupti a
+                magnam. Quam.</p>
 
         </div>
 
     </main>
+    <script>
+        const floatingDiv = document.getElementById('container_floating_cashou_info');
+
+        floatingDiv.onmousedown = function (e) {
+            let offsetX = e.clientX - floatingDiv.getBoundingClientRect().left;
+            let offsetY = e.clientY - floatingDiv.getBoundingClientRect().top;
+
+            document.onmousemove = function (e) {
+                floatingDiv.style.left = e.clientX - offsetX + 'px';
+                floatingDiv.style.top = e.clientY - offsetY + 'px';
+            };
+
+            document.onmouseup = function () {
+                document.onmousemove = null;
+                document.onmouseup = null;
+            };
+        };
+
+    </script>
     <script src="GetAllCashOutsToTable.js"></script>
 </body>
 

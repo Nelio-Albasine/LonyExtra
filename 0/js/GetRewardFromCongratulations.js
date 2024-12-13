@@ -54,7 +54,7 @@ function showBoxAlert(message, type) {
         button.textContent = 'Volte dentro de algum tempinho';
     } else if (type === 'warningv2') {
         iconBox.textContent = '⚠';
-        title.textContent = 'Etapas nao realizadas!';
+        title.textContent = 'Etapas não realizadas!';
         button.textContent = 'OK';
     } else if (type === 'error') {
         iconBox.textContent = '✖';
@@ -140,7 +140,6 @@ async function sendEncryptedDataToServer(encryptedData, iv, btnGetReward) {
     btnGetReward.disabled = true;
     let feedbackMessage = null;
     var referer = document.referrer;
-    console.log("Referer JavaScript: ", referer);
     try {
         const response = await fetch('http://localhost/LonyExtra/0/api/tasks/DecryptTaskData.php', {
             method: 'POST',
@@ -176,7 +175,7 @@ async function sendEncryptedDataToServer(encryptedData, iv, btnGetReward) {
         } else if (result.message == "206") {
             feedbackMessage = "Você precisa passar pelas etapas de cada tarefa para poder receber sua recompensa.";
             showBoxAlert(feedbackMessage, "warningv2");
-            btnGetReward.textContent = "Etapas nao realizadas!";
+            btnGetReward.textContent = "Etapas não realizadas!";
             btnGetReward.style.backgroundColor = "#c7ba05";
         } else {
             btnGetReward.disabled = false;
