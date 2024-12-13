@@ -1,5 +1,6 @@
-# => Home Undefined apos SignUp ########## FEITO
+# Task 01
+==> Criar o Dialog para : aprovar, Recusar saque
 
-=> Undefined quando o nivel ta sem links disponiveis
+=> Criar o COdigo que aprova
 
-=> Erro apos o cashout
+=> Criar o codigo que envia a Notificacao pelo email apos i pagamento ser aprovado
