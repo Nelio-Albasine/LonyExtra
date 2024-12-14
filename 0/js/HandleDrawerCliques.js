@@ -13,6 +13,12 @@ const hashToDialogData = {
     "#Perfil": { id: "dialog_perfil", title: "Perfil" },
     "#Logout": { id: "dialog_logout", title: "Logout" },
 };
+a) 480 ........... 0.50
+b) 1050 .......... 1.30
+c) 1765 ........... 2.00
+d) 6155 ........... 7.00
+e) 13250 ........... 15.00
+f) 83472 ............ 100.00
 
 const starsToValueMap = [
     { stars: 650, revenue: 1.12 },

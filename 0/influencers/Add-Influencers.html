@@ -25,7 +25,7 @@
         function submitForm() {
             const button = document.querySelector("button[type='submit']");
             button.disabled = true;
-            button.textContent = "Aguarde..."; 
+            button.textContent = "Aguarde...";
 
             const influencerEmail = document.getElementById("influencerEmail").value;
             const influencerCountry = document.getElementById("influencerCountry").value;
@@ -69,11 +69,11 @@
                 .then(response => response.json())
                 .then(data => {
                     if (data.success) {
-                        showAlert(0, data.message); 
+                        showAlert(0, data.message);
                     } else if (data.message === "Influenciador já existe no sistema.") {
                         showAlert(1, data.message);
                     } else {
-                        showAlert(2, data.message); 
+                        showAlert(2, data.message);
                     }
                 })
                 .catch(error => {
@@ -81,15 +81,12 @@
                     showAlert(2, "Ocorreu um erro ao processar a solicitação.");
                 })
                 .finally(() => {
-                    button.disabled = false; // Reativa o botão
-                    button.textContent = "Cadastrar Influenciador"; // Restaura o texto do botão
+                    button.disabled = false;
+                    button.textContent = "Cadastrar Influenciador"; 
                 });
         }
     </script>
-<script
-  src="https://js.sentry-cdn.com/a41ea66a6911b5025e8922b0df576302.min.js"
-  crossorigin="anonymous"
-></script>
+     <!-- <script src="https://js.sentry-cdn.com/a41ea66a6911b5025e8922b0df576302.min.js" crossorigin="anonymous"></script> -->
 </head>
 
 <body>

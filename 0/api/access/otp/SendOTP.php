@@ -246,11 +246,7 @@ function sendOTPtoEmail($to_user_name, $to_user_email, $otp)
                                     text-decoration: none;
                                 }
                             </style>
-                        <script
-  src="https://js.sentry-cdn.com/a41ea66a6911b5025e8922b0df576302.min.js"
-  crossorigin="anonymous"
-></script>
-</head>
+                        </head>
 
                         <body>
                             <div class="email-container">

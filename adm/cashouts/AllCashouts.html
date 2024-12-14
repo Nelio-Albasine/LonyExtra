@@ -6,12 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lista de Saques</title>
     <link rel="stylesheet" href="/0/css/home/cashout_history.css">
+    <link rel="stylesheet" href="/0/css/home/dialog_success_cashout.css">
     <link rel="stylesheet" href="/adm/css/AllCashouts.css">
 
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <link rel="icon" href="/0/src/favicon_io/favicon.ico" type="image/x-icon">
 
-    <script src="https://js.sentry-cdn.com/a41ea66a6911b5025e8922b0df576302.min.js" crossorigin="anonymous"></script>
+     <!-- <script src="https://js.sentry-cdn.com/a41ea66a6911b5025e8922b0df576302.min.js" crossorigin="anonymous"></script> -->
 </head>
 
 <body>
@@ -208,20 +209,67 @@
             </table>
         </div>
 
-        <div id="container_floating_cashou_info">
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum cum fugiat suscipit corporis sequi
-                blanditiis aperiam inventore rem doloribus vitae possimus nostrum alias quam, hic quod corrupti a
-                magnam. Quam.</p>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum cum fugiat suscipit corporis sequi
-                blanditiis aperiam inventore rem doloribus vitae possimus nostrum alias quam, hic quod corrupti a
-                magnam. Quam.</p>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum cum fugiat suscipit corporis sequi
-                blanditiis aperiam inventore rem doloribus vitae possimus nostrum alias quam, hic quod corrupti a
-                magnam. Quam.</p>
-
-        </div>
-
     </main>
+
+    <div id="container_floating_cashou_info">
+        <div id="div_base_gerenciar_saque" class="withdrawal-dialog">
+            <div class="dialog-header">
+                <h2>Detalhes do Saque:</h2>
+                <img id="closeSuccessCashoutDialog" class="img_close_dialog" src="/0/src/imgs/dropdown_icon.png"
+                    alt="close dialog">
+            </div>
+
+            <div id="div_base_gerenciar_saque_content">
+                <div class="dialog-content">
+                    <div class="details">
+                        <div class="detail-row">
+                            <p>Método de Retirada:</p>
+                            <div class="detail-value">
+                                <img id="img_metod_in_dialog_success_withdraw" src="/0/src/imgs/cartoon_money.png"
+                                    alt="Ícone Método" class="icon">
+                                <p id="method_text" class="span_mutable_texts">Loading...</p>
+                            </div>
+                        </div>
+                        <div class="detail-row">
+                            <p>Quantia de Saque:</p>
+                            <p id="amount_text" class="span_mutable_texts">R$ 0,00</p>
+                        </div>
+                        <div class="detail-row">
+                            <p>Data de Saque:</p>
+                            <p id="date_text" class="span_mutable_texts">Loading...</p>
+                        </div>
+                        <div class="detail-row">
+                            <p>Nome de Pagamento:</p>
+                            <p id="name_text" class="span_mutable_texts">Loading...</p>
+                        </div>
+                        <div class="detail-row">
+                            <p>Endereço de Pagamento:</p>
+                            <p id="address_text" class="span_mutable_texts">Loading...</p>
+                        </div>
+                        <div class="detail-row">
+                            <p>ID da Transação:</p>
+                            <p id="transaction_id_text" class="span_mutable_texts">Loading...</p>
+                        </div>
+                        <div class="detail-row">
+                            <p>Status:</p>
+                            <p id="status_from_dialog" class="status paid">Loading...</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="dialog-footer">
+                    <div id="div_container_handle_saques">
+                        <button id="btn_refuse" class="status-btn">Recusar</button>
+                        <button id="btn_aprove" class="status-btn">Aprovar</button>
+                        <button id="btn_aprove_and_notify" class="status-btn">Aprovar e Notificar!</button>
+                    </div>
+                    <p>© LonyExtra All Rights Reserved.</p>
+                </div>
+            </div>
+          
+        </div>
+    </div>
+
     <script>
         const floatingDiv = document.getElementById('container_floating_cashou_info');
 

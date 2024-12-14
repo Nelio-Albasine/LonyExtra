@@ -87,7 +87,12 @@ if (isset($_GET['data']) && isset($_GET['iv'])) {
     <link rel="icon" href="../src/favicon_io/favicon.ico" type="image/x-icon">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
     <style>
-        body, h2, p, form, input, button {
+        body,
+        h2,
+        p,
+        form,
+        input,
+        button {
             margin: 0;
             padding: 0;
         }
@@ -195,10 +200,7 @@ if (isset($_GET['data']) && isset($_GET['iv'])) {
             }
         }
     </style>
-<script
-  src="https://js.sentry-cdn.com/a41ea66a6911b5025e8922b0df576302.min.js"
-  crossorigin="anonymous"
-></script>
+     <!-- <script src="https://js.sentry-cdn.com/a41ea66a6911b5025e8922b0df576302.min.js" crossorigin="anonymous"></script> -->
 </head>
 
 <body>

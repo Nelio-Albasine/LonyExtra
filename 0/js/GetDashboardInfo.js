@@ -2,7 +2,6 @@ let countdownIntervals = [];
 let isOverlayVisible = false
 let previusLinksFetched = null;
 let allLinks = null;
-let pointsToEarnByLevel = 10
 let currentURL_hash;
 let currentServerDate;
 
@@ -15,7 +14,7 @@ var textTotalStarsEarnedByReferrals = null
 var myInviterInfo = null
 let textInvitationLink = null;
 let textInvitationCode = null;
-let userLTCashoutsGloabl = null
+let userLTCashoutsGloabl = null;
 
 const userId = "391f58325968d93b6778b9722f953bb063b44254d8e04109955c52b928ac9782";
 var userEmailAddress = null;
@@ -202,23 +201,23 @@ async function loadLinksIntoTable(levelIndex) {
     switch (levelIndex) {
         case 0:
             previusLinksFetched = allLinks.bronzeAvailability;
-            pointsToEarnByLevel = 3;
+            pointsToEarnByLevel = 4;
             break;
         case 1:
             previusLinksFetched = allLinks.prataAvailability;
-            pointsToEarnByLevel = 6;
+            pointsToEarnByLevel = 7;
             break;
         case 2:
             previusLinksFetched = allLinks.ouroAvailability;
-            pointsToEarnByLevel = 12;
+            pointsToEarnByLevel = 13;
             break;
         case 3:
             previusLinksFetched = allLinks.diamanteAvailability;
-            pointsToEarnByLevel = 20;
+            pointsToEarnByLevel = 21;
             break;
         case 4:
             previusLinksFetched = allLinks.platinaAvailability;
-            pointsToEarnByLevel = 25;
+            pointsToEarnByLevel = 26;
             break;
     }
     updateHashSilently(currentURL_hash);

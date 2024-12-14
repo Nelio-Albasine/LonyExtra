@@ -2,16 +2,16 @@ body {
     overflow: hidden;
 }
 
-main{
+main {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-.dialog_historio_de_saques{
+.dialog_historio_de_saques {
     width: 100%;
     height: 86vh;
-    overflow-y: scroll ;
+    overflow-y: scroll;
 }
 
 
@@ -47,7 +47,7 @@ main{
     width: 100%;
 }
 
-.toolbar-right{
+.toolbar-right {
     width: 100%;
     display: flex;
     flex-direction: row;
@@ -168,7 +168,8 @@ select option {
     border-radius: 5px;
 }
 
-.search-button, .restore-button  {
+.search-button,
+.restore-button {
     padding: 8px 15px;
     font-size: 13.5px;
     background-color: #4CAF50;
@@ -186,18 +187,113 @@ select option {
     white-space: nowrap;
 }
 
-.search-button:hover, .restore-button:hover {
+.search-button:hover,
+.restore-button:hover {
     background-color: #45a049;
 }
 
 
 #container_floating_cashou_info {
+    display: flex;
     position: absolute;
-    width: 500px; 
-    height: auto;
+    box-sizing: border-box;
+    top: 0px;
+    left: 20px;
+    right: 0;
+    bottom: 0;
+    width: 500px;
+    height: fit-content;
     border-radius: 15px;
-    padding: 10px;
+    padding: 10px px;
     color: white;
     cursor: move;
-    background-color: red;
+    overflow: hidden;
+    background-color: transparent;
+}
+
+.withdrawal-dialog {
+    width: 100%;
+    height: 100%;
+}
+
+#div_container_handle_saques {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+#btn_refuse {
+    background: #ce1e2c;
+    color: white;
+}
+
+#btn_aprove_and_notify {
+    background: #0f6423;
+    color: white;
+}
+
+.dialog-header h2 {
+    font-size: 18px;
+    margin: 0;
+    color: rgb(68, 68, 68);
+}
+
+.img_close_dialog {
+    width: 13px;
+    height: 13px;
+    background-color: rgb(189, 189, 189);
+    padding: 7px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+#status_from_dialog {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#div_base_gerenciar_saque_content{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+}
+
+#div_base_gerenciar_saque {
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    border: 1px solid #cacaca;
+}
+
+
+/* Transição suave para abrir e fechar a gaveta */
+#div_base_gerenciar_saque_content {
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: max-height 0.3s ease-out, opacity 0.3s ease-out;
+}
+
+/* Quando a gaveta estiver visível, ajusta a altura e a opacidade */
+#div_base_gerenciar_saque_content.visible {
+    max-height: 1000px; /* valor alto para permitir o conteúdo */
+    opacity: 1;
+}
+
+/* Classe para esconder inicialmente */
+.hidden {
+    display: none;
+}
+
+.img_close_dialog {
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+/* Ícone de fechamento (girado) quando o conteúdo estiver visível */
+.img_close_dialog.rotated {
+    transform: rotate(180deg);
 }

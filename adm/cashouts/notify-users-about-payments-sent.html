@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,6 +12,7 @@
             margin: 0;
             padding: 0;
         }
+
         .container {
             max-width: 600px;
             margin: 50px auto;
@@ -19,19 +21,23 @@
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
             border-radius: 8px;
         }
+
         h1 {
             font-size: 24px;
             color: #333;
             text-align: center;
         }
+
         form {
             display: flex;
             flex-direction: column;
         }
+
         label {
             margin: 10px 0 5px;
             font-weight: bold;
         }
+
         input[type="password"],
         input[type="submit"] {
             padding: 10px;
@@ -39,25 +45,26 @@
             border-radius: 4px;
             font-size: 16px;
         }
+
         input[type="submit"] {
             background-color: #4CAF50;
             color: #fff;
             cursor: pointer;
             margin-top: 20px;
         }
+
         input[type="submit"]:hover {
             background-color: #45a049;
         }
+
         .error {
             color: red;
             margin-top: 10px;
         }
     </style>
-<script
-  src="https://js.sentry-cdn.com/a41ea66a6911b5025e8922b0df576302.min.js"
-  crossorigin="anonymous"
-></script>
+     <!-- <script src="https://js.sentry-cdn.com/a41ea66a6911b5025e8922b0df576302.min.js" crossorigin="anonymous"></script> -->
 </head>
+
 <body>
     <div class="container">
         <h1>Enviar Notificações de Pagamento</h1>
@@ -71,7 +78,7 @@
     </div>
 
     <script>
-        document.getElementById('notificationForm').addEventListener('submit', function(event) {
+        document.getElementById('notificationForm').addEventListener('submit', function (event) {
             const passwordField = document.getElementById('password');
             const errorMessage = document.getElementById('errorMessage');
 
@@ -82,4 +89,5 @@
         });
     </script>
 </body>
+
 </html>
