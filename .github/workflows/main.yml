@@ -3,7 +3,7 @@ name: 🚀 Deploy to VPS
 on:
   push:
     branches:
-      - production
+      - development  # Use 'development' para acionar o deploy com base nesta branch
 
 jobs:
   web-deploy:
@@ -48,10 +48,12 @@ jobs:
       - name: 📂 Setup SSH for Deployment
         run: |
           mkdir -p ~/.ssh
-          echo "$SSH_PRIVATE_KEY_LONY_EXTRA" > ~/.ssh/id_rsa
+          echo "$SSH_PRIVATE_KEY_VPS" > ~/.ssh/id_rsa  # Usando a chave SSH configurada como segredo
           chmod 600 ~/.ssh/id_rsa
-          ssh-keyscan -H lonyextra.com >> ~/.ssh/known_hosts
+          # Opcional: Use ssh-keyscan se necessário
+          ssh-keyscan -H 123.45.67.89 >> ~/.ssh/known_hosts
 
       - name: 📂 Deploy to VPS
         run: |
-         rsync -avz --exclude='.git' --exclude='.github' --exclude='node_modules' ./ nelioalbasine@123.45.67.89:/var/www/html/
+          # Usar o rsync para sincronizar os arquivos, com a chave SSH configurada
+          rsync -avz --exclude='.git' --exclude='.github' --exclude='node_modules' -e "ssh -o StrictHostKeyChecking=no" ./ nelioalbasine@191.101.18.114:/var/www/html/
