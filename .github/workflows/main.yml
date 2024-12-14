@@ -1,9 +1,9 @@
+name: 🚀 Deploy to VPS
+
 on:
   push:
     branches:
       - production
-
-name: 🚀 Deploy to VPS
 
 jobs:
   web-deploy:
@@ -21,21 +21,16 @@ jobs:
 
       - name: 🔄 Update file paths and URLs
         run: |
-          # Atualizar o nome do arquivo de conexão do banco de dados
           find . -type f -name "*.php" -exec sed -i 's|Wamp64Connection\.php|DBConnection.php|g' {} +
-
-          # Atualizar URLs
           find . \( -name "*.php" -o -name "*.js" -o -name "*.html" \) -exec sed -i 's|http://localhost/LonyExtra/|https://lonyextra.com/|g' {} +
           find . \( -name "*.php" -o -name "*.js" -o -name "*.html" \) -exec sed -i 's|http://127.0.0.1:5500/|https://lonyextra.com/|g' {} +
 
       - name: 🔄 Update userId in JavaScript files
         run: |
-            # Substituir const userId com valor fixo por const userId = localStorage.getItem("userId")
             find . -type f -name "*.js" -exec sed -i 's|const userId = "391f58325968d93b6778b9722f953bb063b44254d8e04109955c52b928ac9782";|const userId = localStorage.getItem("userId");|g' {} +
 
       - name: 🔧 Remove debugging and CORS headers from PHP files
         run: |
-          # Remover as linhas de erro e cabeçalhos CORS de arquivos PHP
           find . -type f -name "*.php" -exec sed -i "/error_reporting(E_ALL);/d" {} +
           find . -type f -name "*.php" -exec sed -i "/ini_set('display_errors', 1);/d" {} +
           find . -type f -name "*.php" -exec sed -i "/header('Access-Control-Allow-Origin: \*');/d" {} +
@@ -44,28 +39,19 @@ jobs:
 
       - name: 🔨 Remove specific HTML comment around Sentry script
         run: |
-          # Remover exclusivamente o comentário HTML em torno do script do Sentry
           find . \( -name "*.php" -o -name "*.js" -o -name "*.html" \) -exec sed -i 's|<!-- <script src="https://js.sentry-cdn.com/a41ea66a6911b5025e8922b0df576302.min.js" crossorigin="anonymous"></script> -->|<script src="https://js.sentry-cdn.com/a41ea66a6911b5025e8922b0df576302.min.js" crossorigin="anonymous"></script>|g' {} +
 
       - name: 🔧 Remove specific comment from JavaScript files
         run: |
-            # Remover o comentário em torno da linha de redirecionamento
-            find . -type f -name "*.js" -exec sed -i 's|//window.location.href = `../../0/access/login.html`; ##REMOVE IN yml|window.location.href = `../../0/access/login.html`;|g' {} +
+            find . -type f -name "*.js" -exec sed -i 's|//window.location.href = ../../0/access/login.html; ##REMOVE IN yml|window.location.href = ../../0/access/login.html;|g' {} +
 
-      - name: 📂 Sync files
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
-        with:
-          server: "lonyextra.com"
-          username: ${{ secrets.FTP_VPS_USERNAME_LONY_EXTRA }}
-          password: ${{ secrets.FTP_VPS_PASSWORD_LONY_EXTRA }}
-          server-dir: "/home/ftp_lonyextra/"
-          secure: true
-          
+      - name: 📂 Setup SSH for Deployment
+        run: |
+          mkdir -p ~/.ssh
+          echo "$SSH_PRIVATE_KEY_LONY_EXTRA" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H lonyextra.com >> ~/.ssh/known_hosts
 
-          exclude: |
-            !**/php.ini           # Mantém o php.ini no servidor 
-            !**/.htaccess         # Mantém o .htaccess no servidor 
-            !**/.user.ini         # Mantém o .user.ini no servidor
-            **/.git/              # Exclui a pasta .git
-            **/.github/           # Exclui qualquer coisa dentro de .github
-            **/.gitignore
+      - name: 📂 Deploy to VPS
+        run: |
+          rsync -avz --exclude='.git' --exclude='.github' --exclude='node_modules' ./ nelioalbasine@lonyextra:/var/www/html/

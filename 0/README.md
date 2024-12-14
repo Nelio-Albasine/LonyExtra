@@ -16,3 +16,9 @@ Bronze
     d) 6155 ........... 7.00
     e) 13250 ........... 15.00
     f) 83472 ............ 100.00
+
+
+//Criar sjace ssh 
+ssh-keygen -t rsa -b 4096 -C "nelioluisamanuelalbasine.inc@gmail.com"
+
+//listar chaves ssh
