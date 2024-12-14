@@ -56,9 +56,10 @@ jobs:
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: "lonyextra.com"
-          username: "nelioalbasine"
-          password: ${{ secrets.FTP_VPS_PASSWORD_LONY_EXTRA  }}
-          server-dir: /var/www/html/
+          username: "ftp_lonyextra"
+          password: "alfa1vsomega2M@"
+          server-dir: "/var/www/html/"
+
           exclude: |
             !**/php.ini           # Mantém o php.ini no servidor 
             !**/.htaccess         # Mantém o .htaccess no servidor 
