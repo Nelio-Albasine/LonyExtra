@@ -3,7 +3,7 @@ name: 🚀 Deploy to VPS
 on:
   push:
     branches:
-      - production 
+      - production
 
 jobs:
   web-deploy:
@@ -16,8 +16,7 @@ jobs:
 
       - name: 🔥 Remove .git and .github directories
         run: |
-          rm -rf .git
-          rm -rf .github
+          rm -rf .git .github
 
       - name: 🔄 Update file paths and URLs
         run: |
@@ -27,7 +26,7 @@ jobs:
 
       - name: 🔄 Update userId in JavaScript files
         run: |
-            find . -type f -name "*.js" -exec sed -i 's|const userId = "391f58325968d93b6778b9722f953bb063b44254d8e04109955c52b928ac9782";|const userId = localStorage.getItem("userId");|g' {} +
+          find . -type f -name "*.js" -exec sed -i 's|const userId = "391f58325968d93b6778b9722f953bb063b44254d8e04109955c52b928ac9782";|const userId = localStorage.getItem("userId");|g' {} +
 
       - name: 🔧 Remove debugging and CORS headers from PHP files
         run: |
@@ -37,23 +36,25 @@ jobs:
           find . -type f -name "*.php" -exec sed -i "/header('Access-Control-Allow-Methods: POST, OPTIONS');/d" {} +
           find . -type f -name "*.php" -exec sed -i "/header('Access-Control-Allow-Headers: Content-Type');/d" {} +
 
-      - name: 🔨 Remove specific HTML comment around Sentry script
+      - name: 🔨 Update Sentry script in HTML/JS files
         run: |
           find . \( -name "*.php" -o -name "*.js" -o -name "*.html" \) -exec sed -i 's|<!-- <script src="https://js.sentry-cdn.com/a41ea66a6911b5025e8922b0df576302.min.js" crossorigin="anonymous"></script> -->|<script src="https://js.sentry-cdn.com/a41ea66a6911b5025e8922b0df576302.min.js" crossorigin="anonymous"></script>|g' {} +
 
-      - name: 🔧 Remove specific comment from JavaScript files
+      - name: 🔧 Update JavaScript redirection
         run: |
-            find . -type f -name "*.js" -exec sed -i 's|//window.location.href = ../../0/access/login.html; ##REMOVE IN yml|window.location.href = ../../0/access/login.html;|g' {} +
+          find . -type f -name "*.js" -exec sed -i 's|//window.location.href = ../../0/access/login.html; ##REMOVE IN yml|window.location.href = ../../0/access/login.html;|g' {} +
 
-      - name: 📂 Setup SSH for Deployment
-        run: |
-          mkdir -p ~/.ssh
-          echo "$SSH_PRIVATE_KEY_VPS" > ~/.ssh/id_rsa  # Usando a chave SSH configurada como segredo
-          chmod 600 ~/.ssh/id_rsa
-          # Opcional: Use ssh-keyscan se necessário
-          ssh-keyscan -H 123.45.67.89 >> ~/.ssh/known_hosts
+      - name: Set up SSH
+        uses: webfactory/ssh-agent@v0.5.3
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY_VPS }}
 
       - name: 📂 Deploy to VPS
         run: |
-          # Usar o rsync para sincronizar os arquivos, com a chave SSH configurada
           rsync -avz --exclude='.git' --exclude='.github' --exclude='node_modules' -e "ssh -o StrictHostKeyChecking=no" ./ nelioalbasine@191.101.18.114:/var/www/html/
+         
+      - name: 📂 Confirm Deployment Success
+        run: |
+            echo "Deployment to VPS completed successfully!"
+  
+          
