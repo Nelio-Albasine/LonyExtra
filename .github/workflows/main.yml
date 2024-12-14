@@ -55,7 +55,7 @@ jobs:
       - name: 📂 Sync files
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
-          server: "lonyextra"
+          server: "lonyextra.com"
           username: "nelioalbasine"
           password: ${{ secrets.FTP_VPS_PASSWORD_LONY_EXTRA  }}
           server-dir: /var/www/html/
