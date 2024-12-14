@@ -14,9 +14,10 @@ jobs:
       - name: 🚚 Get latest code
         uses: actions/checkout@v4
 
-      - name: 🔥 Remove .git directory
+      - name: 🔥 Remove .git and .github directories
         run: |
           rm -rf .git
+          rm -rf .github
 
       - name: 🔄 Update file paths and URLs
         run: |
@@ -50,7 +51,7 @@ jobs:
         run: |
             # Remover o comentário em torno da linha de redirecionamento
             find . -type f -name "*.js" -exec sed -i 's|//window.location.href = `../../0/access/login.html`; ##REMOVE IN yml|window.location.href = `../../0/access/login.html`;|g' {} +
-  
+
       - name: 📂 Sync files
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
@@ -62,5 +63,5 @@ jobs:
             !**/php.ini           # Mantém o php.ini no servidor 
             !**/.htaccess         # Mantém o .htaccess no servidor 
             !**/.user.ini         # Mantém o .user.ini no servidor
-            **/.git/  
-            **/.github/
+            **/.git/              # Exclui a pasta .git
+            **/.github/           # Exclui qualquer coisa dentro de .github
