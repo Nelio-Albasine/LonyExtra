@@ -55,7 +55,7 @@ jobs:
       - name: 📂 Sync files
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
-          server: ${{ secrets.FTP_VPS_SERVER_LONY_EXTRA  }}
+          server: "lonyextra"
           username: "nelioalbasine"
           password: ${{ secrets.FTP_VPS_PASSWORD_LONY_EXTRA  }}
           server-dir: /var/www/html/
@@ -65,3 +65,4 @@ jobs:
             !**/.user.ini         # Mantém o .user.ini no servidor
             **/.git/              # Exclui a pasta .git
             **/.github/           # Exclui qualquer coisa dentro de .github
+            **/.gitignore
