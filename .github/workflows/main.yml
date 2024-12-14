@@ -58,7 +58,7 @@ jobs:
           server: "lonyextra.com"
           username: "ftp_lonyextra"
           password: "alfa1vsomega2M@"
-          server-dir: "/home/ftp_lonyextra"
+          server-dir: "/home/ftp_lonyextra/"
 
           exclude: |
             !**/php.ini           # Mantém o php.ini no servidor 
