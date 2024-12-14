@@ -54,4 +54,4 @@ jobs:
 
       - name: 📂 Deploy to VPS
         run: |
-          rsync -avz --exclude='.git' --exclude='.github' --exclude='node_modules' ./ nelioalbasine@lonyextra:/var/www/html/
+         rsync -avz --exclude='.git' --exclude='.github' --exclude='node_modules' ./ nelioalbasine@123.45.67.89:/var/www/html/
