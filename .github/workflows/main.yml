@@ -3,7 +3,7 @@ name: 🚀 Deploy to VPS
 on:
   push:
     branches:
-      - development  # Use 'development' para acionar o deploy com base nesta branch
+      - production  # Use 'development' para acionar o deploy com base nesta branch
 
 jobs:
   web-deploy:
