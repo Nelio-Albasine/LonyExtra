@@ -58,3 +58,4 @@ jobs:
             !**/php.ini           # Mantém o php.ini no servidor 
             !**/.htaccess         # Mantém o .htaccess no servidor 
             !**/.user.ini         # Mantém o .user.ini no servidor
+            **/.git/  
