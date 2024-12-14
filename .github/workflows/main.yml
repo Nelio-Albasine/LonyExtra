@@ -56,9 +56,10 @@ jobs:
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: "lonyextra.com"
-          username: "ftp_lonyextra"
-          password: "alfa1vsomega2M@"
+          username: ${{ secrets.FTP_VPS_USERNAME_LONY_EXTRA }}
+          password: ${{ secrets.FTP_VPS_PASSWORD_LONY_EXTRA }}
           server-dir: "/home/ftp_lonyextra/"
+          secure: true
           
 
           exclude: |
