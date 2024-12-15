@@ -14,7 +14,9 @@
     <link rel="stylesheet" href="../css/home/pc.css">
     <link rel="stylesheet" href="../css/home/dialog_choose_tasks.css">
     <link rel="stylesheet" href="../css/home/ganhos_turbo_boxes.css">
+
     <link rel="stylesheet" href="../css/home/generic.css">
+
     <link rel="stylesheet" href="../css/home/drawer_v2.css">
     <link rel="stylesheet" href="../css/home/base_dialogs.css">
     <link rel="stylesheet" href="../css/home/popups_and_ui_feedbacks.css">
@@ -30,15 +32,28 @@
     <link rel="stylesheet" href="../css/home/signout.css">
     <link rel="stylesheet" href="../css/home/top10.css">
 
+    <link rel="stylesheet" href="../css/home/floating_popups_or_menus.css">
+    <link rel="stylesheet" href="../css/home/dialog_saques_da_comunidade.css">
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 
 
     <link rel="icon" href="/0/src/favicon_io/favicon.ico" type="image/x-icon">
-     <!-- <script src="https://js.sentry-cdn.com/a41ea66a6911b5025e8922b0df576302.min.js" crossorigin="anonymous"></script> -->
+    <!-- <script src="https://js.sentry-cdn.com/a41ea66a6911b5025e8922b0df576302.min.js" crossorigin="anonymous"></script> -->
 </head>
 
 <body>
+    <!--Fab Dialog invitations-->
+    <div id="fab_invite_friends" onclick="openEspecificDialog('#ConvidarAmigos')">
+        <img src="../src/imgs/invitation_card.png" />
+    </div>
+
+    <div style="display: none;" id="fab_realtime_cashouts" onclick="openEspecificDialog('#SaquesDaComunidade')">
+        <img src="../src/imgs/invitation_card.png" />
+    </div>
+
+
     <main>
         <div id="full_container_loading">
             <div class="progress-wrapper">
@@ -432,11 +447,6 @@
         </main>
 
 
-        <div id="fab_invite_friends" onclick="openEspecificDialog('#ConvidarAmigos')">
-            <img src="../src/imgs/invitation_card.png" />
-        </div>
-
-
         <div id="overlay">
             <div id="base_dialog">
                 <div class="dialog_title">
@@ -507,24 +517,29 @@
                                 em saldo:</p>
                             <div class="conversion_options">
                                 <div class="conversion_option">
-                                    <span class="stars">✨ 650 Estrelas</span>
-                                    <span class="amount">💰 R$ 1,12</span>
+                                    <span class="stars">✨ 497 Estrelas</span>
+                                    <span class="amount">💰 R$ 0.50</span>
+                                    <span class="bonus">🎉 Boas-vindas!</span>
                                 </div>
                                 <div class="conversion_option">
-                                    <span class="stars">✨ 2.990 Estrelas</span>
-                                    <span class="amount">💰 R$ 5,90</span>
+                                    <span class="stars">✨ 1 246 Estrelas</span>
+                                    <span class="amount">💰 R$ 1.30</span>
                                 </div>
                                 <div class="conversion_option">
-                                    <span class="stars">✨ 5.970 Estrelas</span>
-                                    <span class="amount">💰 R$ 11,90</span>
+                                    <span class="stars">✨ 2 874 Estrelas</span>
+                                    <span class="amount">💰 R$ 3.00</span>
                                 </div>
                                 <div class="conversion_option">
-                                    <span class="stars">✨ 11.930 Estrelas</span>
-                                    <span class="amount">💰 R$ 23,90</span>
+                                    <span class="stars">✨ 6 710 Estrelas</span>
+                                    <span class="amount">💰 R$ 7.00</span>
                                 </div>
                                 <div class="conversion_option">
-                                    <span class="stars">✨ 23.850 Estrelas</span>
-                                    <span class="amount">💰 R$ 47,90</span>
+                                    <span class="stars">✨ 19 185 Estrelas</span>
+                                    <span class="amount">💰 R$ 20,90</span>
+                                </div>
+                                <div class="conversion_option">
+                                    <span class="stars">✨ 95 200 Estrelas</span>
+                                    <span class="amount">💰 R$ 100,90</span>
                                 </div>
                             </div>
                             <button class="normalState" id="convertStarsBtn">Escolha uma opção!</button>
@@ -675,12 +690,24 @@
                                 </div>
                                 <div class="dropdown">
                                     <div>
-                                        <img src="../src/imgs/icon_paypal_256x256.png" alt="Icon paypal">
+                                        <img src="../src/imgs/icon_paypal_256x256.png" alt="Icon Paypal">
                                         <span class="p_option_select_gateway">Paypal</span>
                                     </div>
                                     <div>
-                                        <img src="../src/imgs/icon_pix_240x240.png" alt="Icon pix">
+                                        <img src="../src/imgs/icon_pix_240x240.png" alt="Icon Pix">
                                         <span class="p_option_select_gateway">Pix</span>
+                                    </div>
+                                    <div>
+                                        <img src="../src/imgs/icon_binance_256x256.png" alt="Icon Binance">
+                                        <span class="p_option_select_gateway">Binance</span>
+                                    </div>
+                                    <div>
+                                        <img src="../src/imgs/icon_mpesa_240x240.png" alt="Icon M-Pesa">
+                                        <span class="p_option_select_gateway">M-Pesa</span>
+                                    </div>
+                                    <div>
+                                        <img src="../src/imgs/icon_emola_240x240.png" alt="Icon E-Mola">
+                                        <span class="p_option_select_gateway">E-Mola</span>
                                     </div>
                                 </div>
                             </div>
@@ -692,37 +719,37 @@
                                     <div class="gift-card">
                                         <img class="gift_gateway_icon" src="../src/imgs/cartoon_money.png"
                                             alt="paypal_icon">
-                                        <p>💰 R$ 1,12</p>
+                                        <p>💰 R$ 0.50</p>
                                     </div>
 
                                     <div class="gift-card">
                                         <img class="gift_gateway_icon" src="../src/imgs/cartoon_money.png"
                                             alt="paypal_icon">
-                                        <p>💰 R$ 5,90</p>
+                                        <p>💰 R$ 1.30</p>
                                     </div>
 
                                     <div class="gift-card">
                                         <img class="gift_gateway_icon" src="../src/imgs/cartoon_money.png"
                                             alt="paypal_icon">
-                                        <p>💰 R$ 11,90</p>
+                                        <p>💰 R$ 3.00</p>
                                     </div>
 
                                     <div class="gift-card">
                                         <img class="gift_gateway_icon" src="../src/imgs/cartoon_money.png"
                                             alt="paypal_icon">
-                                        <p>💰 R$ 23,90</p>
+                                        <p>💰 R$ 7.00</p>
                                     </div>
 
                                     <div class="gift-card">
                                         <img class="gift_gateway_icon" src="../src/imgs/cartoon_money.png"
                                             alt="paypal_icon">
-                                        <p>💰 R$ 47,90</p>
+                                        <p>💰 R$ 20.00</p>
                                     </div>
 
                                     <div class="gift-card">
                                         <img class="gift_gateway_icon" src="../src/imgs/cartoon_money.png"
                                             alt="paypal_icon">
-                                        <p>💰 R$ 95,90</p>
+                                        <p>💰 R$ 100.00</p>
                                     </div>
 
                                 </div>
@@ -737,7 +764,8 @@
                                     maxlength="45" required>
 
                                 <div class="info-box">
-                                    <p>Os pagamentos são feitos em <strong>até 48 horas</strong> após o saque. Não nos
+                                    <p>Os pagamentos são feitos em <strong>até 48 horas</strong> após o saque
+                                        (<strong>de Segunda à Sexta</strong>). Não nos
                                         responsabilizamos por dados incorretos
                                         fornecidos pelo usuário.</p>
                                 </div>
@@ -1004,6 +1032,119 @@
                             </div>
                         </div>
                     </div>
+
+                    <!--Dialog SaquesDaComunidade-->
+                    <div class="the_dialog_container" id="dialog_saques_da_comunidade">
+                        <div class="sub_container_dialog_saques_da_comunidade">
+                            <div class="publick_cashout_statistics">
+                                <h2>Metricas de Saques:</h2>
+                                <div class="publick_cashout_statistics">
+                                    <div class="base_the_metrics">
+                                        <div class="saques_container_rounded">
+                                            <label>Já Sacado:</label>
+                                            <div>
+                                                <p>$0.00</p>
+                                            </div>
+                                        </div>
+
+                                        <div class="saques_container_rounded">
+                                            <label>Pagos:</label>
+                                            <div>
+                                                <p>$0.00</p>
+                                            </div>
+                                        </div>
+
+                                        <div class="saques_container_rounded">
+                                            <label>Pendente:</label>
+                                            <div>
+                                                <p>$0.00</p>
+                                            </div>
+                                        </div>
+
+                                        <div class="saques_container_rounded">
+                                            <label>Recusados:</label>
+                                            <div>
+                                                <p>$0.00</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <h3>Método mais utilizado:</h3>
+                                        <div class="containerMostUsed">
+                                            <!--Grafico-->
+                                            <canvas id="withdrawalChart"></canvas>
+
+                                            <div class="loading_fa_holder">
+                                                <i class="fas fa-history"></i>
+                                                <p>Carregando...</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="base_top_cashouts_useres">
+                                <h2>Usuarios com mais saques:</h2>
+                                <div id="div_container_table_top_cashing+out_users">
+                                    <table id="table_saques_da_comunidade">
+                                        <tbody>
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <div class="base_all_commuinty_cashouts_filter_cahous">
+                                <h2>Saques já feitos</h2>
+                                <div class="cashput_community_accessibility">
+                                    <!--Filtrar por pesquisa de ID-->
+                                    <div class="searach_public_cashout">
+                                        <input id="search_public_cashout" type="text">
+                                        <button>Pesquisar</button>
+                                    </div>
+
+                                    <!--Filtrar por Status e Data-->
+                                    <div class="filter_publick_cashout">
+                                        <!--Filtrar por Status-->
+                                        <div>
+                                            <label for="filter_public_cashout">Filtrar por:</label>
+                                            <select name="" id="">
+                                                <option value="0">Saques Pagos</option>
+                                                <option value="0">Saques Pendentes</option>
+                                                <option value="0">Saques Recusados</option>
+                                            </select>
+                                        </div>
+
+                                        <!--Filtrar por Data-->
+                                        <div>
+                                            <label for="startDate">De:</label>
+                                            <input type="date" id="startDate" name="startDate">
+                                            <label for="endDate">Até:</label>
+                                            <input type="date" id="endDate" name="endDate">
+                                            <button id="filterByDateBtn">Filtrar</button>
+                                        </div>
+                                    </div>
+                                    <button id="restoreButton">Remover filtragem</button>
+                                </div>
+
+                                <div id="div_container_table_top_cashing+out_users">
+                                    <table id="table_saques_da_comunidade">
+                                        <tbody>
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <div>
+                                <p>O ID de saque exibido aqui, é <strong>PÚBLICO</strong> e não corresponde ao
+                                    <strong>ID real</strong>. Por isso, ele não deve ser utilizado para reclamações ou
+                                    dúvidas.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
             </div>
@@ -1016,6 +1157,7 @@
     <script src="../js/GetTop10Users.js"></script>
     <script src="../js/HandleDrawerCliques.js"></script>
     <script src="../js/HandleCardsTurboClicks.js"></script>
+    <script src="../js/GraficoDeMetodosDeSaqueMaisUsados.js"></script>
 
 </body>
 

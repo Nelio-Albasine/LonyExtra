@@ -38,7 +38,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             require_once '../SignUp.php';
 
             if (createNewUser($conn, $data)) {
-                createTableLinksAvailabilityIfNotExists($conn);
 
                 $output = [
                     'success' => true,
@@ -100,17 +99,4 @@ function verifyOTP($conn, $email, $otp)
 }
 
 
-function createTableLinksAvailabilityIfNotExists($conn)
-{
-    $createTable = "
-        CREATE TABLE IF NOT EXISTS Links_Availability(
-            id INT AUTO_INCREMENT PRIMARY KEY,
-            userId VARCHAR(191) NOT NULL UNIQUE,
-            availabilityJson JSON NOT NULL
-        );
-    ";
 
-    if (!$conn->query($createTable)) {
-        throw new Exception("Erro ao criar/verificar tabela: " . $conn->error);
-    }
-}

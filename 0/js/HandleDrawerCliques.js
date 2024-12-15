@@ -12,30 +12,28 @@ const hashToDialogData = {
     "#YouTube": { id: "dialog_youtube", title: "YouTube" },
     "#Perfil": { id: "dialog_perfil", title: "Perfil" },
     "#Logout": { id: "dialog_logout", title: "Logout" },
+    "#SaquesDaComunidade": { id: "dialog_saques_da_comunidade", title: "Saques da Comunidade" }
 };
-a) 480 ........... 0.50
-b) 1050 .......... 1.30
-c) 1765 ........... 2.00
-d) 6155 ........... 7.00
-e) 13250 ........... 15.00
-f) 83472 ............ 100.00
 
 const starsToValueMap = [
-    { stars: 650, revenue: 1.12 },
-    { stars: 2990, revenue: 5.9 },
-    { stars: 5970, revenue: 11.9 },
-    { stars: 11930, revenue: 23.9 },
-    { stars: 23850, revenue: 47.9 },
+    { stars: 497, revenue: 0.50 },
+    { stars: 1246, revenue: 1.30 },
+    { stars: 2874, revenue: 3.00 },
+    { stars: 6710, revenue: 7.00 },
+    { stars: 19185, revenue: 20.00 },
+    { stars: 95200, revenue: 100.00 },
 ];
 
+
 const indexCashoutToAmountToValues = {
-    0: 1.12,
-    1: 5.9,
-    2: 11.9,
-    3: 23.9,
-    4: 47.9,
-    5: 95.9
+    0: 0.50,
+    1: 1.30,
+    2: 3.00,
+    3: 7.00,
+    4: 20.00,
+    5: 100.00
 };
+
 
 let imgCloseDialog = document.getElementById("img_close_dialog");
 const convertStarsBtn = document.getElementById("convertStarsBtn");
@@ -164,6 +162,9 @@ function handleActionsToEspecifiedHash(dialogId) {
         case "#Logout":
             handleSignOutDIalog();
             break;
+        case "#SaquesDaComunidade":
+            handleSaquesDaComunidade();
+            break;
     }
 
 }
@@ -291,7 +292,7 @@ async function handleConvertion(index, convertStarsBtn) {
             userPointsJson.userStars = newStars;
             userPointsJson.userRevenue = newRevenue;
             userPointsJson.userLTRevenue = newLTRevenue;
-            
+
             localStorage.setItem("userPoints", JSON.stringify(userPointsJson));
 
             textUserStars.forEach(el => {
@@ -306,9 +307,9 @@ async function handleConvertion(index, convertStarsBtn) {
                 el.textContent = newLTRevenue.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
             });
 
-            setTimeout(()=>{
-                window.location.reload()
-            },1000)
+            /* setTimeout(()=>{
+                 window.location.reload()
+             },1000) */
         } else {
             if (responseData.message === "405") {
                 let msg = "Estrelas insuficientes para conversão!";
@@ -332,7 +333,7 @@ async function handleConvertion(index, convertStarsBtn) {
                 conversionOption = null;
                 convertStarsBtn.disabled = false;
             });
-        }, 3000);
+        }, 1500);
     } catch (error) {
         convertStarsBtn.disabled = false;
         convertStarsBtn.textContent = "Escolha uma opção!";
@@ -349,6 +350,16 @@ async function handleConvertion(index, convertStarsBtn) {
     }
 }
 
+function toggleDropdown() {
+    const dropdown = document.querySelector('.dropdown');
+    if (dropdown.classList.contains('active')) {
+        dropdown.classList.remove('active');
+    } else {
+        dropdown.classList.add('active');
+    }
+}
+
+
 function handleCashoutDialog() {
     function handleGiftCardSelection() {
         giftCards.forEach((card, index) => {
@@ -363,16 +374,6 @@ function handleCashoutDialog() {
 
     handleGiftCardSelection();
 
-
-    function toggleDropdown() {
-        const dropdown = document.querySelector('.dropdown');
-        if (dropdown.classList.contains('active')) {
-            dropdown.classList.remove('active');
-        } else {
-            dropdown.classList.add('active');
-        }
-    }
-
     function selectOption(optionText, iconSrc) {
         const select = document.querySelector('.custom-select span');
         const icon = document.getElementById('selected_gatway_icon');
@@ -384,9 +385,18 @@ function handleCashoutDialog() {
         gift_gateway_icon.forEach(icon => {
             icon.src = iconSrc;
         })
+
         label_payment_adress.textContent = optionText === "Paypal"
             ? "Seu Email do PayPal"
-            : "Sua chave ou email do Pix";
+            : optionText === "Pix"
+                ? "Sua chave ou email do Pix"
+                : optionText === "Binance"
+                    ? "Sua chave da Binance (e.g., email ou endereço da carteira)"
+                    : optionText === "M-Pesa"
+                        ? "Seu número associado ao M-Pesa"
+                        : optionText === "E-Mola"
+                            ? "Seu número associado ao E-Mola"
+                            : "Opção inválida";
 
         paymentMethodSelected = optionText
         console.log(`Opção selecionada: ${optionText}`);
@@ -431,18 +441,37 @@ function whenCashoutRevenueClicked() {
         }
         if (!userCashoutName) {
             let text = optionText === "Paypal"
-                ? "Insira o <strong>nome</strong> da sua conta paypal"
-                : "Insira o <strong>nome</strong> da sua conta Pix";
+                ? "Insira o <strong>nome</strong> da sua conta Paypal"
+                : optionText === "Pix"
+                    ? "Insira o <strong>nome</strong> da sua conta Pix"
+                    : optionText === "Binance"
+                        ? "Insira o <strong>nome</strong> da sua conta Binance"
+                        : optionText === "M-Pesa"
+                            ? "Insira o <strong>nome</strong> da sua conta M-Pesa"
+                            : optionText === "E-Mola"
+                                ? "Insira o <strong>nome</strong> da sua conta E-Mola"
+                                : "Opção inválida";
             showBoxAlert(text, "warning");
             return
         }
+
         if (!userCashoutAdress) {
             let text = optionText === "Paypal"
                 ? "Insira seu <strong>Email do</strong> PayPal"
-                : "Insira sua <strong>chave ou email do</strong> Pix";
+                : optionText === "Pix"
+                    ? "Insira sua <strong>chave ou email do</strong> Pix"
+                    : optionText === "Binance"
+                        ? "Insira sua <strong>chave da Binance</strong> (e.g., email ou endereço da carteira)"
+                        : optionText === "M-Pesa"
+                            ? "Insira seu <strong>número associado ao M-Pesa</strong>"
+                            : optionText === "E-Mola"
+                                ? "Insira seu <strong>número associado ao E-Mola</strong>"
+                                : "Opção inválida";
+
             showBoxAlert(text, "warning");
-            return
+            return;
         }
+
 
         const data = {
             userId: userId,
@@ -492,6 +521,7 @@ function formatarData(dataISO, userTimeZone) {
 }
 
 function showSuccessDialogCashout(data, isByHistoryTable = null) {
+    console.log("Data passed: " , data)
     const closeSuccessCashoutDialog = document.getElementById("closeSuccessCashoutDialog");
     const success_cashout_overlay = document.getElementById("success_cashout_overlay");
 
@@ -509,48 +539,74 @@ function showSuccessDialogCashout(data, isByHistoryTable = null) {
 
     const userLTCashout = document.querySelectorAll(".userLTCashout");
     userLTCashoutsGloabl += data.amountCashedOut;
-    
+
     userLTCashout.forEach(text => {
         text.textContent = userLTCashoutsGloabl.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
     });
 
-    amountElement.textContent = `R$ ${data.amountCashedOut.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}` || "Valor não informado";
+    amountElement.textContent = `${data.amountCashedOut.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}` || "Valor não informado";
     nameElement.textContent = data.userPaymentName || "Nome não informado";
     addressElement.textContent = data.userPaymentAddress || "Endereço não informado";
     transactionIdElement.textContent = data.cashOutId || "ID não informado";
     dateElement.textContent = formatarData(data.created_at, userTimeZone);
 
+    // Mapear ícones e nomes dos gateways
+    const gatewayIcons = {
+        paypal: "icon_paypal_256x256",
+        pix: "icon_pix_240x240",
+        binance: "icon_binance_256x256",
+        "m-pesa": "icon_mpesa_240x240",
+        "e-mola": "icon_emola_240x240",
+    };
+
+    const gatewayNames = {
+        paypal: "PayPal",
+        pix: "Pix",
+        binance: "Binance",
+        "m-pesa": "M-Pesa",
+        "e-mola": "E-Mola",
+    };
+
+    const gatewayKey = data.gatewayName?.toLowerCase() || "desconhecido";
+    const iconFileName = gatewayIcons[gatewayKey] || "default_icon";
+    const gatewayDisplayName = gatewayNames[gatewayKey] || "Método desconhecido";
+
     if (isByHistoryTable) {
         const status_image = document.querySelectorAll(".status-image");
-        status_image.forEach(img => img.style.display = "none")
+        status_image.forEach(img => img.style.display = "none");
         btn_see_cashou_status.style.display = "none";
-        methodElement.textContent = data.gatewayName == "paypal" ? "Paypal" : "Pix"
-        icon.src = `../src/imgs/${data.gatewayName == "paypal" ? "icon_paypal_256x256" : "icon_pix_240x240"}.png`;
+
+        methodElement.textContent = gatewayDisplayName;
+        icon.src = `../src/imgs/${iconFileName}.png`;
 
         const statusMap = {
             0: "pending",
             1: "paid",
-            2: "declined"
+            2: "declined",
         };
 
         const statusClass = statusMap[data.cashOutStatus];
         statusElement.className = `status ${statusClass} status_from_dialog`;
 
-        statusElement.textContent = statusClass === "paid" ? "Pago" : statusClass === "pending" ? "Pendente" : "Recusado";
+        statusElement.textContent = 
+            statusClass === "paid"
+                ? "Pago"
+                : statusClass === "pending"
+                    ? "Pendente"
+                    : "Recusado";
     } else {
         const status_image = document.querySelectorAll(".status-image");
-        status_image.forEach(img => img.style.display = "flex")
+        status_image.forEach(img => img.style.display = "flex");
         btn_see_cashou_status.style.display = "flex";
 
-        methodElement.textContent = data.metodo || "Método desconhecido";
-        icon.src = `../src/imgs/${data.metodo == "paypal" ? "icon_paypal_256x256" : "icon_pix_240x240"}.png`;
-
+        methodElement.textContent = gatewayDisplayName;
+        icon.src = `../src/imgs/${iconFileName}.png`;
 
         statusElement.className = `status pending status_from_dialog`;
         statusElement.textContent = "Pendente";
 
         btn_see_cashou_status.addEventListener("click", () => {
-            let hashHistorico = "#HistoricoSaques"
+            let hashHistorico = "#HistoricoSaques";
             window.location.hash = hashHistorico;
             openEspecificDialog(hashHistorico);
             success_cashout_overlay.style.display = "none";
@@ -561,6 +617,7 @@ function showSuccessDialogCashout(data, isByHistoryTable = null) {
         success_cashout_overlay.style.display = "none";
     });
 }
+
 
 async function makeRequestToCashOut(requestData, btnCashoutRevenue) {
     try {
@@ -576,7 +633,11 @@ async function makeRequestToCashOut(requestData, btnCashoutRevenue) {
             throw new Error(`Erro na API: ${response.statusText}`);
         }
 
-        const responseData = await response.json();
+        const textResponse = await response.text();
+        console.log("Raw response is: ", textResponse);
+
+
+        const responseData = JSON.parse(textResponse);
 
         if (responseData.success) {
             btnCashoutRevenue.style.backgroundColor = "green";
@@ -597,7 +658,7 @@ async function makeRequestToCashOut(requestData, btnCashoutRevenue) {
             })
 
             const dataForSuccessDialog = {
-                metodo: requestData.gatewayName, //is: paypal or pix
+                gatewayName: requestData.gatewayName, 
                 amountCashedOut: amountToCashout,
                 userPaymentName: requestData.userPaymentName,
                 userPaymentAddress: requestData.userPaymentAddress,
@@ -656,25 +717,47 @@ async function loadMyCashoutsToTable() {
 
     if (historyData.length > 0) {
         emptyHistory.style.display = "none";
-
+    
         historyData.forEach((item) => {
-            const row = document.createElement("tr");
 
+            const row = document.createElement("tr");
+    
             // Coluna Método
             const methodCell = document.createElement("td");
             const methodDiv = document.createElement("div");
             const methodImg = document.createElement("img");
             methodImg.className = "teable_icon_gateway";
-            methodImg.src = `../src/imgs/${item.gatewayName == "paypal" ? "icon_paypal_256x256" : "icon_pix_240x240"}.png`;
-            methodImg.alt = "cashout method icon";
+    
+            // Mapeamento dos gateways e ícones
+            const gatewayIcons = {
+                paypal: "icon_paypal_256x256",
+                pix: "icon_pix_240x240",
+                binance: "icon_binance_256x256",
+                "m-pesa": "icon_mpesa_240x240",
+                "e-mola": "icon_emola_240x240",
+            };
+    
+            const gatewayNames = {
+                paypal: "PayPal",
+                pix: "Pix",
+                binance: "Binance",
+                "m-pesa": "M-Pesa",
+                "e-mola": "E-Mola",
+            };
+    
+            const iconFileName = gatewayIcons[item.gatewayName.toLowerCase()] || "default_icon"; // Ícone padrão, se necessário
+            methodImg.src = `../src/imgs/${iconFileName}.png`;
+            methodImg.alt = `${gatewayNames[item.gatewayName.toLowerCase()] || "Método"} icon`;
+    
             const methodText = document.createElement("p");
             methodText.className = "gatway_name";
-            methodText.textContent = item.gatewayName == "paypal" ? "PayPal" : "Pix";
+            methodText.textContent = gatewayNames[item.gatewayName.toLowerCase()] || "Desconhecido";
+    
             methodDiv.appendChild(methodImg);
             methodDiv.appendChild(methodText);
             methodCell.appendChild(methodDiv);
             row.appendChild(methodCell);
-
+    
             // Coluna Quantia
             const amountCell = document.createElement("td");
             const amountDiv = document.createElement("div");
@@ -684,7 +767,7 @@ async function loadMyCashoutsToTable() {
             amountDiv.appendChild(amountText);
             amountCell.appendChild(amountDiv);
             row.appendChild(amountCell);
-
+    
             // Coluna Saque
             const idCell = document.createElement("td");
             const idDiv = document.createElement("div");
@@ -699,20 +782,19 @@ async function loadMyCashoutsToTable() {
             idDiv.appendChild(copyIcon);
             idCell.appendChild(idDiv);
             row.appendChild(idCell);
-
+    
             // Coluna Status
             const statusCell = document.createElement("td");
             const statusDiv = document.createElement("div");
             const statusText = document.createElement("p");
-
+    
             // Mapeamento dos status
             const statusMap = {
                 0: "pending",
                 1: "paid",
-                2: "declined"
+                2: "declined",
             };
-
-
+    
             const statusClass = statusMap[item.cashOutStatus];
             statusText.className = `status ${statusClass}`;
             statusText.textContent =
@@ -721,25 +803,24 @@ async function loadMyCashoutsToTable() {
                     : statusClass === "pending"
                         ? "Pendente"
                         : "Recusado";
-
+    
             const infoIcon = document.createElement("i");
             infoIcon.className = "fa-solid fa-circle-info info-icon";
             infoIcon.title = "Detalhes";
-            infoIcon.onclick = () =>
-                showSuccessDialogCashout(item, true);
-
+            infoIcon.onclick = () => showSuccessDialogCashout(item, true);
+    
             statusDiv.appendChild(statusText);
             statusDiv.appendChild(infoIcon);
             statusCell.appendChild(statusDiv);
             row.appendChild(statusCell);
-
-            // Adicionar linha à tabela
+    
             tableBody.appendChild(row);
         });
     } else {
         loading_or_empty_awesome_icon.className = "fa-solid fa-history history-icon";
         p_sem_saques.forEach(text => text.textContent = "Sem saques!");
     }
+    
 
 }
 
@@ -866,7 +947,6 @@ async function makeRequestToGetAllInvitedFriends(myReferralCode) {
         }
 
         const result = await response.json();
-        console.log("O AllInvited Friends retornou: ", result)
 
         return result;
     } catch (error) {
@@ -1139,4 +1219,8 @@ function handleSignOutDIalog() {
         })
 
     });
+}
+function handleSaquesDaComunidade() {
+    window.location.hash = "#SaquesDaComunidade";
+
 }

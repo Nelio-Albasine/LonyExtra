@@ -64,3 +64,20 @@
     font-size: 14px;
 
 }
+
+
+.loading_fa_holder{
+    font-size: 13px;
+    text-align: center;
+    color: #808080;
+    display: flex;
+    gap: 8px;
+    margin: 40px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.loading_fa_holder i{
+    font-size: 21px;
+}

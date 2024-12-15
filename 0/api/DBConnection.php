@@ -15,3 +15,4 @@ function Wamp64Connection()
 
     return $conn;
 }
+

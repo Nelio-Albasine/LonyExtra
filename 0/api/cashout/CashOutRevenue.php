@@ -29,15 +29,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $created_at = gmdate('Y-m-d H:i:s');
 
 
-    $allowedGateways = ['paypal', 'pix'];
+    $allowedGateways = ['paypal', 'pix', 'binance', 'm-pesa', 'e-mola'];
+
     $indexAmountToValues = [
-        0 => 1.12,
-        1 => 5.9,
-        2 => 11.9,
-        3 => 23.9,
-        4 => 47.9,
-        5 => 95.90
+        0 => 0.50,   // 497 pontos
+        1 => 1.30,   // 1246 pontos
+        2 => 3.00,   // 2874 pontos
+        3 => 7.00,   // 6710 pontos
+        4 => 20.00,  // 19185 pontos
+        5 => 100.00  // 95200 pontos
     ];
+
 
     if (!in_array($gatewayName, $allowedGateways)) {
         echo json_encode(['success' => false, 'message' => 'Método de saque inválido!']);
@@ -54,7 +56,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     try {
 
         $userRevenueJsonString = checkIfUserHasSufficientRevenue($conn, $userId);
-       
+
         if (!$userRevenueJsonString) {
             echo json_encode(['success' => false, 'message' => 'Nenhum registro encontrado para o usuário!']);
             exit;
@@ -70,9 +72,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $remainingBalance = $userRevenueJson['userRevenue'] - $amountToCashOut;
         $userRevenueJson['userRevenue'] = $remainingBalance;
 
-        $userRevenueJson['userLTCashouts'] += $amountToCashOut;
-
-        $insertResponse = insertCashOutIntoTable($conn, $userId, $userEmail,$created_at,  $gatewayName, $amountToCashOut, $userPaymentName, $userPaymentAddress, $cashOutId);
+        $insertResponse = insertCashOutIntoTable($conn, $userId, $userEmail, $created_at,  $gatewayName, $amountToCashOut, $userPaymentName, $userPaymentAddress, $cashOutId);
         if (!$insertResponse['success']) {
             echo json_encode($insertResponse);
             exit;
@@ -80,12 +80,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         $updateSuccess = updateUserRevenue($conn, $userId, json_encode($userRevenueJson));
         if ($updateSuccess) {
+
+            require "../invitation/handleInvitation.php";
+
+            if (updateMyInviterStarsWhenICashOut($conn, $amountIndex, $userId)) {
+                error_log("Atualização de estrelas realizada com sucesso para o usuário!");
+            } else {
+                error_log("Falha ao atualizar as estrelas ou ainda nao inseri o codigo de convinte");
+            }
+
             echo json_encode([
                 'success' => true,
                 'message' => 'Saque realizado com sucesso!',
                 'cashOutId' => $cashOutId,
                 'created_at' => $created_at
             ]);
+
+            if ($conn) {
+                $conn->close();
+            }
         } else {
             echo json_encode(['success' => false, 'message' => 'Erro ao atualizar os dados do usuário.']);
         }
@@ -106,7 +119,7 @@ function checkIfUserHasSufficientRevenue($conn, $userId)
     $stmt->bind_param("s", $userId);
     $stmt->execute();
     $stmt->bind_result($userPointsJSON);
-   
+
     if ($stmt->fetch()) {
         return $userPointsJSON;
     } else {
@@ -114,7 +127,7 @@ function checkIfUserHasSufficientRevenue($conn, $userId)
     }
 }
 
-function insertCashOutIntoTable($conn, $userId, $userEmail,$created_at, $gatewayName, $amountCashedOut, $userPaymentName, $userPaymentAddress, &$cashOutId)
+function insertCashOutIntoTable($conn, $userId, $userEmail, $created_at, $gatewayName, $amountCashedOut, $userPaymentName, $userPaymentAddress, &$cashOutId)
 {
     $cashOutStatusDefault = 0;
 
@@ -139,7 +152,6 @@ function updateUserRevenue($conn, $userId, $userRevenueJson)
     $stmt = $conn->prepare("UPDATE Usuarios SET userPointsJSON = ? WHERE userId = ?");
     return $stmt->execute([$userRevenueJson, $userId]);
 }
-
 function generateNumericID()
 {
     return str_pad(rand(0, 999999), 6, '0', STR_PAD_LEFT);

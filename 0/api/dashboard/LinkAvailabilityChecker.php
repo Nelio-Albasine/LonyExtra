@@ -1,4 +1,6 @@
 <?php
+ini_set('display_errors', 1);
+ini_set('error_log', __DIR__ . '/../logs/get_dash_info.log');
 function getUserTimeZone($conn, $userId) {
     $query = "SELECT userTimeZone FROM Usuarios WHERE userId = ?";
     $stmt = $conn->prepare($query);
@@ -58,13 +60,17 @@ function hasValidLinksPerBatch($userId)
             return null;
         }
 
-        function processBatch($links, $userTimeZone, $validityDays = 1)
+        function processBatch($links, $validityDays = 1)
         {
             $oldestTimeStored = null;
             $validLinkCount = 0;
             $currentDate = new DateTime();
         
+            $linksCount = 0;
+
             foreach ($links as $linkData) {
+                $linksCount++;
+
                 $isAvailable = $linkData['isAvailable'];
                 $timeStored = $linkData['timeStored'] ? $linkData['timeStored'] : null; 
     
@@ -79,6 +85,10 @@ function hasValidLinksPerBatch($userId)
                 }
             }
         
+            error_log("Temos linksCount: " .$linksCount);
+
+            error_log("Temos validLinkCount: " .$validLinkCount);
+
             return [
                 "hasValidLinks" => $validLinkCount > 0,
                 "oldestTimeStored" => $oldestTimeStored,  
@@ -89,10 +99,10 @@ function hasValidLinksPerBatch($userId)
         
         
         $result = [
-            "ouroAvailability" => processBatch($linkAvailability['ouroAvailability'],  $userTimeZone),
-            "prataAvailability" => processBatch($linkAvailability['prataAvailability'],  $userTimeZone),
-            "bronzeAvailability" => processBatch($linkAvailability['bronzeAvailability'],  $userTimeZone),
-            "diamanteAvailability" => processBatch($linkAvailability['diamanteAvailability'],  $userTimeZone)
+            "ouroAvailability" => processBatch($linkAvailability['ouroAvailability']),
+            "prataAvailability" => processBatch($linkAvailability['prataAvailability']),
+            "bronzeAvailability" => processBatch($linkAvailability['bronzeAvailability']),
+            "diamanteAvailability" => processBatch($linkAvailability['diamanteAvailability'])
         ];
 
         return $result;

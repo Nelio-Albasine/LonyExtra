@@ -1,0 +1,20 @@
+#fab_realtime_cashouts {
+    width: 150px;
+    height: 60px;
+    padding: 8px;
+    background-color: #cf2860;
+    position: fixed;
+    bottom: 16px;
+    left: 16px;
+    border-radius: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    z-index: 100;
+}
+
+#fab_realtime_cashouts img {
+    width: 40px;
+    height: 40px;
+}

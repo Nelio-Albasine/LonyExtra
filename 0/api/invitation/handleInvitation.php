@@ -43,7 +43,6 @@ function increaseMyInviterTotalInvited($conn, $myInviterUserId)
     return $rowsUpdated > 0;
 }
 
-
 function creditUserWithInfluencerBonus($conn, $myUID, $indluencerReferrarCode)
 {
     require_once "../influencers/CheckIfUserIsInfluencer.php";
@@ -61,7 +60,7 @@ function creditUserWithInfluencerBonus($conn, $myUID, $indluencerReferrarCode)
             $isLifetime = $lifeTimeInfo["isLifetime"];
 
             if ($isLifetime) {
-                addUserBonusStarsFromInfluencer($conn, $pointsToEarn, $myUID );
+                addUserBonusStarsFromInfluencer($conn, $pointsToEarn, $myUID);
             } else {
                 $startDay = $lifeTimeInfo["startDay"];
                 $endDay = $lifeTimeInfo["endDay"];
@@ -73,7 +72,6 @@ function creditUserWithInfluencerBonus($conn, $myUID, $indluencerReferrarCode)
         // is not influencer or doesn't even exist
     }
 }
-
 
 function addUserBonusStarsFromInfluencer($conn, $stars, $userId)
 {
@@ -103,7 +101,6 @@ function addUserBonusStarsFromInfluencer($conn, $stars, $userId)
         return false;
     }
 }
-
 
 function isInviterCodeEmptyOrNull($conn, $userId)
 {
@@ -233,6 +230,60 @@ function updateUserStars($conn, $userId)
         return true;
     } else {
         $stmt->close();
+        return false;
+    }
+}
+
+
+function updateMyInviterStarsWhenICashOut($conn, $cashOutIndex, $userId)
+{
+    $percentToEarn = 5; // 5% of the index stars
+
+    $mapStarsIndexed = [
+        0 => 497,
+        1 => 1246,
+        2 => 2874,
+        3 => 6710,
+        4 => 19185,
+        5 => 95200
+    ];
+
+    if (!isset($mapStarsIndexed[$cashOutIndex])) {
+        return false;
+    }
+
+    $stars = $mapStarsIndexed[$cashOutIndex];
+    $starsToEarn = (int)(($percentToEarn / 100) * $stars);
+
+    $whoInvitedMe = isInviterCodeEmptyOrNull($conn, $userId);
+    if (!empty($whoInvitedMe)) {
+        $updatePointsQuery = "
+            UPDATE Usuarios 
+            SET 
+                userPointsJSON = JSON_SET(
+                    userPointsJSON, 
+                    '$.userStars', JSON_EXTRACT(userPointsJSON, '$.userStars') + ?, 
+                    '$.userLTStars', JSON_EXTRACT(userPointsJSON, '$.userLTStars') + ?
+                )
+            WHERE 
+                myReferralCode = ?
+        ";
+
+        $stmt = $conn->prepare($updatePointsQuery);
+        if ($stmt === false) {
+            return false;
+        }
+
+        $stmt->bind_param("iis", $starsToEarn, $starsToEarn, $whoInvitedMe);
+
+        if ($stmt->execute()) {
+            $stmt->close();
+            return true;
+        } else {
+            $stmt->close();
+            return false;
+        }
+    } else {
         return false;
     }
 }

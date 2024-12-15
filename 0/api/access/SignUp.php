@@ -19,7 +19,6 @@ function createNewUser($conn, $data): bool
     $userPointsJSON = json_encode([
         "userRevenue" => 0.000,
         "userLTRevenue" => 0.000,
-        "userLTCashouts" => 0.000,
         "userStars" => 0,
         "userLTStars" => 0,
     ], JSON_FORCE_OBJECT);

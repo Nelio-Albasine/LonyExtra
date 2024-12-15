@@ -151,23 +151,23 @@ function respondWithSuccess(array $data, int $httpCode = 200): void
 function updateUserPoints($conn, $decryptedData, $userId, $taskId)
 {
     $index = $decryptedData["index"];
-    $starsToEarn = 10;
+    $starsToEarn = 0;
 
     switch ($index) {
         case 0:
-            $starsToEarn = 3;
+            $starsToEarn = 4;
             break;
         case 1:
-            $starsToEarn = 6;
+            $starsToEarn = 7;
             break;
         case 2:
-            $starsToEarn = 12;
+            $starsToEarn = 13;
             break;
         case 3:
-            $starsToEarn = 20;
+            $starsToEarn = 21;
             break;
         case 4:
-            $starsToEarn = 25;
+            $starsToEarn = 26;
             break;
     }
 
@@ -359,4 +359,4 @@ function getUserTimeZone($conn, $userId)
     return "America/Sao_Paulo";
 }
 
-function updatemyInviterStars() {}
+

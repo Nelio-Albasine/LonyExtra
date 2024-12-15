@@ -59,20 +59,20 @@ document.addEventListener("DOMContentLoaded", async function () {
     textTotalStarsEarnedByReferrals = document.querySelectorAll(".textTotalStarsEarnedByReferrals");
 
     dashInfo = await GetDashboardInfo(userId);
-
+    
     if (window.location.hash == "#welcome") {
         window.location.replace("http://127.0.0.1:5500/0/dashboard/");
     }
 
-
     userInfo = dashInfo.userInfo;
+
     myInviterInfo = JSON.parse(dashInfo.myInviterInfo);
     const userPoints = JSON.parse(userInfo.userPointsJSON);
     userInvitationInfo = JSON.parse(userInfo.userInvitationJSON);
 
     userEmailAddress = userInfo.userEmail
     userTimeZone = userInfo.userTimeZone;
-    userLTCashoutsGloabl = userPoints.userLTCashouts || 0
+    userLTCashoutsGloabl = userInfo.userLTCashouts || 0
 
     const availabilityLinks = JSON.parse(dashInfo.hasValidLinksPerBatch);
 

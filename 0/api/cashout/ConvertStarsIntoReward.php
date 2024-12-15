@@ -59,12 +59,13 @@ function main() {
 
 function handleConversion($conn, $userId, $index) {
     $starsToValueMap = [
-        0 => ["stars" => 650, "revenue" => 1.12],
-        1 => ["stars" => 2990, "revenue" => 5.90],
-        2 => ["stars" => 5970, "revenue" => 11.90],
-        3 => ["stars" => 11930, "revenue" => 23.90],
-        4 => ["stars" => 23850, "revenue" => 47.90],
-    ];
+        0 => ["stars" => 497, "revenue" => 0.50],
+        1 => ["stars" => 1246, "revenue" => 1.30],
+        2 => ["stars" => 2874, "revenue" => 3.00],
+        3 => ["stars" => 6710, "revenue" => 7.00],
+        4 => ["stars" => 19185, "revenue" => 20.00],
+        5 => ["stars" => 95200, "revenue" => 100.00],
+    ];    
 
     $response = new ConversionResponse();
 
