@@ -14,10 +14,25 @@
 
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="icon" href="../0/src/favicon_io/favicon.ico" type="image/x-icon">
-     <!-- <script src="https://js.sentry-cdn.com/a41ea66a6911b5025e8922b0df576302.min.js" crossorigin="anonymous"></script> -->
+    <!-- <script src="https://js.sentry-cdn.com/a41ea66a6911b5025e8922b0df576302.min.js" crossorigin="anonymous"></script> -->
 </head>
 
 <body>
+    <div style="
+    display: block; 
+    position: absolute;
+    top: 0; 
+    width: 100%;
+    z-index: 999;
+    padding: 15px;
+    color: white;
+    text-align: center;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    background-color: red;">
+        <p id="textAlert">Ainda estamos em atualização, volte mais tarde!</p>
+    </div>
+
     <div id="alert" class="alert hidden">
         <span class="icon"></span>
         <span class="message"></span>

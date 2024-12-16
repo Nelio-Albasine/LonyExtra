@@ -355,7 +355,13 @@ async function loadLinksIntoTable(levelIndex) {
 
                     if (saveToCookies(data)) {
                         setTimeout(() => {
-                            window.location.href = tarefa.url
+                            if(userId == "391f58325968d93b6778b9722f953bb063b44254d8e04109955c52b928ac9782"){
+                                window.location.href = tarefa.url
+                            } else {
+                                alert("Ainda estamos em atualização, volte mais tarde!");
+                            }
+
+                           // window.location.href = "http://127.0.0.1:5500/congratulations/index.html"
                         }, 500);
                     } else {
                         console.error("Ocorreu um erro ao salvar para os cookies: ")

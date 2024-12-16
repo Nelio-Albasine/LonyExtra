@@ -117,6 +117,8 @@ function handlePointsToEarnText(index, text) {
 
 function loadUserPointsFromLocal() {
     let userPoints = localStorage.getItem('userPoints');
+    console.log("User points: ", userPoints);
+    
     if (userPoints !== null) {
         return JSON.parse(userPoints);
     } else {
