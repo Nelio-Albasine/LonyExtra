@@ -51,7 +51,7 @@ jobs:
 
       - name: 📂 Deploy to VPS
         run: |
-          rsync -avz --exclude='.git' --exclude='.github' --exclude='node_modules' -e "ssh -o StrictHostKeyChecking=no" ./ nelioalbasine@191.101.18.114:/var/www/html/
+          rsync -avz --exclude='.git' --exclude='.github' --exclude='node_modules' -e "ssh -o StrictHostKeyChecking=no" ./ nelioalbasine@191.101.18.114:/var/www/lonyextra/
          
       - name: 📂 Confirm Deployment Success
         run: |
