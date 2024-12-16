@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", () => {
+/* document.addEventListener("DOMContentLoaded", () => {
     // Dados fictícios de saques por mês
     const labels = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
@@ -80,4 +80,4 @@ document.addEventListener("DOMContentLoaded", () => {
     // Renderizar o gráfico
     const ctx = document.getElementById("withdrawalChart").getContext("2d");
     new Chart(ctx, config);
-});
+});  */
