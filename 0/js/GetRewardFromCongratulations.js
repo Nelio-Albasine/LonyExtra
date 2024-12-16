@@ -18,8 +18,6 @@ document.addEventListener("DOMContentLoaded", async function () {
 
     taskBatch = getTaskBatch();
 
-    console.log("Task batch: ", taskBatch, "taskIndex is: ", taskIndex)
-
     const backLink = document.getElementById("backLink");
     if (taskBatch) {
         backLink.href = `http://127.0.0.1:5500/0/dashboard/index.html#${taskBatch}`;

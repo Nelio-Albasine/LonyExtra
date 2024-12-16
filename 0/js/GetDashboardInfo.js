@@ -347,7 +347,7 @@ async function loadLinksIntoTable(levelIndex) {
 
                     let data = {
                         userId: userId,
-                        index: index,
+                        index: levelIndex,
                         taskId: tarefa.key,
                     }
 
@@ -356,8 +356,8 @@ async function loadLinksIntoTable(levelIndex) {
                     if (saveToCookies(data)) {
                         setTimeout(() => {
                           if (userId == "391f58325968d93b6778b9722f953bb063b44254d8e04109955c52b928ac9782") {
-                                // window.location.href = "http://127.0.0.1:5500/congratulations/index.html"
-                                window.location.href = tarefa.url
+                                window.location.href = "http://127.0.0.1:5500/congratulations/index.html"
+                                //window.location.href = tarefa.url
                             } else {
                                 alert("Ainda estamos em atualização, volte mais tarde!");
                             } 
