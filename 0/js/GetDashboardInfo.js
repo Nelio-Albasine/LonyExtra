@@ -75,7 +75,6 @@ document.addEventListener("DOMContentLoaded", async function () {
     userLTCashoutsGloabl = userInfo.userLTCashouts || 0
 
     const availabilityLinks = JSON.parse(dashInfo.hasValidLinksPerBatch);
-
     // console.log(" userInfo ", userInfo)
 
     saveUserPointsToLocalStorage(userPoints);
@@ -355,12 +354,13 @@ async function loadLinksIntoTable(levelIndex) {
 
                     if (saveToCookies(data)) {
                         setTimeout(() => {
-                          if (userId == "391f58325968d93b6778b9722f953bb063b44254d8e04109955c52b928ac9782" || userId == "db8a9d9fe0896ddd2438f532243cdf340a1e148815891ed1e0bf139f29b8159e") {
-                                //window.location.href = "http://127.0.0.1:5500/congratulations/index.html"
-                                window.location.href = tarefa.url
-                            } else {
-                                alert("Ainda estamos em atualização, volte mais tarde!");
-                            } 
+                            window.location.href = tarefa.url
+                            /* if (userId == "391f58325968d93b6778b9722f953bb063b44254d8e04109955c52b928ac9782" || userId == "db8a9d9fe0896ddd2438f532243cdf340a1e148815891ed1e0bf139f29b8159e") {
+                                  //window.location.href = "http://127.0.0.1:5500/congratulations/index.html"
+                                  window.location.href = tarefa.url
+                              } else {
+                                  alert("Ainda estamos em atualização, volte mais tarde!");
+                              } */
                         }, 500);
                     } else {
                         console.error("Ocorreu um erro ao salvar para os cookies: ")
@@ -443,7 +443,7 @@ function handleLinkAvailabilityChecker(data) {
         {
             container: document.getElementById("containerPlatinaChecker"),
             textTask: document.getElementById("tasksPlatinaRemaining"),
-            availability: data.diamanteAvailability
+            availability: data.platinaAvailability
         }
     ];
 

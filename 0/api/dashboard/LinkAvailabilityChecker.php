@@ -102,7 +102,8 @@ function hasValidLinksPerBatch($userId)
             "ouroAvailability" => processBatch($linkAvailability['ouroAvailability']),
             "prataAvailability" => processBatch($linkAvailability['prataAvailability']),
             "bronzeAvailability" => processBatch($linkAvailability['bronzeAvailability']),
-            "diamanteAvailability" => processBatch($linkAvailability['diamanteAvailability'])
+            "diamanteAvailability" => processBatch($linkAvailability['diamanteAvailability']),
+            "platinaAvailability" => processBatch($linkAvailability['platinaAvailability'])
         ];
 
         return $result;
