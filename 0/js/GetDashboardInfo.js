@@ -350,15 +350,17 @@ async function loadLinksIntoTable(levelIndex) {
 
                     let data = {
                         userId: userId,
-                        index: levelIndex,
+                        index: index,
                         taskId: tarefa.key,
                     }
+
+                    console.log("Data to pass: ", data)
 
                     localStorage.setItem("taskIndex", levelIndex);
 
                     if (saveToCookies(data)) {
                         setTimeout(() => {
-                            window.location.href = tarefa.url
+                            //window.location.href = tarefa.url
                         }, 500);
                     } else {
                         console.error("Ocorreu um erro ao salvar para os cookies: ")
