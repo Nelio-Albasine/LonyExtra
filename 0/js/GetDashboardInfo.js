@@ -59,7 +59,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     textTotalStarsEarnedByReferrals = document.querySelectorAll(".textTotalStarsEarnedByReferrals");
 
     dashInfo = await GetDashboardInfo(userId);
-    
+
     if (window.location.hash == "#welcome") {
         window.location.replace("http://127.0.0.1:5500/0/dashboard/");
     }
@@ -354,18 +354,16 @@ async function loadLinksIntoTable(levelIndex) {
                     localStorage.setItem("taskIndex", levelIndex);
 
                     if (saveToCookies(data)) {
-                        console.log("userPoints saved anteriormente: " , localStorage.getItem('userPoints'))
-
                         setTimeout(() => {
-                            if(userId == "391f58325968d93b6778b9722f953bb063b44254d8e04109955c52b928ac9782"){
+                          /*  if (userId == "391f58325968d93b6778b9722f953bb063b44254d8e04109955c52b928ac9782") {
+                                // window.location.href = "http://127.0.0.1:5500/congratulations/index.html"
                                 window.location.href = tarefa.url
-                           // window.location.href = "http://127.0.0.1:5500/congratulations/index.html"
-
                             } else {
                                 alert("Ainda estamos em atualização, volte mais tarde!");
-                            }
+                            } */
 
-                        }, 7000);
+                            window.location.href = tarefa.url
+                        }, 500);
                     } else {
                         console.error("Ocorreu um erro ao salvar para os cookies: ")
                     }
@@ -485,7 +483,7 @@ function updateHomeTaskAvailability(container, textTask, availability) {
         clearInterval(countdownIntervals[intervalKey]);
     }
 
-   
+
     if (availability.hasValidLinks) {
         container.classList.add("hasSomeTaskAvailable");
         container.classList.remove("dontHasSomeTaskAvailable");
@@ -561,7 +559,6 @@ function updateHashSilently(hashValue) {
 function saveUserPointsToLocalStorage(jsonPoints) {
     const userPoints = JSON.stringify(jsonPoints);
     localStorage.setItem("userPoints", userPoints);
-    console.log("userPoints saved: " , localStorage.getItem('userPoints'))
 }
 
 
