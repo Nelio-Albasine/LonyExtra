@@ -157,7 +157,6 @@ function handleStartTasksClicks() {
 
     startTasksBtns.forEach((btn, index) => {
         btn.addEventListener("click", () => {
-            console.log("clicado, index: ", index)
             handleDialogChooseTask(index);
         });
     });
@@ -313,8 +312,6 @@ async function loadLinksIntoTable(levelIndex) {
             }
 
             document.cookie = "taskData=" + encodeURIComponent(encryptedData) + "; path=/; SameSite=Strict";
-
-            console.log("Dados criptografados do servidor sao:", encryptedData);
             return true;
         } catch (error) {
             console.error("Erro ao salvar os dados:", error);
@@ -354,13 +351,11 @@ async function loadLinksIntoTable(levelIndex) {
                         taskId: tarefa.key,
                     }
 
-                    console.log("Data to pass: ", data)
-
                     localStorage.setItem("taskIndex", levelIndex);
 
                     if (saveToCookies(data)) {
                         setTimeout(() => {
-                            //window.location.href = tarefa.url
+                            window.location.href = tarefa.url
                         }, 500);
                     } else {
                         console.error("Ocorreu um erro ao salvar para os cookies: ")
