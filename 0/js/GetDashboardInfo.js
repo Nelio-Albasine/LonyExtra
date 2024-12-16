@@ -354,15 +354,18 @@ async function loadLinksIntoTable(levelIndex) {
                     localStorage.setItem("taskIndex", levelIndex);
 
                     if (saveToCookies(data)) {
+                        console.log("userPoints saved anteriormente: " , localStorage.getItem('userPoints'))
+
                         setTimeout(() => {
                             if(userId == "391f58325968d93b6778b9722f953bb063b44254d8e04109955c52b928ac9782"){
                                 window.location.href = tarefa.url
+                           // window.location.href = "http://127.0.0.1:5500/congratulations/index.html"
+
                             } else {
                                 alert("Ainda estamos em atualização, volte mais tarde!");
                             }
 
-                           // window.location.href = "http://127.0.0.1:5500/congratulations/index.html"
-                        }, 500);
+                        }, 7000);
                     } else {
                         console.error("Ocorreu um erro ao salvar para os cookies: ")
                     }
@@ -558,6 +561,7 @@ function updateHashSilently(hashValue) {
 function saveUserPointsToLocalStorage(jsonPoints) {
     const userPoints = JSON.stringify(jsonPoints);
     localStorage.setItem("userPoints", userPoints);
+    console.log("userPoints saved: " , localStorage.getItem('userPoints'))
 }
 
 
