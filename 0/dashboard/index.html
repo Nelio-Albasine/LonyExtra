@@ -5,45 +5,61 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lony Extra</title>
-    <link rel="stylesheet" href="../css/home/styles.css">
+    <link rel="stylesheet" href="../css/home/styles.css?v=1">
 
-    <link rel="stylesheet" href="../css/home/full_container_loading.css">
+    <link rel="stylesheet" href="../css/home/full_container_loading.css?v=1">
 
-    <link rel="stylesheet" href="../css/home/header.css">
-    <link rel="stylesheet" href="../css/home/ui_settings.css">
-    <link rel="stylesheet" href="../css/home/pc.css">
-    <link rel="stylesheet" href="../css/home/dialog_choose_tasks.css">
-    <link rel="stylesheet" href="../css/home/ganhos_turbo_boxes.css">
+    <link rel="stylesheet" href="../css/home/header.css?v=1">
+    <link rel="stylesheet" href="../css/home/ui_settings.css?v=1">
+    <link rel="stylesheet" href="../css/home/pc.css?v=1">
+    <link rel="stylesheet" href="../css/home/dialog_choose_tasks.css?v=1">
 
-    <link rel="stylesheet" href="../css/home/generic.css">
+    <link rel="stylesheet" href="../css/home/ganhos_turbo_boxes.css?v=1">
 
-    <link rel="stylesheet" href="../css/home/drawer_v2.css">
-    <link rel="stylesheet" href="../css/home/base_dialogs.css">
-    <link rel="stylesheet" href="../css/home/popups_and_ui_feedbacks.css">
-    <link rel="stylesheet" href="../css/home/dialog_success_cashout.css">
-    <link rel="stylesheet" href="../css/home/mobile.css">
-    <link rel="stylesheet" href="../css/home/invitation.css">
-    <link rel="stylesheet" href="../css/home/cashout.css">
-    <link rel="stylesheet" href="../css/home/cashout_history.css">
-    <link rel="stylesheet" href="../css/home/notifications.css">
-    <link rel="stylesheet" href="../css/home/social_network.css">
-    <link rel="stylesheet" href="../css/home/gmail_support.css">
-    <link rel="stylesheet" href="../css/home/profile.css">
-    <link rel="stylesheet" href="../css/home/signout.css">
-    <link rel="stylesheet" href="../css/home/top10.css">
+    <link rel="stylesheet" href="../css/home/generic.css?v=1">
 
-    <link rel="stylesheet" href="../css/home/floating_popups_or_menus.css">
-    <link rel="stylesheet" href="../css/home/dialog_saques_da_comunidade.css">
+    <link rel="stylesheet" href="../css/home/drawer_v2.css?v=1">
+    <link rel="stylesheet" href="../css/home/base_dialogs.css?v=1">
+    <link rel="stylesheet" href="../css/home/popups_and_ui_feedbacks.css?v=1">
+    <link rel="stylesheet" href="../css/home/dialog_success_cashout.css?v=1">
+    <link rel="stylesheet" href="../css/home/mobile.css?v=1">
+    <link rel="stylesheet" href="../css/home/invitation.css?v=1">
+    <link rel="stylesheet" href="../css/home/cashout.css?v=1">
+    <link rel="stylesheet" href="../css/home/cashout_history.css?v=1">
+    <link rel="stylesheet" href="../css/home/notifications.css?v=1">
+    <link rel="stylesheet" href="../css/home/social_network.css?v=1">
+    <link rel="stylesheet" href="../css/home/gmail_support.css?v=1">
+    <link rel="stylesheet" href="../css/home/profile.css?v=1">
+    <link rel="stylesheet" href="../css/home/signout.css?v=1">
+    <link rel="stylesheet" href="../css/home/top10.css?v=1">
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+    <link rel="stylesheet" href="../css/home/overlay_dialog_join_telegram.css">
+
+    <link rel="stylesheet" href="../css/home/floating_popups_or_menus.css?v=1">
+    <link rel="stylesheet" href="../css/home/dialog_saques_da_comunidade.css?v=1">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js?v=1"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 
 
     <link rel="icon" href="/0/src/favicon_io/favicon.ico" type="image/x-icon">
     <!-- <script src="https://js.sentry-cdn.com/a41ea66a6911b5025e8922b0df576302.min.js" crossorigin="anonymous"></script> -->
+
+    <!-- Meta tags de controle de cache -->
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
 </head>
 
 <body>
+    <script>
+        document.addEventListener("DOMContentLoaded", async function () {
+            if (localStorage.getItem("tmeMarketing")) {
+                document.getElementById("overlay_dialog_join_telegram").style.display = "none";
+            }
+        })
+    </script>
+
     <div style="
         display: none; 
         position: absolute;
@@ -55,7 +71,7 @@
         text-align: center;
         border-bottom-left-radius: 20px;
         border-bottom-right-radius: 20px;
-        background-color: red;" >
+        background-color: red;">
         <p id="textAlert">Ainda estamos em atualização, volte mais tarde!</p>
     </div>
 
@@ -937,6 +953,7 @@
 
                             <button
                                 onclick="window.open('https://www.instagram.com/lonyextra?igsh=YzljYTk1ODg3Zg==', '_blank');">Seguir</button>
+
                         </div>
 
                     </div>
@@ -1167,12 +1184,61 @@
 
     </main>
 
-    <script src="../js/drawer.js"></script>
-    <script src="../js/GetDashboardInfo.js"></script>
-    <script src="../js/GetTop10Users.js"></script>
-    <script src="../js/HandleDrawerCliques.js"></script>
-    <script src="../js/HandleCardsTurboClicks.js"></script>
-    <script src="../js/GraficoDeMetodosDeSaqueMaisUsados.js"></script>
+
+    <div id="overlay_dialog_join_telegram">
+        <div id="base_overlay_dialog_join_telegram">
+            <div class="dialog_title">
+                <p id="dialog_title">Join our telegram!</p>
+                <img class="img_close_dialog" id="img_close_dialog_joint_telegram" src="../src/imgs/close.png"
+                    alt="close dialog">
+            </div>
+
+            <div id="content_overlay_dialog_join_telegram">
+                <p>
+                    Porque se juntar ao nosso grupo?
+                </p>
+
+                <ul>
+                    <li>
+                        <p>Por lá, você terá suas dúvidas ou reclamações resolvidas rapidamente!</p>
+                    </li>
+                    <li>
+                        <p>Receba dicas exclusivas sobre os produtos e serviços oferecidos.</p>
+                    </li>
+                    <li>
+                        <p>Participe de sorteios e promoções especiais.</p>
+                    </li>
+                    <li>
+                        <p>Converse diretamente com nossa equipe de suporte, sempre disponível.</p>
+                    </li>
+                </ul>
+
+                <button id="btnDialogMarktJoinTelegram">Seguir</button>
+                <p id="info_message">
+                    Ao entrar no grupo, esse diálogo não voltará a aparecer.
+                </p>
+                <script>
+                    document.getElementById("btnDialogMarktJoinTelegram").addEventListener("click", () => {
+                        localStorage.setItem("tmeMarketing", true);
+                        window.open('https://t.me/LonyExtra', '_blank');
+                        document.getElementById("overlay_dialog_join_telegram").style.display = "none";
+                    });
+
+                    document.getElementById("img_close_dialog_joint_telegram").addEventListener("click", () => {
+                        document.getElementById("overlay_dialog_join_telegram").style.display = "none";
+                    });
+                </script>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="../js/drawer.js?v=1"></script>
+    <script src="../js/GetDashboardInfo.js?v=1"></script>
+    <script src="../js/GetTop10Users.js?v=1"></script>
+    <script src="../js/HandleDrawerCliques.js?v=1"></script>
+    <script src="../js/HandleCardsTurboClicks.js?v=1"></script>
+    <script src="../js/GraficoDeMetodosDeSaqueMaisUsados.js?v=1"></script>
 
 </body>
 
