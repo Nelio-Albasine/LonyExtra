@@ -3,20 +3,23 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1);
 ini_set('error_log', __DIR__ . '/../logs/ConvertStarsIntoReward.log');
 
-require_once "../Wamp64Connection.php";
+
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: GET, OPTIONS');
 header('Access-Control-Allow-Headers: Content-Type');
 
 require_once "../Wamp64Connection.php";
+require_once "../settings/CheckIfUserIsBanned.php";
 
-class UserPoints {
+class UserPoints
+{
     public float $userStars;
     public float $userLTStars;
     public float $userRevenue;
     public float $userLTRevenue;
 
-    public function __construct($userStars, $userLTStars, $userRevenue, $userLTRevenue) {
+    public function __construct($userStars, $userLTStars, $userRevenue, $userLTRevenue)
+    {
         $this->userStars = $userStars;
         $this->userLTStars = $userLTStars;
         $this->userRevenue = $userRevenue;
@@ -24,40 +27,48 @@ class UserPoints {
     }
 }
 
-class ConversionResponse {
+class ConversionResponse
+{
     public bool $success;
     public ?string $message;
 
-    public function __construct($success = false, $message = null) {
+    public function __construct($success = false, $message = null)
+    {
         $this->success = $success;
         $this->message = $message;
     }
 }
 
-function main() {
+function main()
+{
     $data = json_decode(file_get_contents('php://input'), true);
 
     $userId = $data["userId"];
-    $index = (int) $data["index"]; 
+    $index = (int) $data["index"];
 
     $conn = Wamp64Connection();
 
     try {
-        $response = handleConversion($conn, $userId, $index);
-        header('Content-Type: application/json');
-        echo json_encode($response);
+        if (!checkIfUserIsBanned($conn, $userId)) {
+            $response = handleConversion($conn, $userId, $index);
+            header('Content-Type: application/json');
+            echo json_encode($response);
+        } else {
+            echo json_encode(['success' => false, 'message' => '409']);
+        }
     } catch (Exception $e) {
         echo json_encode([
             "success" => false,
             "message" => "Erro: " . $e->getMessage()
         ]);
     } finally {
-        $conn = null; 
+        $conn = null;
     }
 }
 
 
-function handleConversion($conn, $userId, $index) {
+function handleConversion($conn, $userId, $index)
+{
     $starsToValueMap = [
         0 => ["stars" => 497, "revenue" => 0.50],
         1 => ["stars" => 1246, "revenue" => 1.30],
@@ -65,7 +76,7 @@ function handleConversion($conn, $userId, $index) {
         3 => ["stars" => 6710, "revenue" => 7.00],
         4 => ["stars" => 19185, "revenue" => 20.00],
         5 => ["stars" => 95200, "revenue" => 100.00],
-    ];    
+    ];
 
     $response = new ConversionResponse();
 
@@ -102,7 +113,8 @@ function handleConversion($conn, $userId, $index) {
     return $response;
 }
 
-function checkIfUserHasSufficientStars($conn, $userId) {
+function checkIfUserHasSufficientStars($conn, $userId)
+{
     $query = "SELECT userPointsJSON FROM Usuarios WHERE userId = ?";
 
     try {
@@ -121,7 +133,8 @@ function checkIfUserHasSufficientStars($conn, $userId) {
     }
 }
 
-function updateUserPoints($conn, $userId, $userPointsJson) {
+function updateUserPoints($conn, $userId, $userPointsJson)
+{
     $query = "UPDATE Usuarios SET userPointsJSON = ? WHERE userId = ?";
 
     try {

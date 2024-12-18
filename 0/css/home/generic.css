@@ -81,3 +81,11 @@
 .loading_fa_holder i{
     font-size: 21px;
 }
+
+#textPrivacyPolicyProfile{
+    font-size: 12px;
+    color: #808080;
+    width: 100%;
+    text-align: center;
+    margin: 10px;
+}

@@ -11,13 +11,11 @@ header('Content-Type: application/json; charset=utf-8');
 
 require_once "../Wamp64Connection.php";
 
-
 try {
     if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
         http_response_code(200);
         exit;
     }
-
 
     if ($_SERVER['REQUEST_METHOD'] == "GET") {
         $conn = Wamp64Connection();
@@ -77,7 +75,7 @@ try {
 
 function getDashboardInfo($conn, $userId)
 {
-    $query = "SELECT userId, userName, userSurname, userEmail, userTimeZone, myReferralCode, userGender, userAge, userJoinedAt, userPointsJSON, userInvitationJSON 
+    $query = "SELECT userId, userLockStatus , userName, userSurname, userEmail, userTimeZone, myReferralCode, userGender, userAge, userJoinedAt, userPointsJSON, userInvitationJSON 
             FROM Usuarios 
             WHERE userId = ?";
 

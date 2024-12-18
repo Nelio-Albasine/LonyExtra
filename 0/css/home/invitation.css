@@ -86,15 +86,29 @@
 
 
 .invite_code_container {
+    width: 100%;
     max-width: 450px;
     margin: 0 auto;
     margin-top: 25px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
     gap: 20px;
     margin-bottom: 20px;
+}
+
+#textInvitationLink{
+    max-width: 200px;
+    white-space: wrap;
+    text-align: center;
+}
+
+.div_container_invite_links_and_code{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 .container_invitation_url {
@@ -131,7 +145,7 @@
 
 .hr_in_invitation_dialog {
     width: 90%;
-    margin: 0 auto 15px auto;
+    margin: 10px auto 15px auto;
     border-color: rgb(255, 255, 255);
 }
 
@@ -357,7 +371,17 @@
     margin-right: 8px;
 }
 
+.starsInvitationTotalEarnedCount{
+    font-size: 13px;
+    margin-top: 10px;
+    text-align: center;
+    color: #5c5c5c;
+}
+
 @media screen and (max-width: 600px) {
+    .starsInvitationTotalEarnedCount{
+        font-size: 11px;
+    }
     .div_base_onvitation_statistics {
         border-radius: 10px;
         padding: 15px;

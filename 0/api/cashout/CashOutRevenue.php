@@ -4,6 +4,8 @@ ini_set('display_errors', 1);
 ini_set('error_log', __DIR__ . '/../logs/CashOutRevenue.log');
 
 require_once "../Wamp64Connection.php";
+require_once "../settings/CheckIfUserIsBanned.php";
+
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: POST, OPTIONS');
 header('Access-Control-Allow-Headers: Content-Type');
@@ -55,52 +57,56 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     try {
 
-        $userRevenueJsonString = checkIfUserHasSufficientRevenue($conn, $userId);
+        if (!checkIfUserIsBanned($conn, $userId)) {
+            $userRevenueJsonString = checkIfUserHasSufficientRevenue($conn, $userId);
 
-        if (!$userRevenueJsonString) {
-            echo json_encode(['success' => false, 'message' => 'Nenhum registro encontrado para o usuário!']);
-            exit;
-        }
-
-        $userRevenueJson = json_decode($userRevenueJsonString, true);
-
-        if ($userRevenueJson['userRevenue'] < $amountToCashOut) {
-            echo json_encode(['success' => false, 'message' => '405']);
-            exit;
-        }
-
-        $remainingBalance = $userRevenueJson['userRevenue'] - $amountToCashOut;
-        $userRevenueJson['userRevenue'] = $remainingBalance;
-
-        $insertResponse = insertCashOutIntoTable($conn, $userId, $userEmail, $created_at,  $gatewayName, $amountToCashOut, $userPaymentName, $userPaymentAddress, $cashOutId);
-        if (!$insertResponse['success']) {
-            echo json_encode($insertResponse);
-            exit;
-        }
-
-        $updateSuccess = updateUserRevenue($conn, $userId, json_encode($userRevenueJson));
-        if ($updateSuccess) {
-
-            require "../invitation/handleInvitation.php";
-
-            if (updateMyInviterStarsWhenICashOut($conn, $amountIndex, $userId)) {
-                error_log("Atualização de estrelas realizada com sucesso para o usuário!");
-            } else {
-                error_log("Falha ao atualizar as estrelas ou ainda nao inseri o codigo de convinte");
+            if (!$userRevenueJsonString) {
+                echo json_encode(['success' => false, 'message' => 'Nenhum registro encontrado para o usuário!']);
+                exit;
             }
-
-            echo json_encode([
-                'success' => true,
-                'message' => 'Saque realizado com sucesso!',
-                'cashOutId' => $cashOutId,
-                'created_at' => $created_at
-            ]);
-
-            if ($conn) {
-                $conn->close();
+    
+            $userRevenueJson = json_decode($userRevenueJsonString, true);
+    
+            if ($userRevenueJson['userRevenue'] < $amountToCashOut) {
+                echo json_encode(['success' => false, 'message' => '405']);
+                exit;
+            }
+    
+            $remainingBalance = $userRevenueJson['userRevenue'] - $amountToCashOut;
+            $userRevenueJson['userRevenue'] = $remainingBalance;
+    
+            $insertResponse = insertCashOutIntoTable($conn, $userId, $userEmail, $created_at,  $gatewayName, $amountToCashOut, $userPaymentName, $userPaymentAddress, $cashOutId);
+            if (!$insertResponse['success']) {
+                echo json_encode($insertResponse);
+                exit;
+            }
+    
+            $updateSuccess = updateUserRevenue($conn, $userId, json_encode($userRevenueJson));
+            if ($updateSuccess) {
+    
+                require "../invitation/handleInvitation.php";
+    
+                if (updateMyInviterStarsWhenICashOut($conn, $amountIndex, $userId)) {
+                    error_log("Atualização de estrelas realizada com sucesso para o usuário!");
+                } else {
+                    error_log("Falha ao atualizar as estrelas ou ainda nao inseri o codigo de convinte");
+                }
+    
+                echo json_encode([
+                    'success' => true,
+                    'message' => 'Saque realizado com sucesso!',
+                    'cashOutId' => $cashOutId,
+                    'created_at' => $created_at
+                ]);
+    
+                if ($conn) {
+                    $conn->close();
+                }
+            } else {
+                echo json_encode(['success' => false, 'message' => 'Erro ao atualizar os dados do usuário.']);
             }
         } else {
-            echo json_encode(['success' => false, 'message' => 'Erro ao atualizar os dados do usuário.']);
+            echo json_encode(['success' => false, 'message' => '409']);
         }
     } catch (Exception $e) {
         echo json_encode(['success' => false, 'message' => 'Erro: ' . $e->getMessage()]);

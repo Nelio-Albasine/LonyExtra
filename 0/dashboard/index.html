@@ -5,40 +5,42 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lony Extra</title>
-    <link rel="stylesheet" href="../css/home/styles.css?v=1">
+    <link rel="stylesheet" href="../css/home/styles.css?v=1.01">
 
-    <link rel="stylesheet" href="../css/home/full_container_loading.css?v=1">
+    <link rel="stylesheet" href="../css/home/full_container_loading.css?v=1.01">
 
-    <link rel="stylesheet" href="../css/home/header.css?v=1">
-    <link rel="stylesheet" href="../css/home/ui_settings.css?v=1">
-    <link rel="stylesheet" href="../css/home/pc.css?v=1">
-    <link rel="stylesheet" href="../css/home/dialog_choose_tasks.css?v=1">
+    <link rel="stylesheet" href="../css/home/header.css?v=1.01">
+    <link rel="stylesheet" href="../css/home/ui_settings.css?v=1.01">
+    <link rel="stylesheet" href="../css/home/pc.css?v=1.01">
+    <link rel="stylesheet" href="../css/home/dialog_choose_tasks.css?v=1.01">
 
-    <link rel="stylesheet" href="../css/home/ganhos_turbo_boxes.css?v=1">
+    <link rel="stylesheet" href="../css/home/ganhos_turbo_boxes.css?v=1.01">
 
-    <link rel="stylesheet" href="../css/home/generic.css?v=1">
+    <link rel="stylesheet" href="../css/home/generic.css?v=1.01">
 
-    <link rel="stylesheet" href="../css/home/drawer_v2.css?v=1">
-    <link rel="stylesheet" href="../css/home/base_dialogs.css?v=1">
-    <link rel="stylesheet" href="../css/home/popups_and_ui_feedbacks.css?v=1">
-    <link rel="stylesheet" href="../css/home/dialog_success_cashout.css?v=1">
-    <link rel="stylesheet" href="../css/home/mobile.css?v=1">
-    <link rel="stylesheet" href="../css/home/invitation.css?v=1">
-    <link rel="stylesheet" href="../css/home/cashout.css?v=1">
-    <link rel="stylesheet" href="../css/home/cashout_history.css?v=1">
-    <link rel="stylesheet" href="../css/home/notifications.css?v=1">
-    <link rel="stylesheet" href="../css/home/social_network.css?v=1">
-    <link rel="stylesheet" href="../css/home/gmail_support.css?v=1">
-    <link rel="stylesheet" href="../css/home/profile.css?v=1">
-    <link rel="stylesheet" href="../css/home/signout.css?v=1">
-    <link rel="stylesheet" href="../css/home/top10.css?v=1">
+    <link rel="stylesheet" href="../css/home/drawer_v2.css?v=1.01">
+    <link rel="stylesheet" href="../css/home/base_dialogs.css?v=1.01">
+    <link rel="stylesheet" href="../css/home/popups_and_ui_feedbacks.css?v=1.01">
+    <link rel="stylesheet" href="../css/home/dialog_success_cashout.css?v=1.01">
+    <link rel="stylesheet" href="../css/home/mobile.css?v=1.01">
+    <link rel="stylesheet" href="../css/home/invitation.css?v=1.01">
+    <link rel="stylesheet" href="../css/home/cashout.css?v=1.01">
+    <link rel="stylesheet" href="../css/home/cashout_history.css?v=1.01">
+    <link rel="stylesheet" href="../css/home/notifications.css?v=1.01">
+    <link rel="stylesheet" href="../css/home/social_network.css?v=1.01">
+    <link rel="stylesheet" href="../css/home/gmail_support.css?v=1.01">
+    <link rel="stylesheet" href="../css/home/profile.css?v=1.01">
+    <link rel="stylesheet" href="../css/home/signout.css?v=1.01">
+    <link rel="stylesheet" href="../css/home/top10.css?v=1.01">
 
     <link rel="stylesheet" href="../css/home/overlay_dialog_join_telegram.css">
 
-    <link rel="stylesheet" href="../css/home/floating_popups_or_menus.css?v=1">
-    <link rel="stylesheet" href="../css/home/dialog_saques_da_comunidade.css?v=1">
+    <link rel="stylesheet" href="../css/home/floating_popups_or_menus.css?v=1.01">
+    <link rel="stylesheet" href="../css/home/dialog_saques_da_comunidade.css?v=1.01">
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js?v=1"></script>
+    <link rel="stylesheet" href="../css/home/base_locked_user.css?v=1.01">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js?v=1.01"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 
 
@@ -278,6 +280,24 @@
         </div>
 
         <main class="main-content">
+            <!-- Base blocked-->
+            <div id="content_base_blocked">
+                <div id="base-blocked">
+                    <img src="../src/imgs/warning.png" alt="Warning icon">
+                    <p>
+                        Seu painel foi bloqueado porque detectamos comportamento que
+                        viola nossos <span class="linkSpanned textPoliticasUso">Termos de Serviço</span> ou <span
+                            class="linkSpanned textPoliticasPrivacidade">Política de
+                            Atividade</span> Inválida.
+                        Se você acha que isso é um erro, por favor, entre em contato com o
+                        nosso suporte <span class="linkSpanned textBannedComplainHere">aqui</span>. Um de nossos
+                        especialistas irá analisar seu
+                        caso
+                        e responder o mais breve possível.
+                    </p>
+                </div>
+            </div>
+
             <!-- Conteúdo principal -->
             <div class="stats-grid">
                 <div class="stat-card">
@@ -604,9 +624,16 @@
                                     </div>
                                 </div>
 
+                                <p class="starsInvitationTotalEarnedCount">
+                                    A contagem das estrelas de convite ganhas (aqui neste diálogo) começou em: 18 de
+                                    Dez. de 2024. <br>
+                                    Não se preocupe, no seu saldo de estrelas conversíveis, a contagem esteve/está
+                                    normal desde sempre.
+                                </p>
+
                                 <!-- Código de Convite -->
                                 <div class="invite_code_container">
-                                    <div>
+                                    <div class="div_container_invite_links_and_code">
                                         <div class="container_invitation_url">
                                             <p id="textInvitationLink">
                                                 https://lonyextra.com/0/access/signup.html?invite=.....</p>
@@ -615,7 +642,7 @@
                                         <p class="link_and_invite_code_description">Link de convinte</p>
                                     </div>
 
-                                    <div>
+                                    <div class="div_container_invite_links_and_code">
                                         <div class="container_invitation_url">
                                             <p id="textInvitationCode">........</p>
                                             <i class="fa-solid fa-copy copy-icon copy_my_invite_code_or_link"></i>
@@ -624,6 +651,15 @@
                                     </div>
                                 </div>
                             </div>
+
+                            <p class="starsInvitationTotalEarnedCount">
+                                Você ganhará 4% das estrelas correspondentes à opção de saque que seus convidados
+                                fizerem.
+                            </p>
+                            <p class="starsInvitationTotalEarnedCount">Por exemplo:</p>
+                            <p class="starsInvitationTotalEarnedCount">Se seu amigo sacar 💰 R$ 0,50, o que corresponde
+                                a ✨ 497, então você ganhará 4% de ✨ 497.</p>
+
                             <hr class="hr_in_invitation_dialog">
                             <!-- Inserir Código -->
                             <div class="container_insert_cde_and_titles">
@@ -795,7 +831,8 @@
                                     maxlength="45" required>
 
                                 <div class="info-box">
-                                    <p>Os pagamentos são feitos em <strong>até 48 horas</strong> após o saque
+                                    <p class="attention_to_payments_time">Atenção</p>
+                                    <p>Os pagamentos são feitos em <strong>até 72 horas (3 Dias - para Paypal e Pix)</strong> e até <strong>até 96h horas (4 Dias - para os demais)</strong> após o saque
                                         (<strong>de Segunda à Sexta</strong>). Não nos
                                         responsabilizamos por dados incorretos
                                         fornecidos pelo usuário.</p>
@@ -1023,12 +1060,11 @@
                                 <img src="../src/imgs/profile.png" alt="">
                                 <p class="userName">User Name</p>
                                 <p class="userEmail">useremail@gmail.com</p>
+                                <p id="textProfileLockedFromDialog"></p>
                                 <p id="memberShipText">
                                     Juntou-se à comunidade @LonyExtra <span id="joinedDate"></span>. Já se passaram
                                     <strong id="timeElapsedText"></strong> desde então 💖!
                                 </p>
-
-
                             </div>
 
                             <div class="div_container_profile_points_history">
@@ -1045,9 +1081,8 @@
                                     <p class="textLThistoricDescription">Total sacado</p>
                                 </div>
                             </div>
-                            <div>
-
-                            </div>
+                           
+                            <p id="textPrivacyPolicyProfile">&copy; Politicas de <span class="linkSpanned textPoliticasUso">Uso</span> e <span class="linkSpanned textPoliticasPrivacidade">Privacidade</span>! Veja como fazer para <span class="linkSpanned textHowToEarnStars">Ganhar estrelas</span>.</p>
                         </div>
                     </div>
 
@@ -1233,12 +1268,12 @@
         </div>
     </div>
 
-    <script src="../js/drawer.js?v=1"></script>
-    <script src="../js/GetDashboardInfo.js?v=1"></script>
-    <script src="../js/GetTop10Users.js?v=1"></script>
-    <script src="../js/HandleDrawerCliques.js?v=1"></script>
-    <script src="../js/HandleCardsTurboClicks.js?v=1"></script>
-    <script src="../js/GraficoDeMetodosDeSaqueMaisUsados.js?v=1"></script>
+    <script src="../js/drawer.js?v=1.01"></script>
+    <script src="../js/GetDashboardInfo.js?v=1.01"></script>
+    <script src="../js/GetTop10Users.js?v=1.01"></script>
+    <script src="../js/HandleDrawerCliques.js?v=1.01"></script>
+    <script src="../js/HandleCardsTurboClicks.js?v=1.01"></script>
+    <script src="../js/GraficoDeMetodosDeSaqueMaisUsados.js?v=1.01"></script>
 
 </body>
 

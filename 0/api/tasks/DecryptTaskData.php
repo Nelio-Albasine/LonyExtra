@@ -1,6 +1,8 @@
 <?php
 require_once './Config.php';
 require_once '../Wamp64Connection.php';
+require_once "../settings/CheckIfUserIsBanned.php";
+
 
 // Configurações de cabeçalhos para CORS e tipo de conteúdo
 header('Access-Control-Allow-Origin: *');
@@ -58,7 +60,7 @@ function main()
                 'success' => false,
                 'message' => "206"
             ]
-        );        
+        );
     }
 
     $conn = Wamp64Connection();
@@ -245,54 +247,59 @@ function processUserPointsAndLinkStatus($conn, array $decryptedData): bool
     $taskId = $decryptedData["taskId"];
     $index = $decryptedData["index"];
 
-    $jsonBatchName = null;
+    if (!checkIfUserIsBanned($conn, $userId)) {
+        $jsonBatchName = null;
 
-    switch ($index) {
-        case 0:
-            $jsonBatchName = "bronzeAvailability";
-            break;
-        case 1:
-            $jsonBatchName = "prataAvailability";
-            break;
-        case 2:
-            $jsonBatchName = "ouroAvailability";
-            break;
-        case 3:
-            $jsonBatchName = "diamanteAvailability";
-            break;
-        case 4:
-            $jsonBatchName = "platinaAvailability";
-            break;
-    }
+        switch ($index) {
+            case 0:
+                $jsonBatchName = "bronzeAvailability";
+                break;
+            case 1:
+                $jsonBatchName = "prataAvailability";
+                break;
+            case 2:
+                $jsonBatchName = "ouroAvailability";
+                break;
+            case 3:
+                $jsonBatchName = "diamanteAvailability";
+                break;
+            case 4:
+                $jsonBatchName = "platinaAvailability";
+                break;
+        }
 
-    if ($jsonBatchName === null) {
-        return false;
-    }
+        if ($jsonBatchName === null) {
+            return false;
+        }
 
-    /*
+        /*
         Verificar se, essa requisicao para receber o premio,
         é de fato de uma tarefa que esta DISPONIVEL.
      */
 
-    $checkIfTaskIdIsAvailable = checkIfTaskIdIsAvailable($conn, $userId, $taskId, $jsonBatchName);
+        $checkIfTaskIdIsAvailable = checkIfTaskIdIsAvailable($conn, $userId, $taskId, $jsonBatchName);
 
-    if ($checkIfTaskIdIsAvailable === true) {
-        if (!updateUserPoints($conn, $decryptedData, $userId, $taskId)) {
-            respondWithError('Falha ao atualizar a pontuação do usuário');
-        }
+        if ($checkIfTaskIdIsAvailable === true) {
+            if (!updateUserPoints($conn, $decryptedData, $userId, $taskId)) {
+                respondWithError('Falha ao atualizar a pontuação do usuário');
+            }
 
-        if (!updateLinkStatus(
-            $conn,
-            $userId,
-            $taskId,
-            $jsonBatchName
-        )) {
-            respondWithError('Falha ao atualizar o status do link');
+            if (!updateLinkStatus(
+                $conn,
+                $userId,
+                $taskId,
+                $jsonBatchName
+            )) {
+                respondWithError('Falha ao atualizar o status do link');
+            }
+            return true;
+        } else {
+            //user is tryng to earn stars from an expired/unavailable Task
+            echo json_encode(['message' => "204"]);
+            exit;
         }
-        return true;
     } else {
-        //user is tryng to earn stars from an expired/unavailable Task
-        echo json_encode(['message' => "204"]);
+        echo json_encode(['message' => "208"]);
         exit;
     }
 }
@@ -358,5 +365,3 @@ function getUserTimeZone($conn, $userId)
 
     return "America/Sao_Paulo";
 }
-
-

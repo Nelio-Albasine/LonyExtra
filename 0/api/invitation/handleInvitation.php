@@ -234,10 +234,8 @@ function updateUserStars($conn, $userId)
     }
 }
 
-
-function updateMyInviterStarsWhenICashOut($conn, $cashOutIndex, $userId)
-{
-    $percentToEarn = 5; // 5% of the index stars
+function updateMyInviterStarsWhenICashOut($conn, $cashOutIndex, $userId) {
+    $percentToEarn = 4; // 4% of the index stars
 
     $mapStarsIndexed = [
         0 => 497,
@@ -251,39 +249,39 @@ function updateMyInviterStarsWhenICashOut($conn, $cashOutIndex, $userId)
     if (!isset($mapStarsIndexed[$cashOutIndex])) {
         return false;
     }
-
     $stars = $mapStarsIndexed[$cashOutIndex];
-    $starsToEarn = (int)(($percentToEarn / 100) * $stars);
+    $starsToEarn = (int) (($percentToEarn / 100.0) * $stars);
 
     $whoInvitedMe = isInviterCodeEmptyOrNull($conn, $userId);
+    
     if (!empty($whoInvitedMe)) {
-        $updatePointsQuery = "
-            UPDATE Usuarios 
+        $updateQuery = "
+            UPDATE Usuarios
             SET 
                 userPointsJSON = JSON_SET(
                     userPointsJSON, 
                     '$.userStars', JSON_EXTRACT(userPointsJSON, '$.userStars') + ?, 
                     '$.userLTStars', JSON_EXTRACT(userPointsJSON, '$.userLTStars') + ?
+                ),
+                userInvitationJSON = JSON_SET(
+                    userInvitationJSON,
+                    '$.totalStarsEarnedByReferral', JSON_EXTRACT(userInvitationJSON, '$.totalStarsEarnedByReferral') + ?
                 )
             WHERE 
-                myReferralCode = ?
+                myReferralCode = ? 
         ";
 
-        $stmt = $conn->prepare($updatePointsQuery);
-        if ($stmt === false) {
+        try {
+            $stmt = $conn->prepare($updateQuery);
+            $stmt->bind_param("iiis", $starsToEarn, $starsToEarn, $starsToEarn, $whoInvitedMe);
+
+            return $stmt->execute() > 0;
+        } catch (Exception $e) {
+            error_log("Error: " . $e->getMessage());
             return false;
         }
-
-        $stmt->bind_param("iis", $starsToEarn, $starsToEarn, $whoInvitedMe);
-
-        if ($stmt->execute()) {
-            $stmt->close();
-            return true;
-        } else {
-            $stmt->close();
-            return false;
-        }
-    } else {
-        return false;
     }
+
+    return false;
 }
+

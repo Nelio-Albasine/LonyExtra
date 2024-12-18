@@ -189,13 +189,28 @@
     padding: 10px;
     border: 1px solid #ffe1a3;
     border-radius: 8px;
-    margin-bottom: 20px;
+    margin-bottom: 0px;
+    margin-top: 10px;
+    position:relative;
 }
 
 .info-box p {
     font-size: 12px;
     color: #805500;
     margin: 0;
+}
+
+.attention_to_payments_time{
+    position: absolute; 
+    top: -15px; 
+    left: -10px; 
+    background-color: #ca0202; 
+    color: #fff !important;
+    font-weight: bold;
+    padding: 4px 10px;
+    border-radius: 50px;
+    font-size: 12px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
 .withdraw-button {

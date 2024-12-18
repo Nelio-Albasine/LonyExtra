@@ -57,6 +57,10 @@ function showBoxAlert(message, type) {
         iconBox.textContent = '⚠';
         title.textContent = 'Etapas não realizadas!';
         button.textContent = 'OK';
+    } if (type === 'warningv3') {
+        iconBox.textContent = '⚠';
+        title.textContent = 'Conta Bloqueada!';
+        button.textContent = 'OK';
     } else if (type === 'error') {
         iconBox.textContent = '✖';
         title.textContent = 'Error!';
@@ -177,6 +181,11 @@ async function sendEncryptedDataToServer(encryptedData, iv, btnGetReward) {
             feedbackMessage = "Você precisa passar pelas etapas de cada tarefa para poder receber sua recompensa.";
             showBoxAlert(feedbackMessage, "warningv2");
             btnGetReward.textContent = "Etapas não realizadas!";
+            btnGetReward.style.backgroundColor = "#c7ba05";
+        } if (result.message == "208") {
+            feedbackMessage = "Sua conta está bloqueada. Pontuação não creditada!";
+            showBoxAlert(feedbackMessage, "warningv3");
+            btnGetReward.textContent = "Conta Bloqueada!";
             btnGetReward.style.backgroundColor = "#c7ba05";
         } else {
             btnGetReward.disabled = false;

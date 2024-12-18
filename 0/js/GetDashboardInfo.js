@@ -115,6 +115,37 @@ document.addEventListener("DOMContentLoaded", async function () {
     textTotalStarsEarnedByReferrals.forEach(text => {
         text.textContent = userInvitationInfo.totalStarsEarnedByReferral.toLocaleString().replace(/,/g, ' ');
     });
+
+    document.querySelectorAll(".textPoliticasUso").forEach(t => t.addEventListener("click", () => {
+        window.open("http://localhost/LonyExtra/policy/terms-of-use.html", "_blank")
+    }));
+
+    document.querySelectorAll(".textPoliticasPrivacidade").forEach(t => t.addEventListener("click", () => {
+        window.open("http://localhost/LonyExtra/policy/privacy-policy.html", "_blank")
+    }));
+
+    document.querySelectorAll(".textHowToEarnStars").forEach(t => t.addEventListener("click", () => {
+        window.open("http://localhost/LonyExtra/policy/como-ganhar-estrelas.html", "_blank")
+    }));
+
+    document.querySelectorAll(".textBannedComplainHere").forEach(t => t.addEventListener("click", () => { window.open("https://t.me/LonyExtra", "_blank") }));
+
+    if (userInfo.userLockStatus === 1) {
+        document.getElementById("content_base_blocked").style.display = "flex";
+        document.getElementById("memberShipText").style.display = "none";
+
+        document.body.style.setProperty('overflow', 'hidden', 'important');
+
+        document.getElementById("textProfileLockedFromDialog").innerHTML = `
+            Seu painel foi bloqueado porque detectamos comportamento que
+            viola nossos <span class="linkSpanned textPoliticasUso">Termos de Serviço</span> ou <span class="linkSpanned textPoliticasPrivacidade">Política de
+            Atividade</span> Inválida.
+            Se você acha que isso é um erro, por favor, entre em contato com o
+            nosso suporte <span class="linkSpanned textBannedComplainHere">aqui</span>. Um de nossos especialistas irá analisar seu
+            caso e responder o mais breve possível.
+        `;
+    }
+
 });
 
 async function GetDashboardInfo(userId) {

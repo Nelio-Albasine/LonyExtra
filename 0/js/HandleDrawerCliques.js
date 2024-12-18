@@ -208,6 +208,10 @@ function showBoxAlert(message, type) {
         iconBox.textContent = '⚠';
         title.textContent = 'Atenção!';
         button.textContent = 'Entendido';
+    } else if (type === 'warningv2') {
+        iconBox.textContent = '⚠';
+        title.textContent = 'Conta Bloqueada!';
+        button.textContent = 'Entendido';
     } else if (type === 'error') {
         iconBox.textContent = '✖';
         title.textContent = 'Error!';
@@ -316,6 +320,11 @@ async function handleConvertion(index, convertStarsBtn) {
                 showBoxAlert(msg, "warning");
                 convertStarsBtn.textContent = "Estrelas insuficientes!";
                 convertStarsBtn.style.backgroundColor = "#c7ba05";
+            } else if (responseData.message == "409") {
+                let msg = "Sua conta está bloqueada. Pontuação não debitada!";
+                btnCashoutRevenue.textContent = msg;
+                showBoxAlert(msg, "warningv2")
+                btnCashoutRevenue.style.backgroundColor = "#ffc107";
             } else {
                 showBoxAlert(responseData.message, "error");
                 convertStarsBtn.textContent = "Erro na conversão!";
@@ -521,7 +530,7 @@ function formatarData(dataISO, userTimeZone) {
 }
 
 function showSuccessDialogCashout(data, isByHistoryTable = null) {
-    console.log("Data passed: " , data)
+    console.log("Data passed: ", data)
     const closeSuccessCashoutDialog = document.getElementById("closeSuccessCashoutDialog");
     const success_cashout_overlay = document.getElementById("success_cashout_overlay");
 
@@ -588,7 +597,7 @@ function showSuccessDialogCashout(data, isByHistoryTable = null) {
         const statusClass = statusMap[data.cashOutStatus];
         statusElement.className = `status ${statusClass} status_from_dialog`;
 
-        statusElement.textContent = 
+        statusElement.textContent =
             statusClass === "paid"
                 ? "Pago"
                 : statusClass === "pending"
@@ -658,7 +667,7 @@ async function makeRequestToCashOut(requestData, btnCashoutRevenue) {
             })
 
             const dataForSuccessDialog = {
-                gatewayName: requestData.gatewayName, 
+                gatewayName: requestData.gatewayName,
                 amountCashedOut: amountToCashout,
                 userPaymentName: requestData.userPaymentName,
                 userPaymentAddress: requestData.userPaymentAddress,
@@ -671,6 +680,11 @@ async function makeRequestToCashOut(requestData, btnCashoutRevenue) {
             let msg = "Saldo insuficiente!";
             btnCashoutRevenue.textContent = msg;
             showBoxAlert(msg, "warning")
+            btnCashoutRevenue.style.backgroundColor = "#ffc107";
+        } else if (responseData.message == "409") {
+            let msg = "Sua conta está bloqueada. Pontuação não debitada!";
+            btnCashoutRevenue.textContent = msg;
+            showBoxAlert(msg, "warningv2")
             btnCashoutRevenue.style.backgroundColor = "#ffc107";
         } else {
             showBoxAlert(responseData.message, "error")
@@ -717,17 +731,17 @@ async function loadMyCashoutsToTable() {
 
     if (historyData.length > 0) {
         emptyHistory.style.display = "none";
-    
+
         historyData.forEach((item) => {
 
             const row = document.createElement("tr");
-    
+
             // Coluna Método
             const methodCell = document.createElement("td");
             const methodDiv = document.createElement("div");
             const methodImg = document.createElement("img");
             methodImg.className = "teable_icon_gateway";
-    
+
             // Mapeamento dos gateways e ícones
             const gatewayIcons = {
                 paypal: "icon_paypal_256x256",
@@ -736,7 +750,7 @@ async function loadMyCashoutsToTable() {
                 "m-pesa": "icon_mpesa_240x240",
                 "e-mola": "icon_emola_240x240",
             };
-    
+
             const gatewayNames = {
                 paypal: "PayPal",
                 pix: "Pix",
@@ -744,20 +758,20 @@ async function loadMyCashoutsToTable() {
                 "m-pesa": "M-Pesa",
                 "e-mola": "E-Mola",
             };
-    
+
             const iconFileName = gatewayIcons[item.gatewayName.toLowerCase()] || "default_icon"; // Ícone padrão, se necessário
             methodImg.src = `../src/imgs/${iconFileName}.png`;
             methodImg.alt = `${gatewayNames[item.gatewayName.toLowerCase()] || "Método"} icon`;
-    
+
             const methodText = document.createElement("p");
             methodText.className = "gatway_name";
             methodText.textContent = gatewayNames[item.gatewayName.toLowerCase()] || "Desconhecido";
-    
+
             methodDiv.appendChild(methodImg);
             methodDiv.appendChild(methodText);
             methodCell.appendChild(methodDiv);
             row.appendChild(methodCell);
-    
+
             // Coluna Quantia
             const amountCell = document.createElement("td");
             const amountDiv = document.createElement("div");
@@ -767,7 +781,7 @@ async function loadMyCashoutsToTable() {
             amountDiv.appendChild(amountText);
             amountCell.appendChild(amountDiv);
             row.appendChild(amountCell);
-    
+
             // Coluna Saque
             const idCell = document.createElement("td");
             const idDiv = document.createElement("div");
@@ -782,19 +796,19 @@ async function loadMyCashoutsToTable() {
             idDiv.appendChild(copyIcon);
             idCell.appendChild(idDiv);
             row.appendChild(idCell);
-    
+
             // Coluna Status
             const statusCell = document.createElement("td");
             const statusDiv = document.createElement("div");
             const statusText = document.createElement("p");
-    
+
             // Mapeamento dos status
             const statusMap = {
                 0: "pending",
                 1: "paid",
                 2: "declined",
             };
-    
+
             const statusClass = statusMap[item.cashOutStatus];
             statusText.className = `status ${statusClass}`;
             statusText.textContent =
@@ -803,24 +817,24 @@ async function loadMyCashoutsToTable() {
                     : statusClass === "pending"
                         ? "Pendente"
                         : "Recusado";
-    
+
             const infoIcon = document.createElement("i");
             infoIcon.className = "fa-solid fa-circle-info info-icon";
             infoIcon.title = "Detalhes";
             infoIcon.onclick = () => showSuccessDialogCashout(item, true);
-    
+
             statusDiv.appendChild(statusText);
             statusDiv.appendChild(infoIcon);
             statusCell.appendChild(statusDiv);
             row.appendChild(statusCell);
-    
+
             tableBody.appendChild(row);
         });
     } else {
         loading_or_empty_awesome_icon.className = "fa-solid fa-history history-icon";
         p_sem_saques.forEach(text => text.textContent = "Sem saques!");
     }
-    
+
 
 }
 
@@ -1045,7 +1059,7 @@ async function handleInviteFriendsDialog() {
 
     waitForInvitation().then(async invite => {
         myInviteCode = invite.myReferralCode
-        textInvitationLink.textContent = `https://lonyextra.com/0/access/signup.html?invite=${myInviteCode}`;
+        textInvitationLink.textContent = `https://lonyextra.com...=${myInviteCode}`;
         textInvitationCode.textContent = myInviteCode
 
         let copyIcons = document.querySelectorAll(".copy_my_invite_code_or_link");
