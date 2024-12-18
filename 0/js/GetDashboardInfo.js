@@ -385,8 +385,9 @@ async function loadLinksIntoTable(levelIndex) {
 
                     if (saveToCookies(data)) {
                         setTimeout(() => {
-                            window.open("http://127.0.0.1:5500/congratulations/index.html", "_blank")
-                            //window.location.href = tarefa.url
+                            window.location.href = tarefa.url
+                            
+                            //window.open("http://127.0.0.1:5500/congratulations/index.html", "_blank")
                             /* if (userId == "391f58325968d93b6778b9722f953bb063b44254d8e04109955c52b928ac9782" || userId == "db8a9d9fe0896ddd2438f532243cdf340a1e148815891ed1e0bf139f29b8159e") {
                                   //window.location.href = "http://127.0.0.1:5500/congratulations/index.html"
                                   window.location.href = tarefa.url
