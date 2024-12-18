@@ -39,7 +39,6 @@ function main()
         respondWithError('Falha ao descriptografar os dados.');
     }
 
-
     $decryptedData = json_decode($decryptedData, true);
 
     if ($decryptedData === null || !is_array($decryptedData)) {
@@ -67,10 +66,22 @@ function main()
     }
 
     $conn = Wamp64Connection();
-    $linkStatusUpdateResponse = processUserPointsAndLinkStatus($conn, $decryptedData);
 
-    // Retorna uma resposta de sucesso
-    respondWithSuccess(['success' => $linkStatusUpdateResponse]);
+    $checkIfUserIsBanned = checkIfUserIsBanned($conn, $decryptedData["userId"]);
+
+    error_log("O usuario: {$decryptedData['userId']} está com status e bloqueio: $checkIfUserIsBanned");
+
+    if (!$checkIfUserIsBanned) {
+        $linkStatusUpdateResponse = processUserPointsAndLinkStatus($conn, $decryptedData);
+        // Retorna uma resposta de sucesso
+        respondWithSuccess(['success' => $linkStatusUpdateResponse]);
+    } else {
+        echo json_encode([
+            'success' => false,
+            'message' => "208"
+        ]);
+        exit;
+    }
 }
 
 try {
@@ -251,59 +262,49 @@ function processUserPointsAndLinkStatus($conn, array $decryptedData): bool
     $taskId = $decryptedData["taskId"];
     $index = $decryptedData["index"];
 
-    if (!checkIfUserIsBanned($conn, $userId)) {
-        $jsonBatchName = null;
+    $jsonBatchName = null;
 
-        switch ($index) {
-            case 0:
-                $jsonBatchName = "bronzeAvailability";
-                break;
-            case 1:
-                $jsonBatchName = "prataAvailability";
-                break;
-            case 2:
-                $jsonBatchName = "ouroAvailability";
-                break;
-            case 3:
-                $jsonBatchName = "diamanteAvailability";
-                break;
-            case 4:
-                $jsonBatchName = "platinaAvailability";
-                break;
+    switch ($index) {
+        case 0:
+            $jsonBatchName = "bronzeAvailability";
+            break;
+        case 1:
+            $jsonBatchName = "prataAvailability";
+            break;
+        case 2:
+            $jsonBatchName = "ouroAvailability";
+            break;
+        case 3:
+            $jsonBatchName = "diamanteAvailability";
+            break;
+        case 4:
+            $jsonBatchName = "platinaAvailability";
+            break;
+    }
+
+    if ($jsonBatchName === null) {
+        return false;
+    }
+
+    $checkIfTaskIdIsAvailable = checkIfTaskIdIsAvailable($conn, $userId, $taskId, $jsonBatchName);
+
+    if ($checkIfTaskIdIsAvailable === true) {
+        if (!updateUserPoints($conn, $decryptedData, $userId, $taskId)) {
+            respondWithError('Falha ao atualizar a pontuação do usuário');
         }
 
-        if ($jsonBatchName === null) {
-            return false;
+        if (!updateLinkStatus(
+            $conn,
+            $userId,
+            $taskId,
+            $jsonBatchName
+        )) {
+            respondWithError('Falha ao atualizar o status do link');
         }
-
-        /*
-        Verificar se, essa requisicao para receber o premio,
-        é de fato de uma tarefa que esta DISPONIVEL.
-     */
-
-        $checkIfTaskIdIsAvailable = checkIfTaskIdIsAvailable($conn, $userId, $taskId, $jsonBatchName);
-
-        if ($checkIfTaskIdIsAvailable === true) {
-            if (!updateUserPoints($conn, $decryptedData, $userId, $taskId)) {
-                respondWithError('Falha ao atualizar a pontuação do usuário');
-            }
-
-            if (!updateLinkStatus(
-                $conn,
-                $userId,
-                $taskId,
-                $jsonBatchName
-            )) {
-                respondWithError('Falha ao atualizar o status do link');
-            }
-            return true;
-        } else {
-            //user is tryng to earn stars from an expired/unavailable Task
-            echo json_encode(['message' => "204"]);
-            exit;
-        }
+        return true;
     } else {
-        echo json_encode(['message' => "208"]);
+        //user is tryng to earn stars from an expired/unavailable Task
+        echo json_encode(['message' => "204"]);
         exit;
     }
 }
