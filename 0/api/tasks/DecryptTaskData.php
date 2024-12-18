@@ -78,7 +78,9 @@ function main()
     } else {
         echo json_encode([
             'success' => false,
-            'message' => "208"
+            'message' => "208",
+            'user' => $decryptedData['userId'],
+            'bloqueio' => $checkIfUserIsBanned
         ]);
         exit;
     }
