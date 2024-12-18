@@ -53,6 +53,9 @@ function main()
         'https://horoscopeonday.com/'
     ];
 
+    // 'http://127.0.0.1:5500/0/dashboard/index.html'
+
+
     $refererPassado = $input['referer'];
     if (!in_array($refererPassado, $allowedReferer)) {
         respondWithSuccess(
@@ -73,7 +76,7 @@ function main()
 try {
     main();
 } catch (\Throwable $th) {
-    error_log("Ocorreu um erro genérico no DecrypeTaskData.php: " . $th->getMessage());
+    error_log("Ocorreu um erro no DecrypeTaskData.php: " . $th->getMessage());
 }
 
 exit;
@@ -132,7 +135,8 @@ function logDecryptedData(string $data): void
  */
 function respondWithError(string $message, int $httpCode = 400): void
 {
-    http_response_code($httpCode);
+    //http_response_code($httpCode);
+    error_log("Os parâmetros \"encryptedData\" e \"iv\" são obrigatórios.");
     echo json_encode(['error' => $message]);
     exit;
 }
@@ -142,7 +146,7 @@ function respondWithError(string $message, int $httpCode = 400): void
  */
 function respondWithSuccess(array $data, int $httpCode = 200): void
 {
-    http_response_code($httpCode);
+    // http_response_code($httpCode);
     echo json_encode($data);
     exit;
 }

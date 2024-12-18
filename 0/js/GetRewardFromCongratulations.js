@@ -163,6 +163,7 @@ async function sendEncryptedDataToServer(encryptedData, iv, btnGetReward) {
         }
 
         let result = await response.json();
+        console.log("Data respnse are: ", result)
 
         if (result.success) {
             btnGetReward.textContent = "Pontos Adicionados!";
@@ -172,29 +173,24 @@ async function sendEncryptedDataToServer(encryptedData, iv, btnGetReward) {
             showBoxAlert(feedbackMessage, "success");
 
             textUserPoints.textContent = (currentStars + pointsToEarn).toLocaleString().replace(/,/g, ' ');
-        } else if (result.message == "204") {
+        } else if (result.message === "204") {
             feedbackMessage = "Tarefa ainda não disponivel!";
             showBoxAlert(feedbackMessage, "warning");
             btnGetReward.textContent = "Volte dentro de algum tempinho!";
             btnGetReward.style.backgroundColor = "#c7ba05";
-        } else if (result.message == "206") {
+        } else if (result.message === "206") {
             feedbackMessage = "Você precisa passar pelas etapas de cada tarefa para poder receber sua recompensa.";
             showBoxAlert(feedbackMessage, "warningv2");
             btnGetReward.textContent = "Etapas não realizadas!";
             btnGetReward.style.backgroundColor = "#c7ba05";
-        } if (result.message == "208") {
+        } if (result.message === "208") {
             feedbackMessage = "Sua conta está bloqueada. Pontuação não creditada!";
             showBoxAlert(feedbackMessage, "warningv3");
             btnGetReward.textContent = "Conta Bloqueada!";
             btnGetReward.style.backgroundColor = "#c7ba05";
-        } else {
-            btnGetReward.disabled = false;
-            console.error(result.message)
-            btnGetReward.textContent = "Tentar novamente!";
-            feedbackMessage = "Ocorreu um erro ao somar estrelas!";
-            showBoxAlert(feedbackMessage, "success");
         }
     } catch (error) {
+        console.log('Erro ao enviar os dados:', error);
         console.error('Erro ao enviar os dados:', error);
     }
 }
