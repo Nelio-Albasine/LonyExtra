@@ -69,18 +69,17 @@ function main()
 
     $checkIfUserIsBanned = checkIfUserIsBanned($conn, $decryptedData["userId"]);
 
-    error_log("O usuario: {$decryptedData['userId']} está com status e bloqueio: $checkIfUserIsBanned");
-
     if (!$checkIfUserIsBanned) {
         $linkStatusUpdateResponse = processUserPointsAndLinkStatus($conn, $decryptedData);
         // Retorna uma resposta de sucesso
-        respondWithSuccess(['success' => $linkStatusUpdateResponse]);
+        respondWithSuccess(['success' => $linkStatusUpdateResponse], $conn);
     } else {
+        if ($conn) {
+            $conn->close();
+        }
         echo json_encode([
             'success' => false,
-            'message' => "208",
-            'user' => $decryptedData['userId'],
-            'bloqueio' => $checkIfUserIsBanned
+            'message' => "208"
         ]);
         exit;
     }
@@ -157,9 +156,12 @@ function respondWithError(string $message, int $httpCode = 400): void
 /**
  * Função para enviar uma resposta de sucesso em JSON.
  */
-function respondWithSuccess(array $data, int $httpCode = 200): void
+function respondWithSuccess(array $data, $conn = null, int $httpCode = 200): void
 {
     // http_response_code($httpCode);
+    if ($conn) {
+        $conn->close();
+    }
     echo json_encode($data);
     exit;
 }
