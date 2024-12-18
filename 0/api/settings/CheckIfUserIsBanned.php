@@ -10,7 +10,7 @@ function checkIfUserIsBanned($conn, $userId): bool
     $stmt->close();
     if ($result->num_rows > 0) {
         $row = $result->fetch_assoc();
-        return $row['userLockStatus'] == 1;
+        return isset($row['userLockStatus']) && $row['userLockStatus'] === 1;
     } else {
         return false;
     }
