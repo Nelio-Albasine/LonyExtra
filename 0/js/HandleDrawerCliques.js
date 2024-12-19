@@ -16,12 +16,12 @@ const hashToDialogData = {
 };
 
 const starsToValueMap = [
-    { stars: 497, revenue: 0.50 },
-    { stars: 1246, revenue: 1.30 },
-    { stars: 2874, revenue: 3.00 },
-    { stars: 6710, revenue: 7.00 },
-    { stars: 19185, revenue: 20.00 },
-    { stars: 95200, revenue: 100.00 },
+    { stars: 697, revenue: 0.50 },
+    { stars: 1446, revenue: 1.30 },
+    { stars: 3074, revenue: 3.00 },
+    { stars: 6910, revenue: 7.00 },
+    { stars: 19385, revenue: 20.00 },
+    { stars: 95400, revenue: 100.00 },
 ];
 
 

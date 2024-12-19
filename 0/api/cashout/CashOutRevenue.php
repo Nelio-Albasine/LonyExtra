@@ -34,12 +34,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $allowedGateways = ['paypal', 'pix', 'binance', 'm-pesa', 'e-mola'];
 
     $indexAmountToValues = [
-        0 => 0.50,   // 497 pontos
-        1 => 1.30,   // 1246 pontos
-        2 => 3.00,   // 2874 pontos
-        3 => 7.00,   // 6710 pontos
-        4 => 20.00,  // 19185 pontos
-        5 => 100.00  // 95200 pontos
+        0 => 0.50,   // 697 pontos
+        1 => 1.30,   // 1446 pontos
+        2 => 3.00,   // 3074 pontos
+        3 => 7.00,   // 6910 pontos
+        4 => 20.00,  // 19385 pontos
+        5 => 100.00  // 95400 pontos
     ];
 
 

@@ -238,12 +238,12 @@ function updateMyInviterStarsWhenICashOut($conn, $cashOutIndex, $userId) {
     $percentToEarn = 4; // 4% of the index stars
 
     $mapStarsIndexed = [
-        0 => 497,
-        1 => 1246,
-        2 => 2874,
-        3 => 6710,
-        4 => 19185,
-        5 => 95200
+        0 => 697,
+        1 => 1446,
+        2 => 3074,
+        3 => 6910,
+        4 => 19385,
+        5 => 95400
     ];
 
     if (!isset($mapStarsIndexed[$cashOutIndex])) {

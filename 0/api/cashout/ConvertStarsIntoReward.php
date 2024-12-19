@@ -70,12 +70,12 @@ function main()
 function handleConversion($conn, $userId, $index)
 {
     $starsToValueMap = [
-        0 => ["stars" => 497, "revenue" => 0.50],
-        1 => ["stars" => 1246, "revenue" => 1.30],
-        2 => ["stars" => 2874, "revenue" => 3.00],
-        3 => ["stars" => 6710, "revenue" => 7.00],
-        4 => ["stars" => 19185, "revenue" => 20.00],
-        5 => ["stars" => 95200, "revenue" => 100.00],
+        0 => ["stars" => 697, "revenue" => 0.50],
+        1 => ["stars" => 1446, "revenue" => 1.30],
+        2 => ["stars" => 3074, "revenue" => 3.00],
+        3 => ["stars" => 6910, "revenue" => 7.00],
+        4 => ["stars" => 19385, "revenue" => 20.00],
+        5 => ["stars" => 95400, "revenue" => 100.00],
     ];
 
     $response = new ConversionResponse();

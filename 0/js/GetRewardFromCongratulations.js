@@ -163,7 +163,6 @@ async function sendEncryptedDataToServer(encryptedData, iv, btnGetReward) {
         }
 
         let result = await response.json();
-        console.log("Data respnse are: ", result)
 
         if (result.success) {
             btnGetReward.textContent = "Pontos Adicionados!";
